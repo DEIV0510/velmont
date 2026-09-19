@@ -1,0 +1,27 @@
+<section class="section editorial" data-surface="dark">
+  <div class="container editorial__inner">
+    <div data-reveal>
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <p class="h-editorial editorial__quote">"{{ section.settings.quote }}"</p>
+      <p class="editorial__body">{{ section.settings.body }}</p>
+      {%- if section.settings.cta_text != blank -%}
+        <a href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}" class="btn btn--ghost" style="margin-top:32px">{{ section.settings.cta_text }}</a>
+      {%- endif -%}
+    </div>
+    <div class="editorial__figure" data-reveal id="editorial-bottle"></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Editorial de marca",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "La casa VELMONT" },
+    { "type": "textarea", "id": "quote", "label": "Cita", "default": "Elegir un perfume no es comprar un producto. Es decidir cómo quieres ser percibido." },
+    { "type": "textarea", "id": "body", "label": "Párrafo", "default": "Cada fragancia de VELMONT se selecciona, no se fabrica en masa. Trabajamos con casas como MATAI para traer piezas con carácter propio — pensadas para quienes prefieren ser recordados antes que vistos." },
+    { "type": "text", "id": "cta_text", "label": "Texto del botón", "default": "Conocer la colección" },
+    { "type": "url", "id": "cta_url", "label": "Enlace del botón" }
+  ],
+  "presets": [{ "name": "Editorial de marca" }]
+}
+{% endschema %}

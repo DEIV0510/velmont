@@ -1,0 +1,38 @@
+{%- comment -%}
+  Construye el catalogo completo (productos + reglas de promocion) que
+  consume assets/catalog.js. Se imprime UNA sola vez en layout/theme.liquid
+  dentro de <script type="application/json" id="velmont-catalog-data">.
+  Ver docs/ADMIN.md para el esquema de tags/metafields que un producto debe
+  tener para aparecer correctamente aqui.
+{%- endcomment -%}
+{%- liquid
+  assign catalog_products = collections.all.products
+  if settings.catalog_collection != blank
+    assign catalog_products = settings.catalog_collection.products
+  endif
+-%}
+{
+  "collections": [
+    {
+      "id": "matai",
+      "label": {{ settings.matai_promo_label | json }},
+      "kind": "promo",
+      "promoPrice": {{ settings.matai_promo_price | default: 0 }},
+      "promoUnits": {{ settings.matai_promo_units | default: 2 }}
+    },
+    {
+      "id": "seleccion",
+      "label": {{ settings.seleccion_promo_label | json }},
+      "kind": "promo",
+      "promoPrice": {{ settings.seleccion_promo_price | default: 0 }},
+      "promoUnits": {{ settings.seleccion_promo_units | default: 2 }}
+    }
+  ],
+  "families": ["dulce", "fresco", "amaderado", "intenso", "citrico", "oriental", "floral", "especiado"],
+  "products": [
+    {%- for product in catalog_products limit: 250 -%}
+      {%- unless forloop.first -%},{%- endunless -%}
+      {%- render 'catalog-product-json', product: product -%}
+    {%- endfor -%}
+  ]
+}

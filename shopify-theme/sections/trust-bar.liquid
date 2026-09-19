@@ -1,0 +1,32 @@
+<section class="trust-bar">
+  <div class="container trust-bar__inner">
+    {%- for block in section.blocks -%}
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+        {{ block.settings.text }}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Barra de confianza",
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Elemento",
+      "settings": [{ "type": "text", "id": "text", "label": "Texto", "default": "Envíos a todo Colombia" }]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "item", "settings": { "text": "Envíos a todo Colombia" } },
+      { "type": "item", "settings": { "text": "Compra segura" } },
+      { "type": "item", "settings": { "text": "Productos seleccionados" } },
+      { "type": "item", "settings": { "text": "Atención personalizada" } }
+    ]
+  },
+  "presets": [{ "name": "Barra de confianza" }]
+}
+{% endschema %}

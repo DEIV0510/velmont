@@ -1,0 +1,25 @@
+<section class="section" data-surface="light">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div>
+        <p class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+        <h2 class="h-section" data-reveal>{{ section.settings.title }}</h2>
+      </div>
+      <a href="{{ section.settings.collection_url | default: routes.all_products_collection_url }}" class="link-underline" data-reveal>Ver toda la colección →</a>
+    </div>
+    <div class="product-grid" data-layout="editorial" data-featured-grid></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Productos destacados",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "Selección" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Productos destacados" },
+    { "type": "url", "id": "collection_url", "label": "Enlace \"Ver toda la colección\"" },
+    { "type": "paragraph", "content": "Muestra los productos que tengan el tag configurado en Configuración del tema → Catálogo VELMONT → 'Tag que marca un producto como destacado' (por defecto: destacado)." }
+  ],
+  "presets": [{ "name": "Productos destacados" }]
+}
+{% endschema %}

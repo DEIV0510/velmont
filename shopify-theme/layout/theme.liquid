@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page_title }}{% unless page_title contains shop.name %} — {{ shop.name }}{% endunless %}</title>
+{% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+<link rel="canonical" href="{{ canonical_url }}">
+<meta property="og:site_name" content="{{ shop.name }}">
+<meta property="og:title" content="{{ page_title | escape }}">
+{% if page_description %}<meta property="og:description" content="{{ page_description | escape }}">{% endif %}
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ canonical_url }}">
+
+<link rel="icon" href="{{ 'favicon-32.png' | asset_url }}" sizes="32x32">
+<link rel="icon" href="{{ 'favicon-192.png' | asset_url }}" sizes="192x192">
+<link rel="apple-touch-icon" href="{{ 'favicon-180.png' | asset_url }}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="preload" as="image" href="{{ 'velmont-logo-full@2x.png' | asset_url }}">
+<link rel="stylesheet" href="{{ 'tokens.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'base.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'components.css' | asset_url }}">
+
+{{ content_for_header }}
+</head>
+<body{% unless template.name == 'index' %} data-header-theme="light"{% endunless %}>
+
+<div data-loading-screen>
+  <div style="text-align:center">
+    <img class="loading-mark" src="{{ 'velmont-logo-full@2x.png' | asset_url }}" alt="{{ shop.name }}" width="220" height="169">
+    <div class="loading-rule"></div>
+  </div>
+</div>
+
+{% section 'header' %}
+
+<div class="nav-panel" data-nav-panel>
+  <button class="icon-btn nav-panel__close" data-nav-toggle aria-label="Cerrar menú">&times;</button>
+  <nav class="nav-panel__links">
+    <a href="{{ routes.all_products_collection_url | default: '/collections/all' }}">Perfumes</a>
+    <a href="/#finder">Encuentra tu perfume</a>
+    <a href="/#ofertas">Ofertas</a>
+    <a href="/#marcas">Marcas</a>
+    <a href="/#contacto">Contacto</a>
+    <button type="button" data-favorites-open>Favoritos</button>
+  </nav>
+</div>
+
+<main id="main-content">
+  {{ content_for_layout }}
+</main>
+
+{% section 'footer' %}
+
+{% comment %} Cada uno se llena por JS (ver assets/velmont-app.js), igual que en el prototipo estatico. {% endcomment %}
+<div data-cart-root></div>
+<div data-favorites-root></div>
+<div data-search-root></div>
+<div data-assistant-root></div>
+
+<script type="application/json" id="velmont-catalog-data">
+  {%- render 'catalog-json' -%}
+</script>
+
+<script type="module" src="{{ 'ui.js' | asset_url }}"></script>
+<script type="module" src="{{ 'catalog.js' | asset_url }}"></script>
+<script type="module" src="{{ 'cart.js' | asset_url }}"></script>
+<script type="module" src="{{ 'cart-ui.js' | asset_url }}"></script>
+<script type="module" src="{{ 'favorites.js' | asset_url }}"></script>
+<script type="module" src="{{ 'favorites-ui.js' | asset_url }}"></script>
+<script type="module" src="{{ 'product-card.js' | asset_url }}"></script>
+<script type="module" src="{{ 'finder.js' | asset_url }}"></script>
+<script type="module" src="{{ 'assistant.js' | asset_url }}"></script>
+<script type="module" src="{{ 'velmont-app.js' | asset_url }}"></script>
+
+</body>
+</html>

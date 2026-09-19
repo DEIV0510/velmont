@@ -1,0 +1,90 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "VELMONT",
+    "theme_version": "1.0.0",
+    "theme_author": "VELMONT",
+    "theme_documentation_url": "https://velmont.co",
+    "theme_support_email": "soporte@velmont.co"
+  },
+  {
+    "name": "Catálogo VELMONT",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "catalog_collection",
+        "label": "Colección que alimenta el catálogo del sitio",
+        "info": "El buscador, el finder, el asesor y las cuadrículas de producto leen de esta colección. Déjalo vacío para usar todos los productos de la tienda."
+      },
+      {
+        "type": "text",
+        "id": "featured_tag",
+        "label": "Tag que marca un producto como destacado",
+        "default": "destacado",
+        "info": "Agrega este tag a un producto en el admin de Shopify para que aparezca en 'Productos destacados' y en la colección editorial."
+      },
+      {
+        "type": "paragraph",
+        "content": "Tags que Shopify lee automáticamente por producto (agrégalos en el admin, sin espacios): género → hombre / mujer / unisex · familia → familia-dulce, familia-fresco, familia-amaderado, familia-intenso, familia-citrico, familia-oriental, familia-especiado, familia-floral · personalidad → perfil-seductor, perfil-elegante, perfil-intenso, perfil-fresco, perfil-misterioso, perfil-sofisticado, perfil-dulce, perfil-clasico · ocasión → ocasion-diario, ocasion-oficina, ocasion-cita, ocasion-noche, ocasion-evento, ocasion-vacaciones · intensidad → intensidad-suave, intensidad-media, intensidad-intensa."
+      }
+    ]
+  },
+  {
+    "name": "Promoción MATAI",
+    "settings": [
+      {
+        "type": "text",
+        "id": "matai_promo_tag",
+        "label": "Tag que marca un producto como elegible",
+        "default": "promo-matai"
+      },
+      {
+        "type": "text",
+        "id": "matai_promo_label",
+        "label": "Nombre de la promoción",
+        "default": "MATAI"
+      },
+      {
+        "type": "number",
+        "id": "matai_promo_units",
+        "label": "Unidades requeridas",
+        "default": 2
+      },
+      {
+        "type": "number",
+        "id": "matai_promo_price",
+        "label": "Precio fijo del combo (COP)",
+        "default": 450000
+      }
+    ]
+  },
+  {
+    "name": "Promoción Selección VELMONT",
+    "settings": [
+      {
+        "type": "text",
+        "id": "seleccion_promo_tag",
+        "label": "Tag que marca un producto como elegible",
+        "default": "promo-seleccion"
+      },
+      {
+        "type": "text",
+        "id": "seleccion_promo_label",
+        "label": "Nombre de la promoción",
+        "default": "Selección VELMONT"
+      },
+      {
+        "type": "number",
+        "id": "seleccion_promo_units",
+        "label": "Unidades requeridas",
+        "default": 2
+      },
+      {
+        "type": "number",
+        "id": "seleccion_promo_price",
+        "label": "Precio fijo del combo (COP)",
+        "default": 280000
+      }
+    ]
+  }
+]

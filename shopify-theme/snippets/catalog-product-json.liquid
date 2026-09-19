@@ -1,0 +1,80 @@
+{%- comment -%}
+  Convierte un `product` de Shopify en el objeto JSON que espera
+  assets/catalog.js. Esquema de tags esperado (ver config/settings_schema.json
+  y docs/ADMIN.md): hombre|mujer|unisex, familia-*, perfil-*, ocasion-*,
+  intensidad-*, promo-*, y el tag de destacado configurado en settings.
+  Metafields opcionales (namespace "velmont"): notes (list.single_line_text_field),
+  profile (json), short_description (single_line_text_field).
+{%- endcomment -%}
+{%- liquid
+  assign gender = ''
+  assign family = ''
+  assign intensity = ''
+  assign promo = ''
+  assign featured = false
+
+  for tag in product.tags
+    assign tag_clean = tag | downcase | strip
+    if tag_clean == 'hombre' or tag_clean == 'mujer' or tag_clean == 'unisex'
+      assign gender = tag_clean
+    endif
+    if tag_clean contains 'familia-'
+      assign family = tag_clean | remove_first: 'familia-'
+    endif
+    if tag_clean contains 'intensidad-'
+      assign intensity = tag_clean | remove_first: 'intensidad-'
+    endif
+    if tag_clean contains 'promo-'
+      assign promo = tag_clean | remove_first: 'promo-'
+    endif
+    if tag_clean == settings.featured_tag
+      assign featured = true
+    endif
+  endfor
+
+  assign variant = product.selected_or_first_available_variant
+  assign price_decimal = variant.price | divided_by: 100.0 | round
+  assign description = product.metafields.velmont.short_description.value | default: product.description | strip_html | truncate: 160
+  assign notes = product.metafields.velmont.notes.value
+  assign profile = product.metafields.velmont.profile.value
+-%}
+{
+  "id": {{ product.id | json }},
+  "variantId": {{ variant.id | json }},
+  "slug": {{ product.handle | json }},
+  "name": {{ product.title | json }},
+  "house": {{ product.vendor | json }},
+  "gender": {{ gender | json }},
+  "price": {{ price_decimal }},
+  "promo": {{ promo | json }},
+  "featured": {{ featured }},
+  "family": {{ family | json }},
+  "intensity": {{ intensity | json }},
+  "image": {{ product.featured_image | image_url: width: 1200 | default: '' | json }},
+  "url": {{ product.url | json }},
+  "personality": [
+    {%- assign p_first = true -%}
+    {%- for tag in product.tags -%}
+      {%- assign tag_clean = tag | downcase | strip -%}
+      {%- if tag_clean contains 'perfil-' -%}
+        {%- unless p_first -%},{%- endunless -%}
+        {%- assign p_first = false -%}
+        {{ tag_clean | remove_first: 'perfil-' | json }}
+      {%- endif -%}
+    {%- endfor -%}
+  ],
+  "occasion": [
+    {%- assign o_first = true -%}
+    {%- for tag in product.tags -%}
+      {%- assign tag_clean = tag | downcase | strip -%}
+      {%- if tag_clean contains 'ocasion-' -%}
+        {%- unless o_first -%},{%- endunless -%}
+        {%- assign o_first = false -%}
+        {{ tag_clean | remove_first: 'ocasion-' | json }}
+      {%- endif -%}
+    {%- endfor -%}
+  ],
+  "notes": {% if notes %}{{ notes | json }}{% else %}[]{% endif %},
+  "profile": {% if profile %}{{ profile | json }}{% else %}{}{% endif %},
+  "description": {{ description | json }}
+}

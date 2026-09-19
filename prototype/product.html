@@ -13,29 +13,6 @@
 <link rel="stylesheet" href="assets/css/tokens.css">
 <link rel="stylesheet" href="assets/css/base.css">
 <link rel="stylesheet" href="assets/css/components.css">
-<style>
-  .pdp { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-8); align-items: start; }
-  .pdp__stage, .pdp__info { min-width: 0; }
-  .pdp__stage { position: sticky; top: calc(var(--header-h) + var(--sp-6)); display: flex; align-items: center; justify-content: center; aspect-ratio: 4/5; background: var(--surface-alt); border-radius: var(--radius-lg); }
-  .pdp__stage svg { width: 42%; }
-  .pdp__breadcrumb { font-size: var(--fs-label); color: var(--on-surface-dim); margin-bottom: var(--sp-5); }
-  .pdp__family { font-size: var(--fs-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--gold-deep); }
-  .pdp__name { margin-top: var(--sp-3); }
-  .pdp__price { font-family: var(--font-display); font-size: 1.8rem; margin-top: var(--sp-3); }
-  .pdp__desc { margin-top: var(--sp-4); }
-  .pdp__facts { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-5); }
-  .pdp__fact { border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; font-size: var(--fs-small); text-transform: capitalize; }
-  .pdp__cta { margin-top: var(--sp-6); display: flex; gap: var(--sp-3); flex-wrap: wrap; }
-  .pdp__cta .btn { flex: 1 1 200px; }
-  .pdp__notes { margin-top: var(--sp-7); }
-  .pdp__notes ul { display: flex; gap: var(--sp-3); flex-wrap: wrap; margin-top: var(--sp-3); }
-  .pdp__notes li { border-bottom: 1px solid var(--line); padding-bottom: 2px; }
-  .pdp__profile { margin-top: var(--sp-8); }
-  @media (max-width: 860px) {
-    .pdp { grid-template-columns: 1fr; }
-    .pdp__stage { position: static; aspect-ratio: 5/4; }
-  }
-</style>
 </head>
 <body data-header-theme="light">
 

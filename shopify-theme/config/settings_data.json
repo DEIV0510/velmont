@@ -1,0 +1,16 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "featured_tag": "destacado",
+      "matai_promo_tag": "promo-matai",
+      "matai_promo_label": "MATAI",
+      "matai_promo_units": 2,
+      "matai_promo_price": 450000,
+      "seleccion_promo_tag": "promo-seleccion",
+      "seleccion_promo_label": "Selección VELMONT",
+      "seleccion_promo_units": 2,
+      "seleccion_promo_price": 280000
+    }
+  }
+}

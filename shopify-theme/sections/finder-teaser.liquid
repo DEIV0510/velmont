@@ -1,0 +1,21 @@
+<section class="section finder-teaser" id="finder">
+  <div class="container">
+    <p class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+    <h2 class="h-section finder-teaser__title" data-reveal>{{ section.settings.title }}</h2>
+    <p class="lede finder-teaser__lede" data-reveal>{{ section.settings.subtitle }}</p>
+    <a href="#finder-quiz" class="btn btn--primary finder-teaser__cta" data-reveal>{{ section.settings.cta_text }}</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Invitación al Finder",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "Perfume finder" },
+    { "type": "text", "id": "title", "label": "Título", "default": "No elijas a ciegas." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Cuéntanos qué buscas. Nosotros encontramos la fragancia." },
+    { "type": "text", "id": "cta_text", "label": "Texto del botón", "default": "Encontrar mi perfume" }
+  ],
+  "presets": [{ "name": "Invitación al Finder" }]
+}
+{% endschema %}

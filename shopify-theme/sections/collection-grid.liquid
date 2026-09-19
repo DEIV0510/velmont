@@ -1,0 +1,27 @@
+<section class="section" style="padding-bottom:0">
+  <div class="container">
+    <p class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+    <h1 class="h-section" data-reveal>{{ section.settings.title }}</h1>
+    <p class="lede" style="margin-top:12px" data-reveal>{{ section.settings.subtitle }}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="filter-bar" data-filter-bar></div>
+    <p class="lede" data-empty-state style="display:none">No hay fragancias con esos filtros todavía. Prueba otra combinación.</p>
+    <div class="product-grid" data-collection-grid></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Colección VELMONT",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "Catálogo completo" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Descubre VELMONT" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Cada fragancia, organizada por género y familia olfativa. Encuentra la tuya o déjate sorprender." }
+  ],
+  "presets": [{ "name": "Colección VELMONT" }]
+}
+{% endschema %}

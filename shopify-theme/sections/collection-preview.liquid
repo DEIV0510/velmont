@@ -1,0 +1,24 @@
+<section class="section" data-surface="light" id="marcas">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div>
+        <p class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+        <h2 class="h-section" data-reveal>{{ section.settings.title }}</h2>
+      </div>
+      <a href="{{ section.settings.collection_url | default: routes.all_products_collection_url }}" class="btn btn--ghost" data-reveal>Ver colección</a>
+    </div>
+    <div class="product-grid" data-collection-preview></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Vista previa de colección",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "Catálogo completo" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Descubre VELMONT" },
+    { "type": "url", "id": "collection_url", "label": "Enlace \"Ver colección\"" }
+  ],
+  "presets": [{ "name": "Vista previa de colección" }]
+}
+{% endschema %}

@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "hero": { "type": "hero" },
+    "trust-bar": { "type": "trust-bar" },
+    "finder-teaser": { "type": "finder-teaser" },
+    "perfume-finder": { "type": "perfume-finder" },
+    "featured-products": { "type": "featured-products" },
+    "editorial": { "type": "editorial" },
+    "offers": { "type": "offers" },
+    "collection-preview": { "type": "collection-preview" }
+  },
+  "order": [
+    "hero",
+    "trust-bar",
+    "finder-teaser",
+    "perfume-finder",
+    "featured-products",
+    "editorial",
+    "offers",
+    "collection-preview"
+  ]
+}

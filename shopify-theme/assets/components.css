@@ -95,7 +95,7 @@ body[data-header-theme="light"] .site-header__actions .icon-btn { color: var(--i
 }
 .hero__bg {
   position: absolute; inset: -4%;
-  background-image: url('../img/marble-dark.webp');
+  background-image: url('marble-dark.webp');
   background-size: cover; background-position: center;
   opacity: 0.5;
 }
@@ -312,7 +312,7 @@ body[data-header-theme="light"] .site-header__actions .icon-btn { color: var(--i
 .offer-card::before {
   content: '';
   position: absolute; inset: 0;
-  background-image: url('../img/marble-dark.webp');
+  background-image: url('marble-dark.webp');
   background-size: cover; background-position: center;
   opacity: 0.28; mix-blend-mode: luminosity;
 }

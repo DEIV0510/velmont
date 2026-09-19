@@ -1,0 +1,79 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <img src="{{ 'velmont-wordmark.png' | asset_url }}" alt="{{ shop.name }}" width="200" height="44" loading="lazy">
+        <p>{{ section.settings.brand_copy }}</p>
+      </div>
+      <div>
+        <h4>Navegación</h4>
+        <ul>
+          {%- for link in section.settings.nav_menu.links -%}
+            <li><a href="{{ link.url }}" class="link-underline">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+      <div>
+        <h4>Ayuda</h4>
+        <ul>
+          {%- for link in section.settings.help_menu.links -%}
+            <li><a href="{{ link.url }}" class="link-underline">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+      <div id="contacto">
+        <h4>Contacto</h4>
+        <ul>
+          {%- if section.settings.whatsapp_url != blank -%}<li><a href="{{ section.settings.whatsapp_url }}" class="link-underline">WhatsApp</a></li>{%- endif -%}
+          {%- if section.settings.instagram_url != blank -%}<li><a href="{{ section.settings.instagram_url }}" class="link-underline">Instagram</a></li>{%- endif -%}
+          {%- if section.settings.contact_email != blank -%}<li><a href="mailto:{{ section.settings.contact_email }}" class="link-underline">{{ section.settings.contact_email }}</a></li>{%- endif -%}
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}. Todos los derechos reservados.</span>
+      <span>Envíos a toda Colombia · Pagos seguros</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "brand_copy",
+      "label": "Descripción de marca",
+      "default": "Perfumes premium seleccionados para acompañar tu identidad, con envíos a todo Colombia."
+    },
+    {
+      "type": "link_list",
+      "id": "nav_menu",
+      "label": "Menú de navegación",
+      "default": "footer"
+    },
+    {
+      "type": "link_list",
+      "id": "help_menu",
+      "label": "Menú de ayuda",
+      "default": "footer"
+    },
+    {
+      "type": "url",
+      "id": "whatsapp_url",
+      "label": "Enlace de WhatsApp"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Enlace de Instagram"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Correo de contacto"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,23 @@
+{
+  "general": {
+    "search": {
+      "placeholder": "¿Qué perfume estás buscando?",
+      "no_results_html": "No encontramos resultados para \"{{ terms }}\"."
+    },
+    "cart": {
+      "empty": "Tu carrito está vacío"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Agregar al carrito",
+      "sold_out": "Agotado",
+      "unavailable": "No disponible"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Tu selección VELMONT"
+    }
+  }
+}

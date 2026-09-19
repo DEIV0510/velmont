@@ -1,0 +1,36 @@
+<section class="section" id="ofertas" data-surface="light">
+  <div class="section-head section-head--center container">
+    <p class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+    <h2 class="h-section" data-reveal>{{ section.settings.title }}</h2>
+  </div>
+  <div class="container offers-grid">
+    <article class="offer-card" data-reveal>
+      <div class="offer-card__content">
+        <p class="eyebrow offer-card__eyebrow">{{ settings.matai_promo_label }}</p>
+        <p class="offer-card__price gold-text">{{ settings.matai_promo_units }} x {{ settings.matai_promo_price | times: 100 | money_without_trailing_zeros }}</p>
+        <p class="offer-card__copy">Combina {{ settings.matai_promo_units }} fragancias {{ settings.matai_promo_label }} elegibles.</p>
+        <a href="{{ routes.all_products_collection_url }}?promo=matai" class="btn btn--primary offer-card__cta">Comprar oferta</a>
+      </div>
+    </article>
+    <article class="offer-card" data-reveal data-reveal-delay="1">
+      <div class="offer-card__content">
+        <p class="eyebrow offer-card__eyebrow">{{ settings.seleccion_promo_label }}</p>
+        <p class="offer-card__price gold-text">{{ settings.seleccion_promo_units }} x {{ settings.seleccion_promo_price | times: 100 | money_without_trailing_zeros }}</p>
+        <p class="offer-card__copy">Elige {{ settings.seleccion_promo_units }} fragancias participantes.</p>
+        <a href="{{ routes.all_products_collection_url }}?promo=seleccion" class="btn btn--primary offer-card__cta">Comprar oferta</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ofertas VELMONT",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "Ofertas VELMONT" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Dos experiencias, un mismo criterio." },
+    { "type": "paragraph", "content": "Los precios y unidades de cada oferta se configuran en Configuración del tema → 'Promoción MATAI' y 'Promoción Selección VELMONT'. Ahí también defines el tag que hace elegible a un producto." }
+  ],
+  "presets": [{ "name": "Ofertas VELMONT" }]
+}
+{% endschema %}

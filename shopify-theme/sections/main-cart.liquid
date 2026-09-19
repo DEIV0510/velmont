@@ -1,0 +1,42 @@
+<section class="section" data-surface="light">
+  <div class="container" style="max-width:720px">
+    <h1 class="h-section" style="margin-bottom:32px">Tu selección VELMONT</h1>
+    {%- if cart.item_count == 0 -%}
+      <p class="lede">Tu carrito está vacío. <a href="{{ routes.all_products_collection_url }}" class="link-underline">Ver colección</a></p>
+    {%- else -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        <ul class="cart-lines">
+          {%- for item in cart.items -%}
+            <li class="cart-line">
+              <div class="cart-line__thumb">
+                {%- if item.image -%}{{ item.image | image_url: width: 160 | image_tag }}{%- endif -%}
+              </div>
+              <div class="cart-line__info">
+                <p class="cart-line__name">{{ item.product.title }}</p>
+                <p class="cart-line__family">{{ item.variant.title }}</p>
+                <div class="qty-stepper">
+                  <input type="number" min="0" name="updates[]" value="{{ item.quantity }}" style="width:48px;text-align:center;border:none;background:transparent">
+                </div>
+              </div>
+              <div class="cart-line__price">
+                <span>{{ item.final_line_price | money }}</span>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+        <div class="cart-row cart-row--total" style="margin-top:24px">
+          <span>Subtotal</span><span>{{ cart.total_price | money }}</span>
+        </div>
+        <p class="badge-note" style="margin-top:12px;color:var(--on-surface-dim);font-size:var(--fs-small)">Las promociones MATAI y Selección VELMONT se muestran en el carrito lateral (ícono superior). Actualiza cantidades aquí y ábrelo de nuevo para ver el precio con oferta aplicada.</p>
+        <button type="submit" name="update" class="btn btn--ghost" style="margin-top:16px">Actualizar</button>
+        <a href="{{ routes.cart_url }}/checkout" class="btn btn--primary" style="margin-top:16px;margin-left:12px">Finalizar compra</a>
+      </form>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Carrito"
+}
+{% endschema %}

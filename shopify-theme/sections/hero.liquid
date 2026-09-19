@@ -1,0 +1,40 @@
+<section class="hero" data-hero-parallax data-surface="dark">
+  <div class="hero__bg" data-parallax-layer="-8"></div>
+  <div class="hero__scrim"></div>
+  <div class="hero__glow" data-parallax-layer="6"></div>
+  <div class="container hero__inner">
+    <div class="hero__copy" data-reveal>
+      <p class="eyebrow hero__eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1 class="h-display hero__title">{{ section.settings.title }}</h1>
+      <p class="lede hero__lede">{{ section.settings.subtitle }}</p>
+      <div class="hero__ctas">
+        {%- if section.settings.primary_cta_text != blank -%}
+          <a href="{{ section.settings.primary_cta_url | default: '#finder' }}" class="btn btn--primary">{{ section.settings.primary_cta_text }}</a>
+        {%- endif -%}
+        {%- if section.settings.secondary_cta_text != blank -%}
+          <a href="{{ section.settings.secondary_cta_url | default: routes.all_products_collection_url }}" class="btn btn--ghost">{{ section.settings.secondary_cta_text }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="hero__stage">
+      <div class="hero__ring" data-parallax-layer="10"></div>
+      <div class="hero__bottle" id="hero-bottle" data-parallax-layer="26"></div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño superior", "default": "VELMONT" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Descubre la fragancia que te define." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Una selección de fragancias para dejar una impresión." },
+    { "type": "text", "id": "primary_cta_text", "label": "Texto botón principal", "default": "Encuentra tu perfume" },
+    { "type": "url", "id": "primary_cta_url", "label": "Enlace botón principal" },
+    { "type": "text", "id": "secondary_cta_text", "label": "Texto botón secundario", "default": "Ver colección" },
+    { "type": "url", "id": "secondary_cta_url", "label": "Enlace botón secundario" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

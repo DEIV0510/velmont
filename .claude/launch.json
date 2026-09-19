@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "velmont-prototype",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["prototype/server.js"],
+      "port": 5401
+    }
+  ]
+}

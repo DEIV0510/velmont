@@ -1,0 +1,192 @@
+{
+  "_placeholder_notice": "CATALOGO DE MUESTRA — ningun nombre, precio, nota olfativa o imagen de este archivo es un dato real de VELMONT. Se genero porque la carpeta VELMONT solo contenia el logo (ver /README.md). Reemplazar por el catalogo real de Shopify antes de publicar. Las promociones MATAI (2x$450.000) y Seleccion VELMONT (2x$280.000) SI son reglas de negocio reales confirmadas por el cliente; solo los productos que las ilustran aqui son de muestra.",
+  "collections": [
+    { "id": "matai", "label": "MATAI", "kind": "promo", "promoPrice": 450000, "promoUnits": 2, "promoTitle": "2 x $450.000", "promoCopy": "Combina dos fragancias MATAI elegibles." },
+    { "id": "seleccion", "label": "Selección VELMONT", "kind": "promo", "promoPrice": 280000, "promoUnits": 2, "promoTitle": "2 x $280.000", "promoCopy": "Elige dos fragancias participantes." }
+  ],
+  "families": ["dulce", "fresco", "amaderado", "intenso", "citrico", "oriental", "floral", "especiado"],
+  "products": [
+    {
+      "id": "matai-onyx", "name": "MATAI Onyx", "house": "MATAI", "slug": "matai-onyx",
+      "gender": "hombre", "price": 275000, "promo": "matai", "featured": true,
+      "family": "amaderado", "profile": { "dulce": 1, "fresco": 1, "amaderado": 5, "intenso": 4, "citrico": 0, "oriental": 2, "especiado": 2 },
+      "personality": ["intenso", "misterioso", "elegante"], "occasion": ["noche", "evento"], "intensity": "intensa",
+      "notes": ["Vetiver", "Cuero", "Ámbar gris"],
+      "description": "Una madera oscura y pulida, con fondo de cuero y ámbar para presencias que no piden permiso.",
+      "liquid": ["#4A4640", "#201D19"]
+    },
+    {
+      "id": "matai-aurum", "name": "MATAI Aurum", "house": "MATAI", "slug": "matai-aurum",
+      "gender": "unisex", "price": 289000, "promo": "matai", "featured": true,
+      "family": "oriental", "profile": { "dulce": 2, "fresco": 0, "amaderado": 2, "intenso": 4, "citrico": 0, "oriental": 5, "especiado": 4 },
+      "personality": ["sofisticado", "seductor", "misterioso"], "occasion": ["noche", "cita", "evento"], "intensity": "intensa",
+      "notes": ["Azafrán", "Incienso", "Haba tonka"],
+      "description": "Especias cálidas envueltas en resina dorada. La firma MATAI en su versión más ceremoniosa.",
+      "liquid": ["#C9922E", "#7A5417"]
+    },
+    {
+      "id": "matai-bruma", "name": "MATAI Bruma", "house": "MATAI", "slug": "matai-bruma",
+      "gender": "mujer", "price": 265000, "promo": "matai",
+      "family": "floral", "profile": { "dulce": 3, "fresco": 4, "amaderado": 1, "intenso": 2, "citrico": 2, "oriental": 1, "especiado": 0 },
+      "personality": ["elegante", "fresco", "sofisticado"], "occasion": ["diario", "oficina", "cita"], "intensity": "media",
+      "notes": ["Peonía", "Té blanco", "Almizcle"],
+      "description": "Flores recién cortadas sobre un fondo limpio, como niebla de madrugada. Discreta y precisa.",
+      "liquid": ["#D7C6CE", "#9C8A93"]
+    },
+    {
+      "id": "matai-ember", "name": "MATAI Ember", "house": "MATAI", "slug": "matai-ember",
+      "gender": "hombre", "price": 280000, "promo": "matai",
+      "family": "especiado", "profile": { "dulce": 1, "fresco": 0, "amaderado": 3, "intenso": 5, "citrico": 0, "oriental": 3, "especiado": 5 },
+      "personality": ["intenso", "seductor", "misterioso"], "occasion": ["noche", "evento"], "intensity": "intensa",
+      "notes": ["Pimienta negra", "Cardamomo", "Madera de oud"],
+      "description": "La brasa de la colección: especias encendidas y madera de oud al fondo. No pasa desapercibido.",
+      "liquid": ["#8C3B26", "#4A1D12"]
+    },
+
+    {
+      "id": "noir-absolu", "name": "Noir Absolu", "house": "VELMONT", "slug": "noir-absolu",
+      "gender": "hombre", "price": 175000, "promo": "seleccion", "featured": true,
+      "family": "amaderado", "profile": { "dulce": 0, "fresco": 1, "amaderado": 5, "intenso": 4, "citrico": 0, "oriental": 2, "especiado": 1 },
+      "personality": ["elegante", "misterioso", "intenso"], "occasion": ["noche", "oficina"], "intensity": "intensa",
+      "notes": ["Cedro", "Pachulí", "Vainilla negra"],
+      "description": "Un clásico reinterpretado: madera profunda con un cierre de vainilla oscura.",
+      "liquid": ["#3A342C", "#171410"]
+    },
+    {
+      "id": "fleur-de-minuit", "name": "Fleur de Minuit", "house": "VELMONT", "slug": "fleur-de-minuit",
+      "gender": "mujer", "price": 165000, "promo": "seleccion",
+      "family": "dulce", "profile": { "dulce": 5, "fresco": 1, "amaderado": 1, "intenso": 2, "citrico": 0, "oriental": 2, "especiado": 0 },
+      "personality": ["dulce", "seductor", "elegante"], "occasion": ["cita", "noche"], "intensity": "media",
+      "notes": ["Jazmín", "Praliné", "Almizcle blanco"],
+      "description": "Flores blancas que se abren de noche, con un fondo goloso pero nunca empalagoso.",
+      "liquid": ["#D9AFC4", "#8C4E6B"]
+    },
+    {
+      "id": "cuir-blanc", "name": "Cuir Blanc", "house": "VELMONT", "slug": "cuir-blanc",
+      "gender": "unisex", "price": 180000, "promo": "seleccion",
+      "family": "amaderado", "profile": { "dulce": 1, "fresco": 2, "amaderado": 4, "intenso": 3, "citrico": 1, "oriental": 1, "especiado": 1 },
+      "personality": ["clasico", "elegante", "sofisticado"], "occasion": ["oficina", "diario", "cita"], "intensity": "media",
+      "notes": ["Cuero suave", "Iris", "Almendra"],
+      "description": "Cuero claro y pulido, sin dureza. Un unisex versátil para el día a día con carácter.",
+      "liquid": ["#E4D9C2", "#A8967A"]
+    },
+    {
+      "id": "ambre-nocturne", "name": "Ambre Nocturne", "house": "VELMONT", "slug": "ambre-nocturne",
+      "gender": "hombre", "price": 178000, "promo": "seleccion",
+      "family": "oriental", "profile": { "dulce": 2, "fresco": 0, "amaderado": 2, "intenso": 5, "citrico": 0, "oriental": 5, "especiado": 2 },
+      "personality": ["seductor", "intenso", "misterioso"], "occasion": ["noche", "evento", "cita"], "intensity": "intensa",
+      "notes": ["Ámbar", "Canela", "Benjuí"],
+      "description": "Ámbar caliente y especias dulces para las noches que se alargan.",
+      "liquid": ["#A9662B", "#5C3212"]
+    },
+    {
+      "id": "vetiver-imperial", "name": "Vetiver Impérial", "house": "VELMONT", "slug": "vetiver-imperial",
+      "gender": "hombre", "price": 170000, "promo": "seleccion",
+      "family": "fresco", "profile": { "dulce": 0, "fresco": 5, "amaderado": 3, "intenso": 2, "citrico": 2, "oriental": 0, "especiado": 0 },
+      "personality": ["fresco", "elegante", "clasico"], "occasion": ["diario", "oficina"], "intensity": "media",
+      "notes": ["Vetiver", "Bergamota", "Sal marina"],
+      "description": "Vetiver verde y fresco con un toque cítrico. Impecable de lunes a viernes.",
+      "liquid": ["#7E8F6E", "#414F35"]
+    },
+
+    {
+      "id": "or-et-santal", "name": "Or et Santal", "house": "VELMONT", "slug": "or-et-santal",
+      "gender": "unisex", "price": 210000, "featured": true,
+      "family": "oriental", "profile": { "dulce": 2, "fresco": 0, "amaderado": 4, "intenso": 3, "citrico": 0, "oriental": 4, "especiado": 2 },
+      "personality": ["sofisticado", "elegante", "misterioso"], "occasion": ["evento", "cita"], "intensity": "media",
+      "notes": ["Sándalo", "Azafrán", "Miel"],
+      "description": "Sándalo cremoso con un hilo de azafrán dorado. La pieza de firma de la casa.",
+      "liquid": ["#C9A860", "#7A5C22"]
+    },
+    {
+      "id": "rose-imperiale", "name": "Rose Impériale", "house": "VELMONT", "slug": "rose-imperiale",
+      "gender": "mujer", "price": 195000, "featured": true,
+      "family": "floral", "profile": { "dulce": 3, "fresco": 2, "amaderado": 1, "intenso": 2, "citrico": 1, "oriental": 1, "especiado": 0 },
+      "personality": ["elegante", "sofisticado", "clasico"], "occasion": ["oficina", "diario", "cita"], "intensity": "media",
+      "notes": ["Rosa de mayo", "Litchi", "Almizcle"],
+      "description": "Rosa fresca y afrutada, pulida hasta la elegancia. Un clásico que no envejece.",
+      "liquid": ["#D98A9A", "#8C4453"]
+    },
+    {
+      "id": "agrume-solaire", "name": "Agrume Solaire", "house": "VELMONT", "slug": "agrume-solaire",
+      "gender": "unisex", "price": 155000,
+      "family": "citrico", "profile": { "dulce": 1, "fresco": 5, "amaderado": 0, "intenso": 1, "citrico": 5, "oriental": 0, "especiado": 0 },
+      "personality": ["fresco", "dulce"], "occasion": ["diario", "vacaciones"], "intensity": "suave",
+      "notes": ["Pomelo", "Mandarina", "Flor de azahar"],
+      "description": "Cítricos recién exprimidos con un toque floral. Directo al buen humor.",
+      "liquid": ["#E8C25A", "#B08A25"]
+    },
+    {
+      "id": "velours-gris", "name": "Velours Gris", "house": "VELMONT", "slug": "velours-gris",
+      "gender": "hombre", "price": 225000, "featured": true,
+      "family": "amaderado", "profile": { "dulce": 1, "fresco": 1, "amaderado": 5, "intenso": 3, "citrico": 0, "oriental": 1, "especiado": 1 },
+      "personality": ["clasico", "elegante", "sofisticado"], "occasion": ["oficina", "diario", "evento"], "intensity": "media",
+      "notes": ["Cachemira de madera", "Ámbar gris", "Almizcle"],
+      "description": "Madera suave como tela de sastre. Un fondo silencioso que sostiene toda la compostura.",
+      "liquid": ["#8C8C86", "#4A4A46"]
+    },
+    {
+      "id": "jasmin-sauvage", "name": "Jasmin Sauvage", "house": "VELMONT", "slug": "jasmin-sauvage",
+      "gender": "mujer", "price": 185000,
+      "family": "floral", "profile": { "dulce": 2, "fresco": 4, "amaderado": 1, "intenso": 2, "citrico": 2, "oriental": 0, "especiado": 0 },
+      "personality": ["fresco", "dulce", "elegante"], "occasion": ["diario", "cita"], "intensity": "suave",
+      "notes": ["Jazmín silvestre", "Pera", "Cedro blanco"],
+      "description": "Jazmín sin domesticar, más verde que dulce, con un final limpio de cedro.",
+      "liquid": ["#EDE7C8", "#B7AE79"]
+    },
+    {
+      "id": "santal-mystique", "name": "Santal Mystique", "house": "VELMONT", "slug": "santal-mystique",
+      "gender": "unisex", "price": 230000,
+      "family": "amaderado", "profile": { "dulce": 1, "fresco": 0, "amaderado": 5, "intenso": 4, "citrico": 0, "oriental": 3, "especiado": 1 },
+      "personality": ["misterioso", "sofisticado", "intenso"], "occasion": ["noche", "evento"], "intensity": "intensa",
+      "notes": ["Sándalo de Mysore", "Incienso", "Musgo"],
+      "description": "Sándalo denso y ahumado. Para quienes prefieren dejar una pregunta en el aire.",
+      "liquid": ["#7A6650", "#3D3122"]
+    },
+    {
+      "id": "poivre-noir", "name": "Poivre Noir", "house": "VELMONT", "slug": "poivre-noir",
+      "gender": "hombre", "price": 198000,
+      "family": "especiado", "profile": { "dulce": 0, "fresco": 1, "amaderado": 2, "intenso": 4, "citrico": 1, "oriental": 2, "especiado": 5 },
+      "personality": ["intenso", "seductor"], "occasion": ["noche", "cita"], "intensity": "intensa",
+      "notes": ["Pimienta rosa", "Nuez moscada", "Cuero"],
+      "description": "Un latigazo de pimienta sobre cuero cálido. Energía en estado puro.",
+      "liquid": ["#5B3B36", "#2C1A17"]
+    },
+    {
+      "id": "iris-argente", "name": "Iris Argenté", "house": "VELMONT", "slug": "iris-argente",
+      "gender": "mujer", "price": 205000,
+      "family": "floral", "profile": { "dulce": 1, "fresco": 2, "amaderado": 2, "intenso": 3, "citrico": 0, "oriental": 1, "especiado": 0 },
+      "personality": ["sofisticado", "elegante", "misterioso"], "occasion": ["oficina", "evento"], "intensity": "media",
+      "notes": ["Iris", "Violeta", "Almizcle gris"],
+      "description": "Iris polvoso y frío como la plata pulida. Sofisticación sin levantar la voz.",
+      "liquid": ["#C9C4CE", "#7A7488"]
+    },
+    {
+      "id": "citron-noir", "name": "Citron Noir", "house": "VELMONT", "slug": "citron-noir",
+      "gender": "hombre", "price": 160000,
+      "family": "citrico", "profile": { "dulce": 0, "fresco": 5, "amaderado": 1, "intenso": 2, "citrico": 5, "oriental": 0, "especiado": 1 },
+      "personality": ["fresco", "elegante"], "occasion": ["diario", "oficina", "vacaciones"], "intensity": "suave",
+      "notes": ["Limón negro", "Pimienta blanca", "Vetiver"],
+      "description": "Cítrico oscuro y seco, sin dulzura. Ideal para climas cálidos y días largos.",
+      "liquid": ["#C7C24A", "#6E6B23"]
+    },
+    {
+      "id": "musc-eternel", "name": "Musc Éternel", "house": "VELMONT", "slug": "musc-eternel",
+      "gender": "mujer", "price": 215000,
+      "family": "dulce", "profile": { "dulce": 4, "fresco": 1, "amaderado": 1, "intenso": 3, "citrico": 0, "oriental": 2, "especiado": 0 },
+      "personality": ["sofisticado", "dulce", "seductor"], "occasion": ["cita", "evento", "noche"], "intensity": "media",
+      "notes": ["Almizcle", "Vainilla", "Flor de loto"],
+      "description": "Almizcle limpio envuelto en vainilla suave. Se queda en la piel, no en el aire.",
+      "liquid": ["#E4D6D9", "#9C838C"]
+    },
+    {
+      "id": "bois-de-nuit", "name": "Bois de Nuit", "house": "VELMONT", "slug": "bois-de-nuit",
+      "gender": "hombre", "price": 240000, "featured": true,
+      "family": "amaderado", "profile": { "dulce": 1, "fresco": 0, "amaderado": 5, "intenso": 5, "citrico": 0, "oriental": 3, "especiado": 2 },
+      "personality": ["misterioso", "intenso", "seductor"], "occasion": ["noche", "evento"], "intensity": "intensa",
+      "notes": ["Oud", "Ciprés negro", "Ámbar"],
+      "description": "La pieza más oscura de VELMONT: madera de oud y ámbar para entradas que se recuerdan.",
+      "liquid": ["#2E2723", "#120E0C"]
+    }
+  ]
+}

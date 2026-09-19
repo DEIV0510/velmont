@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-title>Perfume — VELMONT</title>
+<meta name="description" data-meta-description content="Descubre esta fragancia VELMONT.">
+<link rel="icon" href="assets/img/logo/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/img/logo/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<style>
+  .pdp { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-8); align-items: start; }
+  .pdp__stage, .pdp__info { min-width: 0; }
+  .pdp__stage { position: sticky; top: calc(var(--header-h) + var(--sp-6)); display: flex; align-items: center; justify-content: center; aspect-ratio: 4/5; background: var(--surface-alt); border-radius: var(--radius-lg); }
+  .pdp__stage svg { width: 42%; }
+  .pdp__breadcrumb { font-size: var(--fs-label); color: var(--on-surface-dim); margin-bottom: var(--sp-5); }
+  .pdp__family { font-size: var(--fs-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--gold-deep); }
+  .pdp__name { margin-top: var(--sp-3); }
+  .pdp__price { font-family: var(--font-display); font-size: 1.8rem; margin-top: var(--sp-3); }
+  .pdp__desc { margin-top: var(--sp-4); }
+  .pdp__facts { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-5); }
+  .pdp__fact { border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; font-size: var(--fs-small); text-transform: capitalize; }
+  .pdp__cta { margin-top: var(--sp-6); display: flex; gap: var(--sp-3); flex-wrap: wrap; }
+  .pdp__cta .btn { flex: 1 1 200px; }
+  .pdp__notes { margin-top: var(--sp-7); }
+  .pdp__notes ul { display: flex; gap: var(--sp-3); flex-wrap: wrap; margin-top: var(--sp-3); }
+  .pdp__notes li { border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+  .pdp__profile { margin-top: var(--sp-8); }
+  @media (max-width: 860px) {
+    .pdp { grid-template-columns: 1fr; }
+    .pdp__stage { position: static; aspect-ratio: 5/4; }
+  }
+</style>
+</head>
+<body data-header-theme="light">
+
+<header class="site-header" data-header>
+  <div class="container site-header__inner">
+    <nav class="site-header__nav">
+      <a href="/collection.html" class="link-underline">Perfumes</a>
+      <a href="/index.html#finder" class="link-underline">Encuentra tu perfume</a>
+      <a href="/index.html#ofertas" class="link-underline">Ofertas</a>
+      <a href="/index.html#marcas" class="link-underline">Marcas</a>
+      <a href="/index.html#contacto" class="link-underline">Contacto</a>
+    </nav>
+    <a href="/" class="site-header__logo"><img src="assets/img/logo/velmont-wordmark.png" alt="VELMONT"></a>
+    <div class="site-header__actions">
+      <button class="icon-btn" data-search-open aria-label="Buscar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+      <button class="icon-btn" data-favorites-open aria-label="Favoritos">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 20s-7-4.4-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 5c-2.5 4.6-9.5 9-9.5 9Z"/></svg>
+        <span class="cart-badge is-hidden" data-favorites-count>0</span>
+      </button>
+      <button class="icon-btn" data-cart-open aria-label="Carrito">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 4.5 2H2"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor" stroke="none"/><circle cx="17" cy="20" r="1.4" fill="currentColor" stroke="none"/></svg>
+        <span class="cart-badge is-hidden" data-cart-count>0</span>
+      </button>
+      <button class="icon-btn nav-toggle" data-nav-toggle aria-label="Abrir menú" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="nav-panel" data-nav-panel>
+  <button class="icon-btn nav-panel__close" data-nav-toggle aria-label="Cerrar menú">&times;</button>
+  <nav class="nav-panel__links">
+    <a href="/collection.html">Perfumes</a>
+    <a href="/index.html#finder">Encuentra tu perfume</a>
+    <a href="/index.html#ofertas">Ofertas</a>
+    <a href="/index.html#marcas">Marcas</a>
+    <a href="/index.html#contacto">Contacto</a>
+    <button type="button" data-favorites-open>Favoritos</button>
+  </nav>
+</div>
+
+<main>
+  <section class="section" data-product-root>
+    <div class="container">
+      <p class="pdp__breadcrumb">
+        <a href="/collection.html" class="link-underline">Perfumes</a> / <span data-crumb-name></span>
+      </p>
+      <div class="pdp">
+        <div class="pdp__stage" data-pdp-stage></div>
+        <div class="pdp__info">
+          <p class="pdp__family" data-pdp-family></p>
+          <h1 class="h-section pdp__name" data-pdp-name></h1>
+          <p class="pdp__price gold-text" data-pdp-price></p>
+          <p class="lede pdp__desc" data-pdp-desc></p>
+          <div class="pdp__facts" data-pdp-facts></div>
+          <div class="pdp__cta">
+            <button class="btn btn--primary" data-pdp-add>Agregar al carrito</button>
+            <button class="btn btn--ghost" data-pdp-fav>Guardar en favoritos</button>
+          </div>
+          <div class="pdp__notes">
+            <p class="eyebrow">Notas</p>
+            <ul data-pdp-notes></ul>
+          </div>
+          <div class="pdp__profile">
+            <p class="eyebrow">¿Te gustará este perfume?</p>
+            <div class="profile-bars" data-pdp-profile style="margin-top:16px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-surface="light" style="padding-top:0">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>Cross-selling</p>
+        <h2 class="h-section" data-reveal>También podría gustarte</h2>
+      </div>
+      <div class="product-grid" data-cross-sell></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <img src="assets/img/logo/velmont-wordmark.png" alt="VELMONT">
+        <p>Perfumes premium seleccionados para acompañar tu identidad, con envíos a todo Colombia.</p>
+      </div>
+      <div>
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="/collection.html" class="link-underline">Perfumes</a></li>
+          <li><a href="/index.html#finder" class="link-underline">Encuentra tu perfume</a></li>
+          <li><a href="/index.html#ofertas" class="link-underline">Ofertas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="#" class="link-underline">Envíos</a></li>
+          <li><a href="#" class="link-underline">Cambios y devoluciones</a></li>
+          <li><a href="#" class="link-underline">Preguntas frecuentes</a></li>
+        </ul>
+      </div>
+      <div id="contacto">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="#" class="link-underline">WhatsApp</a></li>
+          <li><a href="#" class="link-underline">Instagram</a></li>
+          <li><a href="#" class="link-underline">hola@velmont.co</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <span>© 2026 VELMONT Fragances. Todos los derechos reservados.</span>
+      <span>Envíos a toda Colombia · Pagos seguros</span>
+    </div>
+  </div>
+</footer>
+
+<div data-cart-root></div>
+<div data-favorites-root></div>
+<div data-search-root></div>
+<div data-assistant-root></div>
+
+<script type="module" src="assets/js/product.js"></script>
+</body>
+</html>

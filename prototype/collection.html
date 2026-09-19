@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perfumes — Colección VELMONT</title>
+<meta name="description" content="Explora la colección completa de fragancias VELMONT: hombre, mujer y unisex, filtradas por familia olfativa.">
+<link rel="canonical" href="/collection.html">
+<link rel="icon" href="assets/img/logo/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/img/logo/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "VELMONT", "item": "/" },
+    { "@type": "ListItem", "position": 2, "name": "Perfumes", "item": "/collection.html" }
+  ]
+}
+</script>
+</head>
+<body data-header-theme="light">
+
+<header class="site-header" data-header>
+  <div class="container site-header__inner">
+    <nav class="site-header__nav">
+      <a href="/collection.html" class="link-underline">Perfumes</a>
+      <a href="/index.html#finder" class="link-underline">Encuentra tu perfume</a>
+      <a href="/index.html#ofertas" class="link-underline">Ofertas</a>
+      <a href="/index.html#marcas" class="link-underline">Marcas</a>
+      <a href="/index.html#contacto" class="link-underline">Contacto</a>
+    </nav>
+    <a href="/" class="site-header__logo"><img src="assets/img/logo/velmont-wordmark.png" alt="VELMONT"></a>
+    <div class="site-header__actions">
+      <button class="icon-btn" data-search-open aria-label="Buscar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+      <button class="icon-btn" data-favorites-open aria-label="Favoritos">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 20s-7-4.4-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 5c-2.5 4.6-9.5 9-9.5 9Z"/></svg>
+        <span class="cart-badge is-hidden" data-favorites-count>0</span>
+      </button>
+      <button class="icon-btn" data-cart-open aria-label="Carrito">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 4.5 2H2"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor" stroke="none"/><circle cx="17" cy="20" r="1.4" fill="currentColor" stroke="none"/></svg>
+        <span class="cart-badge is-hidden" data-cart-count>0</span>
+      </button>
+      <button class="icon-btn nav-toggle" data-nav-toggle aria-label="Abrir menú" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="nav-panel" data-nav-panel>
+  <button class="icon-btn nav-panel__close" data-nav-toggle aria-label="Cerrar menú">&times;</button>
+  <nav class="nav-panel__links">
+    <a href="/collection.html">Perfumes</a>
+    <a href="/index.html#finder">Encuentra tu perfume</a>
+    <a href="/index.html#ofertas">Ofertas</a>
+    <a href="/index.html#marcas">Marcas</a>
+    <a href="/index.html#contacto">Contacto</a>
+    <button type="button" data-favorites-open>Favoritos</button>
+  </nav>
+</div>
+
+<main>
+  <section class="section" style="padding-bottom:0">
+    <div class="container">
+      <p class="eyebrow" data-reveal>Catálogo completo</p>
+      <h1 class="h-section" data-reveal>Descubre VELMONT</h1>
+      <p class="lede" style="margin-top:12px" data-reveal>Cada fragancia, organizada por género y familia olfativa. Encuentra la tuya o déjate sorprender.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="filter-bar" data-filter-bar></div>
+      <p class="lede" data-empty-state style="display:none">No hay fragancias con esos filtros todavía. Prueba otra combinación.</p>
+      <div class="product-grid" data-collection-grid></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <img src="assets/img/logo/velmont-wordmark.png" alt="VELMONT">
+        <p>Perfumes premium seleccionados para acompañar tu identidad, con envíos a todo Colombia.</p>
+      </div>
+      <div>
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="/collection.html" class="link-underline">Perfumes</a></li>
+          <li><a href="/index.html#finder" class="link-underline">Encuentra tu perfume</a></li>
+          <li><a href="/index.html#ofertas" class="link-underline">Ofertas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="#" class="link-underline">Envíos</a></li>
+          <li><a href="#" class="link-underline">Cambios y devoluciones</a></li>
+          <li><a href="#" class="link-underline">Preguntas frecuentes</a></li>
+        </ul>
+      </div>
+      <div id="contacto">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="#" class="link-underline">WhatsApp</a></li>
+          <li><a href="#" class="link-underline">Instagram</a></li>
+          <li><a href="#" class="link-underline">hola@velmont.co</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <span>© 2026 VELMONT Fragances. Todos los derechos reservados.</span>
+      <span>Envíos a toda Colombia · Pagos seguros</span>
+    </div>
+  </div>
+</footer>
+
+<div data-cart-root></div>
+<div data-favorites-root></div>
+<div data-search-root></div>
+<div data-assistant-root></div>
+
+<script type="module" src="assets/js/collection.js"></script>
+</body>
+</html>

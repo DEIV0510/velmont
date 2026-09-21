@@ -1,18 +1,14 @@
-<section class="section" data-surface="light" style="padding-top:0">
-  <div class="container">
-    <div class="section-head">
-      <p class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
-      <h2 class="h-section" data-reveal>{{ section.settings.title }}</h2>
-    </div>
-    <div class="product-grid" data-cross-sell></div>
+<section class="band band--tight" data-tone="light">
+  <div class="wrap" style="margin-bottom:clamp(40px,5vw,72px)">
+    <span class="section-index" data-reveal>{{ section.settings.title }}</span>
   </div>
+  <div class="grid-quiet" data-related></div>
 </section>
 
 {% schema %}
 {
   "name": "También podría gustarte",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "Cross-selling" },
     { "type": "text", "id": "title", "label": "Título", "default": "También podría gustarte" }
   ]
 }

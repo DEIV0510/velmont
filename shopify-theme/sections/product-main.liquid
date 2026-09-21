@@ -1,38 +1,35 @@
 <script type="application/ld+json">{{ product | structured_data }}</script>
 
-<section class="section" data-product-root data-product-slug="{{ product.handle }}">
-  <div class="container">
-    <p class="pdp__breadcrumb">
-      <a href="{{ routes.all_products_collection_url }}" class="link-underline">Perfumes</a> / <span data-crumb-name>{{ product.title }}</span>
-    </p>
-    <div class="pdp">
-      <div class="pdp__stage" data-pdp-stage data-reveal="fade">
-        {%- if product.featured_image -%}
-          {{ product.featured_image | image_url: width: 1000 | image_tag: loading: 'eager', widths: '500,750,1000', alt: product.featured_image.alt | default: product.title }}
-        {%- endif -%}
-      </div>
-      <div class="pdp__info" data-reveal="fade">
-        <p class="pdp__family" data-pdp-family>{{ product.vendor }}{% if product.type != blank %} · {{ product.type }}{% endif %}</p>
-        <h1 class="h-section pdp__name" data-pdp-name>{{ product.title }}</h1>
-        <p class="pdp__price gold-text" data-pdp-price>{{ product.selected_or_first_available_variant.price | money }}</p>
-        <p class="lede pdp__desc" data-pdp-desc>{{ product.metafields.velmont.short_description.value | default: product.description | strip_html | truncate: 220 }}</p>
-        <div class="pdp__facts" data-pdp-facts></div>
-        <div class="pdp__cta">
-          <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" id="velmont-pdp-form">
-            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-            <button type="submit" class="btn btn--primary" data-pdp-add>Agregar al carrito</button>
-          </form>
-          <button type="button" class="btn btn--ghost" data-pdp-fav>Guardar en favoritos</button>
-        </div>
-        <div class="pdp__notes">
-          <p class="eyebrow">Notas</p>
-          <ul data-pdp-notes></ul>
-        </div>
-        <div class="pdp__profile">
-          <p class="eyebrow">¿Te gustará este perfume?</p>
-          <div class="profile-bars" data-pdp-profile style="margin-top:16px"></div>
-        </div>
-      </div>
+<section class="pdp" data-product-root data-product-slug="{{ product.handle }}">
+  <div class="pdp__stage" data-tone="dark" data-pdp-stage>
+    {%- if product.featured_image -%}
+      {{ product.featured_image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '600,900,1400', alt: product.featured_image.alt | default: product.title }}
+    {%- endif -%}
+  </div>
+  <div class="pdp__info">
+    <span class="label" data-pdp-house>{{ product.vendor }}</span>
+    <h1 class="display pdp__name" data-pdp-name>{{ product.title }}</h1>
+    <p class="pdp__price" data-pdp-price>{{ product.selected_or_first_available_variant.price | money }}</p>
+    <p class="lede" data-pdp-desc>{{ product.metafields.velmont.short_description.value | default: product.description | strip_html | truncate: 220 }}</p>
+
+    <div class="pdp__cta">
+      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" class="act act--solid" data-pdp-add>Añadir a la bolsa</button>
+      </form>
+      <button type="button" class="link" data-pdp-save>Guardar</button>
+    </div>
+
+    <div class="spec">
+      <div class="spec__row"><span class="label">Familia</span><span class="spec__val" data-pdp-family></span></div>
+      <div class="spec__row"><span class="label">Intensidad</span><span class="spec__val" data-pdp-intensity></span></div>
+      <div class="spec__row"><span class="label">Ideal para</span><span class="spec__val" data-pdp-occasion></span></div>
+      <div class="spec__row"><span class="label">Notas</span><span class="spec__val" data-pdp-notes></span></div>
+    </div>
+
+    <div class="spec">
+      <span class="label">Perfil olfativo</span>
+      <div class="profile" data-pdp-profile style="margin-top:8px"></div>
     </div>
   </div>
 </section>
@@ -41,7 +38,7 @@
 {
   "name": "Ficha de producto",
   "settings": [
-    { "type": "paragraph", "content": "Los datos base (nombre, precio, imagen, descripción) vienen del producto de Shopify. Notas y el perfil olfativo vienen de los metafields del namespace 'velmont' (ver docs/ADMIN.md)." }
+    { "type": "paragraph", "content": "Nombre, precio, imagen y descripción vienen del producto de Shopify. Familia, intensidad y ocasión salen de los tags; notas y perfil olfativo de los metafields 'velmont' (ver docs/ADMIN.md)." }
   ]
 }
 {% endschema %}

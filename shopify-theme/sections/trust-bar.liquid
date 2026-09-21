@@ -1,32 +1,25 @@
-<section class="trust-bar">
-  <div class="container trust-bar__inner">
+<section class="thread" data-tone="light">
+  <div class="thread__in">
     {%- for block in section.blocks -%}
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
-        {{ block.settings.text }}
-      </div>
+      <span class="label">{{ block.settings.text }}</span>
     {%- endfor -%}
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Barra de confianza",
+  "name": "Hilo de confianza",
   "blocks": [
-    {
-      "type": "item",
-      "name": "Elemento",
-      "settings": [{ "type": "text", "id": "text", "label": "Texto", "default": "Envíos a todo Colombia" }]
-    }
+    { "type": "item", "name": "Texto", "settings": [{ "type": "text", "id": "text", "label": "Texto", "default": "Envíos a todo Colombia" }] }
   ],
   "default": {
     "blocks": [
       { "type": "item", "settings": { "text": "Envíos a todo Colombia" } },
-      { "type": "item", "settings": { "text": "Compra segura" } },
-      { "type": "item", "settings": { "text": "Productos seleccionados" } },
-      { "type": "item", "settings": { "text": "Atención personalizada" } }
+      { "type": "item", "settings": { "text": "Pago seguro" } },
+      { "type": "item", "settings": { "text": "Selección curada" } },
+      { "type": "item", "settings": { "text": "Asesoría personal" } }
     ]
   },
-  "presets": [{ "name": "Barra de confianza" }]
+  "presets": [{ "name": "Hilo de confianza" }]
 }
 {% endschema %}

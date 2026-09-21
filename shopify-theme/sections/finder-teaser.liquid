@@ -1,21 +1,25 @@
-<section class="section finder-teaser" id="finder">
-  <div class="container">
-    <p class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
-    <h2 class="h-section finder-teaser__title" data-reveal>{{ section.settings.title }}</h2>
-    <p class="lede finder-teaser__lede" data-reveal>{{ section.settings.subtitle }}</p>
-    <a href="#finder-quiz" class="btn btn--primary finder-teaser__cta" data-reveal>{{ section.settings.cta_text }}</a>
+<section class="band finder-gate grain" data-tone="dark" id="descubre">
+  <div class="finder-gate__in">
+    <span class="section-index" data-reveal>{{ section.settings.index_label }}</span>
+    <h2 class="display" data-reveal style="max-width:14ch">
+      <span class="line-mask"><span>{{ section.settings.line_one }}</span></span>
+      <span class="line-mask" style="--reveal-delay:100ms"><span><em>{{ section.settings.line_two }}</em></span></span>
+    </h2>
+    <p class="lede" data-reveal style="--reveal-delay:220ms">{{ section.settings.body }}</p>
+    <button class="act" data-finder-open data-reveal style="--reveal-delay:320ms">{{ section.settings.cta }}</button>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Invitación al Finder",
+  "name": "Descubre tu firma",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "Perfume finder" },
-    { "type": "text", "id": "title", "label": "Título", "default": "No elijas a ciegas." },
-    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Cuéntanos qué buscas. Nosotros encontramos la fragancia." },
-    { "type": "text", "id": "cta_text", "label": "Texto del botón", "default": "Encontrar mi perfume" }
+    { "type": "text", "id": "index_label", "label": "Índice", "default": "03 — Descubre" },
+    { "type": "text", "id": "line_one", "label": "Línea 1", "default": "¿Qué define" },
+    { "type": "text", "id": "line_two", "label": "Línea 2 (cursiva)", "default": "tu presencia?" },
+    { "type": "textarea", "id": "body", "label": "Párrafo", "default": "Cuatro preguntas. Una firma olfativa. Sin catálogos infinitos ni filtros que no dicen nada." },
+    { "type": "text", "id": "cta", "label": "Botón", "default": "Comenzar" }
   ],
-  "presets": [{ "name": "Invitación al Finder" }]
+  "presets": [{ "name": "Descubre tu firma" }]
 }
 {% endschema %}

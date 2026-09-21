@@ -8,58 +8,78 @@
 <link rel="icon" href="assets/img/logo/favicon-32.png" sizes="32x32">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/tokens.css">
 <link rel="stylesheet" href="assets/css/base.css">
 <link rel="stylesheet" href="assets/css/components.css">
-<style>
-  body { background: var(--paper); }
-  .checkout-header { display: flex; align-items: center; justify-content: center; padding: var(--sp-5) 0; border-bottom: 1px solid var(--line); }
-  .checkout-header img { height: 28px; }
-  .checkout { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: var(--sp-8); padding-block: var(--sp-8); }
-  .checkout__form, .checkout__summary { min-width: 0; }
-  .checkout__form { display: flex; flex-direction: column; gap: var(--sp-5); }
-  .form-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-  .form-field label { font-size: var(--fs-label); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--on-surface-dim); }
-  .form-field input, .form-field select { width: 100%; min-width: 0; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 14px; background: var(--surface); }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
-  @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
-  .checkout__summary { background: var(--surface-alt); border-radius: var(--radius-lg); padding: var(--sp-6); align-self: start; position: sticky; top: var(--sp-6); }
-  .summary-line { display: grid; grid-template-columns: 48px 1fr auto; gap: var(--sp-3); align-items: center; margin-bottom: var(--sp-4); }
-  .summary-line__thumb { width: 48px; }
-  .summary-totals { border-top: 1px solid var(--line); margin-top: var(--sp-5); padding-top: var(--sp-4); display: flex; flex-direction: column; gap: 8px; font-size: var(--fs-small); }
-  .summary-totals .row-total { font-family: var(--font-display); font-size: 1.3rem; padding-top: var(--sp-2); border-top: 1px solid var(--line); }
-  .badge-note { font-size: 12px; color: var(--on-surface-dim); margin-top: var(--sp-5); text-align: center; }
-  @media (max-width: 860px) { .checkout { grid-template-columns: 1fr; } .checkout__summary { position: static; } }
-</style>
 </head>
-<body>
-  <div class="checkout-header">
-    <a href="/"><img src="assets/img/logo/velmont-wordmark.png" alt="VELMONT"></a>
-  </div>
-  <main class="container checkout">
-    <section class="checkout__form">
-      <h1 class="h-card">Contacto y envío</h1>
-      <div class="form-field"><label>Correo electrónico</label><input type="email" placeholder="tucorreo@ejemplo.com"></div>
-      <div class="form-row">
-        <div class="form-field"><label>Nombre</label><input type="text" placeholder="Nombre"></div>
-        <div class="form-field"><label>Apellido</label><input type="text" placeholder="Apellido"></div>
+<body style="background:var(--ivory); color:var(--ink)">
+
+  <header style="display:flex;justify-content:center;padding:var(--s6) 0;border-bottom:1px solid var(--hairline)">
+    <a href="/"><img src="assets/img/logo/velmont-wordmark.png" alt="VELMONT" style="height:24px"></a>
+  </header>
+
+  <main class="ck">
+    <section class="ck__form">
+      <div>
+        <span class="section-index">01 — Contacto</span>
       </div>
-      <div class="form-field"><label>Dirección</label><input type="text" placeholder="Calle, número, barrio"></div>
-      <div class="form-row">
-        <div class="form-field"><label>Ciudad</label><input type="text" placeholder="Ciudad"></div>
-        <div class="form-field"><label>Departamento</label><input type="text" placeholder="Departamento"></div>
+      <div class="field">
+        <label class="label" for="mail">Correo electrónico</label>
+        <input id="mail" type="email" autocomplete="email" placeholder="tucorreo@ejemplo.com">
       </div>
-      <h1 class="h-card" style="margin-top:16px">Método de pago</h1>
-      <div class="form-field"><label>Tarjeta o pasarela</label><select><option>PSE</option><option>Tarjeta de crédito/débito</option><option>Nequi</option></select></div>
-      <button class="btn btn--primary btn--block" disabled title="Vista previa de continuidad visual — sin pasarela real conectada">Pagar ahora</button>
-      <p class="badge-note">Esta pantalla es una vista previa de continuidad visual del checkout. La pasarela de pago real se conecta en Shopify.</p>
+      <div class="field-row">
+        <div class="field">
+          <label class="label" for="nom">Nombre</label>
+          <input id="nom" type="text" autocomplete="given-name">
+        </div>
+        <div class="field">
+          <label class="label" for="ape">Apellido</label>
+          <input id="ape" type="text" autocomplete="family-name">
+        </div>
+      </div>
+
+      <div style="margin-top:var(--s6)">
+        <span class="section-index">02 — Envío</span>
+      </div>
+      <div class="field">
+        <label class="label" for="dir">Dirección</label>
+        <input id="dir" type="text" autocomplete="street-address">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label class="label" for="ciu">Ciudad</label>
+          <input id="ciu" type="text" autocomplete="address-level2">
+        </div>
+        <div class="field">
+          <label class="label" for="dep">Departamento</label>
+          <input id="dep" type="text" autocomplete="address-level1">
+        </div>
+      </div>
+
+      <div style="margin-top:var(--s6)">
+        <span class="section-index">03 — Pago</span>
+      </div>
+      <div class="field">
+        <label class="label" for="pago">Método</label>
+        <select id="pago">
+          <option>PSE</option>
+          <option>Tarjeta de crédito o débito</option>
+          <option>Nequi</option>
+        </select>
+      </div>
+
+      <button class="act act--solid" disabled style="justify-content:center;margin-top:var(--s5)">Pagar</button>
+      <p class="fine">Esta pantalla es una vista previa de continuidad visual. La pasarela de pago real se conecta del lado de Shopify.</p>
     </section>
-    <aside class="checkout__summary">
-      <div data-summary-lines></div>
-      <div class="summary-totals" data-summary-totals></div>
+
+    <aside class="ck__summary">
+      <span class="label">Tu selección</span>
+      <div data-ck-lines style="margin-top:var(--s4)"></div>
+      <div class="ck__totals" data-ck-totals></div>
     </aside>
   </main>
-  <script type="module" src="assets/js/checkout-preview.js"></script>
+
+<script type="module" src="assets/js/checkout-preview.js"></script>
 </body>
 </html>

@@ -1,260 +1,246 @@
-// VELMONT — buscador inteligente + Asesor VELMONT.
-// Ambos comparten un interprete de texto libre por palabras clave (reglas),
-// NO es un modelo de lenguaje real. Se deja preparado para conectar un
-// backend de IA despues (ver interpretQuery/searchProducts): el resto de la
-// UI solo consume la lista de resultados, sin acoplarse a como se calculo.
+// VELMONT — buscador y Asesor. Interpretan texto libre por palabras clave
+// contra los atributos del catalogo. NO hay un modelo de lenguaje detras:
+// interpretQuery/searchProducts son el unico punto a reemplazar el dia que
+// se conecte un backend de IA real.
 import { getProducts, bottleSVG, formatCOP } from './catalog.js';
 
 const KEYWORD_MAP = {
   gender: {
-    hombre: ['hombre', 'masculino', 'el', 'caballero'],
-    mujer: ['mujer', 'femenino', 'ella', 'dama'],
+    hombre: ['hombre', 'masculino', 'caballero', 'para el', 'para él'],
+    mujer: ['mujer', 'femenino', 'dama', 'para ella'],
     unisex: ['unisex'],
   },
   intensity: {
-    intensa: ['fuerte', 'intenso', 'intensa', 'potente', 'marcado'],
+    intensa: ['fuerte', 'intenso', 'intensa', 'potente', 'marcado', 'duradero'],
     suave: ['suave', 'ligero', 'ligera', 'discreto', 'sutil'],
     media: ['medio', 'media', 'moderado'],
   },
   family: {
-    dulce: ['dulce', 'dulces', 'goloso'],
-    fresco: ['fresco', 'fresca', 'ligero', 'veraniego'],
-    amaderado: ['amaderado', 'madera', 'maderas'],
-    citrico: ['citrico', 'cítrico', 'citricos', 'limon', 'limón', 'naranja'],
-    oriental: ['oriental', 'especiado', 'especias'],
-    especiado: ['especiado', 'especias', 'picante'],
-    floral: ['floral', 'flores', 'flor'],
+    dulce: ['dulce', 'dulces', 'goloso', 'vainilla'],
+    fresco: ['fresco', 'fresca', 'veraniego', 'limpio'],
+    amaderado: ['amaderado', 'madera', 'maderas', 'sandalo', 'sándalo'],
+    citrico: ['citrico', 'cítrico', 'citricos', 'limon', 'limón', 'naranja', 'bergamota'],
+    oriental: ['oriental', 'ambar', 'ámbar', 'incienso'],
+    especiado: ['especiado', 'especias', 'picante', 'pimienta'],
+    floral: ['floral', 'flores', 'flor', 'rosa', 'jazmin', 'jazmín'],
   },
   personality: {
     elegante: ['elegante', 'elegancia', 'sobrio'],
-    seductor: ['seductor', 'sensual', 'seduccion', 'seducción'],
-    misterioso: ['misterioso', 'misterio', 'enigmatico'],
+    seductor: ['seductor', 'sensual', 'seduccion', 'seducción', 'irresistible'],
+    misterioso: ['misterioso', 'misterio', 'enigmatico', 'enigmático'],
     sofisticado: ['sofisticado', 'refinado'],
-    clasico: ['clasico', 'clásico', 'tradicional'],
+    clasico: ['clasico', 'clásico', 'tradicional', 'atemporal'],
   },
   occasion: {
-    cita: ['cita', 'date'],
-    noche: ['noche', 'nocturno'],
+    cita: ['cita', 'date', 'conquistar'],
+    noche: ['noche', 'nocturno', 'fiesta'],
     oficina: ['oficina', 'trabajo', 'laboral'],
-    diario: ['diario', 'diariamente', 'dia a dia', 'cotidiano'],
-    evento: ['evento', 'fiesta', 'gala'],
-    vacaciones: ['vacaciones', 'viaje', 'playa'],
+    diario: ['diario', 'diariamente', 'dia a dia', 'día a día', 'cotidiano'],
+    evento: ['evento', 'gala', 'boda', 'matrimonio'],
+    vacaciones: ['vacaciones', 'viaje', 'playa', 'calor'],
   },
 };
 
 export function interpretQuery(text) {
   const t = (text || '').toLowerCase();
-  const filters = { gender: null, intensity: null, family: null, personality: null, occasion: null, regalo: /regal/.test(t) };
+  const f = { gender: null, intensity: null, family: null, personality: null, occasion: null, regalo: /regal/.test(t) };
   for (const [field, groups] of Object.entries(KEYWORD_MAP)) {
     for (const [value, words] of Object.entries(groups)) {
-      if (words.some(w => t.includes(w))) { filters[field] = value; break; }
+      if (words.some(w => t.includes(w))) { f[field] = value; break; }
     }
   }
-  return filters;
+  return f;
 }
 
-function scoreByFilters(product, filters) {
-  let score = 0;
-  let matchedAny = false;
-  if (filters.gender) {
-    if (product.gender !== filters.gender && product.gender !== 'unisex') return -1;
-    matchedAny = true;
+function scoreByFilters(p, f) {
+  let s = 0, matched = false;
+  if (f.gender) {
+    if (p.gender !== f.gender && p.gender !== 'unisex') return -1;
+    matched = true;
   }
-  if (filters.family && product.family === filters.family) { score += 3; matchedAny = true; }
-  if (filters.personality && product.personality?.includes(filters.personality)) { score += 3; matchedAny = true; }
-  if (filters.occasion && product.occasion?.includes(filters.occasion)) { score += 2; matchedAny = true; }
-  if (filters.intensity && product.intensity === filters.intensity) { score += 2; matchedAny = true; }
-  if (filters.regalo && product.featured) { score += 1; matchedAny = true; }
-  return matchedAny ? score : -1;
+  if (f.family && p.family === f.family) { s += 3; matched = true; }
+  if (f.personality && p.personality?.includes(f.personality)) { s += 3; matched = true; }
+  if (f.occasion && p.occasion?.includes(f.occasion)) { s += 2; matched = true; }
+  if (f.intensity && p.intensity === f.intensity) { s += 2; matched = true; }
+  if (f.regalo && p.featured) { s += 1; matched = true; }
+  return matched ? s : -1;
 }
 
 export async function searchProducts(text, limit = 6) {
   const products = await getProducts();
   const filters = interpretQuery(text);
-  let scored = products.map(p => ({ product: p, score: scoreByFilters(p, filters) })).filter(s => s.score >= 0);
-
-  if (scored.length === 0) {
-    // sin coincidencia por reglas: degradamos con honestidad a destacados,
-    // nunca fingimos una comprension que no ocurrio.
+  const scored = products.map(p => ({ p, s: scoreByFilters(p, filters) })).filter(x => x.s >= 0);
+  if (!scored.length) {
+    // Degradamos con honestidad: no fingimos haber entendido.
     return { filters, fallback: true, results: products.filter(p => p.featured).slice(0, limit) };
   }
-  scored.sort((a, b) => b.score - a.score);
-  return { filters, fallback: false, results: scored.slice(0, limit).map(s => s.product) };
+  scored.sort((a, b) => b.s - a.s);
+  return { filters, fallback: false, results: scored.slice(0, limit).map(x => x.p) };
 }
 
-// ---------- Buscador (overlay de pantalla completa) ----------
-export function mountSearchOverlay(root) {
-  root.innerHTML = `
-    <div class="search-overlay" data-search-overlay aria-hidden="true">
-      <div class="search-overlay__panel">
-        <button class="icon-btn search-overlay__close" data-search-close aria-label="Cerrar buscador">&times;</button>
-        <p class="search-overlay__label">¿QUÉ PERFUME ESTÁS BUSCANDO?</p>
-        <input type="text" class="search-overlay__input" placeholder="Ej. algo dulce para una cita…" data-search-input autocomplete="off">
-        <div class="search-overlay__results" data-search-results></div>
+function miniResult(p) {
+  return `
+    <a class="piece" href="${p.url || `/product.html?slug=${p.slug}`}">
+      <div class="piece__stage">${p.image ? `<img src="${p.image}" alt="${p.name}">` : bottleSVG(p)}</div>
+      <div class="piece__meta">
+        <h3 class="piece__name" style="font-size:1rem">${p.name}</h3>
+        <span class="price">${formatCOP(p.price)}</span>
       </div>
-    </div>
-  `;
-  const overlay = root.querySelector('[data-search-overlay]');
+    </a>`;
+}
+
+// ---------- Buscador ----------
+export function mountSearchOverlay(root) {
+  if (!root) return;
+  root.innerHTML = `
+    <div class="search" data-search data-tone="dark" aria-hidden="true">
+      <button class="icon-btn search__close" data-search-close aria-label="Cerrar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 5l14 14M19 5L5 19"/></svg>
+      </button>
+      <span class="label">¿Qué fragancia buscas?</span>
+      <input type="text" data-search-input placeholder="algo intenso para la noche…" autocomplete="off">
+      <div class="search__out" data-search-out></div>
+      <p class="label search__note" data-search-note hidden></p>
+    </div>`;
+
+  const el = root.querySelector('[data-search]');
   const input = root.querySelector('[data-search-input]');
-  const results = root.querySelector('[data-search-results]');
+  const out = root.querySelector('[data-search-out]');
+  const note = root.querySelector('[data-search-note]');
 
-  root.querySelector('[data-search-close]').addEventListener('click', closeSearch);
-  overlay.addEventListener('click', e => { if (e.target === overlay) closeSearch(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSearch(); });
+  const open = () => {
+    el.classList.add('open');
+    el.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('no-scroll');
+    setTimeout(() => input.focus(), 80);
+  };
+  const close = () => {
+    el.classList.remove('open');
+    el.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('no-scroll');
+  };
+  root.querySelector('[data-search-close]').addEventListener('click', close);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && el.classList.contains('open')) close(); });
+  document.querySelectorAll('[data-search-open]').forEach(b => b.addEventListener('click', open));
 
-  let debounce;
+  let t;
   input.addEventListener('input', () => {
-    clearTimeout(debounce);
-    debounce = setTimeout(runSearch, 220);
+    clearTimeout(t);
+    t = setTimeout(run, 240);
   });
 
-  async function runSearch() {
+  async function run() {
     const q = input.value.trim();
-    if (q.length < 2) { results.innerHTML = ''; return; }
-    const { results: products, fallback } = await searchProducts(q, 6);
-    results.innerHTML = `
-      ${fallback ? '<p class="search-overlay__fallback">No encontramos una coincidencia exacta — estas son fragancias destacadas de VELMONT:</p>' : ''}
-      <ul class="search-results-grid">
-        ${products.map(p => `
-          <li>
-            <a href="/product.html?slug=${p.slug}" class="search-result">
-              <div class="search-result__thumb">${bottleSVG(p)}</div>
-              <span class="search-result__name">${p.name}</span>
-              <span class="search-result__price">${formatCOP(p.price)}</span>
-            </a>
-          </li>`).join('')}
-      </ul>
-    `;
+    if (q.length < 2) { out.innerHTML = ''; note.hidden = true; return; }
+    const { results, fallback } = await searchProducts(q, 6);
+    note.hidden = !fallback;
+    if (fallback) note.textContent = 'Sin coincidencia exacta — estas son las piezas más queridas de la casa';
+    out.innerHTML = results.map(miniResult).join('');
   }
-
-  function openSearch() {
-    overlay.classList.add('is-open');
-    overlay.setAttribute('aria-hidden', 'false');
-    document.documentElement.classList.add('no-scroll');
-    setTimeout(() => input.focus(), 60);
-  }
-  function closeSearch() {
-    overlay.classList.remove('is-open');
-    overlay.setAttribute('aria-hidden', 'true');
-    document.documentElement.classList.remove('no-scroll');
-  }
-
-  document.querySelectorAll('[data-search-open]').forEach(btn => btn.addEventListener('click', openSearch));
 }
 
-// ---------- Asesor VELMONT (chat privado) ----------
-const QUICK_REPLIES = [
-  'Algo intenso para la noche',
-  'Fresco para el día a día',
-  'Quiero un regalo',
-  'Ver las ofertas',
-];
+// ---------- Asesor ----------
+const CHIPS = ['Algo intenso para la noche', 'Fresco para el día', 'Es un regalo', 'Ver las ediciones'];
 
 export function mountAssistant(root) {
+  if (!root) return;
   root.innerHTML = `
-    <button class="assistant-fab" data-assistant-toggle aria-label="Abrir Asesor VELMONT">
-      <span>Asesor VELMONT</span>
-    </button>
-    <div class="assistant-panel" data-assistant-panel aria-hidden="true">
-      <header class="assistant-panel__head">
+    <button class="advisor-open" data-advisor-open aria-label="Abrir asesor"><i></i><span>Asesor</span></button>
+    <div class="advisor" data-advisor aria-hidden="true">
+      <header class="advisor__head">
         <div>
-          <p class="assistant-panel__title">Asesor VELMONT</p>
-          <p class="assistant-panel__status">En línea</p>
+          <p class="label" style="color:var(--ivory)">Asesor VELMONT</p>
+          <p class="label label--gold" style="margin-top:4px">En línea</p>
         </div>
-        <button class="icon-btn" data-assistant-close aria-label="Cerrar asesor">&times;</button>
+        <button class="icon-btn" data-advisor-close aria-label="Cerrar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 5l14 14M19 5L5 19"/></svg>
+        </button>
       </header>
-      <div class="assistant-panel__body" data-assistant-body></div>
-      <div class="assistant-panel__quick" data-assistant-quick></div>
-      <form class="assistant-panel__form" data-assistant-form>
-        <input type="text" placeholder="Escribe tu mensaje…" data-assistant-input autocomplete="off">
-        <button type="submit" aria-label="Enviar">→</button>
+      <div class="advisor__body" data-advisor-body></div>
+      <div class="advisor__chips" data-advisor-chips></div>
+      <form class="advisor__form" data-advisor-form>
+        <input type="text" placeholder="Escribe aquí…" data-advisor-input autocomplete="off">
+        <button type="submit" aria-label="Enviar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
       </form>
-    </div>
-  `;
+    </div>`;
 
-  const panel = root.querySelector('[data-assistant-panel]');
-  const body = root.querySelector('[data-assistant-body]');
-  const quick = root.querySelector('[data-assistant-quick]');
-  const form = root.querySelector('[data-assistant-form]');
-  const input = root.querySelector('[data-assistant-input]');
+  const panel = root.querySelector('[data-advisor]');
+  const body = root.querySelector('[data-advisor-body]');
+  const chips = root.querySelector('[data-advisor-chips]');
+  const form = root.querySelector('[data-advisor-form]');
+  const input = root.querySelector('[data-advisor-input]');
   let greeted = false;
 
-  root.querySelector('[data-assistant-toggle]').addEventListener('click', openPanel);
-  root.querySelector('[data-assistant-close]').addEventListener('click', closePanel);
-
-  function openPanel() {
-    panel.classList.add('is-open');
+  root.querySelector('[data-advisor-open]').addEventListener('click', () => {
+    panel.classList.add('open');
     panel.setAttribute('aria-hidden', 'false');
     if (!greeted) {
       greeted = true;
-      addBotMessage('Hola. Soy tu asesor VELMONT.');
-      addBotMessage('¿Qué tipo de fragancia estás buscando?');
-      renderQuickReplies();
+      say('Buenas. Soy tu asesor en VELMONT.');
+      say('¿Qué tipo de fragancia estás buscando?');
+      renderChips();
     }
-  }
-  function closePanel() {
-    panel.classList.remove('is-open');
+  });
+  root.querySelector('[data-advisor-close]').addEventListener('click', () => {
+    panel.classList.remove('open');
     panel.setAttribute('aria-hidden', 'true');
-  }
+  });
 
-  function addMessage(text, from) {
-    const div = document.createElement('div');
-    div.className = `assistant-msg assistant-msg--${from}`;
-    div.textContent = text;
-    body.appendChild(div);
+  function bubble(text, who) {
+    const d = document.createElement('div');
+    d.className = `msg msg--${who}`;
+    d.textContent = text;
+    body.appendChild(d);
     body.scrollTop = body.scrollHeight;
   }
-  const addBotMessage = (t) => addMessage(t, 'bot');
-  const addUserMessage = (t) => addMessage(t, 'user');
+  const say = t => bubble(t, 'bot');
 
-  function renderQuickReplies() {
-    quick.innerHTML = QUICK_REPLIES.map(q => `<button type="button" class="assistant-chip">${q}</button>`).join('');
-    quick.querySelectorAll('.assistant-chip').forEach(chip => {
-      chip.addEventListener('click', () => handleUserText(chip.textContent));
-    });
+  function renderChips() {
+    chips.innerHTML = CHIPS.map(c => `<button type="button">${c}</button>`).join('');
+    chips.querySelectorAll('button').forEach(b => b.addEventListener('click', () => handle(b.textContent)));
   }
 
-  async function handleUserText(text) {
-    addUserMessage(text);
-    quick.innerHTML = '';
+  function items(products) {
+    const w = document.createElement('div');
+    w.className = 'msg msg--bot msg--items';
+    w.innerHTML = products.map(p => `
+      <a class="advisor__item" href="${p.url || `/product.html?slug=${p.slug}`}">
+        <div>${bottleSVG(p)}</div>
+        <span>${p.name}</span>
+        <span class="price">${formatCOP(p.price)}</span>
+      </a>`).join('');
+    body.appendChild(w);
+    body.scrollTop = body.scrollHeight;
+  }
 
-    if (/oferta/i.test(text)) {
-      addBotMessage('Tenemos dos experiencias activas: MATAI 2x$450.000 y Selección VELMONT 2x$280.000. Puedes verlas en la sección de ofertas.');
-      const products = await getProducts();
-      renderProductCards(products.filter(p => p.promo).slice(0, 3));
-      renderQuickReplies();
+  async function handle(text) {
+    bubble(text, 'me');
+    chips.innerHTML = '';
+
+    if (/edici|oferta|promo/i.test(text)) {
+      say('Hay dos ediciones activas: The MATAI Edit (2 × $450.000) y el Dúo VELMONT (2 × $280.000).');
+      const all = await getProducts();
+      items(all.filter(p => p.promo).slice(0, 3));
+      renderChips();
       return;
     }
 
     const { results, fallback } = await searchProducts(text, 3);
-    if (fallback) {
-      addBotMessage('Aún no tengo una coincidencia precisa para eso, pero estas son fragancias muy queridas en VELMONT:');
-    } else {
-      addBotMessage('Con eso en mente, te recomiendo:');
-    }
-    renderProductCards(results);
-    addBotMessage('¿Quieres afinar por ocasión, intensidad o género?');
-    renderQuickReplies();
+    say(fallback
+      ? 'Todavía no tengo una coincidencia precisa para eso. Estas son piezas muy queridas de la casa:'
+      : 'Con eso en mente, te recomiendo:');
+    items(results);
+    say('¿Quieres afinar por ocasión, intensidad o género?');
+    renderChips();
   }
 
-  function renderProductCards(products) {
-    const wrap = document.createElement('div');
-    wrap.className = 'assistant-msg assistant-msg--bot assistant-msg--products';
-    wrap.innerHTML = products.map(p => `
-      <a class="assistant-product" href="/product.html?slug=${p.slug}">
-        <div class="assistant-product__thumb">${bottleSVG(p)}</div>
-        <span>${p.name}</span>
-        <span>${formatCOP(p.price)}</span>
-      </a>`).join('');
-    body.appendChild(wrap);
-    body.scrollTop = body.scrollHeight;
-  }
-
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', e => {
     e.preventDefault();
-    const text = input.value.trim();
-    if (!text) return;
+    const v = input.value.trim();
+    if (!v) return;
     input.value = '';
-    handleUserText(text);
+    handle(v);
   });
 }

@@ -1,39 +1,51 @@
-<section class="hero" data-hero-parallax data-surface="dark">
-  <div class="hero__bg" data-parallax-layer="-8"></div>
-  <div class="hero__scrim"></div>
-  <div class="hero__glow" data-parallax-layer="6"></div>
-  <div class="container hero__inner">
-    <div class="hero__copy" data-reveal>
-      <p class="eyebrow hero__eyebrow">{{ section.settings.eyebrow }}</p>
-      <h1 class="h-display hero__title">{{ section.settings.title }}</h1>
-      <p class="lede hero__lede">{{ section.settings.subtitle }}</p>
-      <div class="hero__ctas">
-        {%- if section.settings.primary_cta_text != blank -%}
-          <a href="{{ section.settings.primary_cta_url | default: '#finder' }}" class="btn btn--primary">{{ section.settings.primary_cta_text }}</a>
-        {%- endif -%}
-        {%- if section.settings.secondary_cta_text != blank -%}
-          <a href="{{ section.settings.secondary_cta_url | default: routes.all_products_collection_url }}" class="btn btn--ghost">{{ section.settings.secondary_cta_text }}</a>
-        {%- endif -%}
-      </div>
-    </div>
-    <div class="hero__stage">
-      <div class="hero__ring" data-parallax-layer="10"></div>
-      <div class="hero__bottle" id="hero-bottle" data-parallax-layer="26"></div>
+<section class="hero grain" data-hero data-tone="dark">
+  <div class="hero__texture" data-depth="-6"></div>
+  <div class="hero__pool" data-depth="10"></div>
+  <div class="hero__wordmark" aria-hidden="true">{{ section.settings.wordmark }}</div>
+
+  <div class="hero__stage" data-hero-stage data-depth="24">
+    <div data-hero-bottle></div>
+    <div class="hero__reflect" data-hero-reflect aria-hidden="true"></div>
+  </div>
+  <div class="hero__sweep" aria-hidden="true"></div>
+
+  <div class="hero__copy">
+    <span class="label hero__kicker" data-reveal>{{ section.settings.kicker }}</span>
+    <h1 class="display hero__title">
+      <span class="line-mask" data-reveal><span>{{ section.settings.line_one }}</span></span>
+      <span class="line-mask" data-reveal style="--reveal-delay:120ms"><span><em>{{ section.settings.line_two }}</em></span></span>
+    </h1>
+    <div class="hero__actions" data-reveal style="--reveal-delay:320ms">
+      {%- if section.settings.cta_one != blank -%}
+        <a href="{{ section.settings.cta_one_url | default: routes.all_products_collection_url }}" class="act">{{ section.settings.cta_one }}</a>
+      {%- endif -%}
+      {%- if section.settings.cta_two != blank -%}
+        <button class="act" data-finder-open>{{ section.settings.cta_two }}</button>
+      {%- endif -%}
     </div>
   </div>
+
+  <div class="hero__meta">
+    <span class="label">{{ section.settings.meta_one }}</span>
+    <span class="label">{{ section.settings.meta_two }}</span>
+  </div>
+  <div class="hero__scroll"><span class="label">{{ section.settings.scroll_label }}</span><i></i></div>
 </section>
 
 {% schema %}
 {
   "name": "Hero",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Texto pequeño superior", "default": "VELMONT" },
-    { "type": "text", "id": "title", "label": "Título", "default": "Descubre la fragancia que te define." },
-    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Una selección de fragancias para dejar una impresión." },
-    { "type": "text", "id": "primary_cta_text", "label": "Texto botón principal", "default": "Encuentra tu perfume" },
-    { "type": "url", "id": "primary_cta_url", "label": "Enlace botón principal" },
-    { "type": "text", "id": "secondary_cta_text", "label": "Texto botón secundario", "default": "Ver colección" },
-    { "type": "url", "id": "secondary_cta_url", "label": "Enlace botón secundario" }
+    { "type": "text", "id": "kicker", "label": "Texto pequeño", "default": "Colección 001" },
+    { "type": "text", "id": "line_one", "label": "Titular línea 1", "default": "Una fragancia." },
+    { "type": "text", "id": "line_two", "label": "Titular línea 2 (cursiva)", "default": "Una firma." },
+    { "type": "text", "id": "wordmark", "label": "Palabra de fondo", "default": "VELMONT" },
+    { "type": "text", "id": "cta_one", "label": "Botón 1", "default": "Ver la colección" },
+    { "type": "url", "id": "cta_one_url", "label": "Enlace botón 1" },
+    { "type": "text", "id": "cta_two", "label": "Botón 2 (abre el finder)", "default": "Descubre tu firma" },
+    { "type": "text", "id": "meta_one", "label": "Meta izquierda", "default": "Bogotá · Colombia" },
+    { "type": "text", "id": "meta_two", "label": "Meta derecha", "default": "Envíos a todo el país" },
+    { "type": "text", "id": "scroll_label", "label": "Indicador de scroll", "default": "Desliza" }
   ],
   "presets": [{ "name": "Hero" }]
 }

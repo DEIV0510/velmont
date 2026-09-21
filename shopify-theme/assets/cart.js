@@ -3,7 +3,7 @@
 // prototipo (assets/js/cart.js del prototipo estatico): addToCart, setQty,
 // removeFromCart, clearCart, getRawItems, getCartCount, computeCart,
 // getEligibleCompletions. Todo lo que consume estas funciones (cart-ui.js,
-// finder.js, assistant.js, product-card.js, favorites.js) no necesita saber
+// finder.js, assistant.js, piece.js, favorites.js) no necesita saber
 // que aqui adentro hablamos con /cart.js en vez de localStorage.
 import { getProducts, getCollections, formatCOP } from './catalog.js';
 

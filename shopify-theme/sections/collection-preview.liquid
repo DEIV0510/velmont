@@ -1,24 +1,26 @@
-<section class="section" data-surface="light" id="marcas">
-  <div class="container">
-    <div class="section-head section-head--split">
-      <div>
-        <p class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
-        <h2 class="h-section" data-reveal>{{ section.settings.title }}</h2>
-      </div>
-      <a href="{{ section.settings.collection_url | default: routes.all_products_collection_url }}" class="btn btn--ghost" data-reveal>Ver colección</a>
+<section class="band band--tight" data-tone="light" id="coleccion">
+  <div class="wrap" style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:clamp(48px,6vw,96px)">
+    <div>
+      <span class="section-index" data-reveal>{{ section.settings.index_label }}</span>
+      <h2 class="display" style="margin-top:24px" data-reveal>
+        <span class="line-mask"><span>{{ section.settings.title }}</span></span>
+      </h2>
     </div>
-    <div class="product-grid" data-collection-preview></div>
+    <a href="{{ section.settings.link_url | default: routes.all_products_collection_url }}" class="link" data-reveal>{{ section.settings.link_label }}</a>
   </div>
+  <div class="composition" data-composition></div>
 </section>
 
 {% schema %}
 {
-  "name": "Vista previa de colección",
+  "name": "Colección editorial",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "Catálogo completo" },
-    { "type": "text", "id": "title", "label": "Título", "default": "Descubre VELMONT" },
-    { "type": "url", "id": "collection_url", "label": "Enlace \"Ver colección\"" }
+    { "type": "text", "id": "index_label", "label": "Índice de sección", "default": "02 — La colección" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Piezas de autor" },
+    { "type": "text", "id": "link_label", "label": "Texto del enlace", "default": "Ver todo el catálogo" },
+    { "type": "url", "id": "link_url", "label": "Enlace" },
+    { "type": "paragraph", "content": "Muestra las piezas marcadas con el tag de destacado, en composición asimétrica." }
   ],
-  "presets": [{ "name": "Vista previa de colección" }]
+  "presets": [{ "name": "Colección editorial" }]
 }
 {% endschema %}

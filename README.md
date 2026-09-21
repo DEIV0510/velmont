@@ -66,6 +66,34 @@ configurar las dos promociones, y (importante) el paso pendiente para que el
 checkout de Shopify realmente cobre el precio de combo, no solo lo muestre
 en el carrito.
 
+## Dirección de arte (rediseño 2026-09-20)
+
+El sitio se reconstruyó desde "tienda de perfumes bonita" hacia **casa de
+perfumería digital**. Lo que cambió, y por qué:
+
+- **Sin tarjetas.** El producto dejó de vivir dentro de un rectángulo con
+  borde, badge y botón. Ahora es una *pieza*: imagen con aire, nombre en
+  serif, precio discreto, y metadatos que solo aparecen al pasar el cursor
+  (en táctil siempre visibles — ver la "capa táctil" al final de
+  `components.css`).
+- **Composición asimétrica.** La portada usa una rejilla de 12 columnas
+  donde cada pieza ocupa un ancho distinto y baja a distinta altura
+  (`.composition`). La colección completa rompe la fila perfecta bajando
+  cada tercera pieza.
+- **Ritmo de superficies.** Negro profundo → marfil → negro → marfil, con
+  el atributo `data-tone` cambiando los tokens de superficie por bloque.
+- **Tipografía como imagen.** El wordmark gigante en contorno se apoya en
+  el borde inferior del hero y del footer; los titulares son Fraunces a
+  escala de campaña.
+- **El dorado es filo, no relleno.** No hay botones dorados. El dorado vive
+  en filetes, el índice de sección, el barrido de luz y los estados activos.
+- **Movimiento cinematográfico.** Reveals por `clip-path` y por máscara de
+  línea (no `fade` genérico), barrido de luz sobre el cristal, parallax por
+  capas y escala del producto al hacer scroll. Todo con `transform`/`opacity`
+  y apagado bajo `prefers-reduced-motion`.
+- **El finder dejó de ser un formulario.** Es una capa a pantalla completa,
+  una pregunta por pantalla, opciones como palabras grandes.
+
 ## Decisiones de diseño que vale la pena conocer
 
 - **Sin fotografía de producto real** (no existía ninguna), se optó por una

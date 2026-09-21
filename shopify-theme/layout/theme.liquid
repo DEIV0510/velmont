@@ -18,7 +18,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <link rel="preload" as="image" href="{{ 'velmont-logo-full@2x.png' | asset_url }}">
 <link rel="stylesheet" href="{{ 'tokens.css' | asset_url }}">
@@ -27,27 +27,29 @@
 
 {{ content_for_header }}
 </head>
-<body{% unless template.name == 'index' %} data-header-theme="light"{% endunless %}>
+<body{% unless template.name == 'index' %} data-hdr="light" style="background:var(--ivory)"{% endunless %}>
 
 <div data-loading-screen>
   <div style="text-align:center">
-    <img class="loading-mark" src="{{ 'velmont-logo-full@2x.png' | asset_url }}" alt="{{ shop.name }}" width="220" height="169">
-    <div class="loading-rule"></div>
+    <img class="loader-mark" src="{{ 'velmont-logo-full@2x.png' | asset_url }}" alt="{{ shop.name }}" width="220" height="174">
+    <div class="loader-rule"></div>
   </div>
 </div>
 
 {% section 'header' %}
 
-<div class="nav-panel" data-nav-panel>
-  <button class="icon-btn nav-panel__close" data-nav-toggle aria-label="Cerrar menú">&times;</button>
-  <nav class="nav-panel__links">
-    <a href="{{ routes.all_products_collection_url | default: '/collections/all' }}">Perfumes</a>
-    <a href="/#finder">Encuentra tu perfume</a>
-    <a href="/#ofertas">Ofertas</a>
-    <a href="/#marcas">Marcas</a>
-    <a href="/#contacto">Contacto</a>
-    <button type="button" data-favorites-open>Favoritos</button>
+<div class="menu" data-menu data-tone="dark">
+  <button class="icon-btn menu__close" data-menu-close aria-label="Cerrar menú">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 5l14 14M19 5L5 19"/></svg>
+  </button>
+  <nav class="menu__list" data-menu-list>
+    <a href="{{ routes.all_products_collection_url }}" data-visual="0"><span class="idx">01</span>Colección</a>
+    <a href="{{ routes.root_url }}#descubre" data-finder-open data-visual="1"><span class="idx">02</span>Descubre tu firma</a>
+    <a href="{{ routes.root_url }}#ediciones" data-visual="2"><span class="idx">03</span>Ediciones</a>
+    <a href="{{ routes.root_url }}#casa" data-visual="3"><span class="idx">04</span>La casa</a>
+    <a href="{{ routes.root_url }}#contacto" data-visual="4"><span class="idx">05</span>Contacto</a>
   </nav>
+  <div class="menu__visual" data-menu-visual></div>
 </div>
 
 <main id="main-content">
@@ -56,26 +58,17 @@
 
 {% section 'footer' %}
 
-{% comment %} Cada uno se llena por JS (ver assets/velmont-app.js), igual que en el prototipo estatico. {% endcomment %}
-<div data-cart-root></div>
-<div data-favorites-root></div>
+{% comment %} Bolsa, guardados, buscador, asesor y finder los monta el JS. {% endcomment %}
+<div data-bag-root></div>
+<div data-saved-root></div>
 <div data-search-root></div>
-<div data-assistant-root></div>
+<div data-advisor-root></div>
+<div data-finder-root></div>
 
 <script type="application/json" id="velmont-catalog-data">
   {%- render 'catalog-json' -%}
 </script>
 
-<script type="module" src="{{ 'ui.js' | asset_url }}"></script>
-<script type="module" src="{{ 'catalog.js' | asset_url }}"></script>
-<script type="module" src="{{ 'cart.js' | asset_url }}"></script>
-<script type="module" src="{{ 'cart-ui.js' | asset_url }}"></script>
-<script type="module" src="{{ 'favorites.js' | asset_url }}"></script>
-<script type="module" src="{{ 'favorites-ui.js' | asset_url }}"></script>
-<script type="module" src="{{ 'product-card.js' | asset_url }}"></script>
-<script type="module" src="{{ 'finder.js' | asset_url }}"></script>
-<script type="module" src="{{ 'assistant.js' | asset_url }}"></script>
 <script type="module" src="{{ 'velmont-app.js' | asset_url }}"></script>
-
 </body>
 </html>

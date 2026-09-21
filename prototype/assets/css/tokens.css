@@ -1,96 +1,83 @@
 /* ==========================================================================
    VELMONT — Design Tokens
-   Boutique de perfumería + editorial de lujo.
-   Paleta: negro profundo, blanco/hueso, neutros cálidos, dorado (metal, no amarillo).
+   Dark luxury editorial. El lujo viene de composicion, tipografia, espacio
+   y movimiento — NO del dorado. El dorado es solo filo y acento.
    ========================================================================== */
 
 :root{
-  /* ---- Color: base ---- */
-  --black:        #0B0B0C;
-  --black-soft:   #141311;
-  --ink:          #1C1A16;
-  --paper:        #F6F3EC;
-  --paper-dim:    #EFEAE0;
-  --sand:         #E7E1D3;
-  --taupe:        #8C8272;
-  --taupe-dark:   #5B5548;
-  --line:         #DDD6C6;
-  --line-on-dark: rgba(246,243,236,0.14);
+  /* ---- Materia: negro profundo -> marfil -> piedra ---- */
+  --noir:        #08080A;
+  --noir-soft:   #101013;
+  --ink:         #16161A;
+  --ivory:       #F4F1EA;
+  --bone:        #E9E4D9;
+  --sand:        #DED7C7;
+  --stone:       #9C958A;
+  --stone-deep:  #6A645B;
 
-  /* ---- Color: gold (metal gradient, never flat yellow) ---- */
-  --gold-light:   #E8D9B5;
-  --gold:         #C9A867;
-  --gold-deep:    #96793C;
-  --gold-grad:    linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 52%, var(--gold-deep) 100%);
-  --gold-grad-soft: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+  /* ---- Dorado de marca (muestreado del logo real) ---- */
+  --gold:        #C9A867;
+  --gold-light:  #E4D3AB;
+  --gold-deep:   #8A6F3C;
+  --champagne:   #D8C7A6;
 
-  /* ---- Color: semantic ---- */
-  --surface: var(--paper);
-  --surface-alt: var(--paper-dim);
+  /* Metal solo para filos y barridos de luz, nunca relleno grande */
+  --gold-line:   linear-gradient(90deg, rgba(201,168,103,0) 0%, var(--gold) 50%, rgba(201,168,103,0) 100%);
+  --gold-edge:   linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 45%, var(--gold-deep) 100%);
+
+  /* ---- Superficies semanticas ---- */
+  --surface: var(--ivory);
+  --surface-2: var(--bone);
   --on-surface: var(--ink);
-  --on-surface-dim: var(--taupe-dark);
-  --surface-inverse: var(--black);
-  --on-surface-inverse: var(--paper);
-  --on-surface-inverse-dim: rgba(246,243,236,0.62);
+  --on-surface-dim: var(--stone-deep);
+  --hairline: rgba(22,22,26,0.14);
+  --hairline-strong: rgba(22,22,26,0.28);
 
-  /* ---- Type ---- */
+  /* ---- Tipografia ---- */
   --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
-  --font-body: 'Manrope', 'Segoe UI', -apple-system, sans-serif;
+  --font-ui: 'Manrope', 'Segoe UI', -apple-system, sans-serif;
 
-  --tracking-label: 0.16em;
-  --tracking-wide: 0.06em;
+  /* Micro-label: la firma tipografica de la casa */
+  --label-size: 0.625rem;        /* 10px */
+  --label-track: 0.34em;
 
-  /* Fluid type scale */
-  --fs-display-1: clamp(2.6rem, 6vw + 1rem, 6.4rem);
-  --fs-display-2: clamp(2rem, 4vw + 1rem, 3.6rem);
-  --fs-h2: clamp(1.6rem, 2.4vw + 1rem, 2.6rem);
-  --fs-h3: clamp(1.2rem, 1.2vw + 1rem, 1.5rem);
-  --fs-body-lg: clamp(1.05rem, 0.4vw + 1rem, 1.2rem);
-  --fs-body: 1rem;
-  --fs-small: 0.875rem;
-  --fs-label: 0.75rem;
+  /* Escala display — grande de verdad */
+  --fs-mega:    clamp(3.5rem, 13vw, 13rem);   /* wordmark / momentos de impacto */
+  --fs-display: clamp(2.75rem, 7.5vw, 7rem);  /* titulares de seccion */
+  --fs-h2:      clamp(1.9rem, 3.6vw, 3.4rem);
+  --fs-h3:      clamp(1.15rem, 1.5vw, 1.6rem);
+  --fs-lede:    clamp(1rem, 0.5vw + 0.9rem, 1.15rem);
+  --fs-body:    1rem;
+  --fs-small:   0.8125rem;
 
-  /* ---- Spacing (8pt-ish rhythm) ---- */
-  --sp-1: 4px;
-  --sp-2: 8px;
-  --sp-3: 12px;
-  --sp-4: 16px;
-  --sp-5: 24px;
-  --sp-6: 32px;
-  --sp-7: 48px;
-  --sp-8: 64px;
-  --sp-9: 96px;
-  --sp-10: 128px;
+  /* ---- Ritmo espacial: el espacio es parte del lujo ---- */
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
+  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
+  --s9: 96px; --s10: 128px; --s11: 180px; --s12: 240px;
 
-  --section-pad-y: clamp(56px, 9vw, 140px);
-  --gutter: clamp(20px, 5vw, 64px);
-  --max-w: 1440px;
+  --band: clamp(96px, 13vw, 220px);      /* respiro vertical entre bandas */
+  --band-tight: clamp(64px, 8vw, 120px);
+  --gutter: clamp(20px, 6vw, 110px);     /* margenes amplios */
+  --measure: 62ch;
 
-  /* ---- Motion ---- */
+  /* ---- Movimiento: lento, preciso, intencional ---- */
   --ease-out: cubic-bezier(.16,1,.3,1);
-  --ease-in-out: cubic-bezier(.65,0,.35,1);
-  --dur-fast: 180ms;
-  --dur-base: 320ms;
-  --dur-slow: 560ms;
+  --ease-inout: cubic-bezier(.76,0,.24,1);
+  --t-fast: 240ms;
+  --t-base: 520ms;
+  --t-slow: 900ms;
+  --t-cine: 1400ms;
 
-  /* ---- Elevation ---- */
-  --shadow-sm: 0 2px 8px rgba(11,11,12,0.06);
-  --shadow-md: 0 12px 32px rgba(11,11,12,0.10);
-  --shadow-lg: 0 24px 64px rgba(11,11,12,0.16);
-  --shadow-gold: 0 8px 24px rgba(150,121,60,0.25);
-
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 8px;
-
-  --header-h: 76px;
+  --header-h: 84px;
+  --z-header: 200; --z-menu: 300; --z-drawer: 400; --z-overlay: 500;
 }
 
-/* Data-surface hook so components can flip contexts cleanly (light block vs dark block) */
-[data-surface="dark"]{
-  --surface: var(--black);
-  --surface-alt: var(--black-soft);
-  --on-surface: var(--paper);
-  --on-surface-dim: rgba(246,243,236,0.62);
-  --line: var(--line-on-dark);
+/* Bloques oscuros: invierten las superficies, no los componentes */
+[data-tone="dark"]{
+  --surface: var(--noir);
+  --surface-2: var(--noir-soft);
+  --on-surface: var(--ivory);
+  --on-surface-dim: var(--stone);
+  --hairline: rgba(244,241,234,0.16);
+  --hairline-strong: rgba(244,241,234,0.34);
 }

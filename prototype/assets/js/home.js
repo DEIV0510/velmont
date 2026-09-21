@@ -1,44 +1,62 @@
-import { initAll } from './ui.js';
-import { getProducts, bottleSVG } from './catalog.js';
-import { mountCartDrawer, openCart } from './cart-ui.js';
+import { initAll, initReveal, bindMenuVisuals } from './ui.js';
+import { getProducts, getCollections, bottleSVG, formatCOP } from './catalog.js';
+import { mountCartDrawer } from './cart-ui.js';
 import { mountFavoritesDrawer } from './favorites-ui.js';
 import { mountSearchOverlay, mountAssistant } from './assistant.js';
 import { mountFinder } from './finder.js';
-import { productCardTpl } from './product-card.js';
+import { pieceHTML } from './piece.js';
 
 initAll();
-mountCartDrawer(document.querySelector('[data-cart-root]'));
-mountFavoritesDrawer(document.querySelector('[data-favorites-root]'));
+mountCartDrawer(document.querySelector('[data-bag-root]'));
+mountFavoritesDrawer(document.querySelector('[data-saved-root]'));
 mountSearchOverlay(document.querySelector('[data-search-root]'));
-mountAssistant(document.querySelector('[data-assistant-root]'));
+mountAssistant(document.querySelector('[data-advisor-root]'));
 mountFinder(document.querySelector('[data-finder-root]'));
 
-document.querySelector('[data-cart-open]')?.addEventListener('click', openCart);
-
 (async () => {
-  const products = await getProducts();
+  const [products, collections] = await Promise.all([getProducts(), getCollections()]);
+  if (!products.length) return;
 
-  const heroBottleTarget = document.getElementById('hero-bottle');
-  const heroProduct = products.find(p => p.id === 'bois-de-nuit') || products[0];
-  if (heroBottleTarget) heroBottleTarget.innerHTML = bottleSVG(heroProduct);
+  // --- Hero: la pieza mas oscura de la casa como protagonista ---
+  const heroPick = products.find(p => p.family === 'amaderado' && p.featured) || products.find(p => p.featured) || products[0];
+  const heroMount = document.querySelector('[data-hero-bottle]');
+  if (heroMount) heroMount.innerHTML = bottleSVG(heroPick);
+  const reflect = document.querySelector('[data-hero-reflect]');
+  if (reflect) reflect.innerHTML = bottleSVG(heroPick);
 
-  const editorialTarget = document.getElementById('editorial-bottle');
-  const editorialProduct = products.find(p => p.id === 'or-et-santal') || products[1];
-  if (editorialTarget) editorialTarget.innerHTML = bottleSVG(editorialProduct, { className: 'bottle-hero-svg' });
-
-  const featuredGrid = document.querySelector('[data-featured-grid]');
-  if (featuredGrid) {
+  // --- Composicion editorial: 6 piezas en ritmo asimetrico ---
+  const composition = document.querySelector('[data-composition]');
+  if (composition) {
     const featured = products.filter(p => p.featured);
-    featuredGrid.innerHTML = featured.map(productCardTpl).join('');
+    const picks = (featured.length >= 6 ? featured : [...featured, ...products.filter(p => !p.featured)]).slice(0, 6);
+    composition.innerHTML = picks.map(p => pieceHTML(p)).join('');
   }
 
-  const previewGrid = document.querySelector('[data-collection-preview]');
-  if (previewGrid) {
-    previewGrid.innerHTML = products.slice(0, 8).map(productCardTpl).join('');
+  // --- Campañas: el duo de cada edicion, con precio real del catalogo ---
+  for (const rule of collections.filter(c => c.kind === 'promo')) {
+    const duo = document.querySelector(`[data-duo="${rule.id}"]`);
+    if (duo) {
+      const pair = products.filter(p => p.promo === rule.id).slice(0, 2);
+      duo.innerHTML = pair.map(p => `<figure>${bottleSVG(p)}</figure>`).join('');
+    }
+    const price = document.querySelector(`[data-promo-price="${rule.id}"]`);
+    if (price) price.innerHTML = `${rule.promoUnits} × ${formatCOP(rule.promoPrice)}<sup>COP</sup>`;
   }
 
-  // los cards inyectados dinamicamente tambien entran al reveal-on-scroll
-  const { initReveal } = await import('./ui.js');
-  document.querySelectorAll('.product-card').forEach(el => el.setAttribute('data-reveal', 'fade'));
+  // --- La casa ---
+  const world = document.querySelector('[data-world-bottle]');
+  if (world) {
+    const pick = products.find(p => p.family === 'oriental') || products[1] || products[0];
+    world.innerHTML = bottleSVG(pick);
+  }
+
+  // --- Visuales del menu fullscreen ---
+  const menuVisual = document.querySelector('[data-menu-visual]');
+  if (menuVisual) {
+    const picks = products.slice(0, 5);
+    menuVisual.innerHTML = picks.map((p, i) => `<figure class="${i === 0 ? 'on' : ''}">${bottleSVG(p)}</figure>`).join('');
+    bindMenuVisuals();
+  }
+
   initReveal();
 })();

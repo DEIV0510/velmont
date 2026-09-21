@@ -1,27 +1,29 @@
-<section class="section editorial" data-surface="dark">
-  <div class="container editorial__inner">
-    <div data-reveal>
-      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
-      <p class="h-editorial editorial__quote">"{{ section.settings.quote }}"</p>
-      <p class="editorial__body">{{ section.settings.body }}</p>
-      {%- if section.settings.cta_text != blank -%}
-        <a href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}" class="btn btn--ghost" style="margin-top:32px">{{ section.settings.cta_text }}</a>
+<section class="band world" data-tone="light" id="casa">
+  <div class="world__in">
+    <div class="world__figure" data-reveal="wipe" data-world-bottle></div>
+    <div>
+      <span class="section-index" data-reveal>{{ section.settings.index_label }}</span>
+      <h2 class="h2" style="margin-top:24px;max-width:18ch" data-reveal><em>«{{ section.settings.quote }}»</em></h2>
+      <p class="fine" style="margin-top:28px" data-reveal>{{ section.settings.body }}</p>
+      {%- if section.settings.cta != blank -%}
+        <div style="margin-top:40px" data-reveal>
+          <a href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}" class="link">{{ section.settings.cta }}</a>
+        </div>
       {%- endif -%}
     </div>
-    <div class="editorial__figure" data-reveal id="editorial-bottle"></div>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Editorial de marca",
+  "name": "La casa",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "La casa VELMONT" },
-    { "type": "textarea", "id": "quote", "label": "Cita", "default": "Elegir un perfume no es comprar un producto. Es decidir cómo quieres ser percibido." },
-    { "type": "textarea", "id": "body", "label": "Párrafo", "default": "Cada fragancia de VELMONT se selecciona, no se fabrica en masa. Trabajamos con casas como MATAI para traer piezas con carácter propio — pensadas para quienes prefieren ser recordados antes que vistos." },
-    { "type": "text", "id": "cta_text", "label": "Texto del botón", "default": "Conocer la colección" },
-    { "type": "url", "id": "cta_url", "label": "Enlace del botón" }
+    { "type": "text", "id": "index_label", "label": "Índice", "default": "05 — La casa" },
+    { "type": "textarea", "id": "quote", "label": "Cita", "default": "Creadas para quienes dejan una impresión." },
+    { "type": "textarea", "id": "body", "label": "Párrafo", "default": "VELMONT no fabrica en masa: selecciona. Trabajamos con casas como MATAI para traer piezas con carácter propio, en cantidades cortas, a Colombia." },
+    { "type": "text", "id": "cta", "label": "Enlace", "default": "Conocer la colección" },
+    { "type": "url", "id": "cta_url", "label": "URL del enlace" }
   ],
-  "presets": [{ "name": "Editorial de marca" }]
+  "presets": [{ "name": "La casa" }]
 }
 {% endschema %}

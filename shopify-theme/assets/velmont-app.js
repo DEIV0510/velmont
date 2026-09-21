@@ -1,166 +1,168 @@
-// VELMONT — bootstrap unico para theme.liquid (compartido por todas las
-// plantillas). Cada bloque se activa solo si encuentra su marcador en el
-// DOM, asi una sola capa de JS sirve home/collection/product sin duplicar
-// carga en paginas que no la necesitan.
-import { initAll, initReveal } from './ui.js';
-import { getProducts, getProductBySlug, bottleSVG, formatCOP } from './catalog.js';
+// VELMONT — bootstrap unico del tema. Una sola capa de JS para todas las
+// plantillas: cada bloque se activa solo si encuentra su marcador en el DOM.
+// Importa el resto de modulos con rutas relativas (mismo directorio /assets)
+// para que exista UNA sola instancia de cada modulo — cargarlos ademas con
+// <script src> duplicaria el estado del carrito.
+import { initAll, initReveal, bindMenuVisuals } from './ui.js';
+import { getProducts, getProductBySlug, getCollections, bottleSVG, formatCOP } from './catalog.js';
 import { mountCartDrawer, openCart, showToast } from './cart-ui.js';
 import { mountFavoritesDrawer } from './favorites-ui.js';
 import { mountSearchOverlay, mountAssistant } from './assistant.js';
 import { mountFinder } from './finder.js';
-import { productCardTpl } from './product-card.js';
+import { pieceHTML } from './piece.js';
 import { addToCart } from './cart.js';
 import { toggleFavorite, isFavorite } from './favorites.js';
 
 initAll();
-mountCartDrawer(document.querySelector('[data-cart-root]'));
-mountFavoritesDrawer(document.querySelector('[data-favorites-root]'));
+mountCartDrawer(document.querySelector('[data-bag-root]'));
+mountFavoritesDrawer(document.querySelector('[data-saved-root]'));
 mountSearchOverlay(document.querySelector('[data-search-root]'));
-mountAssistant(document.querySelector('[data-assistant-root]'));
-document.querySelector('[data-cart-open]')?.addEventListener('click', openCart);
+mountAssistant(document.querySelector('[data-advisor-root]'));
+mountFinder(document.querySelector('[data-finder-root]'));
 
-const finderRoot = document.querySelector('[data-finder-root]');
-if (finderRoot) mountFinder(finderRoot);
+const AXES = ['dulce', 'fresco', 'intenso', 'amaderado', 'especiado', 'citrico', 'oriental'];
+const AXIS_LABEL = { dulce: 'Dulce', fresco: 'Fresco', intenso: 'Intenso', amaderado: 'Amaderado', especiado: 'Especiado', citrico: 'Cítrico', oriental: 'Oriental' };
 
-// ---- Home: hero bottle, destacados, preview de coleccion, editorial ----
+const FILTERS = [
+  { v: 'all', label: 'Todas' },
+  { v: 'hombre', label: 'Para él', type: 'gender' },
+  { v: 'mujer', label: 'Para ella', type: 'gender' },
+  { v: 'unisex', label: 'Sin género', type: 'gender' },
+  { v: 'amaderado', label: 'Amaderadas', type: 'family' },
+  { v: 'oriental', label: 'Orientales', type: 'family' },
+  { v: 'fresco', label: 'Frescas', type: 'family' },
+  { v: 'citrico', label: 'Cítricas', type: 'family' },
+  { v: 'dulce', label: 'Dulces', type: 'family' },
+  { v: 'intensa', label: 'Intensas', type: 'intensity' },
+];
+
 (async () => {
-  const heroStage = document.getElementById('hero-bottle');
-  const featuredGrid = document.querySelector('[data-featured-grid]');
-  const previewGrid = document.querySelector('[data-collection-preview]');
-  const editorialStage = document.getElementById('editorial-bottle');
-  if (!heroStage && !featuredGrid && !previewGrid && !editorialStage) return;
+  const [products, collections] = await Promise.all([getProducts(), getCollections()]);
+  if (!products.length) return;
 
-  const products = await getProducts();
-  if (heroStage) {
-    const heroProduct = products.find(p => p.featured) || products[0];
-    if (heroProduct) heroStage.innerHTML = bottleSVG(heroProduct);
+  // Visuales del menu fullscreen (en todas las plantillas)
+  const menuVisual = document.querySelector('[data-menu-visual]');
+  if (menuVisual) {
+    menuVisual.innerHTML = products.slice(0, 5).map((p, i) => `<figure class="${i === 0 ? 'on' : ''}">${bottleSVG(p)}</figure>`).join('');
+    bindMenuVisuals();
   }
-  if (editorialStage) {
-    const editorialProduct = products[1] || products[0];
-    if (editorialProduct) editorialStage.innerHTML = bottleSVG(editorialProduct, { className: 'bottle-hero-svg' });
+
+  // ---------- Portada ----------
+  const heroMount = document.querySelector('[data-hero-bottle]');
+  if (heroMount) {
+    const pick = products.find(p => p.family === 'amaderado' && p.featured) || products.find(p => p.featured) || products[0];
+    heroMount.innerHTML = bottleSVG(pick);
+    const reflect = document.querySelector('[data-hero-reflect]');
+    if (reflect) reflect.innerHTML = bottleSVG(pick);
   }
-  if (featuredGrid) {
-    featuredGrid.innerHTML = products.filter(p => p.featured).map(productCardTpl).join('');
+
+  const composition = document.querySelector('[data-composition]');
+  if (composition) {
+    const featured = products.filter(p => p.featured);
+    const picks = (featured.length >= 6 ? featured : [...featured, ...products.filter(p => !p.featured)]).slice(0, 6);
+    composition.innerHTML = picks.map(p => pieceHTML(p)).join('');
   }
-  if (previewGrid) {
-    previewGrid.innerHTML = products.slice(0, 8).map(productCardTpl).join('');
+
+  for (const rule of collections.filter(c => c.kind === 'promo')) {
+    const duo = document.querySelector(`[data-duo="${rule.id}"]`);
+    if (duo) duo.innerHTML = products.filter(p => p.promo === rule.id).slice(0, 2).map(p => `<figure>${bottleSVG(p)}</figure>`).join('');
   }
-  document.querySelectorAll('.product-card').forEach(el => el.setAttribute('data-reveal', 'fade'));
+
+  const world = document.querySelector('[data-world-bottle]');
+  if (world) world.innerHTML = bottleSVG(products.find(p => p.family === 'oriental') || products[1] || products[0]);
+
+  // ---------- Colección ----------
+  const grid = document.querySelector('[data-grid]');
+  if (grid) {
+    const bar = document.querySelector('[data-filters]');
+    const empty = document.querySelector('[data-empty]');
+    const note = document.querySelector('[data-collection-note]');
+    const promo = new URLSearchParams(location.search).get('promo');
+
+    const paint = (list) => {
+      grid.innerHTML = list.map(p => pieceHTML(p)).join('');
+      if (empty) empty.hidden = list.length > 0;
+      initReveal(grid);
+    };
+
+    if (promo) {
+      const rule = collections.find(c => c.id === promo);
+      if (note) note.innerHTML = `Piezas que participan en <strong>${rule ? rule.label : promo}</strong>.`;
+      if (bar) bar.remove();
+      paint(products.filter(p => p.promo === promo));
+    } else {
+      if (note) note.textContent = `${products.length} fragancias en catálogo. Seleccionadas una por una.`;
+      if (bar) {
+        bar.innerHTML = FILTERS.map(f => `<button data-f="${f.v}" class="${f.v === 'all' ? 'on' : ''}">${f.label}</button>`).join('');
+        bar.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+          bar.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+          const v = b.dataset.f;
+          if (v === 'all') return paint(products);
+          const def = FILTERS.find(f => f.v === v);
+          paint(products.filter(p => {
+            if (def.type === 'gender') return p.gender === def.v;
+            if (def.type === 'family') return p.family === def.v;
+            if (def.type === 'intensity') return p.intensity === def.v;
+            return true;
+          }));
+        }));
+      }
+      paint(products);
+    }
+  }
+
+  // ---------- Ficha de producto ----------
+  const pdp = document.querySelector('[data-product-root]');
+  if (pdp) {
+    const product = await getProductBySlug(pdp.dataset.productSlug);
+    if (product) {
+      const stage = document.querySelector('[data-pdp-stage]');
+      if (stage && !stage.querySelector('img')) stage.innerHTML = bottleSVG(product);
+
+      const set = (sel, val) => { const el = document.querySelector(sel); if (el) el.textContent = val; };
+      set('[data-pdp-family]', product.family || '—');
+      set('[data-pdp-intensity]', product.intensity || '—');
+      const occ = document.querySelector('[data-pdp-occasion]');
+      if (occ) occ.innerHTML = (product.occasion || []).map(o => `<span>${o}</span>`).join('') || '—';
+      const notes = document.querySelector('[data-pdp-notes]');
+      if (notes) notes.innerHTML = (product.notes || []).map(n => `<span>${n}</span>`).join('') || '—';
+
+      const prof = document.querySelector('[data-pdp-profile]');
+      if (prof) prof.innerHTML = AXES.map(k => {
+        const v = product.profile?.[k] || 0;
+        return `<div class="profile__row"><span class="label">${AXIS_LABEL[k]}</span><div class="profile__track"><i style="width:${v * 20}%"></i></div></div>`;
+      }).join('');
+
+      const saveBtn = document.querySelector('[data-pdp-save]');
+      if (saveBtn) {
+        const sync = () => { saveBtn.textContent = isFavorite(product.id) ? 'Guardado' : 'Guardar'; };
+        sync();
+        saveBtn.addEventListener('click', () => { toggleFavorite(product.id); sync(); });
+      }
+
+      // El form tiene fallback sin JS; con JS usamos la Cart AJAX API + bolsa lateral
+      const addBtn = document.querySelector('[data-pdp-add]');
+      if (addBtn) addBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        addToCart(product.id, 1);
+        showToast('Añadido a tu selección');
+        openCart();
+      });
+
+      const related = document.querySelector('[data-related]');
+      if (related) {
+        const list = products
+          .filter(p => p.id !== product.id)
+          .map(p => ({ p, s: (p.family === product.family ? 2 : 0) + (p.personality || []).filter(t => product.personality?.includes(t)).length }))
+          .sort((a, b) => b.s - a.s)
+          .slice(0, 4)
+          .map(x => x.p);
+        related.innerHTML = list.map(p => pieceHTML(p)).join('');
+      }
+    }
+  }
+
   initReveal();
 })();
 
-// ---- Coleccion: filtros + grid ----
-(async () => {
-  const grid = document.querySelector('[data-collection-grid]');
-  if (!grid) return;
-  const filterBar = document.querySelector('[data-filter-bar]');
-  const emptyState = document.querySelector('[data-empty-state]');
-  const products = await getProducts();
-
-  const FILTERS = [
-    { value: 'all', label: 'Todas' },
-    { value: 'hombre', label: 'Hombre', type: 'gender' },
-    { value: 'mujer', label: 'Mujer', type: 'gender' },
-    { value: 'unisex', label: 'Unisex', type: 'gender' },
-    { value: 'dulce', label: 'Dulces', type: 'family' },
-    { value: 'fresco', label: 'Frescos', type: 'family' },
-    { value: 'amaderado', label: 'Amaderados', type: 'family' },
-    { value: 'intenso', label: 'Intensos', type: 'intensity', match: 'intensa' },
-    { value: 'citrico', label: 'Cítricos', type: 'family' },
-    { value: 'oriental', label: 'Orientales', type: 'family' },
-  ];
-
-  const params = new URLSearchParams(location.search);
-  const promoParam = params.get('promo');
-
-  function renderGrid(list) {
-    grid.innerHTML = list.map(productCardTpl).join('');
-    if (emptyState) emptyState.style.display = list.length === 0 ? 'block' : 'none';
-    grid.querySelectorAll('.product-card').forEach(el => el.setAttribute('data-reveal', 'fade'));
-    initReveal();
-  }
-
-  if (promoParam) {
-    if (filterBar) filterBar.innerHTML = `<p class="lede">Mostrando fragancias participantes de <strong>${promoParam}</strong> · <a href="${location.pathname}" class="link-underline">ver todo el catálogo</a></p>`;
-    renderGrid(products.filter(p => p.promo === promoParam));
-    return;
-  }
-
-  if (filterBar) {
-    filterBar.innerHTML = FILTERS.map(f => `<button type="button" class="filter-chip ${f.value === 'all' ? 'is-active' : ''}" data-filter="${f.value}">${f.label}</button>`).join('');
-    let active = 'all';
-    filterBar.querySelectorAll('.filter-chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        active = chip.dataset.filter;
-        filterBar.querySelectorAll('.filter-chip').forEach(c => c.classList.toggle('is-active', c === chip));
-        if (active === 'all') { renderGrid(products); return; }
-        const def = FILTERS.find(f => f.value === active);
-        renderGrid(products.filter(p => {
-          if (def.type === 'gender') return p.gender === def.value;
-          if (def.type === 'family') return p.family === def.value;
-          if (def.type === 'intensity') return p.intensity === def.match;
-          return true;
-        }));
-      });
-    });
-  }
-  renderGrid(products);
-})();
-
-// ---- Producto: ficha + cross-sell ----
-(async () => {
-  const root = document.querySelector('[data-product-root]');
-  if (!root) return;
-  const slug = root.dataset.productSlug;
-  const product = slug ? await getProductBySlug(slug) : null;
-  if (!product) return;
-
-  const FAMILY_LABELS = { dulce: 'Dulce', fresco: 'Fresco', amaderado: 'Amaderado', intenso: 'Intenso', citrico: 'Cítrico', oriental: 'Oriental', especiado: 'Especiado', floral: 'Floral' };
-  const PROFILE_ORDER = ['dulce', 'fresco', 'intenso', 'amaderado', 'especiado', 'citrico', 'oriental'];
-
-  const stage = document.querySelector('[data-pdp-stage]');
-  if (stage && !stage.querySelector('img')) stage.innerHTML = bottleSVG(product);
-
-  const factsEl = document.querySelector('[data-pdp-facts]');
-  if (factsEl) {
-    factsEl.innerHTML = [product.gender, product.intensity, ...(product.occasion || []).slice(0, 2)]
-      .filter(Boolean).map(f => `<span class="pdp__fact">${f}</span>`).join('');
-  }
-  const notesEl = document.querySelector('[data-pdp-notes]');
-  if (notesEl) notesEl.innerHTML = (product.notes || []).map(n => `<li>${n}</li>`).join('');
-
-  const profileEl = document.querySelector('[data-pdp-profile]');
-  if (profileEl) {
-    profileEl.innerHTML = PROFILE_ORDER.map(key => {
-      const val = product.profile?.[key] || 0;
-      return `<div class="profile-bar"><span class="profile-bar__label">${FAMILY_LABELS[key]}</span><div class="profile-bar__track"><div class="profile-bar__fill" style="width:${val * 20}%"></div></div></div>`;
-    }).join('');
-  }
-
-  const favBtn = document.querySelector('[data-pdp-fav]');
-  if (favBtn) {
-    const syncFavBtn = () => { favBtn.textContent = isFavorite(product.id) ? 'Guardado en favoritos' : 'Guardar en favoritos'; };
-    syncFavBtn();
-    favBtn.addEventListener('click', () => { toggleFavorite(product.id); syncFavBtn(); });
-  }
-
-  document.querySelector('[data-pdp-add]')?.addEventListener('click', () => {
-    addToCart(product.id, 1);
-    showToast('AÑADIDO A TU COLECCIÓN');
-    openCart();
-  });
-
-  const crossEl = document.querySelector('[data-cross-sell]');
-  if (crossEl) {
-    const allProducts = await getProducts();
-    const crossSell = allProducts
-      .filter(p => p.id !== product.id)
-      .map(p => ({ p, score: (p.family === product.family ? 2 : 0) + (p.personality || []).filter(t => product.personality?.includes(t)).length }))
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 4)
-      .map(x => x.p);
-    crossEl.innerHTML = crossSell.map(productCardTpl).join('');
-    crossEl.querySelectorAll('.product-card').forEach(el => el.setAttribute('data-reveal', 'fade'));
-    initReveal();
-  }
-})();
+export { formatCOP };

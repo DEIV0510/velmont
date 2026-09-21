@@ -1,74 +1,85 @@
-// VELMONT — heart toggle en cards + drawer de favoritos
+// VELMONT — Guardados. Mismo lenguaje visual que la bolsa.
 import { isFavorite, toggleFavorite, getFavoriteIds, removeFavorite } from './favorites.js';
 import { getProducts, bottleSVG, formatCOP } from './catalog.js';
 
-const HEART = (filled) => `<svg width="16" height="16" viewBox="0 0 24 24" fill="${filled ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="1.6"><path d="M12 20s-7-4.4-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 5c-2.5 4.6-9.5 9-9.5 9Z"/></svg>`;
-
-export function heartButtonHTML(productId) {
-  const active = isFavorite(productId);
-  return `<button type="button" class="heart-btn ${active ? 'is-active' : ''}" data-toggle-favorite="${productId}" aria-label="Guardar en favoritos" aria-pressed="${active}">${HEART(active)}</button>`;
-}
+const HEART = (on) => `<svg width="15" height="15" viewBox="0 0 24 24" fill="${on ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.4-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 5c-2.5 4.6-9.5 9-9.5 9Z"/></svg>`;
 
 export function mountFavoritesDrawer(root) {
+  if (!root) return;
   root.innerHTML = `
-    <div class="cart-overlay" data-fav-overlay></div>
-    <aside class="cart-drawer" data-fav-drawer aria-hidden="true" aria-label="Tus favoritos">
-      <header class="cart-drawer__head">
-        <h2>Tus favoritos</h2>
-        <button class="icon-btn" data-fav-close aria-label="Cerrar favoritos">&times;</button>
+    <div class="scrim" data-fav-scrim></div>
+    <aside class="drawer" data-fav-drawer aria-hidden="true" aria-label="Guardados">
+      <header class="drawer__head">
+        <span class="label">Guardados</span>
+        <button class="icon-btn" data-fav-close aria-label="Cerrar">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 5l14 14M19 5L5 19"/></svg>
+        </button>
       </header>
-      <div class="cart-drawer__body" data-fav-body></div>
-    </aside>
-  `;
+      <div class="drawer__body" data-fav-body></div>
+    </aside>`;
+
   const drawer = root.querySelector('[data-fav-drawer]');
-  const overlay = root.querySelector('[data-fav-overlay]');
-  const close = () => { drawer.classList.remove('is-open'); overlay.classList.remove('is-open'); drawer.setAttribute('aria-hidden', 'true'); document.documentElement.classList.remove('no-scroll'); };
-  const open = () => { drawer.classList.add('is-open'); overlay.classList.add('is-open'); drawer.setAttribute('aria-hidden', 'false'); document.documentElement.classList.add('no-scroll'); };
-
+  const scrim = root.querySelector('[data-fav-scrim]');
+  const open = () => {
+    drawer.classList.add('open'); scrim.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('no-scroll');
+  };
+  const close = () => {
+    drawer.classList.remove('open'); scrim.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('no-scroll');
+  };
   root.querySelector('[data-fav-close]').addEventListener('click', close);
-  overlay.addEventListener('click', close);
-  document.querySelectorAll('[data-favorites-open]').forEach(btn => btn.addEventListener('click', open));
+  scrim.addEventListener('click', close);
+  document.querySelectorAll('[data-fav-open]').forEach(b => b.addEventListener('click', open));
 
-  document.addEventListener('click', async (e) => {
-    const btn = e.target.closest('[data-toggle-favorite]');
+  // Corazon en cualquier pieza de la pagina
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-save]');
     if (!btn) return;
-    const active = toggleFavorite(btn.dataset.toggleFavorite);
-    btn.classList.toggle('is-active', active);
-    btn.setAttribute('aria-pressed', String(active));
-    btn.innerHTML = HEART(active);
+    e.preventDefault();
+    const on = toggleFavorite(btn.dataset.save);
+    btn.classList.toggle('on', on);
+    btn.setAttribute('aria-pressed', String(on));
+    btn.innerHTML = HEART(on);
   });
 
-  document.addEventListener('velmont:favorites-changed', renderBadgesAndDrawer);
-  renderBadgesAndDrawer();
+  document.addEventListener('velmont:favorites-changed', render);
+  render();
 
-  async function renderBadgesAndDrawer() {
+  async function render() {
     const ids = getFavoriteIds();
-    document.querySelectorAll('[data-favorites-count]').forEach(b => {
+    document.querySelectorAll('[data-fav-count]').forEach(b => {
       b.textContent = ids.length;
-      b.classList.toggle('is-hidden', ids.length === 0);
+      b.classList.toggle('off', ids.length === 0);
     });
     const body = root.querySelector('[data-fav-body]');
     if (!body) return;
-    if (ids.length === 0) {
-      body.innerHTML = `<div class="cart-empty"><p>Aún no guardas fragancias.</p><a href="/collection.html" class="btn btn--ghost">Ver colección</a></div>`;
+    if (!ids.length) {
+      body.innerHTML = `<div class="bag-empty">
+        <p class="lede">Aún no guardas fragancias.</p>
+        <a href="/collection.html" class="act">Ver la colección</a>
+      </div>`;
       return;
     }
     const products = (await getProducts()).filter(p => ids.includes(p.id));
-    body.innerHTML = `<ul class="cart-lines">
-      ${products.map(p => `
-        <li class="cart-line">
-          <div class="cart-line__thumb">${bottleSVG(p)}</div>
-          <div class="cart-line__info">
-            <p class="cart-line__name">${p.name}</p>
-            <p class="cart-line__family">${p.family}</p>
-          </div>
-          <div class="cart-line__price">
-            <span>${formatCOP(p.price)}</span>
-            <button class="btn btn--tiny btn--primary" data-add-to-cart="${p.id}">Agregar</button>
-            <button class="link-remove" data-fav-remove="${p.id}">Quitar</button>
-          </div>
-        </li>`).join('')}
-    </ul>`;
-    body.querySelectorAll('[data-fav-remove]').forEach(b => b.addEventListener('click', () => removeFavorite(b.dataset.favRemove)));
+    body.innerHTML = products.map(p => `
+      <div class="bag-line">
+        <div>${bottleSVG(p)}</div>
+        <div>
+          <p class="bag-line__name">${p.name}</p>
+          <span class="label">${p.family || ''}</span>
+        </div>
+        <div class="bag-line__right">
+          <span class="price">${formatCOP(p.price)}</span>
+          <button class="mini" data-add="${p.id}">Añadir</button>
+          <button class="mini" data-unsave="${p.id}">Quitar</button>
+        </div>
+      </div>`).join('');
+    body.querySelectorAll('[data-unsave]').forEach(b =>
+      b.addEventListener('click', () => removeFavorite(b.dataset.unsave)));
   }
 }
+
+export { isFavorite };

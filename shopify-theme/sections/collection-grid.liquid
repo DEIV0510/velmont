@@ -1,26 +1,26 @@
-<section class="section" style="padding-bottom:0">
-  <div class="container">
-    <p class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
-    <h1 class="h-section" data-reveal>{{ section.settings.title }}</h1>
-    <p class="lede" style="margin-top:12px" data-reveal>{{ section.settings.subtitle }}</p>
+<section class="band band--tight" data-tone="light" style="padding-top:calc(var(--header-h) + clamp(48px,9vw,140px))">
+  <div class="wrap">
+    <span class="section-index" data-reveal>{{ section.settings.index_label }}</span>
+    <h1 class="display" style="margin-top:28px;max-width:14ch" data-reveal>
+      <span class="line-mask"><span>{{ section.settings.title }}</span></span>
+    </h1>
+    <p class="lede" style="margin-top:28px" data-reveal data-collection-note></p>
   </div>
 </section>
 
-<section class="section">
-  <div class="container">
-    <div class="filter-bar" data-filter-bar></div>
-    <p class="lede" data-empty-state style="display:none">No hay fragancias con esos filtros todavía. Prueba otra combinación.</p>
-    <div class="product-grid" data-collection-grid></div>
-  </div>
+<div class="filters" data-filters style="margin-bottom:clamp(40px,5vw,72px)"></div>
+
+<section style="padding-bottom:var(--band)">
+  <p class="lede wrap" data-empty hidden>No hay fragancias con esa combinación. Prueba con otra.</p>
+  <div class="grid-quiet" data-grid></div>
 </section>
 
 {% schema %}
 {
   "name": "Colección VELMONT",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "Catálogo completo" },
-    { "type": "text", "id": "title", "label": "Título", "default": "Descubre VELMONT" },
-    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Cada fragancia, organizada por género y familia olfativa. Encuentra la tuya o déjate sorprender." }
+    { "type": "text", "id": "index_label", "label": "Índice", "default": "La colección" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Todas las piezas" }
   ],
   "presets": [{ "name": "Colección VELMONT" }]
 }

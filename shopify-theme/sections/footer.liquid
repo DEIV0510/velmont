@@ -1,38 +1,39 @@
-<footer class="site-footer">
-  <div class="container">
-    <div class="site-footer__top">
-      <div class="site-footer__brand">
-        <img src="{{ 'velmont-wordmark.png' | asset_url }}" alt="{{ shop.name }}" width="200" height="44" loading="lazy">
-        <p>{{ section.settings.brand_copy }}</p>
+<footer class="foot" id="contacto">
+  <div class="foot__in">
+    <div class="foot__mark" aria-hidden="true">{{ section.settings.wordmark }}</div>
+    <div class="foot__cols">
+      <div>
+        <h4 class="label">La casa</h4>
+        <p class="fine">{{ section.settings.brand_copy }}</p>
       </div>
       <div>
-        <h4>Navegación</h4>
+        <h4 class="label">Explorar</h4>
         <ul>
           {%- for link in section.settings.nav_menu.links -%}
-            <li><a href="{{ link.url }}" class="link-underline">{{ link.title }}</a></li>
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
           {%- endfor -%}
         </ul>
       </div>
       <div>
-        <h4>Ayuda</h4>
+        <h4 class="label">Ayuda</h4>
         <ul>
           {%- for link in section.settings.help_menu.links -%}
-            <li><a href="{{ link.url }}" class="link-underline">{{ link.title }}</a></li>
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
           {%- endfor -%}
         </ul>
       </div>
-      <div id="contacto">
-        <h4>Contacto</h4>
+      <div>
+        <h4 class="label">Contacto</h4>
         <ul>
-          {%- if section.settings.whatsapp_url != blank -%}<li><a href="{{ section.settings.whatsapp_url }}" class="link-underline">WhatsApp</a></li>{%- endif -%}
-          {%- if section.settings.instagram_url != blank -%}<li><a href="{{ section.settings.instagram_url }}" class="link-underline">Instagram</a></li>{%- endif -%}
-          {%- if section.settings.contact_email != blank -%}<li><a href="mailto:{{ section.settings.contact_email }}" class="link-underline">{{ section.settings.contact_email }}</a></li>{%- endif -%}
+          {%- if section.settings.whatsapp_url != blank -%}<li><a href="{{ section.settings.whatsapp_url }}" target="_blank" rel="noopener">WhatsApp</a></li>{%- endif -%}
+          {%- if section.settings.instagram_url != blank -%}<li><a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener">Instagram</a></li>{%- endif -%}
+          {%- if section.settings.contact_email != blank -%}<li><a href="mailto:{{ section.settings.contact_email }}">{{ section.settings.contact_email }}</a></li>{%- endif -%}
         </ul>
       </div>
     </div>
-    <div class="site-footer__bottom">
-      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}. Todos los derechos reservados.</span>
-      <span>Envíos a toda Colombia · Pagos seguros</span>
+    <div class="foot__base">
+      <span class="label">© {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+      <span class="label">{{ section.settings.place }}</span>
     </div>
   </div>
 </footer>
@@ -41,41 +42,14 @@
 {
   "name": "Footer",
   "settings": [
-    {
-      "type": "textarea",
-      "id": "brand_copy",
-      "label": "Descripción de marca",
-      "default": "Perfumes premium seleccionados para acompañar tu identidad, con envíos a todo Colombia."
-    },
-    {
-      "type": "link_list",
-      "id": "nav_menu",
-      "label": "Menú de navegación",
-      "default": "footer"
-    },
-    {
-      "type": "link_list",
-      "id": "help_menu",
-      "label": "Menú de ayuda",
-      "default": "footer"
-    },
-    {
-      "type": "url",
-      "id": "whatsapp_url",
-      "label": "Enlace de WhatsApp",
-      "default": "https://wa.me/573103608872"
-    },
-    {
-      "type": "url",
-      "id": "instagram_url",
-      "label": "Enlace de Instagram",
-      "default": "https://instagram.com/velmont.fragances"
-    },
-    {
-      "type": "text",
-      "id": "contact_email",
-      "label": "Correo de contacto"
-    }
+    { "type": "text", "id": "wordmark", "label": "Palabra grande", "default": "VELMONT" },
+    { "type": "textarea", "id": "brand_copy", "label": "Descripción", "default": "Perfumería seleccionada para quienes dejan una impresión. Envíos a toda Colombia." },
+    { "type": "link_list", "id": "nav_menu", "label": "Menú explorar", "default": "footer" },
+    { "type": "link_list", "id": "help_menu", "label": "Menú ayuda", "default": "footer" },
+    { "type": "url", "id": "whatsapp_url", "label": "WhatsApp", "default": "https://wa.me/573103608872" },
+    { "type": "url", "id": "instagram_url", "label": "Instagram", "default": "https://instagram.com/velmont.fragances" },
+    { "type": "text", "id": "contact_email", "label": "Correo" },
+    { "type": "text", "id": "place", "label": "Ciudad", "default": "Bogotá · Colombia" }
   ]
 }
 {% endschema %}

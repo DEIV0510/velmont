@@ -1,36 +1,58 @@
-<section class="section" id="ofertas" data-surface="light">
-  <div class="section-head section-head--center container">
-    <p class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
-    <h2 class="h-section" data-reveal>{{ section.settings.title }}</h2>
-  </div>
-  <div class="container offers-grid">
-    <article class="offer-card" data-reveal>
-      <div class="offer-card__content">
-        <p class="eyebrow offer-card__eyebrow">{{ settings.matai_promo_label }}</p>
-        <p class="offer-card__price gold-text">{{ settings.matai_promo_units }} x {{ settings.matai_promo_price | times: 100 | money_without_trailing_zeros }}</p>
-        <p class="offer-card__copy">Combina {{ settings.matai_promo_units }} fragancias {{ settings.matai_promo_label }} elegibles.</p>
-        <a href="{{ routes.all_products_collection_url }}?promo=matai" class="btn btn--primary offer-card__cta">Comprar oferta</a>
+<section id="ediciones">
+  <article class="campaign grain" data-tone="dark" data-campaign="matai">
+    <div class="campaign__texture" aria-hidden="true"></div>
+    <div class="campaign__in">
+      <div>
+        <span class="section-index" data-reveal>{{ section.settings.index_label }}</span>
+        <h2 class="display campaign__title" data-reveal>
+          <span class="line-mask"><span>{{ section.settings.matai_title }}</span></span>
+        </h2>
+        <p class="campaign__line lede" data-reveal style="--reveal-delay:180ms">{{ section.settings.matai_line }}</p>
+        <p class="campaign__price" data-reveal style="--reveal-delay:260ms" data-promo-price="matai">
+          {{ settings.matai_promo_units }} × {{ settings.matai_promo_price | times: 100 | money_without_trailing_zeros }}<sup>COP</sup>
+        </p>
+        <div class="campaign__cta" data-reveal style="--reveal-delay:340ms">
+          <a href="{{ routes.all_products_collection_url }}?promo=matai" class="act">{{ section.settings.cta }}</a>
+        </div>
       </div>
-    </article>
-    <article class="offer-card" data-reveal data-reveal-delay="1">
-      <div class="offer-card__content">
-        <p class="eyebrow offer-card__eyebrow">{{ settings.seleccion_promo_label }}</p>
-        <p class="offer-card__price gold-text">{{ settings.seleccion_promo_units }} x {{ settings.seleccion_promo_price | times: 100 | money_without_trailing_zeros }}</p>
-        <p class="offer-card__copy">Elige {{ settings.seleccion_promo_units }} fragancias participantes.</p>
-        <a href="{{ routes.all_products_collection_url }}?promo=seleccion" class="btn btn--primary offer-card__cta">Comprar oferta</a>
+      <div class="campaign__duo" data-duo="matai" data-reveal="wipe"></div>
+    </div>
+  </article>
+
+  <article class="campaign campaign--flip grain" data-tone="dark" data-campaign="seleccion">
+    <div class="campaign__texture" aria-hidden="true"></div>
+    <div class="campaign__in">
+      <div>
+        <span class="label label--gold" data-reveal>{{ section.settings.seleccion_label }}</span>
+        <h2 class="display campaign__title" data-reveal>
+          <span class="line-mask"><span>{{ section.settings.seleccion_title }}</span></span>
+        </h2>
+        <p class="campaign__line lede" data-reveal style="--reveal-delay:180ms">{{ section.settings.seleccion_line }}</p>
+        <p class="campaign__price" data-reveal style="--reveal-delay:260ms" data-promo-price="seleccion">
+          {{ settings.seleccion_promo_units }} × {{ settings.seleccion_promo_price | times: 100 | money_without_trailing_zeros }}<sup>COP</sup>
+        </p>
+        <div class="campaign__cta" data-reveal style="--reveal-delay:340ms">
+          <a href="{{ routes.all_products_collection_url }}?promo=seleccion" class="act">{{ section.settings.cta }}</a>
+        </div>
       </div>
-    </article>
-  </div>
+      <div class="campaign__duo" data-duo="seleccion" data-reveal="wipe"></div>
+    </div>
+  </article>
 </section>
 
 {% schema %}
 {
-  "name": "Ofertas VELMONT",
+  "name": "Ediciones",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "Ofertas VELMONT" },
-    { "type": "text", "id": "title", "label": "Título", "default": "Dos experiencias, un mismo criterio." },
-    { "type": "paragraph", "content": "Los precios y unidades de cada oferta se configuran en Configuración del tema → 'Promoción MATAI' y 'Promoción Selección VELMONT'. Ahí también defines el tag que hace elegible a un producto." }
+    { "type": "text", "id": "index_label", "label": "Índice", "default": "04 — Ediciones" },
+    { "type": "text", "id": "matai_title", "label": "Título MATAI", "default": "The MATAI Edit" },
+    { "type": "textarea", "id": "matai_line", "label": "Bajada MATAI", "default": "Dos fragancias de la casa MATAI. Una sola firma." },
+    { "type": "text", "id": "seleccion_label", "label": "Etiqueta Dúo", "default": "Edición" },
+    { "type": "text", "id": "seleccion_title", "label": "Título Dúo", "default": "El Dúo VELMONT" },
+    { "type": "textarea", "id": "seleccion_line", "label": "Bajada Dúo", "default": "Dos esencias participantes, elegidas por ti, a un mismo precio." },
+    { "type": "text", "id": "cta", "label": "Botón", "default": "Elegir las dos" },
+    { "type": "paragraph", "content": "Los precios y unidades salen de Configuración del tema → Promoción MATAI / Promoción Selección VELMONT." }
   ],
-  "presets": [{ "name": "Ofertas VELMONT" }]
+  "presets": [{ "name": "Ediciones" }]
 }
 {% endschema %}

@@ -1,100 +1,147 @@
-// VELMONT — loading screen, header, reveal-on-scroll, parallax de hero, menu movil
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// VELMONT — capa de interaccion: carga, header, menu fullscreen, reveals,
+// profundidad del hero. Todo con transform/opacity y respetando reduced-motion.
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-export function initLoadingScreen() {
+export function initLoader() {
   const el = document.querySelector('[data-loading-screen]');
   if (!el) return;
-  const MIN_MS = reduceMotion ? 0 : 700;
-  const start = performance.now();
+  const MIN = reduce ? 0 : 900;
+  const t0 = performance.now();
+  let done = false;
   const finish = () => {
-    const elapsed = performance.now() - start;
-    const wait = Math.max(0, MIN_MS - elapsed);
+    if (done) return;
+    done = true;
+    const wait = Math.max(0, MIN - (performance.now() - t0));
     setTimeout(() => {
-      el.classList.add('is-hidden');
-      document.documentElement.classList.remove('is-loading');
-      setTimeout(() => el.remove(), 700);
+      el.classList.add('out');
+      document.documentElement.classList.remove('no-scroll');
+      setTimeout(() => el.remove(), 900);
     }, wait);
   };
   if (document.readyState === 'complete') finish();
   else window.addEventListener('load', finish, { once: true });
-  // salvavidas: nunca bloquear la pagina mas de 2.5s aunque algo tarde en cargar
-  setTimeout(finish, 2500);
+  setTimeout(finish, 2600); // salvavidas
 }
 
-export function initHeaderScroll() {
-  const header = document.querySelector('[data-header]');
-  if (!header) return;
-  const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
+export function initHeader() {
+  const hdr = document.querySelector('[data-hdr]');
+  if (!hdr) return;
+  const onScroll = () => hdr.classList.toggle('is-stuck', window.scrollY > 40);
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 }
 
-export function initMobileNav() {
-  const toggle = document.querySelector('[data-nav-toggle]');
-  const panel = document.querySelector('[data-nav-panel]');
-  if (!toggle || !panel) return;
-  toggle.addEventListener('click', () => {
-    const open = panel.classList.toggle('is-open');
-    toggle.setAttribute('aria-expanded', String(open));
-    document.documentElement.classList.toggle('no-scroll', open);
-  });
-  panel.querySelectorAll('a, button').forEach(a => a.addEventListener('click', () => {
-    panel.classList.remove('is-open');
-    toggle.setAttribute('aria-expanded', 'false');
+export function initMenu() {
+  const menu = document.querySelector('[data-menu]');
+  if (!menu) return;
+  const open = () => {
+    menu.classList.add('open');
+    document.documentElement.classList.add('no-scroll');
+    document.querySelector('[data-menu-open]')?.setAttribute('aria-expanded', 'true');
+  };
+  const close = () => {
+    menu.classList.remove('open');
     document.documentElement.classList.remove('no-scroll');
-  }));
+    document.querySelector('[data-menu-open]')?.setAttribute('aria-expanded', 'false');
+  };
+  document.querySelector('[data-menu-open]')?.addEventListener('click', open);
+  document.querySelector('[data-menu-close]')?.addEventListener('click', close);
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && menu.classList.contains('open')) close(); });
+
+  bindMenuVisuals();
 }
 
-export function initReveal() {
-  const items = document.querySelectorAll('[data-reveal]');
+/** Se llama de nuevo cuando el catalogo inyecta las imagenes del menu. */
+export function bindMenuVisuals() {
+  const menu = document.querySelector('[data-menu]');
+  if (!menu) return;
+  const visuals = menu.querySelectorAll('[data-menu-visual] figure');
+  if (!visuals.length) return;
+  menu.querySelectorAll('[data-visual]').forEach(link => {
+    if (link.dataset.visualBound) return;
+    link.dataset.visualBound = '1';
+    link.addEventListener('mouseenter', () => {
+      const i = Number(link.dataset.visual);
+      visuals.forEach((f, idx) => f.classList.toggle('on', idx === i));
+    });
+  });
+}
+
+let io = null;
+export function initReveal(scope = document) {
+  const items = scope.querySelectorAll('[data-reveal]:not(.in)');
   if (!items.length) return;
-  if (reduceMotion || !('IntersectionObserver' in window)) {
-    items.forEach(el => el.classList.add('is-revealed'));
+  if (reduce || !('IntersectionObserver' in window)) {
+    items.forEach(el => el.classList.add('in'));
     return;
   }
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-revealed');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+  if (!io) {
+    io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  }
   items.forEach(el => io.observe(el));
 }
 
-export function initHeroParallax() {
-  const hero = document.querySelector('[data-hero-parallax]');
-  if (!hero || reduceMotion) return;
-  const layers = hero.querySelectorAll('[data-parallax-layer]');
+// Profundidad: capas que responden al mouse a distinta velocidad
+export function initDepth() {
+  const hero = document.querySelector('[data-hero]');
+  if (!hero || reduce) return;
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+  const layers = hero.querySelectorAll('[data-depth]');
   if (!layers.length) return;
-  const isCoarse = window.matchMedia('(pointer: coarse)').matches;
-  if (isCoarse) return; // en movil evitamos el listener por consumo/uso de la pantalla
-
   let raf = null;
-  hero.addEventListener('mousemove', (e) => {
+  hero.addEventListener('mousemove', e => {
     if (raf) return;
     raf = requestAnimationFrame(() => {
-      const rect = hero.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      layers.forEach(layer => {
-        const depth = parseFloat(layer.dataset.parallaxLayer) || 0;
-        layer.style.transform = `translate3d(${x * depth}px, ${y * depth}px, 0)`;
+      const r = hero.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      // Solo variables: el transform final se compone en CSS para no pisar
+      // el efecto de scroll que escribe sobre el mismo elemento.
+      layers.forEach(l => {
+        const d = parseFloat(l.dataset.depth) || 0;
+        l.style.setProperty('--px', `${x * d}px`);
+        l.style.setProperty('--py', `${y * d}px`);
       });
       raf = null;
     });
   });
   hero.addEventListener('mouseleave', () => {
-    layers.forEach(layer => { layer.style.transform = 'translate3d(0,0,0)'; });
+    layers.forEach(l => { l.style.setProperty('--px', '0px'); l.style.setProperty('--py', '0px'); });
   });
 }
 
+// El producto del hero se aleja levemente al hacer scroll (escala cinematografica)
+export function initHeroScroll() {
+  const stage = document.querySelector('[data-hero-stage]');
+  if (!stage || reduce) return;
+  let raf = null;
+  const onScroll = () => {
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      const y = window.scrollY;
+      if (y < window.innerHeight * 1.2) {
+        const p = Math.min(1, y / (window.innerHeight || 1));
+        stage.style.setProperty('--scroll-scale', String(1 - p * 0.08));
+        stage.style.setProperty('--scroll-y', `${p * 60}px`);
+      }
+      raf = null;
+    });
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+}
+
 export function initAll() {
-  document.documentElement.classList.add('is-loading');
-  initLoadingScreen();
-  initHeaderScroll();
-  initMobileNav();
+  document.documentElement.classList.add('no-scroll');
+  initLoader();
+  initHeader();
+  initMenu();
   initReveal();
-  initHeroParallax();
+  initDepth();
+  initHeroScroll();
 }

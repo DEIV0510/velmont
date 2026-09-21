@@ -3,131 +3,129 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Perfumes — Colección VELMONT</title>
-<meta name="description" content="Explora la colección completa de fragancias VELMONT: hombre, mujer y unisex, filtradas por familia olfativa.">
+<title>La colección — VELMONT</title>
+<meta name="description" content="La colección completa de VELMONT. Fragancias para él, para ella y sin género, por familia olfativa.">
 <link rel="canonical" href="/collection.html">
 <link rel="icon" href="assets/img/logo/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/img/logo/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/tokens.css">
 <link rel="stylesheet" href="assets/css/base.css">
 <link rel="stylesheet" href="assets/css/components.css">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "VELMONT", "item": "/" },
-    { "@type": "ListItem", "position": 2, "name": "Perfumes", "item": "/collection.html" }
-  ]
-}
-</script>
 </head>
-<body data-header-theme="light">
+<body data-hdr="light" style="background:var(--ivory)">
 
-<header class="site-header" data-header>
-  <div class="container site-header__inner">
-    <nav class="site-header__nav">
-      <a href="/collection.html" class="link-underline">Perfumes</a>
-      <a href="/index.html#finder" class="link-underline">Encuentra tu perfume</a>
-      <a href="/index.html#ofertas" class="link-underline">Ofertas</a>
-      <a href="/index.html#marcas" class="link-underline">Marcas</a>
-      <a href="/index.html#contacto" class="link-underline">Contacto</a>
+<header class="hdr" data-hdr>
+  <div class="hdr__in">
+    <nav class="hdr__nav">
+      <a href="/collection.html">Colección</a>
+      <a href="/index.html#descubre" data-finder-open>Descubre</a>
+      <a href="/index.html#ediciones">Ediciones</a>
+      <a href="/index.html#casa">La casa</a>
     </nav>
-    <a href="/" class="site-header__logo"><img src="assets/img/logo/velmont-wordmark.png" alt="VELMONT"></a>
-    <div class="site-header__actions">
+    <a href="/" class="hdr__mark"><img src="assets/img/logo/velmont-wordmark.png" alt="VELMONT"></a>
+    <div class="hdr__acts">
       <button class="icon-btn" data-search-open aria-label="Buscar">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
       </button>
-      <button class="icon-btn" data-favorites-open aria-label="Favoritos">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 20s-7-4.4-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 5c-2.5 4.6-9.5 9-9.5 9Z"/></svg>
-        <span class="cart-badge is-hidden" data-favorites-count>0</span>
+      <button class="icon-btn" data-fav-open aria-label="Guardados">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 20s-7-4.4-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 5c-2.5 4.6-9.5 9-9.5 9Z"/></svg>
+        <span class="count off" data-fav-count>0</span>
       </button>
-      <button class="icon-btn" data-cart-open aria-label="Carrito">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 4.5 2H2"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor" stroke="none"/><circle cx="17" cy="20" r="1.4" fill="currentColor" stroke="none"/></svg>
-        <span class="cart-badge is-hidden" data-cart-count>0</span>
+      <button class="icon-btn" data-bag-open aria-label="Bolsa">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 7h12l1 14H5z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+        <span class="count off" data-bag-count>0</span>
       </button>
-      <button class="icon-btn nav-toggle" data-nav-toggle aria-label="Abrir menú" aria-expanded="false">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      <button class="icon-btn burger" data-menu-open aria-label="Menú" aria-expanded="false">
+        <span></span><span></span>
       </button>
     </div>
   </div>
 </header>
 
-<div class="nav-panel" data-nav-panel>
-  <button class="icon-btn nav-panel__close" data-nav-toggle aria-label="Cerrar menú">&times;</button>
-  <nav class="nav-panel__links">
-    <a href="/collection.html">Perfumes</a>
-    <a href="/index.html#finder">Encuentra tu perfume</a>
-    <a href="/index.html#ofertas">Ofertas</a>
-    <a href="/index.html#marcas">Marcas</a>
-    <a href="/index.html#contacto">Contacto</a>
-    <button type="button" data-favorites-open>Favoritos</button>
+<div class="menu" data-menu data-tone="dark">
+  <button class="icon-btn menu__close" data-menu-close aria-label="Cerrar menú">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 5l14 14M19 5L5 19"/></svg>
+  </button>
+  <nav class="menu__list" data-menu-list>
+    <a href="/collection.html" data-visual="0"><span class="idx">01</span>Colección</a>
+    <a href="/index.html#descubre" data-finder-open data-visual="1"><span class="idx">02</span>Descubre tu firma</a>
+    <a href="/index.html#ediciones" data-visual="2"><span class="idx">03</span>Ediciones</a>
+    <a href="/index.html#casa" data-visual="3"><span class="idx">04</span>La casa</a>
+    <a href="/index.html#contacto" data-visual="4"><span class="idx">05</span>Contacto</a>
   </nav>
+  <div class="menu__visual" data-menu-visual></div>
+  <div class="menu__foot">
+    <a class="label" href="https://instagram.com/velmont.fragances" target="_blank" rel="noopener">Instagram</a>
+    <a class="label" href="https://wa.me/573103608872" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
 </div>
 
 <main>
-  <section class="section" style="padding-bottom:0">
-    <div class="container">
-      <p class="eyebrow" data-reveal>Catálogo completo</p>
-      <h1 class="h-section" data-reveal>Descubre VELMONT</h1>
-      <p class="lede" style="margin-top:12px" data-reveal>Cada fragancia, organizada por género y familia olfativa. Encuentra la tuya o déjate sorprender.</p>
+  <section class="band band--tight" data-tone="light" style="padding-top:calc(var(--header-h) + clamp(48px,9vw,140px))">
+    <div class="wrap">
+      <span class="section-index" data-reveal>La colección</span>
+      <h1 class="display" style="margin-top:28px;max-width:14ch" data-reveal>
+        <span class="line-mask"><span>Todas las piezas</span></span>
+      </h1>
+      <p class="lede" style="margin-top:28px" data-reveal data-collection-note></p>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="filter-bar" data-filter-bar></div>
-      <p class="lede" data-empty-state style="display:none">No hay fragancias con esos filtros todavía. Prueba otra combinación.</p>
-      <div class="product-grid" data-collection-grid></div>
-    </div>
+  <div class="filters" data-filters style="margin-bottom:clamp(40px,5vw,72px)"></div>
+
+  <section style="padding-bottom:var(--band)">
+    <p class="lede wrap" data-empty hidden>No hay fragancias con esa combinación. Prueba con otra.</p>
+    <div class="grid-quiet" data-grid></div>
   </section>
 </main>
 
-<footer class="site-footer">
-  <div class="container">
-    <div class="site-footer__top">
-      <div class="site-footer__brand">
-        <img src="assets/img/logo/velmont-wordmark.png" alt="VELMONT">
-        <p>Perfumes premium seleccionados para acompañar tu identidad, con envíos a todo Colombia.</p>
+<footer class="foot" id="contacto">
+  <div class="foot__in">
+    <div class="foot__mark" aria-hidden="true">VELMONT</div>
+    <div class="foot__cols">
+      <div>
+        <h4 class="label">La casa</h4>
+        <p class="fine">Perfumería seleccionada para quienes dejan una impresión. Envíos a toda Colombia.</p>
       </div>
       <div>
-        <h4>Navegación</h4>
+        <h4 class="label">Explorar</h4>
         <ul>
-          <li><a href="/collection.html" class="link-underline">Perfumes</a></li>
-          <li><a href="/index.html#finder" class="link-underline">Encuentra tu perfume</a></li>
-          <li><a href="/index.html#ofertas" class="link-underline">Ofertas</a></li>
+          <li><a href="/collection.html">Colección</a></li>
+          <li><a href="/index.html#descubre" data-finder-open>Descubre tu firma</a></li>
+          <li><a href="/index.html#ediciones">Ediciones</a></li>
         </ul>
       </div>
       <div>
-        <h4>Ayuda</h4>
+        <h4 class="label">Ayuda</h4>
         <ul>
-          <li><a href="#" class="link-underline">Envíos</a></li>
-          <li><a href="#" class="link-underline">Cambios y devoluciones</a></li>
-          <li><a href="#" class="link-underline">Preguntas frecuentes</a></li>
+          <li><a href="#">Envíos</a></li>
+          <li><a href="#">Cambios</a></li>
+          <li><a href="#">Preguntas frecuentes</a></li>
         </ul>
       </div>
-      <div id="contacto">
-        <h4>Contacto</h4>
+      <div>
+        <h4 class="label">Contacto</h4>
         <ul>
-          <li><a href="https://wa.me/573103608872?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20VELMONT" class="link-underline" target="_blank" rel="noopener">WhatsApp</a></li>
-          <li><a href="https://instagram.com/velmont.fragances" class="link-underline" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://wa.me/573103608872?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20VELMONT" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="https://instagram.com/velmont.fragances" target="_blank" rel="noopener">Instagram</a></li>
         </ul>
       </div>
     </div>
-    <div class="site-footer__bottom">
-      <span>© 2026 VELMONT Fragances. Todos los derechos reservados.</span>
-      <span>Envíos a toda Colombia · Pagos seguros</span>
+    <div class="foot__base">
+      <span class="label">© 2026 VELMONT Fragances</span>
+      <span class="label">Bogotá · Colombia</span>
     </div>
   </div>
 </footer>
 
-<div data-cart-root></div>
-<div data-favorites-root></div>
+<div data-bag-root></div>
+<div data-saved-root></div>
 <div data-search-root></div>
-<div data-assistant-root></div>
+<div data-advisor-root></div>
+<div data-finder-root></div>
 
 <script type="module" src="assets/js/collection.js"></script>
 </body>

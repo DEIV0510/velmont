@@ -1,13 +1,24 @@
-<section class="section finder-section" id="finder-quiz" data-surface="dark">
-  <div class="container" data-finder-root></div>
+{% comment %}
+  El finder vive como capa a pantalla completa montada por JS en
+  [data-finder-root] (layout/theme.liquid). Esta seccion solo existe para
+  que el cliente pueda colocar un acceso adicional desde el editor.
+{% endcomment %}
+<section class="band band--tight finder-gate" data-tone="dark">
+  <div class="finder-gate__in">
+    <span class="section-index">{{ section.settings.index_label }}</span>
+    <h2 class="h2" style="max-width:16ch">{{ section.settings.title }}</h2>
+    <button class="act" data-finder-open>{{ section.settings.cta }}</button>
+  </div>
 </section>
 
 {% schema %}
 {
-  "name": "Perfume Finder",
+  "name": "Acceso al finder",
   "settings": [
-    { "type": "paragraph", "content": "El cuestionario (género, personalidad, ocasión, intensidad) y sus resultados se generan automáticamente a partir del catálogo — no requiere configuración." }
+    { "type": "text", "id": "index_label", "label": "Índice", "default": "Descubre" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Encuentra tu firma olfativa" },
+    { "type": "text", "id": "cta", "label": "Botón", "default": "Comenzar" }
   ],
-  "presets": [{ "name": "Perfume Finder" }]
+  "presets": [{ "name": "Acceso al finder" }]
 }
 {% endschema %}

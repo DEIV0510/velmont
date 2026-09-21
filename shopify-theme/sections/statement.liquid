@@ -1,0 +1,23 @@
+<section class="band statement" data-tone="light">
+  <div class="statement__grid">
+    <h2 class="display statement__quote" data-reveal>
+      <span class="line-mask"><span>{{ section.settings.line_one }}</span></span>
+      <span class="line-mask" style="--reveal-delay:100ms"><span><em>{{ section.settings.line_two }}</em></span></span>
+    </h2>
+    <div class="statement__aside" data-reveal style="--reveal-delay:260ms">
+      <p class="fine">{{ section.settings.body }}</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Declaración",
+  "settings": [
+    { "type": "text", "id": "line_one", "label": "Línea 1", "default": "La fragancia" },
+    { "type": "text", "id": "line_two", "label": "Línea 2 (cursiva)", "default": "es memoria." },
+    { "type": "textarea", "id": "body", "label": "Párrafo", "default": "Lo último que queda de ti cuando sales de una habitación. En VELMONT seleccionamos piezas para quienes prefieren ser recordados antes que vistos." }
+  ],
+  "presets": [{ "name": "Declaración" }]
+}
+{% endschema %}

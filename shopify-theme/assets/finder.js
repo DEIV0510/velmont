@@ -1,172 +1,178 @@
-// VELMONT — Perfume Finder: quiz de 4 pasos con scoring simple contra el catalogo
-import { getProducts, bottleSVG, formatCOP } from './catalog.js';
+// VELMONT — Descubre tu firma. Experiencia a pantalla completa: una
+// pregunta por pantalla, opciones como tipografia grande, sin radio buttons
+// ni "paso 1 de 4". La logica de scoring contra el catalogo se mantiene.
+import { getProducts, formatCOP } from './catalog.js';
+import { pieceHTML } from './piece.js';
+import { initReveal } from './ui.js';
 
 const STEPS = [
   {
-    key: 'gender', title: '¿PARA QUIÉN BUSCAS?', multi: false,
+    key: 'gender', title: 'Para quién', multi: false,
     options: [
-      { value: 'hombre', label: 'Hombre' },
-      { value: 'mujer', label: 'Mujer' },
-      { value: 'unisex', label: 'Unisex' },
+      { value: 'hombre', label: 'Para él' },
+      { value: 'mujer', label: 'Para ella' },
+      { value: 'unisex', label: 'Sin género' },
     ]
   },
   {
-    key: 'personality', title: '¿QUÉ PERSONALIDAD QUIERES TRANSMITIR?', multi: true, max: 2,
+    key: 'personality', title: 'Cómo quieres ser recordado', multi: true, max: 2,
     options: [
-      { value: 'seductor', label: 'Seductor' },
+      { value: 'misterioso', label: 'Misterioso' },
       { value: 'elegante', label: 'Elegante' },
       { value: 'intenso', label: 'Intenso' },
-      { value: 'fresco', label: 'Fresco' },
-      { value: 'misterioso', label: 'Misterioso' },
+      { value: 'seductor', label: 'Irresistible' },
       { value: 'sofisticado', label: 'Sofisticado' },
-      { value: 'dulce', label: 'Dulce' },
-      { value: 'clasico', label: 'Clásico' },
+      { value: 'fresco', label: 'Luminoso' },
+      { value: 'dulce', label: 'Cálido' },
+      { value: 'clasico', label: 'Atemporal' },
     ]
   },
   {
-    key: 'occasion', title: '¿CUÁNDO LO USARÁS?', multi: false,
+    key: 'occasion', title: 'Dónde lo vas a usar', multi: false,
     options: [
-      { value: 'diario', label: 'Diario' },
-      { value: 'oficina', label: 'Oficina' },
-      { value: 'cita', label: 'Cita' },
-      { value: 'noche', label: 'Noche' },
-      { value: 'evento', label: 'Evento' },
-      { value: 'vacaciones', label: 'Vacaciones' },
+      { value: 'diario', label: 'Todos los días' },
+      { value: 'oficina', label: 'La oficina' },
+      { value: 'cita', label: 'Una cita' },
+      { value: 'noche', label: 'La noche' },
+      { value: 'evento', label: 'Un evento' },
+      { value: 'vacaciones', label: 'El viaje' },
     ]
   },
   {
-    key: 'intensity', title: '¿QUÉ INTENSIDAD PREFIERES?', multi: false,
+    key: 'intensity', title: 'Cuánto quieres que se note', multi: false,
     options: [
-      { value: 'suave', label: 'Suave' },
-      { value: 'media', label: 'Media' },
-      { value: 'intensa', label: 'Intensa' },
+      { value: 'suave', label: 'Apenas un rastro' },
+      { value: 'media', label: 'Lo justo' },
+      { value: 'intensa', label: 'Que no haya duda' },
     ]
   },
 ];
 
-const INTENSITY_ORDER = ['suave', 'media', 'intensa'];
+const ORDER = ['suave', 'media', 'intensa'];
 
-function scoreProduct(product, answers) {
-  let score = 0;
-  if (answers.gender && answers.gender !== 'unisex' && product.gender !== answers.gender && product.gender !== 'unisex') {
-    return -1; // descarta genero incompatible
+function score(product, a) {
+  if (a.gender && a.gender !== 'unisex' && product.gender !== a.gender && product.gender !== 'unisex') return -1;
+  let s = 0;
+  s += (a.personality || []).filter(p => product.personality?.includes(p)).length * 3;
+  if (a.occasion && product.occasion?.includes(a.occasion)) s += 2;
+  if (a.intensity) {
+    const d = Math.abs(ORDER.indexOf(product.intensity) - ORDER.indexOf(a.intensity));
+    s += d === 0 ? 2 : d === 1 ? 1 : 0;
   }
-  const personality = answers.personality || [];
-  score += personality.filter(p => product.personality?.includes(p)).length * 3;
-
-  if (answers.occasion && product.occasion?.includes(answers.occasion)) score += 2;
-
-  if (answers.intensity) {
-    const diff = Math.abs(INTENSITY_ORDER.indexOf(product.intensity) - INTENSITY_ORDER.indexOf(answers.intensity));
-    score += diff === 0 ? 2 : diff === 1 ? 1 : 0;
-  }
-  return score;
+  return s;
 }
 
-export async function getRecommendations(answers, limit = 5) {
+export async function getRecommendations(answers, limit = 4) {
   const products = await getProducts();
-  const scored = products
-    .map(p => ({ product: p, score: scoreProduct(p, answers) }))
-    .filter(s => s.score >= 0)
-    .sort((a, b) => b.score - a.score);
-  return scored.slice(0, limit).map(s => s.product);
+  return products
+    .map(p => ({ p, s: score(p, answers) }))
+    .filter(x => x.s >= 0)
+    .sort((a, b) => b.s - a.s)
+    .slice(0, limit)
+    .map(x => x.p);
 }
 
 export function mountFinder(root) {
-  const state = { stepIndex: 0, answers: { personality: [] } };
+  if (!root) return;
+  root.innerHTML = `
+    <section class="finder grain" data-finder data-tone="dark" aria-hidden="true" aria-label="Descubre tu firma">
+      <div class="finder__progress"><i data-finder-bar></i></div>
+      <div class="finder__bar">
+        <span class="label" data-finder-step></span>
+        <button class="icon-btn" data-finder-close aria-label="Cerrar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 5l14 14M19 5L5 19"/></svg>
+        </button>
+      </div>
+      <div class="finder__body" data-finder-body></div>
+    </section>`;
+
+  const el = root.querySelector('[data-finder]');
+  const body = root.querySelector('[data-finder-body]');
+  const bar = root.querySelector('[data-finder-bar]');
+  const stepLabel = root.querySelector('[data-finder-step]');
+  const state = { i: 0, answers: { personality: [] } };
+
+  const open = () => {
+    el.classList.add('open');
+    el.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('no-scroll');
+    render();
+  };
+  const close = () => {
+    el.classList.remove('open');
+    el.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('no-scroll');
+  };
+  root.querySelector('[data-finder-close]').addEventListener('click', close);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && el.classList.contains('open')) close(); });
+  document.querySelectorAll('[data-finder-open]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); open(); }));
 
   function render() {
-    const step = STEPS[state.stepIndex];
-    const progressPct = Math.round(((state.stepIndex) / STEPS.length) * 100);
+    const step = STEPS[state.i];
+    bar.style.width = `${(state.i / STEPS.length) * 100}%`;
+    stepLabel.textContent = `${String(state.i + 1).padStart(2, '0')} / ${String(STEPS.length).padStart(2, '0')}`;
 
-    root.innerHTML = `
-      <div class="finder">
-        <div class="finder__progress"><div class="finder__progress-fill" style="width:${progressPct}%"></div></div>
-        <p class="finder__step-label">Paso ${state.stepIndex + 1} de ${STEPS.length}</p>
-        <h3 class="finder__title">${step.title}</h3>
-        <div class="finder__options" data-multi="${step.multi}">
-          ${step.options.map(o => `
-            <button type="button" class="finder__option" data-value="${o.value}">
-              <span>${o.label}</span>
-            </button>`).join('')}
-        </div>
-        ${step.multi ? '<button type="button" class="btn btn--primary finder__continue" data-continue disabled>Continuar</button>' : ''}
-        ${state.stepIndex > 0 ? '<button type="button" class="finder__back" data-back>← Atrás</button>' : ''}
-      </div>
-    `;
-
-    const optionEls = root.querySelectorAll('.finder__option');
     const current = state.answers[step.key];
-    optionEls.forEach(el => {
-      const val = el.dataset.value;
-      const isSelected = step.multi ? (current || []).includes(val) : current === val;
-      el.classList.toggle('is-selected', isSelected);
-      el.addEventListener('click', () => {
+    body.innerHTML = `
+      <h2 class="display finder__q" data-reveal>${step.title}</h2>
+      <div class="finder__opts">
+        ${step.options.map((o, i) => {
+          const on = step.multi ? (current || []).includes(o.value) : current === o.value;
+          return `<button class="finder__opt ${on ? 'on' : ''}" data-val="${o.value}" data-reveal style="--reveal-delay:${60 + i * 45}ms">${o.label}</button>`;
+        }).join('')}
+      </div>
+      <div class="finder__foot" data-reveal style="--reveal-delay:420ms">
+        ${step.multi ? '<button class="act" data-next>Continuar</button>' : ''}
+        ${state.i > 0 ? '<button class="link" data-back>Atrás</button>' : ''}
+        ${step.multi ? '<span class="label">Elige hasta dos</span>' : ''}
+      </div>`;
+
+    body.querySelectorAll('.finder__opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const v = btn.dataset.val;
         if (step.multi) {
           const arr = state.answers[step.key] || [];
-          if (arr.includes(val)) {
-            state.answers[step.key] = arr.filter(v => v !== val);
-          } else if (arr.length < (step.max || 99)) {
-            state.answers[step.key] = [...arr, val];
-          }
+          if (arr.includes(v)) state.answers[step.key] = arr.filter(x => x !== v);
+          else if (arr.length < (step.max || 99)) state.answers[step.key] = [...arr, v];
           render();
         } else {
-          state.answers[step.key] = val;
+          state.answers[step.key] = v;
           advance();
         }
       });
     });
-
-    const continueBtn = root.querySelector('[data-continue]');
-    if (continueBtn) {
-      continueBtn.disabled = (state.answers[step.key] || []).length === 0;
-      continueBtn.addEventListener('click', advance);
+    const next = body.querySelector('[data-next]');
+    if (next) {
+      next.disabled = (state.answers[step.key] || []).length === 0;
+      next.addEventListener('click', advance);
     }
-    const backBtn = root.querySelector('[data-back]');
-    if (backBtn) backBtn.addEventListener('click', () => { state.stepIndex--; render(); });
+    body.querySelector('[data-back]')?.addEventListener('click', () => { state.i--; render(); });
+    initReveal(body);
   }
 
   async function advance() {
-    if (state.stepIndex < STEPS.length - 1) {
-      state.stepIndex++;
-      render();
-    } else {
-      await renderResults();
-    }
-  }
+    if (state.i < STEPS.length - 1) { state.i++; render(); return; }
+    bar.style.width = '100%';
+    stepLabel.textContent = `${String(STEPS.length).padStart(2, '0')} / ${String(STEPS.length).padStart(2, '0')}`;
+    body.innerHTML = `<h2 class="display finder__q" data-reveal>Leyendo tu perfil…</h2>`;
+    initReveal(body);
 
-  async function renderResults() {
-    root.innerHTML = `<div class="finder finder--loading"><p>Buscando tu perfil olfativo…</p></div>`;
-    const recs = await getRecommendations(state.answers, 5);
-    root.innerHTML = `
-      <div class="finder finder--results">
-        <p class="finder__step-label">Tu perfil olfativo</p>
-        <h3 class="finder__title">${recs.length} fragancias para ti</h3>
-        <ul class="finder-results">
-          ${recs.map(p => `
-            <li class="finder-result">
-              <div class="finder-result__thumb">${bottleSVG(p)}</div>
-              <div class="finder-result__info">
-                <p class="finder-result__family">${p.family}</p>
-                <p class="finder-result__name">${p.name}</p>
-                <p class="finder-result__desc">${p.description}</p>
-                <p class="finder-result__price">${formatCOP(p.price)}</p>
-              </div>
-              <div class="finder-result__actions">
-                <a class="btn btn--ghost btn--tiny" href="/product.html?slug=${p.slug}">Descubrir</a>
-                <button class="btn btn--primary btn--tiny" data-add-to-cart="${p.id}">Agregar</button>
-              </div>
-            </li>`).join('')}
-        </ul>
-        <button type="button" class="finder__restart" data-restart>Empezar de nuevo</button>
-      </div>
-    `;
-    root.querySelector('[data-restart]').addEventListener('click', () => {
-      state.stepIndex = 0;
-      state.answers = { personality: [] };
-      render();
+    const recs = await getRecommendations(state.answers, 4);
+    body.innerHTML = `
+      <span class="section-index" data-reveal>Tu firma olfativa</span>
+      <h2 class="display finder__q" data-reveal style="--reveal-delay:80ms">${recs.length ? 'Esto te define' : 'Sin coincidencias'}</h2>
+      ${recs.length ? `<div class="finder__results">${recs.map(p => `<div class="finder__result">${pieceHTML(p, { reveal: false })}</div>`).join('')}</div>` : '<p class="lede">Prueba con otra combinación.</p>'}
+      <div class="finder__foot" data-reveal style="--reveal-delay:300ms">
+        <a class="act" href="/collection.html">Ver toda la colección</a>
+        <button class="link" data-restart>Empezar de nuevo</button>
+      </div>`;
+    body.querySelector('[data-restart]')?.addEventListener('click', () => {
+      state.i = 0; state.answers = { personality: [] }; render();
     });
+    initReveal(body);
   }
 
-  render();
+  return { open, close };
 }
+
+export { formatCOP };

@@ -136,18 +136,16 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
   pointer-events: none;
 }
 
-/* La tipografia gigante ES el fondo: se apoya en el borde inferior */
+/* Las letras del logo oficial como fondo, apoyadas en el borde inferior.
+   Imagen (no texto) para respetar la marca y evitar el text-stroke roto. */
 .hero__wordmark {
-  position: absolute; z-index: 1; left: 50%; bottom: -0.1em;
+  position: absolute; z-index: 1; left: 50%; bottom: clamp(18px, 3vh, 40px);
   transform: translateX(-50%);
-  font-family: var(--font-display);
-  font-size: clamp(3.2rem, 15.5vw, 16rem);
-  line-height: 0.76; letter-spacing: 0.02em;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(244,241,234,0.13);
+  width: min(92vw, 1500px);
+  opacity: 0.075;
   pointer-events: none; user-select: none;
-  white-space: nowrap;
 }
+.hero__wordmark img { width: 100%; height: auto; }
 
 .hero__stage {
   position: absolute; z-index: 2;
@@ -224,7 +222,7 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
     min-height: auto;
   }
   .hero__stage { width: min(56vw, 250px); right: -4vw; bottom: 6vh; }
-  .hero__wordmark { font-size: 21vw; bottom: 1vh; opacity: 0.75; }
+  .hero__wordmark { width: 94vw; bottom: 2vh; opacity: 0.09; }
   .hero__meta { display: none; }
   .hero__scroll { left: var(--gutter); right: auto; }
   .hero__actions .act { padding: 16px 26px; }
@@ -463,12 +461,14 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 /* ===================== FOOTER ===================== */
 .foot { background: var(--noir); color: var(--stone); padding-block: clamp(64px, 9vw, 130px) var(--s7); }
 .foot__in { padding-inline: var(--gutter); }
+/* El cierre de la pagina firma con el logo oficial, no con la palabra
+   re-tipografiada: text-stroke sobre una fuente variable traza los
+   contornos internos superpuestos y rompe las letras. */
 .foot__mark {
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 15vw, 14rem); line-height: 0.8; letter-spacing: -0.04em;
-  color: transparent; -webkit-text-stroke: 1px rgba(244,241,234,0.14);
-  margin-bottom: clamp(40px, 6vw, 90px); user-select: none;
+  width: min(100%, 820px);
+  margin-bottom: clamp(56px, 8vw, 120px);
 }
+.foot__mark img { width: 100%; height: auto; opacity: 0.92; }
 .foot__cols { display: grid; gap: clamp(32px, 4vw, 60px); grid-template-columns: repeat(2, 1fr); }
 @media (min-width: 860px) { .foot__cols { grid-template-columns: 1.3fr repeat(3, 0.9fr); } }
 .foot h4 { color: var(--ivory); margin-bottom: var(--s4); }

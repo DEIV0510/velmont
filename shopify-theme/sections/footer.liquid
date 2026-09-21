@@ -1,6 +1,6 @@
 <footer class="foot" id="contacto">
   <div class="foot__in">
-    <div class="foot__mark" aria-hidden="true">{{ section.settings.wordmark }}</div>
+    <div class="foot__mark"><img src="{{ 'velmont-wordmark.webp' | asset_url }}" alt="{{ shop.name }}" width="1550" height="343" loading="lazy"></div>
     <div class="foot__cols">
       <div>
         <h4 class="label">La casa</h4>
@@ -42,7 +42,6 @@
 {
   "name": "Footer",
   "settings": [
-    { "type": "text", "id": "wordmark", "label": "Palabra grande", "default": "VELMONT" },
     { "type": "textarea", "id": "brand_copy", "label": "Descripción", "default": "Perfumería seleccionada para quienes dejan una impresión. Envíos a toda Colombia." },
     { "type": "link_list", "id": "nav_menu", "label": "Menú explorar", "default": "footer" },
     { "type": "link_list", "id": "help_menu", "label": "Menú ayuda", "default": "footer" },

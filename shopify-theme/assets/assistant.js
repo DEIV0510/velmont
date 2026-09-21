@@ -145,7 +145,10 @@ const CHIPS = ['Algo intenso para la noche', 'Fresco para el día', 'Es un regal
 export function mountAssistant(root) {
   if (!root) return;
   root.innerHTML = `
-    <button class="advisor-open" data-advisor-open aria-label="Abrir asesor"><i></i><span>Asesor</span></button>
+    <button class="advisor-open" data-advisor-open aria-label="Abrir asesor">
+      <i></i><span>Asesor</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8M8 13h5"/></svg>
+    </button>
     <div class="advisor" data-advisor aria-hidden="true">
       <header class="advisor__head">
         <div>

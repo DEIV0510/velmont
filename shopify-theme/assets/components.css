@@ -663,3 +663,131 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
   .advisor__form button { min-height: 48px; }
   .finder__opt { min-height: 48px; }
 }
+
+/* ==========================================================================
+   CAPA MOVIL — experiencia diseñada para el celular, no el escritorio
+   apilado. Va al final del archivo para ganar la cascada.
+   ========================================================================== */
+
+/* --- Galeria deslizable de la coleccion (en vez de 6 piezas en columna) --- */
+.swipe-hint { display: none; }
+@media (max-width: 859px) {
+  .composition {
+    display: flex; gap: 14px;
+    overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter);
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+  .composition::-webkit-scrollbar { display: none; }
+  .composition > * { flex: 0 0 76%; margin-top: 0 !important; scroll-snap-align: start; }
+  .composition > *:nth-child(even) { flex-basis: 64%; }
+
+  .swipe-hint {
+    display: flex; align-items: center; gap: var(--s4);
+    padding: var(--s5) var(--gutter) 0;
+  }
+  .swipe-hint i { flex: 1; height: 1px; background: var(--hairline-strong); position: relative; overflow: hidden; }
+  .swipe-hint b {
+    position: absolute; inset: 0; background: var(--gold);
+    transform-origin: left; transform: scaleX(var(--p, 0.18));
+    transition: transform 120ms linear;
+  }
+}
+
+/* --- Campañas: en movil el texto siempre va primero --- */
+@media (max-width: 899px) {
+  .campaign--flip .campaign__in > *:first-child { order: 0; }
+  .campaign { min-height: 0; }
+  .campaign__duo figure { width: 38vw; }
+}
+
+/* --- Finder tactil: filas completas con filete, no palabras sueltas --- */
+@media (max-width: 760px) {
+  .finder__body { align-content: start; padding-top: var(--s6); padding-bottom: 120px; gap: var(--s6); }
+  .finder__opts { display: grid; gap: 0; max-width: none; width: 100%; }
+  .finder__opt {
+    display: flex; justify-content: space-between; align-items: center;
+    width: 100%; padding: 14px 0; min-height: 60px;
+    font-size: 1.65rem; border-bottom: 1px solid var(--hairline);
+  }
+  .finder__opt::before { content: none; }
+  .finder__opt:hover { transform: none; }
+  .finder__opt.on { color: var(--ivory); }
+  .finder__opt.on::after {
+    position: static; content: ''; width: 8px; height: 8px; border-radius: 999px;
+    background: var(--gold); flex: none;
+  }
+  /* Continuar siempre alcanzable con el pulgar */
+  .finder__foot {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 3;
+    padding: var(--s4) var(--gutter) calc(var(--s4) + env(safe-area-inset-bottom));
+    background: linear-gradient(180deg, rgba(8,8,10,0) 0%, var(--noir) 38%);
+  }
+  .finder__foot .act { flex: 1; justify-content: center; }
+  .finder__results { grid-template-columns: repeat(2, 1fr); gap: var(--s5) 14px; }
+}
+
+/* --- Ficha de producto: el precio asoma sobre el pliegue --- */
+@media (max-width: 899px) {
+  .pdp__stage { min-height: 0; height: 58svh; }
+  .pdp__stage svg { width: min(46%, 220px); }
+  .pdp__info { padding-top: var(--s7); padding-bottom: var(--s8); }
+  .pdp__name { font-size: clamp(2.2rem, 10vw, 3rem); }
+}
+
+/* --- Barra de compra fija (movil): aparece cuando el boton principal sale
+       de pantalla, para que comprar nunca quede a mas de un toque --- */
+.buybar { display: none; }
+@media (max-width: 899px) {
+  .buybar {
+    display: flex; align-items: center; gap: var(--s4);
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: calc(var(--z-drawer) - 1);
+    padding: 12px var(--gutter) calc(12px + env(safe-area-inset-bottom));
+    background: rgba(244,241,234,0.94);
+    backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-top: 1px solid var(--hairline);
+    color: var(--ink);
+    transform: translateY(105%);
+    transition: transform var(--t-base) var(--ease-out);
+  }
+  .buybar.on { transform: none; }
+  .buybar__meta { flex: 1; min-width: 0; display: grid; gap: 2px; }
+  .buybar__name { font-family: var(--font-display); font-size: 1.05rem; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .buybar .act { padding: 14px 22px; flex: none; }
+}
+
+/* --- Asesor en movil: boton circular reconocible, no un cuadro con un punto --- */
+/* El default va ANTES del bloque movil: si quedara despues, lo pisaria. */
+.advisor-open svg { display: none; }
+@media (max-width: 640px) {
+  .advisor-open {
+    width: 52px; height: 52px; padding: 0; border-radius: 999px;
+    justify-content: center; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom));
+    background: var(--noir); color: var(--ivory);
+    border: 1px solid rgba(201,168,103,0.45);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+    transition: transform var(--t-base) var(--ease-out), bottom var(--t-base) var(--ease-out);
+  }
+  .advisor-open i { display: none; }
+  .advisor-open svg { display: block; }
+  .advisor { bottom: calc(80px + env(safe-area-inset-bottom)); }
+}
+
+/* Con la barra de compra a la vista (hasta 899px, tablet incluida) el asesor
+   sube por encima de ella: nunca tapa el boton de anadir. */
+@media (max-width: 899px) {
+  .advisor-open { transition: transform var(--t-base) var(--ease-out), bottom var(--t-base) var(--ease-out); }
+  body.has-buybar .advisor-open { bottom: calc(84px + env(safe-area-inset-bottom)); }
+  body.has-buybar .advisor { bottom: calc(148px + env(safe-area-inset-bottom)); }
+}
+
+/* Ficha: el escenario negro ocupa todo el ancho en movil y la columna
+   izquierda en escritorio. Lo que el header tenga encima va en marfil hasta
+   que se fija con su propio fondo claro. */
+@media (max-width: 899px) {
+  body[data-page="product"] .hdr:not(.is-stuck) { color: var(--ivory); }
+}
+@media (min-width: 900px) {
+  body[data-page="product"] .hdr:not(.is-stuck) .hdr__nav { color: var(--ivory); }
+}

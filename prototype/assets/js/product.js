@@ -1,4 +1,4 @@
-import { initAll, initReveal, bindMenuVisuals } from './ui.js';
+import { initAll, initReveal, bindMenuVisuals, bindBuyBar } from './ui.js';
 import { getProducts, getProductBySlug, bottleSVG, formatCOP } from './catalog.js';
 import { mountCartDrawer, openCart, showToast } from './cart-ui.js';
 import { mountFavoritesDrawer } from './favorites-ui.js';
@@ -78,11 +78,22 @@ const AXIS_LABEL = { dulce: 'Dulce', fresco: 'Fresco', intenso: 'Intenso', amade
   syncSave();
   saveBtn.addEventListener('click', () => { toggleFavorite(product.id); syncSave(); });
 
-  document.querySelector('[data-pdp-add]').addEventListener('click', () => {
+  const add = () => {
     addToCart(product.id, 1);
     showToast('Añadido a tu selección');
     openCart();
-  });
+  };
+  const mainAdd = document.querySelector('[data-pdp-add]');
+  mainAdd.addEventListener('click', add);
+
+  // Barra de compra fija en movil
+  const bar = document.querySelector('[data-buybar]');
+  if (bar) {
+    bar.querySelector('[data-buybar-name]').textContent = product.name;
+    bar.querySelector('[data-buybar-price]').textContent = formatCOP(product.price);
+    bar.querySelector('[data-buybar-add]').addEventListener('click', add);
+    bindBuyBar(mainAdd, bar);
+  }
 
   const related = products
     .filter(p => p.id !== product.id)

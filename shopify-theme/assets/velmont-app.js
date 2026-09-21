@@ -3,7 +3,7 @@
 // Importa el resto de modulos con rutas relativas (mismo directorio /assets)
 // para que exista UNA sola instancia de cada modulo — cargarlos ademas con
 // <script src> duplicaria el estado del carrito.
-import { initAll, initReveal, bindMenuVisuals } from './ui.js';
+import { initAll, initReveal, bindMenuVisuals, bindSwipeHint, bindBuyBar } from './ui.js';
 import { getProducts, getProductBySlug, getCollections, bottleSVG, formatCOP } from './catalog.js';
 import { mountCartDrawer, openCart, showToast } from './cart-ui.js';
 import { mountFavoritesDrawer } from './favorites-ui.js';
@@ -61,6 +61,8 @@ const FILTERS = [
     const featured = products.filter(p => p.featured);
     const picks = (featured.length >= 6 ? featured : [...featured, ...products.filter(p => !p.featured)]).slice(0, 6);
     composition.innerHTML = picks.map(p => pieceHTML(p)).join('');
+    // En movil la composicion es una galeria deslizable con contador
+    bindSwipeHint(composition, document.querySelector('[data-swipe-hint]'));
   }
 
   for (const rule of collections.filter(c => c.kind === 'promo')) {
@@ -141,13 +143,21 @@ const FILTERS = [
       }
 
       // El form tiene fallback sin JS; con JS usamos la Cart AJAX API + bolsa lateral
-      const addBtn = document.querySelector('[data-pdp-add]');
-      if (addBtn) addBtn.addEventListener('click', (e) => {
+      const add = (e) => {
         e.preventDefault();
         addToCart(product.id, 1);
         showToast('Añadido a tu selección');
         openCart();
-      });
+      };
+      const addBtn = document.querySelector('[data-pdp-add]');
+      if (addBtn) addBtn.addEventListener('click', add);
+
+      // Barra de compra fija en movil (nombre y precio ya vienen de Liquid)
+      const buybar = document.querySelector('[data-buybar]');
+      if (buybar && addBtn) {
+        buybar.querySelector('[data-buybar-add]')?.addEventListener('click', add);
+        bindBuyBar(addBtn, buybar);
+      }
 
       const related = document.querySelector('[data-related]');
       if (related) {

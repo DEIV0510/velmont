@@ -2,29 +2,51 @@
 // profundidad del hero. Todo con transform/opacity y respetando reduced-motion.
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// La pantalla de carga NO bloquea el scroll: si lo hiciera, cualquier fallo
+// (una pagina sin loader, un error de JS, temporizadores frenados en una
+// pestaña en segundo plano) dejaria la pagina atrapada sin poder desplazarse.
+// Solo aparece en la primera visita de la sesion, como pide el brief.
+const LOADER_KEY = 'velmont_intro_seen';
+
 export function initLoader() {
   const el = document.querySelector('[data-loading-screen]');
   if (!el) return;
-  const MIN = reduce ? 0 : 900;
+
+  let seen = false;
+  try { seen = sessionStorage.getItem(LOADER_KEY) === '1'; } catch { /* modo privado */ }
+  if (seen || reduce) { el.remove(); return; }
+  try { sessionStorage.setItem(LOADER_KEY, '1'); } catch { /* modo privado */ }
+
+  const MIN = 900;
   const t0 = performance.now();
   let done = false;
+  const hide = () => {
+    el.classList.add('out');
+    setTimeout(() => el.remove(), 900);
+  };
   const finish = () => {
     if (done) return;
     done = true;
-    const wait = Math.max(0, MIN - (performance.now() - t0));
-    setTimeout(() => {
-      el.classList.add('out');
-      document.documentElement.classList.remove('no-scroll');
-      setTimeout(() => el.remove(), 900);
-    }, wait);
+    setTimeout(hide, Math.max(0, MIN - (performance.now() - t0)));
   };
   if (document.readyState === 'complete') finish();
   else window.addEventListener('load', finish, { once: true });
   setTimeout(finish, 2600); // salvavidas
+
+  // Pestaña abierta en segundo plano: el navegador frena los temporizadores.
+  // Al volver a ella, la intro no debe seguir tapando la pagina.
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && document.readyState === 'complete') {
+      done = true;
+      hide();
+    }
+  }, { once: true });
 }
 
 export function initHeader() {
-  const hdr = document.querySelector('[data-hdr]');
+  // header[...] y no [data-hdr] a secas: el <body> de las paginas claras
+  // tambien lleva data-hdr="light" y va primero en el documento.
+  const hdr = document.querySelector('header[data-hdr]');
   if (!hdr) return;
   const onScroll = () => hdr.classList.toggle('is-stuck', window.scrollY > 40);
   onScroll();
@@ -136,8 +158,55 @@ export function initHeroScroll() {
   window.addEventListener('scroll', onScroll, { passive: true });
 }
 
+/**
+ * Indicador de una galeria deslizable (movil): filete de progreso + contador
+ * "02 / 06" segun la pieza que quedo mas cerca del borde izquierdo.
+ */
+export function bindSwipeHint(scroller, hint) {
+  if (!scroller || !hint) return;
+  const count = hint.querySelector('[data-swipe-count]');
+  const total = scroller.children.length;
+  let raf = null;
+  const update = () => {
+    raf = null;
+    const max = scroller.scrollWidth - scroller.clientWidth;
+    if (max <= 0) return;
+    const p = scroller.scrollLeft / max;
+    hint.style.setProperty('--p', String(Math.max(0.12, p)));
+    const left = scroller.getBoundingClientRect().left;
+    let idx = 0, best = Infinity;
+    [...scroller.children].forEach((el, i) => {
+      const d = Math.abs(el.getBoundingClientRect().left - left);
+      if (d < best) { best = d; idx = i; }
+    });
+    // La ultima pieza nunca llega al borde izquierdo: al tope, es la ultima
+    if (scroller.scrollLeft >= max - 2) idx = total - 1;
+    if (count) count.textContent = `${String(idx + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+  };
+  scroller.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+  // Garantiza el estado final exacto aunque se pierda un frame del rAF
+  scroller.addEventListener('scrollend', update);
+  update();
+}
+
+/**
+ * Barra de compra fija (movil). Se muestra siempre que el boton principal
+ * NO este en pantalla — antes de llegar a el o despues de pasarlo — asi
+ * comprar nunca queda a mas de un toque y nunca se ven dos botones a la vez.
+ */
+export function bindBuyBar(mainButton, bar) {
+  if (!mainButton || !bar || !('IntersectionObserver' in window)) return;
+  const btn = bar.querySelector('button');
+  const set = (on) => {
+    bar.classList.toggle('on', on);
+    bar.setAttribute('aria-hidden', String(!on));
+    if (btn) btn.tabIndex = on ? 0 : -1;
+    document.body.classList.toggle('has-buybar', on && window.matchMedia('(max-width: 899px)').matches);
+  };
+  new IntersectionObserver(([e]) => set(!e.isIntersecting), { threshold: 0 }).observe(mainButton);
+}
+
 export function initAll() {
-  document.documentElement.classList.add('no-scroll');
   initLoader();
   initHeader();
   initMenu();

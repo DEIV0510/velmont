@@ -27,7 +27,7 @@
 
 {{ content_for_header }}
 </head>
-<body{% unless template.name == 'index' %} data-hdr="light" style="background:var(--ivory)"{% endunless %}>
+<body{% unless template.name == 'index' %} data-hdr="light" style="background:var(--ivory)"{% endunless %}{% if template.name == 'product' %} data-page="product"{% endif %}>
 
 <div data-loading-screen>
   <div style="text-align:center">

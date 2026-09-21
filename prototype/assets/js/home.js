@@ -1,4 +1,4 @@
-import { initAll, initReveal, bindMenuVisuals } from './ui.js';
+import { initAll, initReveal, bindMenuVisuals, bindSwipeHint } from './ui.js';
 import { getProducts, getCollections, bottleSVG, formatCOP } from './catalog.js';
 import { mountCartDrawer } from './cart-ui.js';
 import { mountFavoritesDrawer } from './favorites-ui.js';
@@ -30,6 +30,7 @@ mountFinder(document.querySelector('[data-finder-root]'));
     const featured = products.filter(p => p.featured);
     const picks = (featured.length >= 6 ? featured : [...featured, ...products.filter(p => !p.featured)]).slice(0, 6);
     composition.innerHTML = picks.map(p => pieceHTML(p)).join('');
+    bindSwipeHint(composition, document.querySelector('[data-swipe-hint]'));
   }
 
   // --- Campañas: el duo de cada edicion, con precio real del catalogo ---

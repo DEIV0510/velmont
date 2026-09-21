@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/css/base.css">
 <link rel="stylesheet" href="assets/css/components.css">
 </head>
-<body data-hdr="light" style="background:var(--ivory)">
+<body data-hdr="light" data-page="product" style="background:var(--ivory)">
 
 <header class="hdr" data-hdr>
   <div class="hdr__in">
@@ -148,6 +148,14 @@
     </div>
   </div>
 </footer>
+
+<div class="buybar" data-buybar aria-hidden="true">
+  <div class="buybar__meta">
+    <span class="buybar__name" data-buybar-name></span>
+    <span class="price" data-buybar-price></span>
+  </div>
+  <button class="act act--solid" data-buybar-add tabindex="-1">Añadir</button>
+</div>
 
 <div data-bag-root></div>
 <div data-saved-root></div>

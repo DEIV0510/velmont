@@ -34,6 +34,15 @@
   </div>
 </section>
 
+{%- comment -%} Barra de compra fija en movil: aparece cuando el boton principal sale de pantalla {%- endcomment -%}
+<div class="buybar" data-buybar aria-hidden="true">
+  <div class="buybar__meta">
+    <span class="buybar__name">{{ product.title }}</span>
+    <span class="price">{{ product.selected_or_first_available_variant.price | money }}</span>
+  </div>
+  <button type="button" class="act act--solid" data-buybar-add tabindex="-1">Añadir</button>
+</div>
+
 {% schema %}
 {
   "name": "Ficha de producto",

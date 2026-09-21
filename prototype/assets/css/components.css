@@ -461,14 +461,21 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 /* ===================== FOOTER ===================== */
 .foot { background: var(--noir); color: var(--stone); padding-block: clamp(64px, 9vw, 130px) var(--s7); }
 .foot__in { padding-inline: var(--gutter); }
-/* El cierre de la pagina firma con el logo oficial, no con la palabra
-   re-tipografiada: text-stroke sobre una fuente variable traza los
-   contornos internos superpuestos y rompe las letras. */
-.foot__mark {
-  width: min(100%, 820px);
-  margin-bottom: clamp(56px, 8vw, 120px);
+/* Sello del footer: el monograma circular oficial entre dos filetes, que
+   repiten el motivo "—— FRAGANCES ——" del propio logo. 88px en escritorio:
+   por debajo, en pantallas 1x, el anillo del monograma se pierde. */
+.foot__seal {
+  display: flex; align-items: center; gap: clamp(20px, 3vw, 44px);
+  margin-bottom: clamp(56px, 7vw, 104px);
 }
-.foot__mark img { width: 100%; height: auto; opacity: 0.92; }
+.foot__seal-line { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(201,168,103,0) 0%, rgba(201,168,103,0.42) 100%); }
+.foot__seal-line:last-child { background: linear-gradient(90deg, rgba(201,168,103,0.42) 0%, rgba(201,168,103,0) 100%); }
+.foot__seal a { display: block; flex: none; transition: opacity var(--t-base) var(--ease-out); }
+.foot__seal a:hover { opacity: 0.78; }
+.foot__seal img { width: 88px; height: 88px; }
+@media (max-width: 760px) {
+  .foot__seal img { width: 72px; height: 72px; }
+}
 .foot__cols { display: grid; gap: clamp(32px, 4vw, 60px); grid-template-columns: repeat(2, 1fr); }
 @media (min-width: 860px) { .foot__cols { grid-template-columns: 1.3fr repeat(3, 0.9fr); } }
 .foot h4 { color: var(--ivory); margin-bottom: var(--s4); }

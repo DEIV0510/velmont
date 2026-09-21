@@ -1,6 +1,10 @@
 <footer class="foot" id="contacto">
   <div class="foot__in">
-    <div class="foot__mark"><img src="{{ 'velmont-wordmark.webp' | asset_url }}" alt="{{ shop.name }}" width="1550" height="343" loading="lazy"></div>
+    <div class="foot__seal">
+      <span class="foot__seal-line" aria-hidden="true"></span>
+      <a href="{{ routes.root_url }}" aria-label="{{ shop.name }} — inicio"><img src="{{ 'velmont-seal.webp' | asset_url }}" alt="{{ shop.name }}" width="88" height="88" loading="lazy"></a>
+      <span class="foot__seal-line" aria-hidden="true"></span>
+    </div>
     <div class="foot__cols">
       <div>
         <h4 class="label">La casa</h4>

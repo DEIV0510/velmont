@@ -1,5 +1,7 @@
 // VELMONT — capa de interaccion: carga, header, menu fullscreen, reveals,
 // profundidad del hero. Todo con transform/opacity y respetando reduced-motion.
+import { initCursor, initMagnetic, initWordReveal, initPdpTilt, initReel } from './motion.js';
+
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // La pantalla de carga NO bloquea el scroll: si lo hiciera, cualquier fallo
@@ -210,7 +212,12 @@ export function initAll() {
   initLoader();
   initHeader();
   initMenu();
+  initWordReveal();  // antes de initReveal(): reparte el texto en palabras
   initReveal();
   initDepth();
   initHeroScroll();
+  initCursor();
+  initMagnetic();
+  initPdpTilt();
+  initReel();
 }

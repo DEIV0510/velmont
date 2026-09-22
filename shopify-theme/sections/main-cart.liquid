@@ -1,35 +1,52 @@
-<section class="section" data-surface="light">
-  <div class="container" style="max-width:720px">
-    <h1 class="h-section" style="margin-bottom:32px">Tu selección VELMONT</h1>
+<!-- Pagina nativa /cart de Shopify: solo se ve si alguien navega ahi
+     directamente (o sin JS). La experiencia principal es la bolsa lateral
+     (cart-ui.js) sobre la Cart AJAX API; esta es el respaldo, con el mismo
+     sistema de diseño del resto del sitio en vez de clases que no existian
+     en components.css. -->
+<section class="band band--tight" data-tone="light">
+  <div class="wrap" style="max-width:760px">
+    <span class="section-index" data-reveal>Tu selección</span>
+    <h1 class="display" style="margin-top:24px;margin-bottom:clamp(40px,5vw,72px)" data-reveal>VELMONT</h1>
+
     {%- if cart.item_count == 0 -%}
-      <p class="lede">Tu carrito está vacío. <a href="{{ routes.all_products_collection_url }}" class="link-underline">Ver colección</a></p>
+      <p class="lede">Tu bolsa está vacía.</p>
+      <p style="margin-top:32px"><a href="{{ routes.all_products_collection_url }}" class="act">Ver la colección</a></p>
     {%- else -%}
       <form action="{{ routes.cart_url }}" method="post" novalidate>
-        <ul class="cart-lines">
+        <div style="display:grid;gap:0">
           {%- for item in cart.items -%}
-            <li class="cart-line">
-              <div class="cart-line__thumb">
-                {%- if item.image -%}{{ item.image | image_url: width: 160 | image_tag }}{%- endif -%}
+            <div class="bag-line">
+              <div>
+                {%- if item.image -%}
+                  {{ item.image | image_url: width: 128 | image_tag: loading: 'lazy', alt: item.product.title }}
+                {%- endif -%}
               </div>
-              <div class="cart-line__info">
-                <p class="cart-line__name">{{ item.product.title }}</p>
-                <p class="cart-line__family">{{ item.variant.title }}</p>
-                <div class="qty-stepper">
-                  <input type="number" min="0" name="updates[]" value="{{ item.quantity }}" style="width:48px;text-align:center;border:none;background:transparent">
+              <div>
+                <p class="bag-line__name">{{ item.product.title }}</p>
+                <span class="label">{{ item.variant.title | replace: 'Default Title', '' }}</span>
+                <div class="stepper" style="margin-top:var(--s3)">
+                  <label class="label" for="qty-{{ item.key }}" style="margin-right:var(--s3)">Cantidad</label>
+                  <input id="qty-{{ item.key }}" type="number" min="0" name="updates[{{ item.key }}]" value="{{ item.quantity }}" style="width:52px;text-align:center;border:1px solid var(--hairline);background:transparent;color:var(--on-surface);padding:6px 0">
                 </div>
               </div>
-              <div class="cart-line__price">
-                <span>{{ item.final_line_price | money }}</span>
+              <div class="bag-line__right">
+                <span class="price">{{ item.final_line_price | money }}</span>
               </div>
-            </li>
+            </div>
           {%- endfor -%}
-        </ul>
-        <div class="cart-row cart-row--total" style="margin-top:24px">
-          <span>Subtotal</span><span>{{ cart.total_price | money }}</span>
         </div>
-        <p class="badge-note" style="margin-top:12px;color:var(--on-surface-dim);font-size:var(--fs-small)">Las promociones MATAI y Selección VELMONT se muestran en el carrito lateral (ícono superior). Actualiza cantidades aquí y ábrelo de nuevo para ver el precio con oferta aplicada.</p>
-        <button type="submit" name="update" class="btn btn--ghost" style="margin-top:16px">Actualizar</button>
-        <a href="{{ routes.cart_url }}/checkout" class="btn btn--primary" style="margin-top:16px;margin-left:12px">Finalizar compra</a>
+
+        <p class="fine" style="margin-top:var(--s6)">Las ediciones MATAI y Selección VELMONT se calculan y muestran en la bolsa lateral (ícono de la bolsa, arriba). Actualiza cantidades aquí y ábrela de nuevo para ver el precio con la promoción aplicada.</p>
+
+        <div class="bag-totals" style="margin-top:var(--s6);padding-top:var(--s5);border-top:1px solid var(--hairline)">
+          <span class="label">Subtotal</span>
+          <strong>{{ cart.total_price | money }}</strong>
+        </div>
+
+        <div style="display:flex;gap:var(--s5);flex-wrap:wrap;margin-top:var(--s6)">
+          <button type="submit" name="update" class="act">Actualizar</button>
+          <a href="{{ routes.cart_url }}/checkout" class="act act--solid">Finalizar compra</a>
+        </div>
       </form>
     {%- endif -%}
   </div>

@@ -69,7 +69,7 @@
   --t-cine: 1400ms;
 
   --header-h: 84px;
-  --z-header: 200; --z-menu: 300; --z-drawer: 400; --z-overlay: 500;
+  --z-header: 200; --z-menu: 300; --z-drawer: 400; --z-overlay: 500; --z-cursor: 1000;
 }
 
 /* Bloques oscuros: invierten las superficies, no los componentes */

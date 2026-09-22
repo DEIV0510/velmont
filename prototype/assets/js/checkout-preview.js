@@ -1,5 +1,13 @@
+import { initAll } from './ui.js';
 import { computeCart, formatCOP } from './cart.js';
 import { bottleSVG } from './catalog.js';
+
+// Esta pantalla no tiene header ni menu propios, pero initAll() no falla:
+// cada init busca su propio marcador y sale si no existe (ver ui.js). Asi
+// el cursor de marca y los botones magneticos quedan iguales que en el
+// resto del sitio — la "continuidad visual" que promete el propio texto
+// de esta pagina.
+initAll();
 
 (async () => {
   const cart = await computeCart();

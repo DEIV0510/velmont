@@ -333,6 +333,21 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 /* Ritmo: cada tercera pieza baja, para romper la fila perfecta */
 @media (min-width: 760px) { .grid-quiet > *:nth-child(3n+2) { transform: translateY(clamp(24px, 3vw, 56px)); } }
 
+/* Carrusel de relacionados: se arrastra con el mouse (initReel) y desliza
+   nativo en tactil. La pieza mas centrada queda con foco total; el resto
+   se atenua un poco, como en una vitrina. */
+.reel {
+  display: flex; gap: clamp(20px, 2.4vw, 40px);
+  overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
+  -webkit-overflow-scrolling: touch; cursor: grab;
+  padding-inline: var(--gutter); padding-bottom: 4px;
+}
+.reel::-webkit-scrollbar { display: none; }
+.reel.dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.reel > * { flex: 0 0 clamp(220px, 26vw, 320px); scroll-snap-align: start; opacity: 0.55; transition: opacity 380ms var(--ease-out); }
+.reel > *.active { opacity: 1; }
+@media (pointer: coarse) { .reel > * { opacity: 1; } }
+
 /* ===================== FILTROS ===================== */
 .filters { display: flex; flex-wrap: wrap; gap: var(--s5); padding-inline: var(--gutter); }
 .filters button {
@@ -604,10 +619,32 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
   display: grid; place-items: center;
   background: radial-gradient(60% 50% at 50% 55%, rgba(201,168,103,0.12), transparent 70%), var(--noir);
   overflow: hidden;
+  perspective: 1400px;
 }
-.pdp__stage svg { width: min(46%, 320px); filter: drop-shadow(0 50px 60px rgba(0,0,0,0.6)); }
-.pdp__stage img { width: 100%; height: 100%; object-fit: cover; }
+/* Leve inclinacion hacia el cursor (initPdpTilt) — variables compuestas en
+   CSS, igual que el parallax del hero, para no pisar otros transforms. */
+.pdp__stage svg {
+  width: min(46%, 320px); filter: drop-shadow(0 50px 60px rgba(0,0,0,0.6));
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 320ms var(--ease-out);
+}
+.pdp__stage img {
+  width: 100%; height: 100%; object-fit: cover;
+  transform: scale(1.02) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 320ms var(--ease-out);
+}
 .pdp__info { padding: clamp(48px, 7vw, 110px) var(--gutter); display: grid; align-content: center; gap: var(--s5); min-width: 0; }
+/* El frasco queda fijo en pantalla mientras la info (que con notas y perfil
+   olfativo es mas larga que un viewport) se desplaza normalmente a su lado
+   — el producto conserva el protagonismo y el CTA nunca esta lejos, sin
+   forzar una columna de texto larga a quedar "stuck" y cortada. */
+@media (min-width: 900px) {
+  /* Altura menor a la del viewport a propósito: dentro de la fila del grid
+     (tan alta como la info, que con notas y perfil es larga) esto deja
+     margen para que lo fijo se note casi todo el recorrido, no solo un
+     tramo corto. */
+  .pdp__stage { position: sticky; top: var(--header-h); align-self: start; height: min(76vh, 660px); min-height: 0; }
+}
 .pdp__name { margin-top: var(--s3); }
 .pdp__price { font-family: var(--font-display); font-size: clamp(1.4rem, 2vw, 2rem); }
 .pdp__cta { display: flex; gap: clamp(20px, 3vw, 40px); flex-wrap: wrap; align-items: center; margin-top: var(--s4); }

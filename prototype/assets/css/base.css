@@ -7,6 +7,20 @@ html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scrollbar-gutter
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 html.no-scroll, html.no-scroll body { overflow: hidden; height: 100%; }
 
+/* Transiciones nativas entre paginas (Chrome/Edge): el navegador hace un
+   crossfade de la pagina saliente a la entrante sin JS ni riesgo de romper
+   la navegacion (back/forward, ctrl-click, checkout externo siguen intactos
+   porque esto no intercepta clicks — es una API del navegador). En el resto
+   de navegadores esta regla se ignora y la navegacion sigue igual que hoy. */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) {
+  animation-duration: var(--t-slow);
+  animation-timing-function: var(--ease-inout);
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}
+
 body {
   margin: 0;
   background: var(--noir);
@@ -125,7 +139,7 @@ h1, h2, h3, h4, p, figure { margin: 0; }
   background: transparent;
   position: relative;
   overflow: hidden;
-  transition: color var(--t-fast) var(--ease-out), border-color var(--t-fast) var(--ease-out);
+  transition: color var(--t-fast) var(--ease-out), border-color var(--t-fast) var(--ease-out), transform 380ms var(--ease-out);
   min-height: 48px;
 }
 /* El relleno entra desde abajo al hover: gesto contenido, no un cambio de color */
@@ -160,7 +174,7 @@ h1, h2, h3, h4, p, figure { margin: 0; }
   width: 44px; height: 44px;
   display: inline-flex; align-items: center; justify-content: center;
   position: relative; color: inherit;
-  transition: opacity var(--t-fast);
+  transition: opacity var(--t-fast), transform 380ms var(--ease-out);
 }
 .icon-btn:hover { opacity: 0.6; }
 
@@ -194,6 +208,21 @@ h1, h2, h3, h4, p, figure { margin: 0; }
 }
 .in .line-mask > span, .line-mask.in > span { transform: translateY(0); }
 
+/* Revelado palabra por palabra: otro ritmo frente al line-mask, para que no
+   toda la pagina se sienta con la misma animacion. initWordReveal() parte
+   el texto en spans antes de que initReveal() observe el elemento — por
+   eso reutiliza el mismo mecanismo de [data-reveal]/.in sin un observer
+   propio. */
+[data-reveal="words"] { opacity: 1; transform: none; }
+[data-reveal="words"] .word { display: inline-block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em; vertical-align: top; }
+[data-reveal="words"] .word > span {
+  display: inline-block;
+  transform: translateY(105%);
+  transition: transform var(--t-slow) var(--ease-inout);
+  transition-delay: calc(var(--wi, 0) * 45ms);
+}
+[data-reveal="words"].in .word > span { transform: none; }
+
 @media (prefers-reduced-motion: reduce) {
   [data-reveal], [data-reveal="wipe"] { opacity: 1 !important; transform: none !important; clip-path: none !important; }
   .line-mask > span { transform: none !important; }
@@ -223,6 +252,25 @@ h1, h2, h3, h4, p, figure { margin: 0; }
   .loader-mark { opacity: 1; animation: none; }
   .loader-rule { width: 200px; animation: none; }
 }
+
+/* ---------------- Cursor de marca (desktop, pointer:fine) ---------------- */
+/* mix-blend-mode:difference se lee sobre cualquier fondo sin rastrear el
+   tono de cada seccion. initCursor() solo lo activa fuera de touch y de
+   prefers-reduced-motion, asi que estas reglas nunca corren de mas. */
+.cursor-dot {
+  position: fixed; top: 0; left: 0; z-index: var(--z-cursor); pointer-events: none;
+  width: 18px; height: 18px; margin: -9px 0 0 -9px;
+  border-radius: 999px; background: var(--ivory);
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity 200ms var(--ease-out), width 240ms var(--ease-out), height 240ms var(--ease-out), margin 240ms var(--ease-out);
+}
+.cursor-dot.ready { opacity: 1; }
+.cursor-dot.hide { opacity: 0; }
+.cursor-dot.grow { width: 44px; height: 44px; margin: -22px 0 0 -22px; }
+.cursor-dot.press { width: 12px; height: 12px; margin: -6px 0 0 -6px; }
+body.cursor-on, body.cursor-on a, body.cursor-on button { cursor: none; }
+body.cursor-on input, body.cursor-on textarea, body.cursor-on select { cursor: auto; }
 
 /* ---------------- Aviso flotante ---------------- */
 .notice {

@@ -1,0 +1,16 @@
+{%- comment -%}
+  Bolsa lateral (Cart AJAX). Todo lo monetario (precio de linea, total) se
+  pinta SIEMPRE desde /cart.js — nunca se calcula aqui un precio de
+  "oferta" por separado. Asi, el dia que exista el descuento automatico de
+  "2 X 280.000" (ver promo-data.liquid), el total ya sale bien sin tocar
+  una linea de codigo: es el mismo motor que ya aplica el de MATAI.
+{%- endcomment -%}
+<div class="cart-scrim" data-cart-scrim></div>
+<aside class="cart-drawer" data-cart-drawer aria-hidden="true" aria-label="Tu bolsa">
+  <div class="cart-drawer__head">
+    <p class="eyebrow" style="margin:0">Tu bolsa</p>
+    <button class="cart-drawer__close" type="button" data-cart-close aria-label="Cerrar">✕</button>
+  </div>
+  <div class="cart-drawer__body" data-cart-body></div>
+  <div class="cart-drawer__foot" data-cart-foot></div>
+</aside>

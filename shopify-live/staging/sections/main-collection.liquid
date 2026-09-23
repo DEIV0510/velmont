@@ -1,0 +1,26 @@
+<section class="collection-page">
+  <div class="page-width">
+    <header class="collection-page__header">
+      <p class="eyebrow">Catálogo Velmont</p>
+      <h1>{{ collection.title }}</h1>
+      {% if collection.description != blank %}<div class="collection-page__description">{{ collection.description }}</div>{% endif %}
+      <p class="collection-page__count">{{ collection.products_count }} fragancias</p>
+    </header>
+    {% paginate collection.products by section.settings.products_per_page %}
+      {% if collection.products_count > 0 %}
+        <div class="collection-filters" data-collection-filters></div>
+        <div class="product-grid">{% for product in collection.products %}{% render 'product-card', product: product %}{% endfor %}</div>
+        {% if paginate.pages > 1 %}<nav class="pagination" aria-label="Paginación">{{ paginate | default_pagination }}</nav>{% endif %}
+      {% else %}
+        <div class="empty-state"><p class="eyebrow">Aún no hay piezas aquí</p><h2>Esta selección está tomando forma.</h2><a class="button button--gold" href="{{ routes.all_products_collection_url }}">Ver catálogo</a></div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name":"Colección principal",
+  "settings":[{"type":"range","id":"products_per_page","min":12,"max":48,"step":4,"label":"Productos por página","default":24}]
+}
+{% endschema %}

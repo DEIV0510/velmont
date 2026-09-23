@@ -1,0 +1,24 @@
+[
+  {
+    "name": "Identidad Velmont",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo principal"
+      },
+      {
+        "type": "text",
+        "id": "support_email",
+        "label": "Correo de servicio al cliente",
+        "info": "Se muestra en el pie de página y en soporte."
+      },
+      {
+        "type": "url",
+        "id": "whatsapp_url",
+        "label": "Enlace de WhatsApp",
+        "info": "Pega el enlace completo de WhatsApp para atención directa."
+      }
+    ]
+  }
+]

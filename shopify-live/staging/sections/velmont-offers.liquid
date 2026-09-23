@@ -1,0 +1,39 @@
+{%- comment -%}
+  Una instancia = una edicion real. Se agrega dos veces en index.json (MATAI
+  y la Seleccion), cada una apuntando a su coleccion real por handle — nunca
+  un precio inventado, siempre {{ collection.title }} y el conteo/descripcion
+  reales de esa coleccion.
+{%- endcomment -%}
+{% assign offer_collection = collections[section.settings.collection_handle] %}
+<section class="offers{% if section.settings.flip %} offers--flip{% endif %}" aria-labelledby="OffersTitle-{{ section.id }}"{% if section.settings.is_anchor_target %} id="ediciones-velmont"{% endif %}>
+  <div class="page-width offers__grid">
+    <div class="offers__art"><span class="offers__line offers__line--one" aria-hidden="true"></span><span class="offers__line offers__line--two" aria-hidden="true"></span><div class="offers__video" data-offers-video><video muted playsinline preload="metadata" poster="{{ 'velmont-hero-poster.jpg' | asset_url }}" width="1280" height="720" aria-hidden="true"><source src="{{ 'velmont-hero.mp4' | asset_url }}" type="video/mp4"></video></div><small>{{ section.settings.tag }}</small></div>
+    <div class="offers__copy">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 id="OffersTitle-{{ section.id }}">{{ section.settings.heading }}</h2>
+      {% if offer_collection != blank and offer_collection.products_count > 0 %}
+        <p class="offers__price-tag">{{ offer_collection.title }}</p>
+        <p>{{ offer_collection.description | strip_html | truncate: 180 }}</p>
+        <div class="offers__products">{% for product in offer_collection.products limit: 2 %}<a href="{{ product.url }}"><span>{{ product.vendor }}</span><strong>{{ product.title }}</strong><em>{{ product.price | money }}</em></a>{% endfor %}</div>
+        <a class="button button--outline" href="{{ offer_collection.url }}">Ver las {{ offer_collection.products_count }} piezas de esta edición</a>
+      {% else %}
+        <p class="offers__empty">Aquí aparecerán las piezas que Velmont active con precio especial.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name":"Ofertas Velmont",
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Antetítulo","default":"Momentos especiales"},
+    {"type":"textarea","id":"heading","label":"Título","default":"Las piezas que no\nesperan."},
+    {"type":"text","id":"tag","label":"Etiqueta sobre el video","default":"SELECCIÓN PRIVADA"},
+    {"type":"text","id":"collection_handle","label":"Handle de la colección real","default":"2-matai-x-450-000","info":"El precio y el conteo se leen de esa colección — nunca se escriben aquí."},
+    {"type":"checkbox","id":"flip","label":"Invertir lado del video","default":false},
+    {"type":"checkbox","id":"is_anchor_target","label":"Punto de llegada del menú \"Ofertas\"","default":false,"info":"Actívalo solo en UNA de las ediciones."}
+  ],
+  "presets": [{ "name": "Ofertas Velmont" }]
+}
+{% endschema %}

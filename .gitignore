@@ -5,3 +5,9 @@ Thumbs.db
 prototype/_bottle-test.html
 
 .vercel
+
+# Copias locales de otros temas de la tienda real (solo para comparar, no se versionan)
+shopify-live/pruebas/
+shopify-live/fragrances-a/
+shopify-live/fragrances-b/
+shopify-live/luxury-v3/

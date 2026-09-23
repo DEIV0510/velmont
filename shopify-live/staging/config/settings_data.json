@@ -1,0 +1,36 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "sections": {
+      "velmont-announcement": {
+        "type": "velmont-announcement",
+        "settings": {
+          "message_left": "Fragancias seleccionadas",
+          "message_right": "Descubre tu firma olfativa"
+        }
+      },
+      "velmont-header": {
+        "type": "velmont-header",
+        "settings": {
+          "menu": "main-menu"
+        }
+      },
+      "velmont-footer": {
+        "type": "velmont-footer",
+        "settings": {}
+      }
+    },
+    "content_for_index": []
+  },
+  "presets": {
+    "Default": {}
+  }
+}

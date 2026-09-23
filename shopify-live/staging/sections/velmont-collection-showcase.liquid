@@ -1,0 +1,49 @@
+<section class="collection-showcase" aria-labelledby="CollectionShowcaseTitle">
+  <div class="page-width">
+    <div class="section-heading">
+      <div><p class="eyebrow">{{ section.settings.eyebrow }}</p><h2 id="CollectionShowcaseTitle">{{ section.settings.heading }}</h2></div>
+      <a class="text-link" href="{{ routes.all_products_collection_url }}">Ver todo <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="collection-showcase__tabs" data-collection-tabs>
+      {% assign collection_ella = collections[section.settings.ella_handle] %}
+      {% assign collection_el = collections[section.settings.el_handle] %}
+      {% assign collection_unisex = collections[section.settings.unisex_handle] %}
+      <button class="is-active" type="button" data-collection-tab="ella">Para ella</button>
+      <button type="button" data-collection-tab="el">Para él</button>
+      <button type="button" data-collection-tab="unisex">Unisex</button>
+    </div>
+    <div class="collection-showcase__panels">
+      <div class="collection-panel is-active" data-collection-panel="ella">
+        <div class="collection-panel__intro"><span>01</span><h3>Para ella</h3><p>Fragancias de presencia luminosa, intensa o delicada, elegidas a tu ritmo.</p><a href="{{ collections[section.settings.ella_handle].url }}">Explorar selección <b>→</b></a></div>
+        <div class="product-grid product-grid--three">
+          {% if collection_ella != blank %}{% for product in collection_ella.products limit: 3 %}{% render 'product-card', product: product %}{% endfor %}{% else %}<div class="collection-placeholder"><span>V</span><p>Crea la colección<br>Para ella</p></div>{% endif %}
+        </div>
+      </div>
+      <div class="collection-panel" data-collection-panel="el">
+        <div class="collection-panel__intro"><span>02</span><h3>Para él</h3><p>Carácter, contraste y elegancia para aromas que entran antes que tú.</p><a href="{{ collections[section.settings.el_handle].url }}">Explorar selección <b>→</b></a></div>
+        <div class="product-grid product-grid--three">
+          {% if collection_el != blank %}{% for product in collection_el.products limit: 3 %}{% render 'product-card', product: product %}{% endfor %}{% else %}<div class="collection-placeholder"><span>V</span><p>Crea la colección<br>Para él</p></div>{% endif %}
+        </div>
+      </div>
+      <div class="collection-panel" data-collection-panel="unisex">
+        <div class="collection-panel__intro"><span>03</span><h3>Unisex</h3><p>Combinaciones sin etiquetas para quien compra por instinto, no por norma.</p><a href="{{ collections[section.settings.unisex_handle].url }}">Explorar selección <b>→</b></a></div>
+        <div class="product-grid product-grid--three">
+          {% if collection_unisex != blank %}{% for product in collection_unisex.products limit: 3 %}{% render 'product-card', product: product %}{% endfor %}{% else %}<div class="collection-placeholder"><span>V</span><p>Crea la colección<br>Unisex</p></div>{% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name":"Colecciones destacadas",
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Antetítulo","default":"Explora por sensación"},
+    {"type":"textarea","id":"heading","label":"Título","default":"Cada aroma tiene\nsu propio lenguaje."},
+    {"type":"text","id":"ella_handle","label":"Handle colección para ella","default":"para-ella"},
+    {"type":"text","id":"el_handle","label":"Handle colección para él","default":"para-el"},
+    {"type":"text","id":"unisex_handle","label":"Handle colección unisex","default":"unisex"}
+  ]
+}
+{% endschema %}

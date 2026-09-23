@@ -1,0 +1,17 @@
+<aside class="announcement" aria-label="Información de la tienda">
+  <div class="page-width announcement__inner">
+    <span>{{ section.settings.message_left }}</span>
+    <span class="announcement__diamond" aria-hidden="true">◆</span>
+    <span>{{ section.settings.message_right }}</span>
+  </div>
+</aside>
+
+{% schema %}
+{
+  "name": "Franja superior",
+  "settings": [
+    {"type":"text","id":"message_left","label":"Mensaje izquierdo","default":"Fragancias seleccionadas"},
+    {"type":"text","id":"message_right","label":"Mensaje derecho","default":"Descubre tu firma olfativa"}
+  ]
+}
+{% endschema %}

@@ -1,0 +1,66 @@
+{% assign selected_variant = product.selected_or_first_available_variant %}
+{% assign product_image = selected_variant.featured_image | default: product.featured_image %}
+<section class="product-page">
+  <div class="page-width product-page__grid">
+    <div class="product-page__image" data-product-image>
+      {% if product_image != blank %}
+        {{ product_image | image_url: width: 1400 | image_tag: widths: '480, 760, 1100, 1400', loading: 'eager', alt: product_image.alt | default: product.title }}
+      {% else %}
+        <div class="product-page__placeholder"><span>V</span><i></i></div>
+      {% endif %}
+      {% if product.images.size > 1 %}
+        <div class="product-page__thumbs">
+          {% for image in product.images limit: 6 %}
+            <button type="button" data-thumb data-full="{{ image | image_url: width: 1400 }}" class="{% if image == product_image %}is-active{% endif %}" aria-label="Ver foto {{ forloop.index }}">
+              {{ image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    <div class="product-page__content">
+      <a class="back-link" href="{{ routes.all_products_collection_url }}">← Volver al catálogo</a>
+      <p class="eyebrow">{{ product.vendor }}</p>
+      <h1>{{ product.title }}</h1>
+      <div class="product-page__price">{{ selected_variant.price | money }} {% if selected_variant.compare_at_price > selected_variant.price %}<s>{{ selected_variant.compare_at_price | money }}</s>{% endif %}</div>
+      {% if product.tags.size > 0 %}<div class="product-page__tags">{% for tag in product.tags %}{% unless tag contains 'Casa:' or tag == 'Velmont' or tag == 'Catálogo' %}<span>{{ tag }}</span>{% endunless %}{% endfor %}</div>{% endif %}
+      <div class="rte product-page__description">{{ product.description }}</div>
+      {% form 'product', product, class: 'product-form' %}
+        {% unless product.has_only_default_variant %}
+          <label for="Variant-{{ section.id }}">Presentación</label>
+          <select id="Variant-{{ section.id }}" name="id">{% for variant in product.variants %}<option value="{{ variant.id }}" {% if variant == selected_variant %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>{{ variant.title }} — {{ variant.price | money }}</option>{% endfor %}</select>
+        {% else %}<input type="hidden" name="id" value="{{ selected_variant.id }}">{% endunless %}
+        <div style="display:flex;gap:14px;align-items:center">
+          <button class="button button--gold product-form__submit" type="submit" style="flex:1" {% unless selected_variant.available %}disabled{% endunless %}>{% if selected_variant.available %}Añadir a la bolsa{% else %}No disponible{% endif %}</button>
+          <button type="button" class="product-card__save" style="position:static;opacity:1" data-save="{{ product.id }}" aria-label="Guardar" aria-pressed="false">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.4-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 5c-2.5 4.6-9.5 9-9.5 9Z"/></svg>
+          </button>
+        </div>
+      {% endform %}
+      <div class="product-page__service"><span>V</span><p><strong>¿Necesitas orientación?</strong> Escríbenos antes de comprar. Te ayudamos a encontrar una elección que se sienta tuya.</p></div>
+    </div>
+  </div>
+
+  {%- liquid
+    assign related_count = 0
+    assign source = product.collections.first.products
+    if source == blank or source.size < 2
+      assign source = collections.all.products
+    endif
+  -%}
+  <div class="page-width product-page__related">
+    <div class="section-heading"><div><p class="eyebrow">También podría gustarte</p><h2>De la misma selección</h2></div></div>
+    <div class="product-grid">
+      {%- for p in source -%}
+        {%- if p.id != product.id and related_count < 4 -%}
+          {%- render 'product-card', product: p -%}
+          {%- assign related_count = related_count | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{"name":"Producto principal","settings":[]}
+{% endschema %}

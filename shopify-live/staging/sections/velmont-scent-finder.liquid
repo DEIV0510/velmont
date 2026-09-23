@@ -1,0 +1,64 @@
+<section id="CodigoDeAroma" class="scent-finder" data-scent-finder aria-labelledby="ScentFinderTitle">
+  <div class="page-width scent-finder__grid">
+    <div>
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 id="ScentFinderTitle">{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.text }}</p>
+      <p class="scent-finder__result" aria-live="polite" data-scent-result>Elige una vibra y te llevaremos a una selección.</p>
+    </div>
+    <div class="scent-finder__choices" role="group" aria-label="Elige tu familia de aroma">
+      {%- for i in (1..4) -%}
+        {%- liquid
+          assign key = 'card_' | append: i
+          assign title_key = key | append: '_title'
+          assign notes_key = key | append: '_notes'
+          assign text_key = key | append: '_text'
+          assign message_key = key | append: '_message'
+          assign link_key = key | append: '_link'
+          assign link = section.settings[link_key] | default: routes.all_products_collection_url
+        -%}
+        <button type="button" data-scent-answer data-scent-url="{{ link }}" data-scent-message="{{ section.settings[message_key] | escape }}">
+          <span>0{{ i }}</span>
+          <strong class="scent-finder__title">{{ section.settings[title_key] | escape }}</strong>
+          <em class="scent-finder__notes">{{ section.settings[notes_key] | escape }}</em>
+          <small class="scent-finder__text">{{ section.settings[text_key] | escape }}</small>
+        </button>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name":"Código de aroma",
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Antetítulo","default":"Una guía sin reglas"},
+    {"type":"textarea","id":"heading","label":"Título","default":"¿Qué aroma\nhabla de ti?"},
+    {"type":"textarea","id":"text","label":"Texto","default":"No hace falta saber de perfumería para empezar. Elige la energía que quieres llevar contigo."},
+    {"type":"header","content":"Tarjeta 1"},
+    {"type":"text","id":"card_1_title","label":"Título","default":"Fresco & Vibrante"},
+    {"type":"text","id":"card_1_notes","label":"Notas","default":"Cítricos • Acuáticos • Aromáticos"},
+    {"type":"textarea","id":"card_1_text","label":"Descripción","default":"Para quienes buscan una sensación limpia, fresca y energética."},
+    {"type":"text","id":"card_1_message","label":"Mensaje al elegirla","default":"Una selección fresca y vibrante te está esperando."},
+    {"type":"url","id":"card_1_link","label":"Enlace","info":"Colección de esta familia. Si queda vacío, lleva al catálogo."},
+    {"type":"header","content":"Tarjeta 2"},
+    {"type":"text","id":"card_2_title","label":"Título","default":"Dulce & Seductor"},
+    {"type":"text","id":"card_2_notes","label":"Notas","default":"Vainilla • Ámbar • Gourmand"},
+    {"type":"textarea","id":"card_2_text","label":"Descripción","default":"Aromas envolventes, cálidos y adictivos que dejan huella."},
+    {"type":"text","id":"card_2_message","label":"Mensaje al elegirla","default":"Una selección dulce y seductora te está esperando."},
+    {"type":"url","id":"card_2_link","label":"Enlace","info":"Colección de esta familia. Si queda vacío, lleva al catálogo."},
+    {"type":"header","content":"Tarjeta 3"},
+    {"type":"text","id":"card_3_title","label":"Título","default":"Amaderado & Intenso"},
+    {"type":"text","id":"card_3_notes","label":"Notas","default":"Maderas • Cuero • Especias"},
+    {"type":"textarea","id":"card_3_text","label":"Descripción","default":"Para una presencia sofisticada, profunda y poderosa."},
+    {"type":"text","id":"card_3_message","label":"Mensaje al elegirla","default":"Una selección amaderada e intensa te está esperando."},
+    {"type":"url","id":"card_3_link","label":"Enlace","info":"Colección de esta familia. Si queda vacío, lleva al catálogo."},
+    {"type":"header","content":"Tarjeta 4"},
+    {"type":"text","id":"card_4_title","label":"Título","default":"Floral & Elegante"},
+    {"type":"text","id":"card_4_notes","label":"Notas","default":"Flores • Frutas • Almizcle"},
+    {"type":"textarea","id":"card_4_text","label":"Descripción","default":"Delicados, refinados y perfectos para una esencia elegante."},
+    {"type":"text","id":"card_4_message","label":"Mensaje al elegirla","default":"Una selección floral y elegante te está esperando."},
+    {"type":"url","id":"card_4_link","label":"Enlace","info":"Colección de esta familia. Si queda vacío, lleva al catálogo."}
+  ]
+}
+{% endschema %}

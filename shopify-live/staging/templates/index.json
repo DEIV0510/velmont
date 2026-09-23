@@ -1,0 +1,41 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {"type":"velmont-hero","settings":{}},
+    "finder": {"type":"velmont-scent-finder","settings":{}},
+    "collections": {"type":"velmont-collection-showcase","settings":{}},
+    "offers-matai": {
+      "type":"velmont-offers",
+      "settings": {
+        "eyebrow": "Edición MATAI",
+        "heading": "Dos aromas.\nUna sola firma.",
+        "tag": "COLECCIÓN MATAI",
+        "collection_handle": "2-matai-x-450-000",
+        "flip": false,
+        "is_anchor_target": true
+      }
+    },
+    "offers-seleccion": {
+      "type":"velmont-offers",
+      "settings": {
+        "eyebrow": "Tu combinación",
+        "heading": "Elige dos.\nDeja huella.",
+        "tag": "SELECCIÓN VELMONT",
+        "collection_handle": "2-x-280-000",
+        "flip": true,
+        "is_anchor_target": false
+      }
+    },
+    "service": {"type":"velmont-service","settings":{}},
+    "editorial": {"type":"velmont-editorial","settings":{}}
+  },
+  "order": ["hero", "finder", "collections", "offers-matai", "offers-seleccion", "service", "editorial"]
+}

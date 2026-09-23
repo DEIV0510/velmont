@@ -1,0 +1,29 @@
+<footer class="site-footer">
+  <div class="page-width site-footer__grid">
+    <div class="site-footer__brand">
+      <p class="footer-monogram">V</p>
+      <p class="eyebrow">Velmont Fragrances</p>
+      <p>Una colección pensada para que el aroma sea parte de tu presencia.</p>
+    </div>
+    <div>
+      <p class="footer-title">Explora</p>
+      <a href="{{ routes.all_products_collection_url }}">Catálogo completo</a>
+      <a href="{{ collections['para-ella'].url | default: '/collections/para-ella' }}">Para ella</a>
+      <a href="{{ collections['para-el'].url | default: '/collections/para-el' }}">Para él</a>
+      <a href="{{ collections['unisex'].url | default: '/collections/unisex' }}">Unisex</a>
+      <a href="{{ routes.root_url }}#ediciones-velmont">Ofertas</a>
+    </div>
+    <div>
+      <p class="footer-title">Servicio al cliente</p>
+      <a href="/pages/contact">Contáctanos</a>
+      {% if settings.whatsapp_url != blank %}<a href="{{ settings.whatsapp_url }}" target="_blank" rel="noopener">WhatsApp</a>{% endif %}
+      {% if settings.support_email != blank %}<a href="mailto:{{ settings.support_email }}">{{ settings.support_email }}</a>{% endif %}
+      <p class="footer-note">Atención personal para elegir, comprar y regalar.</p>
+    </div>
+  </div>
+  <div class="page-width site-footer__bottom"><span>© {{ 'now' | date: '%Y' }} {{ shop.name }}</span><span>El lujo comienza con una elección.</span></div>
+</footer>
+
+{% schema %}
+{"name":"Pie de página Velmont","settings":[]}
+{% endschema %}

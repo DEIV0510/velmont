@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#090909">
+    <link rel="canonical" href="{{ canonical_url }}">
+    {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+    <title>{% if page_title != blank %}{{ page_title }}{% else %}{{ shop.name }}{% endif %}{% unless page_title contains shop.name %} · {{ shop.name }}{% endunless %}</title>
+    {{ content_for_header }}
+    <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js-motion');</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    {{ 'velmont.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'velmont.js' | asset_url }}" defer="defer"></script>
+    <script type="application/json" id="velmont-promo-data">{% render 'promo-data' %}</script>
+  </head>
+  <body class="template-{{ request.page_type | handle }}">
+    <a class="skip-link" href="#MainContent">Ir al contenido</a>
+    {% section 'velmont-announcement' %}
+    {% section 'velmont-header' %}
+    <main id="MainContent" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+    {% section 'velmont-footer' %}
+    {% render 'cart-drawer' %}
+    {% render 'saved-drawer' %}
+  </body>
+</html>

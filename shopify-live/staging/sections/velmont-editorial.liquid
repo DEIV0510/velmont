@@ -1,0 +1,18 @@
+<section class="editorial" aria-labelledby="EditorialTitle">
+  <div class="page-width editorial__grid">
+    <p class="editorial__vertical" aria-hidden="true">DEJAR HUELLA · DEJAR HUELLA · DEJAR HUELLA</p>
+    <div><p class="eyebrow">{{ section.settings.eyebrow }}</p><h2 id="EditorialTitle">{{ section.settings.heading }}</h2><p>{{ section.settings.text }}</p></div>
+    <div class="editorial__quote"><span aria-hidden="true">“</span><p>El perfume no termina en la piel. Empieza en la memoria.</p><small>— VELMONT FRAGRANCES</small></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name":"Editorial Velmont",
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Antetítulo","default":"El manifiesto"},
+    {"type":"textarea","id":"heading","label":"Título","default":"Un aroma no se explica.\nSe reconoce."},
+    {"type":"textarea","id":"text","label":"Texto","default":"Velmont no ordena las fragancias en una vitrina común. Las convierte en caminos: para explorar, preguntar y elegir con intención."}
+  ]
+}
+{% endschema %}

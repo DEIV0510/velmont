@@ -1,0 +1,44 @@
+<section class="hero" aria-labelledby="VelmontHeroTitle">
+  <div class="page-width hero__grid">
+    <div class="hero__copy">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1 id="VelmontHeroTitle">{{ section.settings.heading }}</h1>
+      <p class="hero__lead">{{ section.settings.text }}</p>
+      <div class="hero__actions">
+        <a class="button button--gold" href="{{ routes.all_products_collection_url }}">{{ section.settings.primary_label }}</a>
+        <a class="text-link" href="#CodigoDeAroma">{{ section.settings.secondary_label }} <span aria-hidden="true">↘</span></a>
+      </div>
+      <p class="hero__signature">{{ section.settings.signature }}</p>
+    </div>
+    <div class="hero__art" aria-label="Velmont Fragrances">
+      <span class="hero__arc hero__arc--one" aria-hidden="true"></span>
+      <span class="hero__arc hero__arc--two" aria-hidden="true"></span>
+      <span class="hero__mist hero__mist--one" aria-hidden="true"></span>
+      <span class="hero__mist hero__mist--two" aria-hidden="true"></span>
+      <div class="hero__video" data-hero-video>
+        {% if section.settings.video != blank %}
+          {{ section.settings.video | video_tag: muted: true, playsinline: true, preload: 'auto', image_size: '1280x' }}
+        {% else %}
+          <video muted playsinline preload="auto" poster="{{ 'velmont-hero-poster.jpg' | asset_url }}" width="1280" height="720">
+            <source src="{{ 'velmont-hero.mp4' | asset_url }}" type="video/mp4">
+          </video>
+        {% endif %}
+      </div>
+      <p class="hero__vertical" aria-hidden="true">EXTRAORDINARIO · PERSONAL · VELMONT</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name":"Portada Velmont",
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Antetítulo","default":"El aroma como firma"},
+    {"type":"textarea","id":"heading","label":"Título","default":"No elijas un perfume.\nElige una presencia."},
+    {"type":"textarea","id":"text","label":"Texto","default":"Una selección de fragancias que invita a descubrir, probar y dejar una impresión imposible de repetir."},
+    {"type":"text","id":"primary_label","label":"Botón principal","default":"Explorar el catálogo"},
+    {"type":"text","id":"secondary_label","label":"Enlace secundario","default":"Encuentra tu código"},
+    {"type":"text","id":"signature","label":"Texto final","default":"VELMONT / EST. EN TU MEMORIA"}
+  ]
+}
+{% endschema %}

@@ -1,0 +1,26 @@
+{%- comment -%}
+  Un JSON pequeno (solo IDs, nada de datos de producto) para que la bolsa
+  lateral sepa, sin pedir nada al servidor, si lo que hay en el carrito
+  pertenece a una de las dos ediciones y cuanto falta para desbloquearla.
+  Los montos y el minimo salen de las colecciones reales; si el negocio
+  cambia el precio de la edicion, solo hace falta tocar la coleccion o
+  este snippet — nunca se inventa un numero aqui.
+{%- endcomment -%}
+{
+  "editions": [
+    {
+      "handle": "2-matai-x-450-000",
+      "label": "2 MATAI × $450.000",
+      "units": 2,
+      "bundlePrice": 450000,
+      "productIds": [{% for product in collections['2-matai-x-450-000'].products %}{{ product.id }}{% unless forloop.last %},{% endunless %}{% endfor %}]
+    },
+    {
+      "handle": "2-x-280-000",
+      "label": "2 × $280.000",
+      "units": 2,
+      "bundlePrice": 280000,
+      "productIds": [{% for product in collections['2-x-280-000'].products %}{{ product.id }}{% unless forloop.last %},{% endunless %}{% endfor %}]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+<section class="cart-page">
+  <div class="page-width">
+    <p class="eyebrow">Tu selección</p><h1>Bolsa Velmont</h1>
+    {% if cart.item_count == 0 %}
+      <div class="empty-state"><h2>Tu bolsa aún no tiene aroma.</h2><p>Elige una fragancia para comenzar.</p><a class="button button--gold" href="{{ routes.all_products_collection_url }}">Explorar catálogo</a></div>
+    {% else %}
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        <div class="cart-items">
+          {% for item in cart.items %}
+            <div class="cart-item">
+              <a class="cart-item__image" href="{{ item.url }}">{% if item.image %}{{ item.image | image_url: width: 180 | image_tag: loading: 'lazy', alt: item.title }}{% else %}<span>V</span>{% endif %}</a>
+              <div><p class="eyebrow">{{ item.product.vendor }}</p><h2><a href="{{ item.url }}">{{ item.product.title }}</a></h2><p>{{ item.final_price | money }}</p></div>
+              <label class="cart-item__quantity" for="Updates_{{ item.key }}">Cantidad <input id="Updates_{{ item.key }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0"></label>
+              <a class="cart-item__remove" href="{{ item.url_to_remove }}">Eliminar</a>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="cart-summary"><p>Subtotal <strong>{{ cart.total_price | money }}</strong></p><button class="button button--outline" type="submit" name="update">Actualizar</button><button class="button button--gold" type="submit" name="checkout">Continuar al pago</button></div>
+      </form>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{"name":"Bolsa Velmont","settings":[]}
+{% endschema %}

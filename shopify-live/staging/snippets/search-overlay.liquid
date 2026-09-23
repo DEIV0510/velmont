@@ -1,0 +1,12 @@
+{%- comment -%} Buscador: usa la Predictive Search API real de Shopify (/search/suggest.json), no una copia del catalogo en el HTML. {%- endcomment -%}
+<div class="search-overlay" data-search-overlay aria-hidden="true">
+  <button class="search-overlay__close" type="button" data-search-close aria-label="Cerrar">✕</button>
+  <div class="page-width search-overlay__in">
+    <p class="eyebrow">¿Qué fragancia buscas?</p>
+    <form action="{{ routes.search_url }}" method="get" role="search">
+      <input type="search" name="q" data-search-input placeholder="Lattafa, MATAI, amaderado…" autocomplete="off" aria-label="Buscar">
+      <input type="hidden" name="type" value="product">
+    </form>
+    <div class="search-overlay__results" data-search-results></div>
+  </div>
+</div>

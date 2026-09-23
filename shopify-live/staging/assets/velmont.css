@@ -1538,6 +1538,73 @@ body.cursor-on input, body.cursor-on textarea, body.cursor-on select { cursor: a
   .spotlight__copy { padding-bottom: 50px; }
 }
 
+/* ---------------- Pantalla de carga ---------------- */
+/* Cubre, nunca bloquea: si el JS fallara por lo que sea, la pagina debe
+   poder desplazarse igual (ver feedback_bloqueo_scroll_global). */
+[data-loading-screen] {
+  position: fixed; inset: 0; z-index: 90;
+  background: var(--ink);
+  display: grid; place-items: center;
+  transition: opacity .7s ease;
+}
+[data-loading-screen].is-out { opacity: 0; pointer-events: none; }
+/* Visible desde el primer pintado, sin depender de que el JS ya haya
+   corrido: si algo se demora (o una herramienta toma una captura a mitad
+   de carga, como la miniatura del propio Shopify), no debe verse un
+   rectangulo negro vacio. La animacion solo suaviza la entrada. */
+.loader-mark { width: min(38vw, 200px); opacity: 1; }
+.loader-mark img { width: 100%; height: auto; }
+.loader-rule { width: min(40vw, 200px); height: 1px; background: var(--gold); margin: 22px auto 0; }
+.js-motion .loader-mark { animation: vm-fade .6s ease both; }
+.js-motion .loader-rule { width: 0; animation: loader-rule 900ms .2s cubic-bezier(.2,.65,.2,1) forwards; }
+@keyframes loader-rule { to { width: min(40vw, 200px); } }
+
+/* ---------------- Buscador (overlay) ---------------- */
+.search-overlay {
+  position: fixed; inset: 0; z-index: 62;
+  background: rgba(9,9,9,.97); color: var(--paper);
+  opacity: 0; pointer-events: none; transition: opacity .35s ease;
+  overflow-y: auto; padding: clamp(70px, 13vh, 150px) 0 var(--s7, 80px);
+}
+.search-overlay.is-open { opacity: 1; pointer-events: auto; }
+.search-overlay__close { position: absolute; top: 24px; right: 32px; background: none; border: 0; color: var(--paper); width: 34px; height: 34px; font-size: 18px; z-index: 1; }
+.search-overlay__in input[type="search"] {
+  width: 100%; background: transparent; border: 0; border-bottom: 1px solid var(--line);
+  color: var(--paper); font-family: var(--serif); font-size: clamp(28px, 4.6vw, 52px);
+  padding: 18px 0; margin-top: 18px;
+}
+.search-overlay__in input[type="search"]:focus { outline: none; border-color: var(--gold); }
+.search-overlay__in input[type="search"]::placeholder { color: #756f64; font-style: italic; }
+.search-overlay__results { margin-top: clamp(40px, 6vw, 70px); display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.search-overlay__results a.product-card { text-decoration: none; }
+.search-overlay__note { margin-top: 24px; color: var(--muted); font-size: 13px; }
+@media (max-width: 560px) { .search-overlay__close { top: 18px; right: 20px; } }
+
+/* ---------------- Menu movil a pantalla completa ---------------- */
+@media (max-width: 900px) {
+  .site-nav {
+    padding-top: var(--s7, 60px);
+  }
+  .site-nav a, .velmont-nav-dropdown__toggle {
+    font-family: var(--serif); font-size: 30px; letter-spacing: -.02em;
+    text-transform: none; padding: 14px 0;
+  }
+  .site-nav a:after { display: none; }
+  .velmont-nav-dropdown__menu { position: static; }
+}
+
+/* ---------------- WhatsApp flotante ---------------- */
+.whatsapp-float {
+  position: fixed; right: 22px; bottom: 22px; z-index: 40;
+  width: 54px; height: 54px; border-radius: 999px;
+  display: grid; place-items: center;
+  background: #1fa855; color: #fff;
+  box-shadow: 0 10px 26px rgba(0,0,0,.4);
+  transition: transform .25s ease;
+}
+.whatsapp-float:hover { transform: translateY(-3px); }
+body.has-cart-open .whatsapp-float, body.has-search-open .whatsapp-float { opacity: 0; pointer-events: none; }
+
 /* ---------------- Favoritos (guardados) ---------------- */
 .saved-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 61; width: min(440px, 100vw); background: var(--ink-soft); color: var(--paper); border-left: 1px solid var(--line); display: flex; flex-direction: column; transform: translateX(100%); transition: transform .5s cubic-bezier(.2,.65,.2,1); }
 .saved-drawer.is-open { transform: none; }

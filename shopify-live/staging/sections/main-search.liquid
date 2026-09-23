@@ -1,0 +1,28 @@
+<section class="collection-page">
+  <div class="page-width">
+    <header class="collection-page__header">
+      <p class="eyebrow">Búsqueda</p>
+      <h1>{% if search.terms != blank %}"{{ search.terms }}"{% else %}Buscar en Velmont{% endif %}</h1>
+      <form action="{{ routes.search_url }}" method="get" role="search" style="margin-top:28px;max-width:480px">
+        <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Lattafa, MATAI, amaderado…" autocomplete="off" style="width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--paper);padding:12px 0;font-family:var(--serif);font-size:20px">
+        <input type="hidden" name="type" value="product">
+      </form>
+      {% if search.performed %}<p class="collection-page__count">{{ search.results_count }} resultado{% if search.results_count != 1 %}s{% endif %}</p>{% endif %}
+    </header>
+    {% if search.performed %}
+      {% if search.results.size > 0 %}
+        <div class="product-grid">
+          {% for item in search.results %}
+            {% if item.object_type == 'product' %}{% render 'product-card', product: item %}{% endif %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="empty-state"><p class="eyebrow">Sin resultados</p><h2>No encontramos nada con "{{ search.terms }}".</h2><a class="button button--gold" href="{{ routes.all_products_collection_url }}">Ver todo el catálogo</a></div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{"name":"Resultados de búsqueda","settings":[]}
+{% endschema %}

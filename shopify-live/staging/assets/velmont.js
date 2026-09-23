@@ -368,12 +368,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!cartDrawer) return;
     cartDrawer.classList.add('is-open'); cartDrawer.setAttribute('aria-hidden', 'false');
     cartScrim && cartScrim.classList.add('is-open');
+    document.body.classList.add('has-cart-open');
     document.documentElement.style.overflow = 'hidden';
   };
   const closeCart = () => {
     if (!cartDrawer) return;
     cartDrawer.classList.remove('is-open'); cartDrawer.setAttribute('aria-hidden', 'true');
     cartScrim && cartScrim.classList.remove('is-open');
+    document.body.classList.remove('has-cart-open');
     document.documentElement.style.overflow = '';
   };
 
@@ -550,15 +552,115 @@ document.addEventListener('DOMContentLoaded', () => {
     syncSaveButtons(); renderSaved();
   });
 
-  document.querySelectorAll('[data-saved-open]').forEach((el) => el.addEventListener('click', () => {
-    savedDrawer && savedDrawer.classList.add('is-open');
-    savedDrawer && savedDrawer.setAttribute('aria-hidden', 'false');
+  const openSaved = () => {
+    if (!savedDrawer) return;
+    savedDrawer.classList.add('is-open'); savedDrawer.setAttribute('aria-hidden', 'false');
+    cartScrim && cartScrim.classList.add('is-open');
+    document.documentElement.style.overflow = 'hidden';
     renderSaved();
-  }));
-  document.querySelectorAll('[data-saved-close]').forEach((el) => el.addEventListener('click', () => {
-    savedDrawer && savedDrawer.classList.remove('is-open');
-    savedDrawer && savedDrawer.setAttribute('aria-hidden', 'true');
-  }));
+  };
+  const closeSaved = () => {
+    if (!savedDrawer) return;
+    savedDrawer.classList.remove('is-open'); savedDrawer.setAttribute('aria-hidden', 'true');
+    cartScrim && cartScrim.classList.remove('is-open');
+    document.documentElement.style.overflow = '';
+  };
+  document.querySelectorAll('[data-saved-open]').forEach((el) => el.addEventListener('click', openSaved));
+  document.querySelectorAll('[data-saved-close]').forEach((el) => el.addEventListener('click', closeSaved));
+  cartScrim && cartScrim.addEventListener('click', () => { closeCart(); closeSaved(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSaved(); });
 
   syncSaveButtons();
+});
+
+/* ==========================================================================
+   VELMONT — pantalla de carga y buscador (predictive search real).
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------------- Pantalla de carga ----------------
+     Nunca bloquea el scroll (no toca html.no-scroll ni similar), sale una
+     sola vez por sesion, y se retira tambien si la pestana estuvo en
+     segundo plano y sus temporizadores se congelaron. */
+  const loader = document.querySelector('[data-loading-screen]');
+  if (loader) {
+    const LOADER_KEY = 'velmont_intro_seen';
+    let seen = false;
+    try { seen = sessionStorage.getItem(LOADER_KEY) === '1'; } catch (err) {}
+    if (seen || reduceMotion) {
+      loader.remove();
+    } else {
+      try { sessionStorage.setItem(LOADER_KEY, '1'); } catch (err) {}
+      const MIN = 800;
+      const t0 = performance.now();
+      let done = false;
+      const hide = () => { loader.classList.add('is-out'); setTimeout(() => loader.remove(), 700); };
+      const finish = () => { if (done) return; done = true; setTimeout(hide, Math.max(0, MIN - (performance.now() - t0))); };
+      if (document.readyState === 'complete') finish();
+      else window.addEventListener('load', finish, { once: true });
+      setTimeout(finish, 2600);
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && document.readyState === 'complete') { done = true; hide(); }
+      }, { once: true });
+    }
+  }
+
+  /* ---------------- Buscador ----------------
+     /search/suggest.json es la Predictive Search API real de Shopify:
+     busca en el catalogo real sin tener que volcarlo entero al HTML. */
+  const searchOverlay = document.querySelector('[data-search-overlay]');
+  const searchInput = document.querySelector('[data-search-input]');
+  const searchResults = document.querySelector('[data-search-results]');
+
+  const openSearch = () => {
+    if (!searchOverlay) return;
+    searchOverlay.classList.add('is-open'); searchOverlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('has-search-open');
+    document.documentElement.style.overflow = 'hidden';
+    setTimeout(() => searchInput && searchInput.focus(), 100);
+  };
+  const closeSearch = () => {
+    if (!searchOverlay) return;
+    searchOverlay.classList.remove('is-open'); searchOverlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('has-search-open');
+    document.documentElement.style.overflow = '';
+  };
+  document.querySelectorAll('[data-search-open]').forEach((el) => el.addEventListener('click', (e) => { e.preventDefault(); openSearch(); }));
+  document.querySelectorAll('[data-search-close]').forEach((el) => el.addEventListener('click', closeSearch));
+  searchOverlay && searchOverlay.addEventListener('click', (e) => { if (e.target === searchOverlay) closeSearch(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSearch(); });
+
+  const cardHTML = (p) => `
+    <a class="product-card" href="${p.url}">
+      <div class="product-card__image">
+        ${p.image ? `<img src="${p.image.replace(/(\.[a-z]+)(\?|$)/i, '_360x$1$2')}" alt="${p.title}" loading="lazy">` : '<span class="product-card__monogram">V</span>'}
+      </div>
+      <div class="product-card__content">
+        <p class="eyebrow">${p.vendor || ''}</p>
+        <h3>${p.title}</h3>
+        <div class="product-card__price"><span>${p.price}</span></div>
+      </div>
+    </a>`;
+
+  let searchTimer;
+  searchInput && searchInput.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    const q = searchInput.value.trim();
+    if (q.length < 2) { searchResults && (searchResults.innerHTML = ''); return; }
+    searchTimer = setTimeout(() => {
+      fetch(`/search/suggest.json?q=${encodeURIComponent(q)}&resources[type]=product&resources[limit]=8&resources[options][unavailable_products]=last`)
+        .then((r) => r.json())
+        .then((data) => {
+          if (!searchResults) return;
+          const products = (data.resources && data.resources.results && data.resources.results.products) || [];
+          if (!products.length) {
+            searchResults.innerHTML = `<p class="search-overlay__note">Sin coincidencia exacta para "${q}" — prueba con el nombre de la casa (Lattafa, Mundus…) o de la fragancia.</p>`;
+            return;
+          }
+          searchResults.innerHTML = products.map(cardHTML).join('');
+        })
+        .catch(() => {});
+    }, 220);
+  });
 });

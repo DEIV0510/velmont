@@ -7,6 +7,18 @@
     <link rel="canonical" href="{{ canonical_url }}">
     {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
     <title>{% if page_title != blank %}{{ page_title }}{% else %}{{ shop.name }}{% endif %}{% unless page_title contains shop.name %} · {{ shop.name }}{% endunless %}</title>
+    <meta property="og:site_name" content="{{ shop.name }}">
+    <meta property="og:title" content="{{ page_title | default: shop.name | escape }}">
+    {% if page_description %}<meta property="og:description" content="{{ page_description | escape }}">{% endif %}
+    <meta property="og:type" content="{% if template.name == 'product' %}product{% else %}website{% endif %}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    {% if template.name == 'product' and product.featured_image %}<meta property="og:image" content="https:{{ product.featured_image | image_url: width: 1200 }}">{% endif %}
+    <meta name="twitter:card" content="summary_large_image">
+    {% unless template.name == 'product' or template.name == 'search' %}
+      <script type="application/ld+json">
+        { "@context": "https://schema.org", "@type": "Organization", "name": {{ shop.name | json }}, "url": {{ request.origin | append: routes.root_url | json }} }
+      </script>
+    {% endunless %}
     {{ content_for_header }}
     <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js-motion');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,6 +29,10 @@
     <script type="application/json" id="velmont-promo-data">{% render 'promo-data' %}</script>
   </head>
   <body class="template-{{ request.page_type | handle }}">
+    <div data-loading-screen>
+      <div class="loader-mark"><img src="{{ 'velmont-logo-header.png' | asset_url }}" width="220" height="175" alt="{{ shop.name }}"></div>
+      <div class="loader-rule"></div>
+    </div>
     <a class="skip-link" href="#MainContent">Ir al contenido</a>
     {% section 'velmont-announcement' %}
     {% section 'velmont-header' %}
@@ -26,5 +42,7 @@
     {% section 'velmont-footer' %}
     {% render 'cart-drawer' %}
     {% render 'saved-drawer' %}
+    {% render 'search-overlay' %}
+    {% render 'whatsapp-float' %}
   </body>
 </html>

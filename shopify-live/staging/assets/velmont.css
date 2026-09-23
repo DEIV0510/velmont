@@ -1493,6 +1493,51 @@ body.cursor-on input, body.cursor-on textarea, body.cursor-on select { cursor: a
 .not-found__grid { display: grid; gap: 32px; justify-items: center; }
 .not-found__mark { color: var(--gold); font-family: var(--serif); font-style: italic; font-size: 90px; line-height: 1; }
 
+/* ---------------- Rejilla editorial: una pieza grande + dos chicas, no 3 columnas iguales ---------------- */
+.product-grid--editorial {
+  grid-template-columns: 1.3fr 1fr;
+}
+.product-grid--editorial > *:first-child {
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+}
+.product-grid--editorial > *:first-child .product-card__image {
+  flex: 1;
+  min-height: 460px;
+}
+.product-grid--editorial > *:first-child .product-card__image img {
+  height: 100%;
+}
+@media (max-width: 900px) {
+  .product-grid--editorial { grid-template-columns: repeat(2, 1fr); }
+  .product-grid--editorial > *:first-child { grid-row: auto; grid-column: 1 / span 2; }
+  .product-grid--editorial > *:first-child .product-card__image { min-height: 300px; }
+}
+@media (max-width: 560px) {
+  .product-grid--editorial { grid-template-columns: 1fr; }
+  .product-grid--editorial > *:first-child { grid-column: auto; }
+}
+
+/* ---------------- Foto a pantalla completa (spotlight): una pausa cinematografica con una fotografia real de producto ---------------- */
+.spotlight {
+  position: relative; min-height: 82vh;
+  display: flex; align-items: flex-end;
+  background-size: cover; background-position: center;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  isolation: isolate;
+}
+.spotlight:before {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(0deg, rgba(9,9,9,.92) 0%, rgba(9,9,9,.15) 46%, rgba(9,9,9,.55) 100%);
+}
+.spotlight__copy { position: relative; z-index: 1; padding-bottom: 80px; max-width: 640px; }
+.spotlight__copy p:not(.eyebrow) { color: #d7d1c6; font-family: var(--serif); font-size: 19px; max-width: 440px; margin: 20px 0 32px; }
+@media (max-width: 560px) {
+  .spotlight { min-height: 70vh; }
+  .spotlight__copy { padding-bottom: 50px; }
+}
+
 /* ---------------- Favoritos (guardados) ---------------- */
 .saved-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 61; width: min(440px, 100vw); background: var(--ink-soft); color: var(--paper); border-left: 1px solid var(--line); display: flex; flex-direction: column; transform: translateX(100%); transition: transform .5s cubic-bezier(.2,.65,.2,1); }
 .saved-drawer.is-open { transform: none; }

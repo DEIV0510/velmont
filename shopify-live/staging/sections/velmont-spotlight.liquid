@@ -1,0 +1,33 @@
+{%- comment -%}
+  Pausa cinematografica de una sola fotografia real. Si el merchant no elige
+  un producto, cae sobre el primero de la coleccion MATAI (real, siempre
+  disponible) — nunca sobre una imagen inventada o de stock.
+{%- endcomment -%}
+{%- liquid
+  assign spot = section.settings.product
+  if spot == blank
+    assign spot = collections['2-matai-x-450-000'].products.first
+  endif
+  assign spot_image = spot.featured_image
+-%}
+{%- if spot != blank and spot_image != blank -%}
+<section class="spotlight" style="background-image:url('{{ spot_image | image_url: width: 1800 }}')">
+  <div class="page-width spotlight__copy">
+    <p class="eyebrow">{{ spot.vendor }}</p>
+    <h2 data-reveal-words>{{ spot.title }}</h2>
+    <p>{{ section.settings.text | default: 'Una pieza que se nota antes de hablar.' }}</p>
+    <a class="button button--gold" href="{{ spot.url }}">Descubrir esta fragancia</a>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name":"Foto a pantalla completa",
+  "settings":[
+    {"type":"product","id":"product","label":"Producto a destacar","info":"Si lo dejas vacío, se usa el primero de la colección MATAI."},
+    {"type":"textarea","id":"text","label":"Texto","default":"Una pieza que se nota antes de hablar."}
+  ],
+  "presets": [{ "name": "Foto a pantalla completa" }]
+}
+{% endschema %}

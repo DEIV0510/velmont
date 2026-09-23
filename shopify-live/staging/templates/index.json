@@ -10,6 +10,7 @@
 {
   "sections": {
     "hero": {"type":"velmont-hero","settings":{}},
+    "spotlight": {"type":"velmont-spotlight","settings":{}},
     "finder": {"type":"velmont-scent-finder","settings":{}},
     "collections": {"type":"velmont-collection-showcase","settings":{}},
     "offers-matai": {
@@ -37,5 +38,5 @@
     "service": {"type":"velmont-service","settings":{}},
     "editorial": {"type":"velmont-editorial","settings":{}}
   },
-  "order": ["hero", "finder", "collections", "offers-matai", "offers-seleccion", "service", "editorial"]
+  "order": ["hero", "spotlight", "finder", "collections", "offers-matai", "offers-seleccion", "service", "editorial"]
 }

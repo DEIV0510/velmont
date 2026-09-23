@@ -15,19 +15,19 @@
     <div class="collection-showcase__panels">
       <div class="collection-panel is-active" data-collection-panel="ella">
         <div class="collection-panel__intro"><span>01</span><h3>Para ella</h3><p>Fragancias de presencia luminosa, intensa o delicada, elegidas a tu ritmo.</p><a href="{{ collections[section.settings.ella_handle].url }}">Explorar selección <b>→</b></a></div>
-        <div class="product-grid product-grid--three">
+        <div class="product-grid product-grid--editorial">
           {% if collection_ella != blank %}{% for product in collection_ella.products limit: 3 %}{% render 'product-card', product: product %}{% endfor %}{% else %}<div class="collection-placeholder"><span>V</span><p>Crea la colección<br>Para ella</p></div>{% endif %}
         </div>
       </div>
       <div class="collection-panel" data-collection-panel="el">
         <div class="collection-panel__intro"><span>02</span><h3>Para él</h3><p>Carácter, contraste y elegancia para aromas que entran antes que tú.</p><a href="{{ collections[section.settings.el_handle].url }}">Explorar selección <b>→</b></a></div>
-        <div class="product-grid product-grid--three">
+        <div class="product-grid product-grid--editorial">
           {% if collection_el != blank %}{% for product in collection_el.products limit: 3 %}{% render 'product-card', product: product %}{% endfor %}{% else %}<div class="collection-placeholder"><span>V</span><p>Crea la colección<br>Para él</p></div>{% endif %}
         </div>
       </div>
       <div class="collection-panel" data-collection-panel="unisex">
         <div class="collection-panel__intro"><span>03</span><h3>Unisex</h3><p>Combinaciones sin etiquetas para quien compra por instinto, no por norma.</p><a href="{{ collections[section.settings.unisex_handle].url }}">Explorar selección <b>→</b></a></div>
-        <div class="product-grid product-grid--three">
+        <div class="product-grid product-grid--editorial">
           {% if collection_unisex != blank %}{% for product in collection_unisex.products limit: 3 %}{% render 'product-card', product: product %}{% endfor %}{% else %}<div class="collection-placeholder"><span>V</span><p>Crea la colección<br>Unisex</p></div>{% endif %}
         </div>
       </div>

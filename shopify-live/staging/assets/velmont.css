@@ -1,19 +1,22 @@
+/* Paleta y tipografia alineadas al prototipo de Vercel (velmont-nine),
+   para que las dos caras del mismo negocio se sientan la misma marca.
+   El dorado sigue muestreado del logo real: no cambia el archivo del
+   logo, cambia el resto del sitio para acompañarlo. */
 :root {
-  --ink:#090909;
-  --ink-soft:#151513;
-  --gold:#d8b75c;
-  --gold-light:#f0d98a;
-  --paper:#f4efe5;
-  --paper-deep:#e9decc;
-  --muted:#a9a39a;
-  --line:rgba(216,183,92,.34);
-  --serif:Didot,"Bodoni 72","Bodoni Moda","Iowan Old Style",Georgia,serif;
-  --sans:Inter,"Helvetica Neue",Arial,sans-serif;
+  --ink:#08080A;
+  --ink-soft:#101013;
+  --gold:#C9A867;
+  --gold-light:#E4D3AB;
+  --gold-deep:#8A6F3C;
+  --paper:#F4F1EA;
+  --paper-deep:#E9E4D9;
+  --muted:#9C958A;
+  --line:rgba(201,168,103,.34);
+  --serif:"Fraunces","Iowan Old Style",Georgia,serif;
+  --sans:"Manrope","Segoe UI",-apple-system,sans-serif;
   --max:1320px}
-/* "Bodoni Moda" carga real desde Google Fonts (ver theme.liquid): Didot y
-   "Bodoni 72" son fuentes comerciales que solo existen en Mac — sin este
-   respaldo, casi todo el mundo veia Georgia en vez del serif de alta
-   costura que el diseno pedia. */
+/* Fraunces + Manrope cargan reales desde Google Fonts (ver theme.liquid) —
+   la misma pareja tipografica del prototipo en velmont-nine.vercel.app. */
 * {
   box-sizing:border-box}
 html {
@@ -107,7 +110,7 @@ img {
   font-size:15px;
   margin-left:6px}
 .announcement {
-  background:#d3b35b;
+  background:var(--gold);
   color:#12100b;
   font-size:10px;
   letter-spacing:.18em;
@@ -123,7 +126,7 @@ img {
   font-size:8px}
 .site-header {
   background:rgba(9,9,9,.9);
-  border-bottom:1px solid rgba(216,183,92,.18);
+  border-bottom:1px solid rgba(201,168,103,.18);
   position:sticky;
   top:0;
   z-index:15;
@@ -209,7 +212,7 @@ img {
   overflow:hidden;
   position:relative}
 .hero:after {
-  background:radial-gradient(ellipse at 75% 45%,rgba(216,183,92,.11),transparent 32%);
+  background:radial-gradient(ellipse at 75% 45%,rgba(201,168,103,.11),transparent 32%);
   content:"";
   inset:0;
   pointer-events:none;
@@ -283,7 +286,7 @@ img {
   pointer-events:none;
   z-index:1}
 .hero__arc {
-  border:1px solid rgba(216,183,92,.43);
+  border:1px solid rgba(201,168,103,.43);
   border-radius:50%;
   position:absolute;
   z-index:1}
@@ -465,7 +468,7 @@ img {
 .product-card__image {
   align-items:center;
   background:linear-gradient(145deg,#1a1917,#0d0d0c);
-  border:1px solid rgba(216,183,92,.18);
+  border:1px solid rgba(201,168,103,.18);
   display:flex;
   justify-content:center;
   min-height:300px;
@@ -479,13 +482,13 @@ img {
 .product-card:hover .product-card__image img {
   transform:scale(1.04)}
 .product-card__monogram {
-  color:rgba(216,183,92,.75);
+  color:rgba(201,168,103,.75);
   font-family:var(--serif);
   font-size:130px;
   font-style:italic;
   line-height:1}
 .product-card__ornament {
-  border:1px solid rgba(216,183,92,.45);
+  border:1px solid rgba(201,168,103,.45);
   border-radius:50%;
   height:170px;
   position:absolute;
@@ -533,7 +536,7 @@ img {
   min-height:300px;
   position:relative}
 .collection-placeholder span {
-  color:rgba(216,183,92,.7);
+  color:rgba(201,168,103,.7);
   font-family:var(--serif);
   font-size:140px;
   font-style:italic}
@@ -596,7 +599,7 @@ img {
   position:absolute;
   z-index:1}
 .offers__line {
-  border:1px solid rgba(216,183,92,.45);
+  border:1px solid rgba(201,168,103,.45);
   border-radius:50%;
   position:absolute;
   z-index:1}
@@ -760,7 +763,7 @@ img {
   font-size:11px!important;
   margin-top:18px}
 .site-footer__bottom {
-  border-top:1px solid rgba(216,183,92,.2);
+  border-top:1px solid rgba(201,168,103,.2);
   color:#8f8980;
   display:flex;
   font-size:9px;
@@ -1581,16 +1584,42 @@ body.cursor-on input, body.cursor-on textarea, body.cursor-on select { cursor: a
 @media (max-width: 560px) { .search-overlay__close { top: 18px; right: 20px; } }
 
 /* ---------------- Menu movil a pantalla completa ---------------- */
+/* Mismo espiritu que el menu del prototipo: tapa toda la pantalla, tipos
+   grandes en serif, indice numerado (por contador CSS, funciona igual con
+   el menu de 5 enlaces por defecto o con el que arme el merchant). */
 @media (max-width: 900px) {
   .site-nav {
-    padding-top: var(--s7, 60px);
+    position: fixed; inset: 0; z-index: 25;
+    background: var(--ink);
+    display: none;
+    flex-direction: column; justify-content: center;
+    padding: 90px 28px 70px;
+    gap: 2px;
+    overflow-y: auto;
+    counter-reset: navidx;
+    border-bottom: 0;
+    top: 0; left: 0; width: 100%;
+  }
+  .site-nav.is-open { display: flex; }
+  .site-nav > a, .site-nav > .velmont-nav-dropdown { counter-increment: navidx; width: fit-content; }
+  .site-nav > a:before, .site-nav > .velmont-nav-dropdown .velmont-nav-dropdown__toggle:before {
+    content: counter(navidx, decimal-leading-zero);
+    font-family: var(--sans); font-size: 10px; letter-spacing: .15em;
+    color: var(--gold); opacity: .85; vertical-align: super; margin-right: 16px;
   }
   .site-nav a, .velmont-nav-dropdown__toggle {
-    font-family: var(--serif); font-size: 30px; letter-spacing: -.02em;
-    text-transform: none; padding: 14px 0;
+    font-family: var(--serif); font-size: clamp(30px, 8vw, 44px); letter-spacing: -.02em;
+    text-transform: none; padding: 12px 0;
   }
   .site-nav a:after { display: none; }
   .velmont-nav-dropdown__menu { position: static; }
+
+  /* La hamburguesa se convierte en X mientras el menu esta abierto */
+  .nav-toggle { z-index: 26; position: relative; }
+  .nav-toggle span:not(.visually-hidden) { transition: transform .3s ease, opacity .3s ease; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(4.5px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-4.5px) rotate(-45deg); }
 }
 
 /* ---------------- WhatsApp flotante ---------------- */

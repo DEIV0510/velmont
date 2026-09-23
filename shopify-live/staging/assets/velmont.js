@@ -5,11 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const navToggle = document.querySelector('[data-nav-toggle]');
   const siteNav = document.querySelector('[data-site-nav]');
   if (navToggle && siteNav) {
-    navToggle.addEventListener('click', () => {
-      const isOpen = navToggle.getAttribute('aria-expanded') === 'true';
-      navToggle.setAttribute('aria-expanded', String(!isOpen));
-      siteNav.classList.toggle('is-open', !isOpen);
-    });
+    const setNav = (open) => {
+      navToggle.setAttribute('aria-expanded', String(open));
+      siteNav.classList.toggle('is-open', open);
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    };
+    navToggle.addEventListener('click', () => setNav(navToggle.getAttribute('aria-expanded') !== 'true'));
+    siteNav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setNav(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setNav(false); });
   }
 
   // Drives a <video> from a 0–1 progress value: seeks smoothly toward it, keeps the stage hidden until a real

@@ -1,0 +1,25 @@
+{%- comment -%}
+  Precio en COP, tabular y discreto. Nunca se escribe a mano: sale del objeto
+  de Shopify, para que un cambio de precio o un descuento se refleje solo.
+  Uso: {% render 'price', product: product %}  o  {% render 'price', amount: 450000 %}
+{%- endcomment -%}
+{%- liquid
+  if product
+    assign price = product.price
+    assign compare = product.compare_at_price
+    assign varies = product.price_varies
+  else
+    assign price = amount
+  endif
+-%}
+<span class="price {{ class }}">
+  {%- if varies -%}
+    {%- assign from_price = price | money_without_trailing_zeros -%}
+    {{ 'products.product.from_price' | t: price: from_price }}
+  {%- else -%}
+    {{ price | money_without_trailing_zeros }}
+  {%- endif -%}
+  {%- if compare and compare > price -%}
+    <s>{{ compare | money_without_trailing_zeros }}</s>
+  {%- endif -%}
+</span>

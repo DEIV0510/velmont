@@ -1,0 +1,17 @@
+{%- comment -%}
+  Atributos del panel cromatico. Emite la clase Y el data-tone porque cada uno
+  hace una cosa distinta: la clase pinta el fondo y reasigna las superficies;
+  data-tone es lo que theme.liquid usa para calcular los filetes con el color
+  real del ajuste del tema.
+
+  Uso (dentro de la etiqueta de apertura):
+    <section {% render 'panel', color: section.settings.panel %}>
+{%- endcomment -%}
+{%- liquid
+  assign c = color | default: 'cream'
+  assign tone = 'light'
+  if c == 'black' or c == 'ink'
+    assign tone = 'dark'
+  endif
+-%}
+class="panel panel--{{ c }}{% if extra %} {{ extra }}{% endif %}" data-tone="{{ tone }}"

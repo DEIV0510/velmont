@@ -1,0 +1,18 @@
+<section class="band notfound band--below-header" data-tone="dark">
+  <div class="wrap notfound__in">
+    <span class="section-index" data-reveal>404</span>
+    <h1 class="display" data-reveal>
+      <span class="line-mask"><span>{{ 'general.404.title' | t }}</span></span>
+      <span class="line-mask" style="--reveal-delay:120ms"><span><em>{{ 'general.404.subtitle' | t }}</em></span></span>
+    </h1>
+    <p class="lede" data-reveal>{{ 'general.404.text' | t }}</p>
+    <div class="notfound__cta" data-reveal>
+      <a class="act" href="{{ routes.all_products_collection_url }}">{{ 'general.404.cta' | t }}</a>
+      <button class="link" data-search-open>{{ 'general.search.title' | t }}</button>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "404", "tag": "section", "settings": [] }
+{% endschema %}

@@ -1,0 +1,76 @@
+{%- liquid
+  assign lines = section.settings.heading | newline_to_br | split: '<br />'
+  assign last = lines.size | minus: 1
+-%}
+
+{%- comment -%}
+  Declaracion: una sola columna estrecha. Antes ocupaba 577px de alto para
+  203px de contenido — el resto era relleno vertical, y encima se sumaba al del
+  panel siguiente. Aqui el respiro es proporcional al texto, no al ancho de la
+  pantalla.
+{%- endcomment -%}
+<section {% render 'panel', color: section.settings.panel, extra: 'statement' %}>
+  <div class="column statement__in">
+    <h2 class="statement__quote">
+      {%- for line in lines -%}
+        {%- assign clean = line | strip -%}
+        {%- if clean != blank -%}
+          {%- if forloop.first and section.settings.first_by_words -%}
+            <span class="statement__line" data-reveal>{{ clean }}</span>
+          {%- else -%}
+            <span class="statement__line" data-reveal>
+              {%- if forloop.index0 == last and section.settings.italic_last -%}<em>{{ clean }}</em>{%- else -%}{{ clean }}{%- endif -%}
+            </span>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </h2>
+
+    {%- if section.settings.text != blank -%}
+      <p class="fine statement__aside" data-reveal>{{ section.settings.text }}</p>
+    {%- endif -%}
+  </div>
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="statement__thread">
+      {%- for block in section.blocks -%}
+        <span class="label" {{ block.shopify_attributes }} data-reveal>{{ block.settings.text }}</span>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Declaración",
+  "tag": "section",
+  "settings": [
+    { "type": "textarea", "id": "heading", "label": "Titular", "default": "La fragancia\nes memoria." },
+    { "type": "checkbox", "id": "italic_last", "label": "Última línea en cursiva", "default": true },
+    { "type": "checkbox", "id": "first_by_words", "label": "Primera línea sin cursiva", "default": true },
+    { "type": "textarea", "id": "text", "label": "Texto de apoyo", "default": "Es lo último que queda de ti cuando sales de una habitación. En VELMONT elegimos piezas para quien prefiere dejar recuerdo antes que llamar la atención." },
+    {
+      "type": "select",
+      "id": "panel",
+      "label": "Panel",
+      "options": [
+        { "value": "cream", "label": "Crema" },
+        { "value": "black", "label": "Negro" },
+        { "value": "ink", "label": "Tinta" }
+      ],
+      "default": "cream"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Dato de confianza",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "Envíos a toda Colombia" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{ "name": "Declaración" }]
+}
+{% endschema %}

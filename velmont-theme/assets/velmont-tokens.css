@@ -1,0 +1,220 @@
+/* ==========================================================================
+   VELMONT — SISTEMA DE DISEÑO
+   ==========================================================================
+   Ningún valor de tamaño, espacio, color o tracking puede existir fuera de
+   esta lista. Si una seccion necesita algo que no esta aqui, se discute el
+   token — no se escribe el numero.
+
+   Los colores de marca los emite theme.liquid desde los ajustes del tema
+   (--noir, --ink, --ivory, --bone, --stone, --gold...). Aqui se les pone el
+   nombre del sistema y se construye todo lo demas encima.
+   ========================================================================== */
+
+:root {
+
+  /* =======================================================================
+     1 · TIPOGRAFIA — razon 1,25 · nueve escalones
+     ======================================================================= */
+  --t-100: 0.75rem;    /* 12 — antetitulos, metadatos, marca de la pieza      */
+  --t-200: 0.875rem;   /* 14 — precio, pie, legales, descriptor olfativo      */
+  --t-300: 1rem;       /* 16 — cuerpo                                        */
+  --t-400: 1.25rem;    /* 20 — cuerpo destacado, nombre de producto          */
+  --t-500: 1.625rem;   /* 26 — subtitulo                                     */
+  --t-600: 2.125rem;   /* 34 — entradilla                                    */
+  --t-700: 2.875rem;   /* 46 — titulo de seccion                             */
+  --t-800: 4rem;       /* 64 — display secundario (ficha, no la home)        */
+  --t-900: 6rem;       /* 96 — display del hero                              */
+
+  /* Dos voces, sin zona gris: serif SOLO para display (--t-700 y arriba),
+     sans para todo lo demas. --t-500 y --t-600 son papeles de lectura. */
+  /* Cormorant Garamond: el contraste fino de la perfumeria europea, y en
+     mayusculas se sostiene sola (la eligio el cliente sobre una maqueta).
+     Tiene la altura de x baja: por debajo de --t-500 va en 500, no en 400. */
+  --font-display: 'Cormorant Garamond', 'Cormorant', Georgia, serif;
+  --font-ui: 'Manrope', 'Segoe UI', -apple-system, sans-serif;
+
+  /* Los dos unicos display de la home. Ambos extremos son escalones. */
+  --display-hero: clamp(var(--t-700), 6vw, var(--t-900));
+  --display-section: clamp(var(--t-600), 4vw, var(--t-700));
+
+  /* Interlinea SIEMPRE sin unidad: con unidad no hereda bien y vuelve a
+     producir valores sueltos. Display entre 1.02 y 1.08; cuerpo 1.6. */
+  --lh-display: 1.02;
+  --lh-title: 1.08;
+  --lh-body: 1.6;
+  --lh-eyebrow: 1;
+
+  --w-display: 500;           /* nombres de pieza y casas: serif pequeño      */
+  --w-body: 400;
+  --w-label: 500;
+
+  /* =======================================================================
+     2 · TRACKING — en em, nunca en px
+     ======================================================================= */
+  --track-display: 0.01em;    /* titulares en mayusculas: nunca negativo     */
+  --track-body: 0;            /* --t-300 y --t-400                           */
+  --track-eyebrow: 0.34em;
+
+  /* Los ajustes del tema emitian --label-size en 0.625rem (10px), fuera de la
+     escala y por debajo del suelo legible. El antetitulo es --t-100 y su
+     tracking es --track-eyebrow: el sistema manda sobre el ajuste suelto. */
+  --label-size: var(--t-100);
+  --label-track: var(--track-eyebrow);
+
+  /* --- Escala heredada de los ajustes del tema ---------------------------
+     theme.liquid emite --fs-* desde clamps escritos a mano que producian
+     cinco tamanos de display en la portada (51,8 · 60,8 · 67,2 · 77,8 · 108)
+     y dejaban los titulos de seccion MAS grandes que el hero. Aqui cada uno
+     pasa a apuntar a un escalon de la escala: el numero lo pone el sistema,
+     el ajuste del tema deja de poder inventarlo.
+     Solo dos display en la home, y el hero manda sobre las secciones.
+     --------------------------------------------------------------------- */
+  --fs-mega: var(--display-hero);        /* portada y ficha */
+  --fs-display: var(--display-section);  /* titulos de seccion */
+  --fs-h2: var(--display-section);
+  --fs-h3: var(--t-500);                 /* 26 */
+  --fs-lede: var(--t-400);               /* 20 */
+  --fs-body: var(--t-300);               /* 16 */
+  --fs-small: var(--t-200);              /* 14 */
+
+  /* Ritmo vertical de seccion: dos papeles, no cinco clamps. */
+  --band: var(--section-product);        /* 192 — catalogo y ediciones */
+  --band-tight: var(--section-text);     /* 128 — secciones de texto */    /* SOLO --t-100 — la firma tipografica de la casa */
+
+  /* =======================================================================
+     3 · ESPACIADO — base 8
+     ======================================================================= */
+  --sp-1: 8px;    --sp-2: 16px;   --sp-3: 24px;   --sp-4: 32px;
+  --sp-6: 48px;   --sp-8: 64px;   --sp-12: 96px;  --sp-16: 128px;
+  --sp-20: 160px; --sp-24: 192px;
+
+  /* Unica media parada permitida. Solo para huecos internos de un componente
+     (icono-texto, precio-tachado, filas de lista). Nunca para separar bloques. */
+  --gap-tight: 12px;
+
+  /* --- Nombres heredados -------------------------------------------------
+     base.css y velmont-motion.css se escribieron contra la escala --s2..--s10
+     del prototipo. Son 149 usos: renombrarlos a mano ahora es riesgo puro sin
+     ganancia visual. Se quedan como ALIAS, no como escala paralela — el numero
+     lo sigue poniendo la rejilla base-8, aqui solo se le pone el nombre viejo.
+     Ocho de los nueve coinciden exactos con la rejilla; el noveno (--s3) es la
+     media parada. Se eliminan en el paso de espaciado, con el renombrado.
+     --s1, --s11 y --s12 no los usa nadie: no se reponen.
+     ----------------------------------------------------------------------- */
+  --s2:  var(--sp-1);    /*   8 */
+  --s3:  var(--gap-tight); /* 12 */
+  --s4:  var(--sp-2);    /*  16 */
+  --s5:  var(--sp-3);    /*  24 */
+  --s6:  var(--sp-4);    /*  32 */
+  --s7:  var(--sp-6);    /*  48 */
+  --s8:  var(--sp-8);    /*  64 */
+  --s9:  var(--sp-12);   /*  96 */
+  --s10: var(--sp-16);   /* 128 */
+
+  /* Papeles: una seccion elige un papel, no un numero.
+
+     Fluidos, no fijos. 192px de respiro en un escritorio de 1440 son el 13%
+     del ancho; los mismos 192px en un telefono de 390 son media pantalla en
+     blanco, y asi se leen. Los topes estan calculados para que en escritorio
+     salgan exactamente los valores de siempre (13.4vw de 1440 = 193 → 192;
+     8.9vw de 1440 = 128) y solo encoja de tablet hacia abajo. */
+  --section-product: clamp(96px, 13.4vw, 192px);  /* Coleccion, Ediciones    */
+  --section-text: clamp(64px, 8.9vw, 128px);      /* Statement, Descubre, Casa */
+  --section-band: 0;                 /* bandas a borde completo              */
+  --gap-title: var(--sp-12);
+  --gap-grid: var(--sp-6);
+  --gap-grid-mobile: var(--sp-4);
+  --pad-card: var(--sp-3);
+
+  --column: 700px;
+
+  /* =======================================================================
+     4 · COLOR
+     Dos familias de panel y nada mas. Arena deja de pintar secciones: crema
+     y arena difieren un 6% de luminancia y como alternancia son invisibles.
+     Arena pasa a ser color de inset dentro de un panel claro.
+     ======================================================================= */
+  --black: var(--noir);          /* panel oscuro                             */
+  --cream: var(--ivory);         /* panel claro — el unico                   */
+  /* --ink, --sand, --stone, --stone-deep y --gold* vienen de theme.liquid */
+
+  --surface: var(--cream);
+  --surface-inset: var(--sand);
+  --on-surface: var(--ink);
+  --on-surface-dim: var(--stone-deep);
+
+  /* =======================================================================
+     5 · FORMA
+     ======================================================================= */
+  --radius: 0;
+  --hairline-width: 1px;
+
+  /* =======================================================================
+     6 · MOVIMIENTO
+     ======================================================================= */
+  /* Entrada de seccion: 800ms y salida suave. El escalonado lo calcula el JS
+     (70ms por hermano, tope 6), nunca se escribe a mano en la plantilla. */
+  --t-reveal: 800ms;
+  --reveal-paso: 70ms;
+
+  --ease: cubic-bezier(.16, .84, .44, 1);
+  --ease-soft: cubic-bezier(.22, 1, .36, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-inout: cubic-bezier(.76, 0, .24, 1);
+
+  --z-header: 200; --z-menu: 300; --z-drawer: 400; --z-overlay: 500; --z-cursor: 1000;
+  --announce-h: 32px;   /* barra de anuncio: una linea de --t-100 con aire */
+}
+
+/* A 390px de ancho, 0.34em rompe los renglones del nav y del pie. */
+@media (max-width: 600px) {
+  :root { --track-eyebrow: 0.24em; }
+}
+
+/* ==========================================================================
+   PANELES — dos familias que alternan de verdad
+   Dos paneles contiguos nunca comparten familia, salvo que los separe una
+   imagen a borde completo.
+   ========================================================================== */
+.panel { position: relative; }
+
+.panel--cream,
+.panel--sand {   /* arena degrada a crema: ya no es un panel */
+  background: var(--cream); color: var(--ink);
+  --surface: var(--cream);
+  --surface-inset: var(--sand);
+  --on-surface: var(--ink);
+  --on-surface-dim: var(--stone-deep);
+}
+.panel--black {
+  background: var(--black); color: var(--cream);
+  --surface: var(--black);
+  --surface-inset: var(--ink);
+  --on-surface: var(--cream);
+  --on-surface-dim: var(--stone);
+}
+.panel--ink {
+  background: var(--ink); color: var(--cream);
+  --surface: var(--ink);
+  --surface-inset: var(--black);
+  --on-surface: var(--cream);
+  --on-surface-dim: var(--stone);
+}
+
+/* ==========================================================================
+   PAPELES TIPOGRAFICOS
+   Ninguna seccion declara font-size: aplica un papel. Se definen aqui y se
+   consumen en el paso de tipografia.
+   ========================================================================== */
+.type-eyebrow {
+  font-family: var(--font-ui); font-size: var(--t-100); font-weight: var(--w-label);
+  letter-spacing: var(--track-eyebrow); line-height: var(--lh-eyebrow);
+  text-transform: uppercase; color: var(--on-surface-dim);
+}
+.type-meta   { font-family: var(--font-ui); font-size: var(--t-200); letter-spacing: var(--track-body); line-height: var(--lh-body); }
+.type-body   { font-family: var(--font-ui); font-size: var(--t-300); letter-spacing: var(--track-body); line-height: var(--lh-body); }
+.type-strong { font-family: var(--font-ui); font-size: var(--t-400); letter-spacing: var(--track-body); line-height: var(--lh-title); }
+.type-sub    { font-family: var(--font-ui); font-size: var(--t-500); letter-spacing: var(--track-body); line-height: var(--lh-title); }
+.type-lede   { font-family: var(--font-ui); font-size: var(--t-600); letter-spacing: var(--track-body); line-height: var(--lh-title); color: var(--on-surface-dim); }
+.type-title  { font-family: var(--font-display); font-size: var(--display-section); font-weight: var(--w-display); letter-spacing: var(--track-display); line-height: var(--lh-display); }
+.type-hero   { font-family: var(--font-display); font-size: var(--display-hero); font-weight: var(--w-display); letter-spacing: var(--track-display); line-height: var(--lh-display); }

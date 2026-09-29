@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "bundle_source": "2-x-280-000",
+        "shipping_note": "A toda Colombia"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

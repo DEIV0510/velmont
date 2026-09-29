@@ -1,0 +1,31 @@
+<section class="band band--tight band--below-header" data-tone="light">
+  <div class="wrap collection-head">
+    {%- comment -%} Sin cifras: una casa curada no cuenta unidades. {%- endcomment -%}
+    <span class="section-index" data-reveal>{{ 'collections.general.index' | t }}</span>
+    <h1 class="display" data-reveal><span class="line-mask"><span>{{ 'collections.general.title' | t }}</span></span></h1>
+  </div>
+
+  <div class="grid-quiet">
+    {%- for collection in collections -%}
+      <article class="piece" data-reveal="wipe">
+        <a class="piece__stage" href="{{ collection.url }}" aria-label="{{ collection.title | escape }}">
+          {%- if collection.featured_image -%}
+            <img src="{{ collection.featured_image | image_url: width: 800 }}"
+                 alt="{{ collection.title | escape }}"
+                 width="{{ collection.featured_image.width }}" height="{{ collection.featured_image.height }}"
+                 loading="lazy">
+          {%- endif -%}
+        </a>
+        <div class="piece__meta">
+          <div>
+            <h2 class="piece__name">{{ collection.title }}</h2>
+          </div>
+        </div>
+      </article>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Colecciones", "tag": "section", "settings": [] }
+{% endschema %}

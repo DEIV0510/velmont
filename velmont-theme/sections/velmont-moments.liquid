@@ -1,0 +1,104 @@
+{%- comment -%}
+  Momentos: marco narrativo, destino real. Cada tarjeta es una escena 3:2 —
+  ambiente, no frasco: el producto ya tiene su seccion, y repetir frascos aqui
+  reproduciria el mismo muro en otra proporcion. El enlace sí va a una
+  coleccion real de la tienda.
+
+  Un bloque sin escena no se renderiza: mejor dos tarjetas que tres con un
+  hueco.
+{%- endcomment -%}
+
+{%- liquid
+  assign listos = 0
+  for block in section.blocks
+    if block.settings.image
+      assign listos = listos | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if listos > 0 -%}
+  <section {% render 'panel', color: section.settings.panel, extra: 'moments band--tight' %} id="{{ section.settings.anchor | default: 'momentos' }}">
+    {% render 'section-header',
+       index: section.settings.index,
+       title: section.settings.heading,
+       link_text: section.settings.link_text,
+       link_url: section.settings.link_url %}
+
+    <div class="moments__track" data-reel data-cursor-label="{{ 'motion.cursor.swipe' | t }}">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.image -%}
+          {%- assign destino = block.settings.collection.url | default: routes.all_products_collection_url -%}
+          <article class="moment" {{ block.shopify_attributes }} data-reveal>
+            <a class="moment__link" href="{{ destino }}" data-cursor-label="{{ 'motion.cursor.view' | t }}">
+              <div class="moment__media">
+                <img src="{{ block.settings.image | image_url: width: 1600 }}"
+                     srcset="{{ block.settings.image | image_url: width: 800 }} 800w,
+                             {{ block.settings.image | image_url: width: 1600 }} 1600w"
+                     sizes="(min-width: 900px) 42vw, 84vw"
+                     alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                     width="{{ block.settings.image.width }}"
+                     height="{{ block.settings.image.height }}"
+                     loading="lazy">
+              </div>
+              <div class="moment__copy">
+                <h3 class="moment__title">{{ block.settings.title }}</h3>
+                {%- if block.settings.text != blank -%}
+                  <p class="fine moment__text">{{ block.settings.text }}</p>
+                {%- endif -%}
+              </div>
+            </a>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Momentos",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "index", "label": "Índice", "default": "Momentos" },
+    { "type": "text", "id": "heading", "label": "Titular", "default": "Hecho para estas noches" },
+    { "type": "text", "id": "link_text", "label": "Enlace" },
+    { "type": "url", "id": "link_url", "label": "Destino del enlace" },
+    { "type": "text", "id": "anchor", "label": "Ancla", "default": "momentos" },
+    {
+      "type": "select",
+      "id": "panel",
+      "label": "Panel",
+      "options": [
+        { "value": "black", "label": "Negro" },
+        { "value": "ink", "label": "Tinta" },
+        { "value": "cream", "label": "Crema" }
+      ],
+      "default": "black"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "moment",
+      "name": "Momento",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Noche" },
+        { "type": "textarea", "id": "text", "label": "Texto" },
+        { "type": "image_picker", "id": "image", "label": "Escena", "info": "Horizontal 3:2 (2400×1600). De ambiente — tela, luz, piedra, humo, una mano. No de frasco." },
+        { "type": "collection", "id": "collection", "label": "Colección a la que enlaza" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Momentos",
+      "blocks": [
+        { "type": "moment", "settings": { "title": "Noche" } },
+        { "type": "moment", "settings": { "title": "Firma" } },
+        { "type": "moment", "settings": { "title": "Encuentro" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,101 @@
+{%- liquid
+  assign lines = section.settings.heading | newline_to_br | split: '<br />'
+  assign last = lines.size | minus: 1
+  assign wa = section.settings.whatsapp_url | default: settings.whatsapp
+
+  comment
+    Con panoramica, el cierre pasa a ser una banda 21:9 a borde completo con el
+    texto encima: asi el pie queda justo detras de un anclaje visual y la
+    pagina no termina en una cola de texto. Sin panoramica, se maqueta en
+    columna estrecha, como el resto del texto.
+
+    Las clases se calculan antes: partir la etiqueta <section> entre ramas de
+    un if deja el HTML desbalanceado y el validador lo rechaza.
+  endcomment
+  assign wide = false
+  assign extra = 'closing'
+  assign inner = 'column'
+  if section.settings.image
+    assign wide = true
+    assign extra = 'band-wide closing closing--wide'
+    assign inner = 'band-wide__copy'
+  endif
+-%}
+
+<section {% render 'panel', color: section.settings.panel, extra: extra %}{% if wide %} data-band-text{% endif %}>
+  {%- if wide -%}
+    <div class="band-wide__media">
+      <img src="{{ section.settings.image | image_url: width: 3000 }}"
+           srcset="{{ section.settings.image | image_url: width: 1200 }} 1200w,
+                   {{ section.settings.image | image_url: width: 2000 }} 2000w,
+                   {{ section.settings.image | image_url: width: 3000 }} 3000w"
+           sizes="100vw"
+           alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+           width="{{ section.settings.image.width }}"
+           height="{{ section.settings.image.height }}"
+           loading="lazy">
+    </div>
+  {%- endif -%}
+
+  <div class="{{ inner }} closing__in">
+    {%- if section.settings.index != blank -%}
+      <span class="section-index" data-reveal>{{ section.settings.index }}</span>
+    {%- endif -%}
+
+    <h2 class="closing__title">
+      {%- for line in lines -%}
+        {%- assign clean = line | strip -%}
+        {%- if clean != blank -%}
+          <span class="closing__line" data-reveal>
+            {%- if forloop.index0 == last and section.settings.italic_last -%}<em>{{ clean }}</em>{%- else -%}{{ clean }}{%- endif -%}
+          </span>
+        {%- endif -%}
+      {%- endfor -%}
+    </h2>
+
+    {%- if section.settings.text != blank -%}
+      <p class="lede closing__text" data-reveal>{{ section.settings.text }}</p>
+    {%- endif -%}
+
+    <div class="closing__cta" data-reveal>
+      {%- if section.settings.cta_label != blank -%}
+        <a href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}"
+           class="act" data-cursor-label="{{ 'motion.cursor.discover' | t }}">{{ section.settings.cta_label }}</a>
+      {%- endif -%}
+
+      {%- if section.settings.wa_label != blank and wa != blank -%}
+        <a href="{{ wa }}" class="link" target="_blank" rel="noopener">{{ section.settings.wa_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cierre",
+  "tag": "section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Panorámica de cierre", "info": "21:9 (3000×1286). Con ella, el cierre pasa a banda a borde completo con el texto encima. Sin ella, se maqueta en columna." },
+    { "type": "text", "id": "index", "label": "Índice", "default": "Para terminar" },
+    { "type": "textarea", "id": "heading", "label": "Titular", "default": "Una fragancia.\nUna firma." },
+    { "type": "checkbox", "id": "italic_last", "label": "Última línea en cursiva", "default": true },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Si no sabes por dónde empezar, escríbenos: te acompañamos a elegir." },
+    { "type": "text", "id": "cta_label", "label": "Botón", "default": "Ver la colección" },
+    { "type": "url", "id": "cta_url", "label": "Destino del botón" },
+    { "type": "text", "id": "wa_label", "label": "Enlace de WhatsApp", "default": "Escríbenos por WhatsApp" },
+    { "type": "text", "id": "whatsapp_url", "label": "URL de WhatsApp", "info": "Si lo dejas vacío se usa el de Ajustes del tema → Marca. Sin número, el enlace no aparece." },
+    {
+      "type": "select",
+      "id": "panel",
+      "label": "Panel",
+      "options": [
+        { "value": "cream", "label": "Crema" },
+        { "value": "black", "label": "Negro" },
+        { "value": "ink", "label": "Tinta" }
+      ],
+      "default": "ink"
+    }
+  ],
+  "presets": [{ "name": "Cierre" }]
+}
+{% endschema %}

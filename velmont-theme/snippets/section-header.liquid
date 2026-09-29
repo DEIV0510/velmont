@@ -1,0 +1,24 @@
+{%- comment -%}
+  Encabezado de seccion: indice numerado con filete + titulo display y, si se
+  pasan, una frase bajo el titulo y un enlace alineado abajo a la derecha.
+  Uso: {% render 'section-header', index: '01 — La colección', title: 'Nuestra selección', lede: 'Perfumes elegidos por VELMONT.', link_text: 'Ver todo', link_url: '/collections/all' %}
+{%- endcomment -%}
+<div class="wrap section-head">
+  <div>
+    {%- if index != blank -%}
+      <span class="section-index" data-reveal>{{ index }}</span>
+    {%- endif -%}
+    {%- if title != blank -%}
+      <h2 class="display section-head__title" data-reveal>
+        {%- comment -%} data-words: lo parte el JS y lo sube palabra a palabra. Sin JS, texto normal. {%- endcomment -%}
+        <span data-words>{{ title }}</span>
+      </h2>
+    {%- endif -%}
+    {%- if lede != blank -%}
+      <p class="section-head__lede" data-reveal>{{ lede }}</p>
+    {%- endif -%}
+  </div>
+  {%- if link_text != blank -%}
+    <a href="{{ link_url | default: routes.all_products_collection_url }}" class="link" data-reveal>{{ link_text }}</a>
+  {%- endif -%}
+</div>

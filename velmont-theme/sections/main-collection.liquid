@@ -1,0 +1,141 @@
+{%- liquid
+  comment
+    Titulo: el nombre de la coleccion manda, salvo en el catalogo completo
+    (/collections/all), donde "Todos los productos" no dice nada.
+  endcomment
+  if collection.handle == 'all' and section.settings.heading_catalog != blank
+    assign heading = section.settings.heading_catalog
+  elsif section.settings.heading != blank
+    assign heading = section.settings.heading
+  else
+    assign heading = collection.title
+  endif
+
+  comment
+    Nada de cifras de inventario: una casa curada no cuenta unidades. Si un
+    texto guardado todavia trae {count} o la frase de volumen, se limpian
+    aqui — cambiar solo el valor por omision no toca lo ya guardado.
+  endcomment
+  if collection.description != blank
+    assign note = collection.description
+  elsif section.settings.note != blank
+    assign note = section.settings.note | replace: '{count} fragancias en catálogo.', '' | replace: '{count} fragancias en catalogo.', '' | replace: '{count}', '' | strip
+  endif
+
+  assign filtering = false
+  if current_tags.size > 0
+    assign filtering = true
+  endif
+-%}
+
+<section class="band band--tight band--below-header band--head" data-tone="light">
+  {%- comment -%}
+    Antetitulo y titular van juntos en una sola celda. Sueltos, la nota de la
+    derecha —que es mucho mas alta— repartia su altura entre las dos filas de
+    la rejilla y empujaba el titulo 237px hacia abajo, lejos de su antetitulo.
+  {%- endcomment -%}
+  <div class="wrap collection-head">
+    <div class="collection-head__lead">
+      {%- if section.settings.index != blank -%}
+        <span class="section-index" data-reveal>{{ section.settings.index }}</span>
+      {%- endif -%}
+
+      <h1 class="display collection-head__title" data-reveal>
+        <span class="line-mask"><span>{{ heading }}</span></span>
+      </h1>
+    </div>
+
+    {%- if note != blank -%}
+      <div class="lede collection-head__note" data-reveal>{{ note }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if section.settings.show_filters -%}
+  <nav class="filters collection-filters" aria-label="{{ 'collections.general.filter' | t }}">
+    <a href="{{ collection.url }}"
+       class="filter{% unless filtering %} on{% endunless %}"
+       {% unless filtering %}aria-current="true"{% endunless %}>{{ 'collections.general.all' | t }}</a>
+
+    {%- comment -%} Colecciones reales elegidas por el comerciante (genero, ediciones…) {%- endcomment -%}
+    {%- for c in section.settings.filter_collections -%}
+      <a href="{{ c.url }}"
+         class="filter{% if c.handle == collection.handle %} on{% endif %}"
+         {% if c.handle == collection.handle %}aria-current="page"{% endif %}>{{ c.title }}</a>
+    {%- endfor -%}
+
+    {%- comment -%}
+      Casas: lista curada y editable. Se recorren los tags reales para no
+      enlazar a una casa que no existe en esta coleccion (un enlace a un tag
+      vacio no da 404 en Shopify: da una rejilla vacia, que es peor).
+    {%- endcomment -%}
+    {%- assign houses = section.settings.houses | split: ',' -%}
+    {%- for house in houses -%}
+      {%- assign name = house | strip -%}
+      {%- assign tag = 'Casa: ' | append: name -%}
+      {%- if collection.all_tags contains tag -%}
+        <a href="{{ collection.url }}/{{ tag | handleize }}"
+           class="filter{% if current_tags contains tag %} on{% endif %}"
+           {% if current_tags contains tag %}aria-current="page"{% endif %}>{{ name }}</a>
+      {%- endif -%}
+    {%- endfor -%}
+  </nav>
+{%- endif -%}
+
+{%- paginate collection.products by section.settings.per_page -%}
+  <section class="collection-body">
+    {%- if collection.products.size > 0 -%}
+      <div class="grid-quiet">
+        {%- for product in collection.products -%}
+          {% render 'piece', product: product, eager: forloop.first %}
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="wrap pager" aria-label="{{ 'general.pagination.label' | t }}">
+          {%- if paginate.previous -%}
+            <a class="link" href="{{ paginate.previous.url }}">{{ 'general.pagination.previous' | t }}</a>
+          {%- else -%}
+            <span></span>
+          {%- endif -%}
+          <span class="label">{{ paginate.current_page }} / {{ paginate.pages }}</span>
+          {%- if paginate.next -%}
+            <a class="link" href="{{ paginate.next.url }}">{{ 'general.pagination.next' | t }}</a>
+          {%- else -%}
+            <span></span>
+          {%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- else -%}
+      <div class="wrap collection-empty">
+        <p class="lede">{{ 'collections.general.empty' | t }}</p>
+        <a class="act" href="{{ routes.all_products_collection_url }}">{{ 'collections.general.see_all' | t }}</a>
+      </div>
+    {%- endif -%}
+  </section>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Colección",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "index", "label": "Índice", "default": "La colección" },
+    { "type": "text", "id": "heading", "label": "Titular", "info": "Si lo dejas vacío se usa el nombre de la colección." },
+    { "type": "text", "id": "heading_catalog", "label": "Titular del catálogo completo", "default": "Todas las piezas", "info": "Solo se usa en /collections/all." },
+    { "type": "text", "id": "note", "label": "Texto bajo el titular", "default": "Seleccionadas una por una.", "info": "Si la colección tiene descripción, manda la descripción. No pongas cifras de inventario." },
+    {
+      "type": "header",
+      "content": "Filtros"
+    },
+    { "type": "checkbox", "id": "show_filters", "label": "Mostrar la fila de filtros", "default": true },
+    { "type": "collection_list", "id": "filter_collections", "label": "Colecciones como filtro", "limit": 6, "info": "Por ejemplo Para él, Para ella y Unisex." },
+    { "type": "text", "id": "houses", "label": "Casas", "default": "MATAI, LATTAFA, ARMAF, ILMIN, AHLI, BLACK OUD", "info": "Separadas por comas. Solo aparece la que tenga piezas en la colección que se está viendo." },
+    {
+      "type": "header",
+      "content": "Rejilla"
+    },
+    { "type": "range", "id": "per_page", "label": "Piezas por página", "min": 8, "max": 48, "step": 4, "default": 24 }
+  ]
+}
+{% endschema %}

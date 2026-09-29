@@ -1,0 +1,45 @@
+{%- comment -%}
+  Barra de anuncio. Existe porque quien entraba a la tienda no sabia que era:
+  una perfumeria que vende casas ajenas, o una marca que fabrica las suyas.
+  Va en el grupo del encabezado, asi sale en TODAS las paginas, y como es una
+  seccion propia se edita o se quita desde el personalizador. Si se quita, el
+  encabezado vuelve solo a su sitio (ver .hdr en base.css).
+
+  Dos textos porque en un telefono la barra tiene una sola linea: el largo no
+  cabe y cortarlo con puntos suspensivos se come justo lo importante.
+{%- endcomment -%}
+{%- if section.settings.text != blank -%}
+  <div class="announce">
+    <p class="announce__txt">
+      <span class="announce__largo">{{ section.settings.text }}</span>
+      {%- if section.settings.text_mobile != blank -%}
+        <span class="announce__corto">{{ section.settings.text_mobile }}</span>
+      {%- endif -%}
+    </p>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Barra de anuncio",
+  "tag": "section",
+  "class": "announce-section",
+  "enabled_on": { "groups": ["header"] },
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Texto",
+      "default": "Perfumería multimarca · Envíos a toda Colombia · Pago seguro"
+    },
+    {
+      "type": "text",
+      "id": "text_mobile",
+      "label": "Texto en celular",
+      "default": "Perfumería · Envíos a toda Colombia",
+      "info": "Más corto: en un teléfono la barra tiene una sola línea. Si lo dejas vacío se usa el de arriba."
+    }
+  ],
+  "presets": [{ "name": "Barra de anuncio" }]
+}
+{% endschema %}

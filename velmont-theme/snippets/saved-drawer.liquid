@@ -1,0 +1,18 @@
+{%- comment -%}
+  Guardados. Viven en localStorage del visitante: no hay cuenta de por medio.
+  El contenido lo pinta global.js consultando cada producto por su handle.
+{%- endcomment -%}
+<aside class="drawer" data-saved aria-hidden="true" aria-label="{{ 'general.saved.title' | t }}">
+  <header class="drawer__head">
+    <span class="label">{{ 'general.saved.title' | t }}</span>
+    <button class="icon-btn" data-saved-close aria-label="{{ 'accessibility.close' | t }}">
+      {% render 'icon', name: 'close', size: 17 %}
+    </button>
+  </header>
+  <div class="drawer__body" data-saved-body data-lenis-prevent>
+    <div class="bag-empty">
+      <p class="lede">{{ 'general.saved.empty' | t }}</p>
+      <a class="act" href="{{ routes.all_products_collection_url }}">{{ 'general.cart.continue' | t }}</a>
+    </div>
+  </div>
+</aside>

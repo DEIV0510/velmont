@@ -1,0 +1,286 @@
+{
+  "sections": {
+    "hero": {
+      "type": "velmont-hero",
+      "blocks": {
+        "envios": {
+          "type": "meta",
+          "settings": {
+            "text": "Envíos a toda Colombia"
+          }
+        },
+        "pago": {
+          "type": "meta",
+          "settings": {
+            "text": "Pago seguro"
+          }
+        },
+        "asesoria": {
+          "type": "meta",
+          "settings": {
+            "text": "Asesoría personalizada"
+          }
+        }
+      },
+      "block_order": [
+        "envios",
+        "pago",
+        "asesoria"
+      ],
+      "settings": {
+        "kicker": "Perfumería multimarca",
+        "heading": "Tu esencia.\nTu marca personal.",
+        "italic_last": false,
+        "primary_label": "Descubrir perfumes",
+        "secondary_label": "Descubre tu marca personal",
+        "scroll_label": "Desliza",
+        "product": "zenith",
+        "collections": [
+          "2-matai-x-450-000",
+          "2-x-280-000",
+          "para-el",
+          "para-ella",
+          "unisex"
+        ],
+        "show_stage": false,
+        "show_video": true,
+        "lede": "Perfumes de casas como MATAI, Lattafa y Armaf, elegidos para dejar una impresión que permanece."
+      }
+    },
+    "statement": {
+      "type": "velmont-statement",
+      "settings": {
+        "heading": "La fragancia\nes memoria.",
+        "first_by_words": true,
+        "italic_last": true,
+        "text": "Es lo último que queda de ti cuando sales de una habitación. En VELMONT elegimos piezas para quien prefiere dejar recuerdo antes que llamar la atención.",
+        "panel": "cream"
+      },
+      "blocks": {
+        "d1": {
+          "type": "item",
+          "settings": {
+            "text": "Envíos a toda Colombia"
+          }
+        },
+        "d2": {
+          "type": "item",
+          "settings": {
+            "text": "Pago seguro"
+          }
+        },
+        "d4": {
+          "type": "item",
+          "settings": {
+            "text": "Asesoría personal"
+          }
+        }
+      },
+      "block_order": [
+        "d1",
+        "d2",
+        "d4"
+      ]
+    },
+    "coleccion": {
+      "type": "velmont-collection",
+      "settings": {
+        "index": "01 — La colección",
+        "heading": "Nuestra selección",
+        "count": 6,
+        "link_text": "Ver todo el catálogo",
+        "swipe_label": "Desliza",
+        "anchor": "coleccion",
+        "collection": "2-matai-x-450-000",
+        "layout": "even",
+        "panel": "cream",
+        "lede": "Perfumes elegidos por VELMONT."
+      }
+    },
+    "descubre": {
+      "type": "velmont-discover-quiz",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "title": "¿Para quién?",
+            "multi": false,
+            "options": "Para él | para-el\nPara ella | para-ella\nUnisex | unisex"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "title": "¿Cómo quieres que te recuerden?",
+            "multi": true,
+            "max": 2,
+            "hint": "Elige hasta dos",
+            "options": "Misterio |\nElegancia |\nIntensidad |\nMagnetismo |\nSofisticación |\nLuz |\nCalidez |\nPermanencia |"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "title": "¿Dónde lo vas a usar?",
+            "multi": false,
+            "options": "Todos los días |\nLa oficina |\nUna cita |\nLa noche |\nUn evento |\nEl viaje |"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "title": "¿Cuánto quieres que se note?",
+            "multi": false,
+            "options": "Apenas un rastro |\nLo justo |\nQue no haya duda |"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "settings": {
+        "index": "02 — Descubre",
+        "heading": "¿Qué define\ntu presencia?",
+        "italic_last": true,
+        "text": "Cuatro preguntas y te decimos cuál es la tuya, sin recorrer el catálogo entero ni pelear con filtros.",
+        "cta_label": "Comenzar",
+        "anchor": "descubre",
+        "panel": "cream"
+      }
+    },
+    "ediciones": {
+      "type": "velmont-editions",
+      "blocks": {
+        "matai": {
+          "type": "edition",
+          "settings": {
+            "index": "03 — Ediciones",
+            "index_gold": false,
+            "heading": "La selección MATAI",
+            "text": "Dos fragancias de la casa MATAI, elegidas para ir juntas.",
+            "promo_units": 2,
+            "promo_price": 450000,
+            "cta_label": "Elegir las dos",
+            "flip": false,
+            "collection": "2-matai-x-450-000",
+            "panel": "ink"
+          }
+        },
+        "seleccion": {
+          "type": "edition",
+          "settings": {
+            "index": "Edición",
+            "index_gold": true,
+            "heading": "El dúo VELMONT",
+            "text": "Dos esencias de la promoción, elegidas por ti, al mismo precio.",
+            "promo_units": 2,
+            "promo_price": 280000,
+            "cta_label": "Elegir las dos",
+            "flip": true,
+            "collection": "2-x-280-000",
+            "panel": "ink",
+            "cta_url": "/products/duo-velmont"
+          }
+        }
+      },
+      "block_order": [
+        "matai",
+        "seleccion"
+      ],
+      "settings": {
+        "anchor": "ediciones"
+      }
+    },
+    "casa": {
+      "type": "velmont-about",
+      "settings": {
+        "index": "04 — La casa",
+        "heading": "«Pocas piezas, elegidas una a una».",
+        "italic": true,
+        "text": "<p>VELMONT no fabrica, elige. Trabajamos con casas como MATAI para traer a Colombia piezas de carácter propio, en cantidades cortas.</p>",
+        "link_text": "Conocer la colección",
+        "anchor": "casa",
+        "panel": "cream"
+      }
+    },
+    "cierre": {
+      "type": "velmont-closing",
+      "settings": {
+        "index": "Para terminar",
+        "heading": "Tu esencia.\nTu marca personal.",
+        "italic_last": true,
+        "text": "Si no sabes por dónde empezar, escríbenos: te acompañamos a elegir.",
+        "cta_label": "Ver la colección",
+        "wa_label": "Escríbenos por WhatsApp",
+        "panel": "ink"
+      }
+    },
+    "banda": {
+      "type": "velmont-band",
+      "settings": {
+        "panel": "black"
+      }
+    },
+    "momentos": {
+      "type": "velmont-moments",
+      "blocks": {
+        "noche": {
+          "type": "moment",
+          "settings": {
+            "title": "Noche",
+            "text": "Para cuando quieres que te recuerden al entrar."
+          }
+        },
+        "firma": {
+          "type": "moment",
+          "settings": {
+            "title": "Firma",
+            "text": "La que reconocen antes de verte."
+          }
+        },
+        "encuentro": {
+          "type": "moment",
+          "settings": {
+            "title": "Encuentro",
+            "text": "De cerca, y que se quede."
+          }
+        }
+      },
+      "block_order": [
+        "noche",
+        "firma",
+        "encuentro"
+      ],
+      "settings": {
+        "index": "Momentos",
+        "heading": "Hecho para estas noches",
+        "anchor": "momentos",
+        "panel": "cream"
+      }
+    },
+    "casas": {
+      "type": "velmont-houses",
+      "settings": {
+        "index": "",
+        "heading": "Las marcas que trabajamos",
+        "anchor": "casas",
+        "panel": "ink"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "statement",
+    "coleccion",
+    "casas",
+    "descubre",
+    "banda",
+    "ediciones",
+    "momentos",
+    "casa",
+    "cierre"
+  ]
+}

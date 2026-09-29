@@ -1,0 +1,34 @@
+{%- comment -%}
+  Bolsa lateral. Todo lo monetario sale de /cart.js en cada actualizacion:
+  aqui no se calcula ningun precio ni ningun descuento. Asi, cuando Shopify
+  aplique un descuento automatico (2 MATAI x 450.000), el panel ya lo muestra
+  sin tocar una linea de codigo.
+{%- endcomment -%}
+<aside class="drawer" data-bag aria-hidden="true" aria-label="{{ 'general.cart.title' | t }}">
+  <header class="drawer__head">
+    <span class="label">{{ 'general.cart.title' | t }} <span data-bag-title-count></span></span>
+    <button class="icon-btn" data-bag-close aria-label="{{ 'accessibility.close' | t }}">
+      {% render 'icon', name: 'close', size: 17 %}
+    </button>
+  </header>
+
+  <div class="drawer__body" data-bag-body data-lenis-prevent>
+    <div class="bag-empty">
+      <p class="lede">{{ 'general.cart.empty' | t }}</p>
+      <a class="act" href="{{ routes.all_products_collection_url }}">{{ 'general.cart.continue' | t }}</a>
+    </div>
+  </div>
+
+  <footer class="drawer__foot" data-bag-foot hidden>
+    <div class="bag-totals">
+      <span class="label">{{ 'general.cart.subtotal' | t }}</span>
+      <strong data-bag-total></strong>
+    </div>
+    <p class="mini">{{ 'general.cart.taxes_note' | t }}</p>
+    <form action="{{ routes.cart_url }}" method="post">
+      <button type="submit" name="checkout" class="act act--solid" style="width:100%">
+        {{ 'general.cart.checkout' | t }}
+      </button>
+    </form>
+  </footer>
+</aside>

@@ -1,0 +1,50 @@
+{
+  "type": "footer",
+  "name": "Pie de página",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "casa": {
+          "type": "text",
+          "settings": {
+            "title": "La casa",
+            "text": "Perfumería seleccionada, pieza por pieza. Envíos a toda Colombia."
+          }
+        },
+        "explorar": {
+          "type": "menu",
+          "settings": {
+            "title": "Explorar",
+            "links": "Colección | /collections/all\nDescubre tu marca personal | #descubre\nEdiciones | #ediciones"
+          }
+        },
+        "ayuda": {
+          "type": "menu",
+          "settings": {
+            "title": "Ayuda",
+            "links": "Envíos | /pages/envios\nCambios | /pages/cambios\nPreguntas frecuentes | /pages/preguntas-frecuentes"
+          }
+        },
+        "contacto": {
+          "type": "contact",
+          "settings": {
+            "title": "Contacto"
+          }
+        }
+      },
+      "block_order": [
+        "casa",
+        "explorar",
+        "ayuda",
+        "contacto"
+      ],
+      "settings": {
+        "show_seal": true
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

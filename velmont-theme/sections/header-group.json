@@ -1,0 +1,73 @@
+{
+  "type": "header",
+  "name": "Encabezado",
+  "sections": {
+    "anuncio": {
+      "type": "announcement-bar",
+      "settings": {
+        "text": "Perfumería multimarca · Envíos a toda Colombia · Pago seguro",
+        "text_mobile": "Perfumería · Envíos a toda Colombia"
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "coleccion": {
+          "type": "link",
+          "settings": {
+            "label": "Colección",
+            "url": "/collections/all",
+            "on_desktop": true
+          }
+        },
+        "descubre": {
+          "type": "link",
+          "settings": {
+            "label": "Descubre",
+            "label_long": "Descubre tu marca personal",
+            "url": "#descubre",
+            "on_desktop": true
+          }
+        },
+        "ediciones": {
+          "type": "link",
+          "settings": {
+            "label": "Ediciones",
+            "url": "#ediciones",
+            "on_desktop": true
+          }
+        },
+        "casa": {
+          "type": "link",
+          "settings": {
+            "label": "La casa",
+            "url": "#casa",
+            "on_desktop": true
+          }
+        },
+        "contacto": {
+          "type": "link",
+          "settings": {
+            "label": "Contacto",
+            "url": "#contacto",
+            "on_desktop": false
+          }
+        }
+      },
+      "block_order": [
+        "coleccion",
+        "descubre",
+        "ediciones",
+        "casa",
+        "contacto"
+      ],
+      "settings": {
+        "menu": "main-menu"
+      }
+    }
+  },
+  "order": [
+    "anuncio",
+    "header"
+  ]
+}

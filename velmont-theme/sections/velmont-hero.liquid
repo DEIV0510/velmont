@@ -1,0 +1,214 @@
+{%- liquid
+  assign letters = section.settings.letters | default: settings.logo_letters
+  assign hero_product = section.settings.product
+  comment
+    La pieza en el hero es opcional. Sin ella la portada queda limpia: marca,
+    frase y accesos. El respaldo a la foto del producto solo actua si el
+    interruptor esta encendido.
+  endcomment
+  assign stage_image = nil
+  if section.settings.show_stage
+    assign stage_image = section.settings.image
+    if stage_image == blank and hero_product != blank
+      assign stage_image = hero_product.featured_image
+    endif
+  endif
+
+  assign lines = section.settings.heading | newline_to_br | split: '<br />'
+  assign last = lines.size | minus: 1
+-%}
+
+{%- comment -%}
+  Hero con scrub: la seccion mide UNA pantalla exacta. El scrub de GSAP corre
+  mientras la portada se va (start top top / end bottom top), asi que el
+  titular se desvanece justo cuando sale de cuadro y no sobra ni un pixel de
+  recorrido. Medido antes: con 130vh el velo crema llegaba a opaco a los 270px
+  y quedaban 870px de rectangulo vacio antes de la Declaracion.
+{%- endcomment -%}
+<section class="hero-wrap panel panel--black{% if section.settings.show_video %} hero-wrap--video{% endif %}" data-hero data-scrub data-tone="dark">
+  <div class="hero-stick grain">
+
+    {%- if section.settings.show_video -%}
+      {%- comment -%}
+        Fondo a sangre completa. `autoplay` va en el HTML, no en el JS: asi
+        arranca aunque la capa de movimiento no llegue a montarse. Va mudo y
+        con playsinline porque sin las dos cosas ningun navegador movil
+        permite el arranque automatico.
+
+        Este clip es la UNICA excepcion acordada a la regla de menos
+        movimiento: se reproduce siempre, tambien con prefers-reduced-motion.
+        Todo lo demas del sitio la sigue respetando. Por eso se administra
+        fuera de gsap.matchMedia, en initMotion().
+      {%- endcomment -%}
+      <div class="hero-bg" data-hero-video aria-hidden="true">
+        {%- comment -%}
+          preload="auto", no "metadata": Safari solo arranca solo si ya tiene
+          buffer suficiente, y con metadata se queda esperando un gesto que
+          nunca llega. El clip del movil pesa 567 KB, asi que precargarlo sale
+          barato.
+        {%- endcomment -%}
+        <video id="velmont-hero-bg" autoplay loop muted playsinline disablepictureinpicture
+               preload="auto" tabindex="-1"
+               poster="{{ 'hero-fondo.jpg' | asset_url }}"
+               width="1280" height="720">
+          <source src="{{ 'hero-fondo.mp4' | asset_url }}" type="video/mp4">
+        </video>
+      </div>
+      <script>
+        /* El atributo `media` de <source> NO lo miran los navegadores dentro
+           de <video> (solo funciona en <picture>), asi que la version
+           vertical se elige aqui. En un telefono, el 16:9 recortado a pantalla
+           completa ensena exactamente la misma franja central que el recorte
+           9:16 —misma nitidez— pero pesa 1307 KB en vez de 567.
+
+           Va EN LINEA y sin `defer` a proposito: tiene que correr mientras se
+           analiza el documento, antes de que el navegador decida que archivo
+           descargar. Si no hay JS se queda el horizontal, que tambien va. */
+        (function () {
+          var v = document.getElementById('velmont-hero-bg');
+          if (!v || !window.matchMedia('(max-width: 760px)').matches) return;
+          var s = v.querySelector('source');
+          if (s) { s.src = {{ 'hero-fondo-movil.mp4' | asset_url | json }}; v.load(); }
+        })();
+      </script>
+    {%- endif -%}
+
+    <div class="hero-halo" aria-hidden="true"></div>
+
+    {%- if letters -%}
+      <div class="hero__wordmark" aria-hidden="true">
+        <img src="{{ letters | image_url: width: 1550 }}" alt="" width="{{ letters.width }}" height="{{ letters.height }}">
+      </div>
+    {%- else -%}
+      <div class="hero__wordmark" aria-hidden="true">
+        <img src="{{ 'velmont-letters-ivory.webp' | asset_url }}" alt="" width="1550" height="195">
+      </div>
+    {%- endif -%}
+
+    {%- if stage_image != blank -%}
+      <div class="hero-figure">
+        {%- if hero_product != blank -%}<a href="{{ hero_product.url }}" data-cursor-label="{{ 'motion.cursor.view' | t }}" aria-label="{{ hero_product.title | escape }}">{%- endif -%}
+          <img src="{{ stage_image | image_url: width: 760 }}"
+               srcset="{{ stage_image | image_url: width: 380 }} 380w, {{ stage_image | image_url: width: 760 }} 760w"
+               sizes="clamp(200px, 26vw, 380px)"
+               alt="{{ stage_image.alt | default: hero_product.title | default: '' | escape }}"
+               width="{{ stage_image.width }}" height="{{ stage_image.height }}"
+               fetchpriority="high">
+        {%- if hero_product != blank -%}</a>{%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="hero-copy">
+      {%- if section.settings.kicker != blank -%}
+        <span class="label hero__kicker" data-hero-in>{{ section.settings.kicker }}</span>
+      {%- endif -%}
+
+      <h1 class="display hero__title">
+        {%- for line in lines -%}
+          {%- assign clean = line | strip -%}
+          {%- if clean != blank -%}
+            <span class="hero__line" data-hero-in>
+              {%- if forloop.index0 == last and section.settings.italic_last -%}<em>{{ clean }}</em>{%- else -%}{{ clean }}{%- endif -%}
+            </span>
+          {%- endif -%}
+        {%- endfor -%}
+      </h1>
+
+      {%- comment -%}
+        La frase que dice QUE es VELMONT. Sin ella la portada solo tenia marca
+        y lema, y quien entraba no sabia si aqui se venden perfumes de otras
+        casas o si VELMONT fabrica los suyos.
+      {%- endcomment -%}
+      {%- if section.settings.lede != blank -%}
+        <p class="hero__lede" data-hero-in>{{ section.settings.lede }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.primary_label != blank or section.settings.secondary_label != blank -%}
+        <div class="hero__actions" data-hero-in>
+          {%- if section.settings.primary_label != blank -%}
+            <a href="{{ section.settings.primary_url | default: routes.all_products_collection_url }}"
+               class="act" data-cursor-label="{{ 'motion.cursor.discover' | t }}">{{ section.settings.primary_label }}</a>
+          {%- endif -%}
+          {%- if section.settings.secondary_label != blank -%}
+            <a href="{{ section.settings.secondary_url | default: '#descubre' }}"
+               class="act" data-quiz-open data-cursor-label="{{ 'motion.cursor.discover' | t }}">{{ section.settings.secondary_label }}</a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Accesos directos a las colecciones: la portada tiene que llevar a algun sitio. {%- endcomment -%}
+      {%- if section.settings.collections != blank and section.settings.collections.count > 0 -%}
+        <nav class="hero__cols" data-hero-in aria-label="{{ 'collections.general.title' | t }}">
+          {%- for c in section.settings.collections -%}
+            <a href="{{ c.url }}" data-cursor-label="{{ 'motion.cursor.view' | t }}">{{ c.title }}</a>
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="hero-meta">
+        {%- for block in section.blocks -%}
+          <span class="label" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.scroll_label != blank -%}
+      <div class="hero-cue" aria-hidden="true">
+        <span class="label">{{ section.settings.scroll_label }}</span><i></i>
+      </div>
+    {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Portada",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Antetítulo", "default": "Colección 001" },
+    { "type": "textarea", "id": "heading", "label": "Titular", "default": "Una fragancia.\nUna firma.", "info": "Una línea por renglón. Entran escalonadas al desaparecer la pantalla de carga." },
+    { "type": "checkbox", "id": "italic_last", "label": "Última línea en cursiva", "default": true },
+    { "type": "textarea", "id": "lede", "label": "Frase bajo el titular", "info": "Di qué es la tienda: quien llega por primera vez tiene que saber que aquí se venden perfumes de otras casas." },
+    {
+      "type": "header",
+      "content": "Acciones"
+    },
+    { "type": "text", "id": "primary_label", "label": "Botón principal", "default": "Ver la colección" },
+    { "type": "url", "id": "primary_url", "label": "Enlace del botón principal" },
+    { "type": "text", "id": "secondary_label", "label": "Botón secundario", "default": "Descubre tu marca personal" },
+    { "type": "url", "id": "secondary_url", "label": "Enlace del botón secundario", "info": "Si lo dejas vacío abre el cuestionario." },
+    {
+      "type": "header",
+      "content": "Visual"
+    },
+    { "type": "image_picker", "id": "image", "label": "Imagen" },
+    { "type": "product", "id": "product", "label": "…o un producto", "info": "Se usa su foto principal si no subes una imagen." },
+    { "type": "image_picker", "id": "letters", "label": "Letras de la marca de agua" },
+    { "type": "checkbox", "id": "show_video", "label": "Vídeo de fondo a pantalla completa", "default": false, "info": "El clip del frasco ocupa toda la portada, en bucle, sin sonido y arrancando solo. Se reproduce siempre, incluso si el visitante tiene activado «Reducir movimiento» en su teléfono." },
+    { "type": "checkbox", "id": "show_stage", "label": "Mostrar la pieza en la portada", "default": false, "info": "Apagado, la portada queda con la marca, la frase y los accesos. Encendido, aparece la foto elegida (o la del producto)." },
+    { "type": "collection_list", "id": "collections", "label": "Colecciones enlazadas", "limit": 5, "info": "Accesos directos bajo los botones. Sin ninguna, no aparece la fila." },
+    { "type": "text", "id": "scroll_label", "label": "Indicador de desplazamiento", "default": "Desliza" }
+  ],
+  "blocks": [
+    {
+      "type": "meta",
+      "name": "Dato al pie",
+      "limit": 3,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "Bogotá · Colombia" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Portada",
+      "blocks": [
+        { "type": "meta", "settings": { "text": "Bogotá · Colombia" } },
+        { "type": "meta", "settings": { "text": "Envíos a todo el país" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

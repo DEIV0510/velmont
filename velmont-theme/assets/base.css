@@ -1,0 +1,1965 @@
+/* ==========================================================================
+   VELMONT — base.css
+   Portado del prototipo (velmont/prototype/assets/css). Los tokens NO viven
+   aqui: los emite theme.liquid en :root desde los ajustes del tema, para que
+   el cliente pueda cambiarlos sin tocar codigo.
+   ========================================================================== */
+
+/* ==========================================================================
+   VELMONT — Base: reset, tipografia editorial, movimiento
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scrollbar-gutter: stable; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html.no-scroll, html.no-scroll body { overflow: hidden; height: 100%; }
+
+/* Transiciones nativas entre paginas (Chrome/Edge): el navegador hace un
+   crossfade de la pagina saliente a la entrante sin JS ni riesgo de romper
+   la navegacion (back/forward, ctrl-click, checkout externo siguen intactos
+   porque esto no intercepta clicks — es una API del navegador). En el resto
+   de navegadores esta regla se ignora y la navegacion sigue igual que hoy. */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) {
+  animation-duration: var(--t-slow);
+  animation-timing-function: var(--ease-inout);
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}
+
+body {
+  margin: 0;
+  background: var(--noir);
+  color: var(--on-surface);
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  font-weight: 400;
+  /* Cormorant trae cifras de estilo antiguo (el 9 baja, el 0 es una o): en
+     «9PM BLACK», «STALLION 53» o «2 MATAI X 450.000» se leian desiguales.
+     Se hereda a todo; a Manrope no le cambia nada. */
+  font-variant-numeric: lining-nums;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* height:auto es obligatorio aqui: las imagenes llevan width/height reales para
+   reservar su espacio (evita saltos de maquetacion), y sin esto el alto del
+   atributo gana sobre la proporcion. El prototipo no lo necesitaba porque sus
+   frascos eran SVG en linea. Quien quiera recortar (piezas, portada enmarcada)
+   vuelve a fijar height mas abajo. */
+img, svg, video { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+input { font: inherit; }
+ul { list-style: none; margin: 0; padding: 0; }
+h1, h2, h3, h4, p, figure { margin: 0; }
+::selection { background: var(--gold); color: var(--noir); }
+
+:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+
+/* ---------------- Tipografia ---------------- */
+
+/* Micro-label: la firma de la casa. Diminuto, mayusculas, muy tracked. */
+.label {
+  font-family: var(--font-ui);
+  font-size: var(--label-size);
+  letter-spacing: var(--label-track);
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--on-surface-dim);
+  line-height: 1;
+}
+.label--gold { color: var(--gold); }
+
+/* Numeracion de seccion: 01 — */
+.section-index {
+  display: inline-flex; align-items: center; gap: var(--s3);
+  font-family: var(--font-ui);
+  font-size: var(--label-size);
+  letter-spacing: var(--label-track);
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+}
+.section-index::after {
+  content: ''; width: clamp(28px, 4vw, 64px); height: 1px;
+  background: currentColor; opacity: 0.45;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: var(--track-display);
+}
+.mega {
+  font-family: var(--font-display);
+  font-size: var(--fs-mega);
+  font-weight: 400;
+  line-height: 0.82;
+  letter-spacing: var(--track-display);
+}
+.h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: var(--track-display);
+}
+.h3 { font-family: var(--font-display); font-size: var(--fs-h3); font-weight: 400; line-height: 1.2; }
+/* Titulares en mayusculas, como en la maqueta que eligio el cliente. Cada
+   seccion tiene su clase de titular; la regla es una sola para todas. */
+.display, .h2, .campaign__title, .statement__quote, .closing__title, .band-wide__title { text-transform: uppercase; }
+.italic { font-style: italic; }
+
+.lede {
+  font-size: var(--fs-lede);
+  line-height: 1.65;
+  color: var(--on-surface-dim);
+  max-width: 46ch;
+}
+.fine { font-size: var(--fs-small); line-height: 1.7; color: var(--on-surface-dim); max-width: 42ch; }
+
+/* Precio: tabular, discreto, nunca gritado */
+.price {
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-small);
+  letter-spacing: var(--track-body);
+  color: var(--on-surface);
+}
+
+/* ---------------- Layout ---------------- */
+.band { padding-block: var(--band); position: relative; background: var(--surface); color: var(--on-surface); }
+.band--tight { padding-block: var(--band-tight); }
+.band--flush { padding-block: 0; }
+.wrap { padding-inline: var(--gutter); }
+.wrap--wide { padding-inline: clamp(16px, 3vw, 48px); }
+
+.hairline { height: 1px; background: var(--hairline); border: 0; margin: 0; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* El salto al contenido tiene que APARECER al enfocarlo con el teclado.
+   Medido: seguia en 1x1 incluso con el foco puesto, asi que quien navega sin
+   raton enfocaba un enlace invisible y no sabia donde estaba. Es el primer
+   elemento tabulable de la pagina. */
+a.visually-hidden:focus,
+a.visually-hidden:focus-visible {
+  position: fixed; top: var(--s4); left: var(--s4);
+  width: auto; height: auto; margin: 0;
+  padding: var(--s3) var(--s5);
+  clip: auto; clip-path: none; overflow: visible;
+  z-index: var(--z-overlay, 9999);
+  background: var(--noir); color: var(--ivory);
+  font-family: var(--font-ui); font-size: var(--t-100);
+  letter-spacing: var(--track-eyebrow); text-transform: uppercase;
+  border: 1px solid var(--gold);
+  min-height: 44px; display: inline-flex; align-items: center;
+}
+
+/* ---------------- Acciones ---------------- */
+/* Nada de relleno dorado. Filo fino, mucho aire, label diminuto. */
+.act {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s3);
+  font-size: var(--label-size);
+  letter-spacing: var(--label-track);
+  text-transform: uppercase;
+  font-weight: var(--btn-weight, 600);
+  padding: var(--btn-pad, 18px 34px);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius, 0);
+  color: var(--on-surface);
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+  transition: color var(--t-fast) var(--ease-out), border-color var(--t-fast) var(--ease-out), transform 380ms var(--ease-out);
+  min-height: var(--btn-min-h, 48px);
+  text-align: center;
+}
+.act[disabled], .act[aria-disabled="true"] { opacity: 0.4; pointer-events: none; }
+/* El relleno entra desde abajo al hover: gesto contenido, no un cambio de color */
+.act::after {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: var(--on-surface);
+  transform: translateY(101%);
+  transition: transform var(--t-base) var(--ease-inout);
+}
+.act:hover { color: var(--surface); border-color: var(--on-surface); }
+.act:hover::after { transform: translateY(0); }
+
+.act--solid { background: var(--on-surface); color: var(--surface); border-color: var(--on-surface); }
+.act--solid::after { background: transparent; }
+.act--solid:hover { opacity: 0.86; color: var(--surface); }
+
+/* Enlace editorial: subrayado que se dibuja */
+.link {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  font-size: var(--label-size); letter-spacing: var(--label-track);
+  text-transform: uppercase; font-weight: 600;
+  padding-bottom: 6px; position: relative;
+}
+.link::after {
+  content: ''; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
+  background: currentColor; transform: scaleX(1); transform-origin: right;
+  transition: transform var(--t-base) var(--ease-inout);
+}
+.link:hover::after { transform: scaleX(0); }
+
+.icon-btn {
+  width: 44px; height: 44px;
+  display: inline-flex; align-items: center; justify-content: center;
+  position: relative; color: inherit;
+  transition: opacity var(--t-fast), transform 380ms var(--ease-out);
+}
+.icon-btn:hover { opacity: 0.6; }
+
+/* ---------------- Movimiento ---------------- */
+
+/* Reveal por mascara: el contenido se descubre, no se desvanece */
+/* Solo oculta si hay JS: sin el, nada puede quedarse invisible. */
+.js-motion [data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity var(--t-reveal) var(--ease-out), transform var(--t-reveal) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.js-motion [data-reveal].in { opacity: 1; transform: none; }
+
+/* Imagen/bloque revelado con clip-path (mas barato que mask-image) */
+[data-reveal="wipe"] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path var(--t-cine) var(--ease-inout);
+}
+[data-reveal="wipe"].in { clip-path: inset(0 0 0 0); }
+
+/* Titular por lineas. El padding evita que overflow:hidden corte descendentes. */
+.line-mask { display: block; overflow: hidden; padding-bottom: 0.14em; margin-bottom: -0.14em; }
+.line-mask > span {
+  display: block;
+  transform: translateY(110%);
+  transition: transform var(--t-cine) var(--ease-inout);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.in .line-mask > span, .line-mask.in > span { transform: translateY(0); }
+
+/* Revelado palabra por palabra: otro ritmo frente al line-mask, para que no
+   toda la pagina se sienta con la misma animacion. initWordReveal() parte
+   el texto en spans antes de que initReveal() observe el elemento — por
+   eso reutiliza el mismo mecanismo de [data-reveal]/.in sin un observer
+   propio. */
+[data-reveal="words"] { opacity: 1; transform: none; }
+[data-reveal="words"] .word { display: inline-block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em; vertical-align: top; }
+[data-reveal="words"] .word > span {
+  display: inline-block;
+  transform: translateY(105%);
+  transition: transform var(--t-slow) var(--ease-inout);
+  transition-delay: calc(var(--wi, 0) * 45ms);
+}
+[data-reveal="words"].in .word > span { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal], [data-reveal="wipe"] { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+  .line-mask > span { transform: none !important; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Grano de pelicula: textura sutil de campana, cuesta 0 requests */
+.grain::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 3;
+  opacity: 0.045; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------------- Pantalla de carga ---------------- */
+[data-loading-screen] {
+  position: fixed; inset: 0; z-index: 999;
+  background: var(--noir);
+  display: grid; place-items: center;
+  transition: opacity var(--t-slow) var(--ease-inout);
+}
+[data-loading-screen].out { opacity: 0; pointer-events: none; }
+.loader-mark { width: min(38vw, 190px); opacity: 0; animation: markIn 1100ms var(--ease-out) forwards; }
+.loader-rule { width: 0; height: 1px; background: var(--gold-line); margin: var(--s5) auto 0; animation: ruleIn 900ms 420ms var(--ease-inout) forwards; }
+@keyframes markIn { from { opacity: 0; transform: translateY(12px); filter: blur(10px); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes ruleIn { to { width: min(46vw, 240px); } }
+@media (prefers-reduced-motion: reduce) {
+  .loader-mark { opacity: 1; animation: none; }
+  .loader-rule { width: 200px; animation: none; }
+}
+
+/* El cursor de marca vive entero en velmont-motion.css. Aqui quedaba el de la
+   primera version: arrancaba el punto en opacity 0 y lo encendia con una
+   clase .ready que el cursor actual ya no pone, asi que el punto nunca se
+   veia y, con el cursor del sistema oculto, el escritorio se quedaba sin
+   puntero. */
+
+/* ---------------- Aviso flotante ---------------- */
+.notice {
+  position: fixed; left: 50%; bottom: 32px; transform: translate(-50%, 14px);
+  background: var(--ivory); color: var(--ink);
+  padding: 14px 26px;
+  font-size: var(--label-size); letter-spacing: var(--label-track); text-transform: uppercase; font-weight: 600;
+  opacity: 0; pointer-events: none; z-index: var(--z-overlay);
+  transition: opacity var(--t-base) var(--ease-out), transform var(--t-base) var(--ease-out);
+}
+.notice.in { opacity: 1; transform: translate(-50%, 0); }
+
+
+/* ==========================================================================
+   VELMONT — Componentes
+   Composicion editorial. Sin tarjetas. Asimetria y espacio.
+   ========================================================================== */
+
+/* ===================== BARRA DE ANUNCIO ===================== */
+/* Va en el flujo, antes de todo: empuja la pagina hacia abajo lo que mide y
+   se va con el scroll. Negra en todas las paginas, tambien sobre las crema. */
+.announce {
+  height: var(--announce-h);
+  display: flex; align-items: center; justify-content: center;
+  padding-inline: var(--gutter);
+  background: var(--noir); color: var(--ivory);
+  border-bottom: var(--hairline-width) solid rgba(244,241,234,0.12);
+}
+.announce__txt {
+  margin: 0; min-width: 0;
+  font-family: var(--font-ui); font-size: var(--t-100); font-weight: var(--w-label);
+  letter-spacing: 0.2em; line-height: 1; text-transform: uppercase;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.announce__corto { display: none; }
+@media (max-width: 760px) {
+  .announce__txt { letter-spacing: 0.08em; }
+  .announce__txt:has(.announce__corto) .announce__largo { display: none; }
+  .announce__corto { display: inline; }
+}
+
+/* ===================== HEADER ===================== */
+.hdr {
+  position: fixed; top: 0; left: 0; right: 0; z-index: var(--z-header);
+  height: var(--header-h);
+  display: flex; align-items: center;
+  color: var(--ivory);
+  transition: background var(--t-base) var(--ease-out), height var(--t-base) var(--ease-out), top var(--t-base) var(--ease-out);
+}
+/* El encabezado es fixed: con barra de anuncio la taparia. Mientras la
+   pagina esta arriba del todo baja lo que mide la barra; al fijarse (40px de
+   scroll, la barra ya se fue) sube a 0. Sin barra, esto no aplica. */
+body:has(.announce) .hdr { top: var(--announce-h); }
+body:has(.announce) .hdr.is-stuck { top: 0; }
+/* El logo se centra de forma absoluta: si el nav se oculta en movil, el
+   auto-placement del grid NO puede arrastrarlo a otra columna. */
+.hdr__in {
+  width: 100%; padding-inline: var(--gutter);
+  position: relative;
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s5);
+}
+.hdr.is-stuck {
+  height: 68px;
+  background: rgba(8,8,10,0.72);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+body[data-hdr="light"] .hdr { color: var(--ink); }
+body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
+
+/* La barra se adapta al tono de la seccion que tiene debajo (initHeaderTone).
+   Sin esto, el vidrio oscuro sobre una banda crema da una franja gris sucia:
+   pasa igual en el sitio original, y es lo que se corrige aqui. */
+.hdr.is-stuck.hdr--light {
+  background: rgba(244,241,234,0.82);
+  color: var(--ink);
+  box-shadow: 0 1px 0 var(--hairline);
+}
+/* El logotipo es marfil y dorado: sobre el vidrio claro se apaga. */
+.hdr.is-stuck.hdr--light .hdr__mark img { filter: brightness(0.42) saturate(1.25); }
+
+.hdr__nav { display: flex; gap: clamp(20px, 2.4vw, 40px); }
+.hdr__nav a {
+  font-size: var(--label-size); letter-spacing: var(--label-track);
+  text-transform: uppercase; font-weight: 600; white-space: nowrap;
+  opacity: 0.78; transition: opacity var(--t-fast);
+}
+.hdr__nav a:hover { opacity: 1; }
+
+.hdr__mark { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.hdr__mark img { height: 26px; width: auto; transition: height var(--t-base) var(--ease-out); }
+.hdr.is-stuck .hdr__mark img { height: 22px; }
+
+.hdr__acts { margin-left: auto; display: flex; align-items: center; gap: var(--s2); }
+.count {
+  position: absolute; top: 4px; right: 2px;
+  font-size: var(--t-100); font-weight: 700; font-variant-numeric: tabular-nums;
+  min-width: 18px; height: 18px; line-height: 18px; text-align: center;
+  /* Radio 0 tambien aqui: el contador era el unico redondeado del tema. */
+  border-radius: var(--radius); background: var(--gold); color: var(--noir);
+}
+.count.off { display: none; }
+
+.burger { display: none; flex-direction: column; gap: 5px; width: 44px; height: 44px; align-items: center; justify-content: center; }
+.burger span { display: block; width: 22px; height: 1px; background: currentColor; transition: transform var(--t-base) var(--ease-inout); }
+
+@media (max-width: 1180px) {
+  .hdr__nav { display: none; }
+  .burger { display: flex; }
+  [data-saved-open] { display: none; }
+}
+@media (max-width: 420px) {
+  .hdr__mark img { height: 20px; }
+  .hdr__acts { gap: 0; }
+  .hdr__acts .icon-btn { width: 40px; }
+}
+
+/* ===================== MENU FULLSCREEN ===================== */
+.menu {
+  position: fixed; inset: 0; z-index: var(--z-menu);
+  background: var(--noir); color: var(--ivory);
+  display: grid; grid-template-columns: 1.15fr 0.85fr;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path var(--t-slow) var(--ease-inout);
+  pointer-events: none;
+}
+.menu.open { clip-path: inset(0 0 0 0); pointer-events: auto; }
+.menu__close { position: absolute; top: 20px; right: var(--gutter); z-index: 2; color: var(--ivory); }
+.menu__list {
+  align-self: center; padding: var(--s9) var(--gutter);
+  display: flex; flex-direction: column; gap: clamp(6px, 1.4vw, 18px);
+}
+.menu__list a {
+  font-family: var(--font-display);
+  font-size: var(--display-section);
+  line-height: 1.02; letter-spacing: var(--track-display);
+  color: var(--ivory); opacity: 0.45;
+  /* 44px de alto minimo: medidos 35 en movil, por debajo del minimo tactil
+     que piden tanto Apple como Material. El texto no crece, crece la zona
+     que acepta el dedo. */
+  min-height: 44px; display: flex; align-items: center;
+  transition: opacity var(--t-base) var(--ease-out), transform var(--t-base) var(--ease-out);
+  transform: translateX(0);
+  width: fit-content;
+}
+.menu__list a:hover { opacity: 1; transform: translateX(18px); }
+.menu__list a .idx {
+  font-family: var(--font-ui); font-size: var(--label-size);
+  letter-spacing: var(--label-track); vertical-align: super; margin-right: var(--s3);
+  color: var(--gold); opacity: 0.8;
+}
+.menu__visual { position: relative; overflow: hidden; background: var(--noir-soft); }
+.menu__visual figure {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  opacity: 0; transition: opacity var(--t-base) var(--ease-out);
+}
+.menu__visual figure.on { opacity: 1; }
+.menu__visual svg { width: 42%; }
+.menu__foot {
+  position: absolute; left: var(--gutter); bottom: var(--s7);
+  display: flex; gap: var(--s6); flex-wrap: wrap;
+}
+@media (max-width: 900px) {
+  .menu { grid-template-columns: 1fr; }
+  .menu__visual { display: none; }
+  .menu__list { padding-top: var(--s10); }
+}
+
+/* ===================== HERO CINEMATOGRAFICO ===================== */
+.hero {
+  position: relative; min-height: 100svh;
+  background: var(--noir); color: var(--ivory);
+  overflow: hidden; isolation: isolate;
+}
+/* Todas las capas del hero componen su transform desde variables, para que
+   el parallax de mouse y el efecto de scroll no se pisen entre si. */
+.hero [data-depth] { transform: translate3d(var(--px, 0px), var(--py, 0px), 0); }
+
+.hero__pool {
+  position: absolute; z-index: 0;
+  width: 92vw; max-width: 1100px; aspect-ratio: 1;
+  right: -12vw; top: 46%;
+  transform: translate3d(var(--px, 0px), calc(-50% + var(--py, 0px)), 0);
+  background: radial-gradient(circle, rgba(201,168,103,0.17) 0%, rgba(201,168,103,0.05) 38%, transparent 68%);
+  pointer-events: none;
+}
+.hero__texture {
+  position: absolute; inset: 0; z-index: 0;
+  background: var(--img-marble) center/cover;
+  opacity: 0.30;
+  mask-image: radial-gradient(120% 90% at 70% 40%, #000 0%, transparent 72%);
+  -webkit-mask-image: radial-gradient(120% 90% at 70% 40%, #000 0%, transparent 72%);
+  pointer-events: none;
+}
+
+/* Las letras del logo oficial como fondo, apoyadas en el borde inferior.
+   Imagen (no texto) para respetar la marca y evitar el text-stroke roto. */
+.hero__wordmark {
+  position: absolute; z-index: 1; left: 50%; bottom: clamp(18px, 3vh, 40px);
+  transform: translateX(-50%);
+  width: min(92vw, 1500px);
+  opacity: 0.075;
+  pointer-events: none; user-select: none;
+}
+.hero__wordmark img { width: 100%; height: auto; }
+
+.hero__stage {
+  position: absolute; z-index: 2;
+  right: clamp(-2vw, 3vw, 7vw); bottom: 4vh;
+  width: clamp(200px, 30vw, 420px);
+  will-change: transform;
+  transform:
+    translate3d(var(--px, 0px), calc(var(--py, 0px) + var(--scroll-y, 0px)), 0)
+    scale(var(--scroll-scale, 1));
+}
+.hero__stage svg { width: 100%; height: auto; filter: drop-shadow(0 60px 70px rgba(0,0,0,0.65)); }
+/* Reflejo en el suelo */
+.hero__reflect {
+  position: absolute; left: 0; right: 0; top: calc(100% - 2px); height: 38%;
+  transform: scaleY(-1); transform-origin: top;
+  opacity: 0.16;
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 62%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 62%);
+  pointer-events: none;
+}
+.hero__reflect svg { filter: none; }
+
+/* Barrido de luz sobre el cristal */
+.hero__sweep {
+  position: absolute; inset: 0; z-index: 3; pointer-events: none; overflow: hidden;
+}
+.hero__sweep::before {
+  content: ''; position: absolute; top: -20%; bottom: -20%; width: 34%;
+  background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.10) 42%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0.10) 58%, transparent 100%);
+  filter: blur(6px);
+  animation: sweep 7s var(--ease-inout) 1.8s infinite;
+  left: -40%;
+}
+@keyframes sweep { 0% { left: -40%; } 55%, 100% { left: 130%; } }
+@media (prefers-reduced-motion: reduce) { .hero__sweep::before { animation: none; opacity: 0; } }
+
+.hero__copy {
+  position: relative; z-index: 4;
+  min-height: 100svh;
+  display: grid; align-content: center;
+  padding-inline: var(--gutter);
+  padding-top: var(--header-h);
+  padding-bottom: clamp(120px, 22vh, 260px);
+  max-width: min(68ch, 64vw);
+}
+.hero__kicker { display: block; margin-bottom: var(--s6); color: var(--gold); }
+.hero__title { font-size: var(--display-hero); }
+.hero__title em { font-style: italic; }
+.hero__actions { margin-top: clamp(28px, 4vw, 52px); display: flex; gap: var(--s4); flex-wrap: wrap; }
+
+.hero__meta {
+  position: absolute; z-index: 4; left: var(--gutter); bottom: var(--s7);
+  display: flex; align-items: center; gap: var(--s5);
+}
+.hero__scroll {
+  position: absolute; z-index: 4; right: var(--gutter); bottom: var(--s7);
+  display: flex; align-items: center; gap: var(--s3);
+}
+.hero__scroll i { display: block; width: 52px; height: 1px; background: rgba(244,241,234,0.3); position: relative; overflow: hidden; }
+.hero__scroll i::after {
+  content: ''; position: absolute; inset: 0; background: var(--gold);
+  transform: translateX(-100%); animation: scrollcue 2.6s var(--ease-inout) infinite;
+}
+@keyframes scrollcue { 0% { transform: translateX(-100%); } 60%, 100% { transform: translateX(100%); } }
+
+@media (max-width: 900px) {
+  /* En movil el hero se compone en vertical: texto arriba, producto abajo
+     a la derecha, sin que el wordmark compita con el titular. */
+  .hero__copy {
+    max-width: none;
+    align-content: start;
+    padding-top: calc(var(--header-h) + 10vh);
+    padding-bottom: 0;
+    min-height: auto;
+  }
+  .hero__stage { width: min(56vw, 250px); right: -4vw; bottom: 6vh; }
+  .hero__wordmark { width: 94vw; bottom: 2vh; opacity: 0.09; }
+  .hero__meta { display: none; }
+  .hero__scroll { left: var(--gutter); right: auto; }
+  .hero__actions .act { padding: 16px 26px; }
+}
+@media (max-width: 900px) {
+  .hero { min-height: 100svh; display: grid; grid-template-rows: auto 1fr; }
+}
+
+/* ===================== TIRA DE CONFIANZA (hilo, no tarjetas) ===================== */
+.thread {
+  border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+  background: var(--surface);
+}
+.thread__in {
+  display: flex; flex-wrap: wrap; gap: clamp(20px, 5vw, 80px);
+  justify-content: space-between; align-items: center;
+  padding-block: var(--s5); padding-inline: var(--gutter);
+}
+
+/* ===================== DECLARACION (calma) ===================== */
+.statement { text-align: left; }
+.statement__grid {
+  display: grid; grid-template-columns: 1fr; gap: clamp(32px, 6vw, 90px);
+  padding-inline: var(--gutter);
+}
+.statement__quote { max-width: 18ch; }
+.statement__aside { max-width: 38ch; justify-self: end; align-self: end; }
+@media (min-width: 900px) {
+  .statement__grid { grid-template-columns: 1.4fr 0.6fr; align-items: end; }
+}
+
+/* ===================== PIEZAS DE PRODUCTO (sin tarjetas) ===================== */
+.piece { position: relative; display: block; }
+.piece__stage {
+  position: relative; display: grid; place-items: center;
+  aspect-ratio: 4/5; overflow: hidden;
+  background:
+    radial-gradient(70% 55% at 50% 72%, rgba(0,0,0,0.10) 0%, transparent 70%),
+    var(--surface-2);
+  transition: background var(--t-base) var(--ease-out);
+}
+/* El tilt de escritorio le escribe un transform al escenario, y eso lo vuelve
+   contexto de apilamiento: el z-index de «Añadir» y del corazon quedaba
+   atrapado DEBAJO del enlace de la pieza (z-index 1). Medido con
+   elementFromPoint: en escritorio, «Añadir» abria la ficha en vez de añadir.
+   El escenario sube por encima del enlace y deja pasar los clics, salvo en
+   sus botones. Solo cuando no es el enlace el mismo (colecciones, guardados). */
+.piece__stage:not(a) { z-index: 2; pointer-events: none; container-type: inline-size; }
+.piece__stage:not(a) button { pointer-events: auto; }
+/* La etiqueta de edicion comparte fila con el corazon (44px a la derecha).
+   Medido a 390px: la pieza del catalogo mide 162px y «Selección MATAI» se
+   partia en dos y se metia debajo del corazon. Nunca invade su hueco, y si
+   la pieza es tan estrecha que ni una palabra cabe, no se pinta: el nombre de
+   la casa ya esta debajo de la foto. */
+.piece__edit { max-width: calc(100% - 44px - 3 * var(--s3)); }
+@container (max-width: 240px) { .piece__edit { display: none; } }
+[data-tone="dark"] .piece__stage {
+  background:
+    radial-gradient(70% 55% at 50% 72%, rgba(201,168,103,0.10) 0%, transparent 70%),
+    var(--noir-soft);
+}
+.piece__stage svg, .piece__stage img {
+  width: 58%; height: auto;
+  transition: transform var(--t-slow) var(--ease-out);
+  will-change: transform;
+}
+.piece__stage img { width: 100%; height: 100%; object-fit: cover; }
+.piece:hover .piece__stage svg { transform: translateY(-10px) scale(1.04); }
+.piece:hover .piece__stage img { transform: scale(1.05); }
+
+/* Metadatos que aparecen al hover, sin llenar la pieza */
+.piece__hover {
+  position: absolute; inset: auto 0 0 0;
+  padding: var(--s5);
+  display: flex; justify-content: space-between; align-items: flex-end; gap: var(--s4);
+  opacity: 0; transform: translateY(10px);
+  transition: opacity var(--t-base) var(--ease-out), transform var(--t-base) var(--ease-out);
+}
+.piece:hover .piece__hover, .piece:focus-within .piece__hover { opacity: 1; transform: none; }
+
+/* Ficha: una columna, de menor a mayor peso y de vuelta. El precio cierra en
+   gris para que el nombre siga siendo lo primero que se lee. */
+.piece__meta { padding-top: var(--sp-3); display: grid; gap: 4px; justify-items: start; }
+.piece__house {
+  font-family: var(--font-ui); font-size: var(--t-100); font-weight: var(--w-label);
+  letter-spacing: var(--track-eyebrow); line-height: var(--lh-eyebrow);
+  text-transform: uppercase; color: var(--stone);
+}
+/* Medido: las tarjetas salian con alturas distintas (466 y 444 en escritorio;
+   290, 312, 333 y 355 en movil) porque el nombre ocupa una o dos lineas segun
+   el producto. Se reservan SIEMPRE dos y a la tercera se recorta, asi la
+   rejilla queda pareja sin depender de lo largo que sea cada nombre. */
+.piece__name {
+  font-family: var(--font-display); font-size: var(--t-400); font-weight: var(--w-display);
+  letter-spacing: var(--track-display); line-height: var(--lh-title); color: var(--on-surface);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: calc(2em * var(--lh-title));
+}
+.piece__notes { font-size: var(--t-200); letter-spacing: var(--track-body); color: var(--on-surface-dim); }
+.piece__meta .price { font-size: var(--t-200); color: var(--stone-deep); }
+/* Dorado sobre los arcos dorados de MATAI quedaba en 3:1. Mismo vidrio que
+   los controles, un poco mas denso: el dorado necesita el 78% para llegar a
+   4.5:1 aun sobre una foto blanca. */
+.piece__edit {
+  position: absolute; top: var(--s4); left: var(--s4); z-index: 2; color: var(--gold);
+  padding: 6px 10px;
+  background: rgba(8, 8, 10, 0.78);
+  background: color-mix(in srgb, var(--noir) 78%, transparent);
+}
+.piece__save {
+  position: absolute; top: var(--s3); right: var(--s3); z-index: 2;
+  width: 40px; height: 40px; display: grid; place-items: center;
+  opacity: 0; transform: translateY(-6px);
+  transition: opacity var(--t-base), transform var(--t-base), color var(--t-fast);
+}
+.piece:hover .piece__save, .piece__save:focus-visible, .piece__save.on { opacity: 1; transform: none; }
+.piece__link { position: absolute; inset: 0; z-index: 1; }
+
+/* Lo que se pinta ENCIMA de la foto va en crema sobre un vidrio oscuro.
+   Medido en las 196 fotos del catalogo: en tinta, «Añadir» quedaba en 1.6:1
+   de mediana, invisible en las fotos oscuras, que son casi todas. Crema a
+   secas tampoco basta: fallaba en 28 (fondos blancos como TAJ MAHAL y de tono
+   medio). El vidrio al 68% es el minimo que deja la crema en 4.5:1 y el
+   corazon dorado en 3:1 aun sobre blanco puro; en foto oscura no se nota y se
+   lee como crema sin mas. */
+.piece__add, .piece__save, .piece__hover .label:not(:empty) {
+  color: var(--ivory);
+  background: rgba(8, 8, 10, 0.68);
+  background: color-mix(in srgb, var(--noir) 68%, transparent);
+}
+.piece__add, .piece__save { border: 1px solid color-mix(in srgb, var(--ivory) 45%, transparent); }
+.piece__hover .label:not(:empty) { padding: 7px 10px; }
+.piece__add {
+  position: relative; z-index: 2;
+  min-height: 40px; padding: 0 var(--s4);
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+/* Con marco propio, el subrayado del .link sobra */
+.piece__add::after { content: none; }
+.piece__add:hover, .piece__add:focus-visible { background: var(--ivory); color: var(--ink); border-color: var(--ivory); }
+/* Guardado: ademas del color, el corazon se rellena. El estado no puede
+   distinguirse solo por tono. */
+.piece__save.on { color: var(--gold); }
+.piece__save.on svg { fill: currentColor; }
+
+/* Las reglas tactiles viven al final del archivo (ver "CAPA TACTIL"),
+   para que ganen sobre las definiciones base de cada componente. */
+
+/* Composicion editorial asimetrica (no una cuadricula pareja) */
+.composition {
+  display: grid; gap: clamp(28px, 4vw, 72px);
+  grid-template-columns: 1fr;
+  padding-inline: var(--gutter);
+}
+/* Composicion asimetrica: es la del prototipo, pensada para ilustraciones de
+   frasco con mucho aire alrededor. Con fotos reales que llenan el marco, la
+   primera pieza ocupa media pantalla y la seccion se vuelve larguisima, asi
+   que ya no es el valor por omision. */
+@media (min-width: 860px) {
+  .composition--editorial { grid-template-columns: repeat(12, 1fr); align-items: start; }
+  .composition--editorial > *:nth-child(6n+1) { grid-column: 1 / span 6; }
+  .composition--editorial > *:nth-child(6n+2) { grid-column: 8 / span 4; margin-top: clamp(60px, 12vw, 180px); }
+  .composition--editorial > *:nth-child(6n+3) { grid-column: 2 / span 4; margin-top: clamp(20px, 4vw, 60px); }
+  .composition--editorial > *:nth-child(6n+4) { grid-column: 7 / span 5; }
+  .composition--editorial > *:nth-child(6n+5) { grid-column: 1 / span 5; margin-top: clamp(40px, 7vw, 110px); }
+  .composition--editorial > *:nth-child(6n+6) { grid-column: 7 / span 6; margin-top: clamp(80px, 10vw, 140px); }
+}
+
+/* Rejilla ordenada: piezas del mismo tamano, sin desniveles. Mismo ritmo de
+   columnas que el catalogo para que la portada y /collections/all se sientan
+   una sola tienda. */
+@media (min-width: 860px) {
+  .composition--even {
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(28px, 3.4vw, 64px) clamp(20px, 2.6vw, 44px);
+    align-items: start;
+  }
+}
+@media (min-width: 1200px) {
+  .composition--even { grid-template-columns: repeat(4, 1fr); }
+  /* Con exactamente 6 piezas, cuatro columnas dejan una fila de 4 y otra de
+     2 — ragged y con un hueco a la derecha. Dos filas de 3 es lo que cuadra,
+     y ademas cada pieza se ve mas grande. */
+  .composition--even:has(> :nth-child(6):last-child) { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Rejilla sobria para la coleccion completa */
+.grid-quiet {
+  display: grid; gap: clamp(28px, 3.4vw, 64px) clamp(20px, 2.6vw, 44px);
+  grid-template-columns: repeat(2, 1fr);
+  padding-inline: var(--gutter);
+}
+@media (min-width: 760px) { .grid-quiet { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1200px) { .grid-quiet { grid-template-columns: repeat(4, 1fr); } }
+/* El desfase de cada tercera pieza se quito a peticion del cliente: en un
+   catalogo de 195 productos la fila rota se lee como descuadre, no como
+   ritmo. Todas las piezas arrancan a la misma altura. */
+
+/* Carrusel de relacionados: se arrastra con el mouse (initReel) y desliza
+   nativo en tactil. La pieza mas centrada queda con foco total; el resto
+   se atenua un poco, como en una vitrina. */
+.reel {
+  display: flex; gap: clamp(20px, 2.4vw, 40px);
+  overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
+  -webkit-overflow-scrolling: touch; cursor: grab;
+  padding-inline: var(--gutter); padding-bottom: 4px;
+}
+.reel::-webkit-scrollbar { display: none; }
+.reel.dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.reel > * { flex: 0 0 clamp(220px, 26vw, 320px); scroll-snap-align: start; opacity: 0.55; transition: opacity 380ms var(--ease-out); }
+.reel > *.active { opacity: 1; }
+@media (pointer: coarse) { .reel > * { opacity: 1; } }
+
+/* ===================== FILTROS ===================== */
+.filters { display: flex; flex-wrap: wrap; gap: var(--s5); padding-inline: var(--gutter); }
+.filters button {
+  font-size: var(--label-size); letter-spacing: var(--label-track); text-transform: uppercase; font-weight: 600;
+  color: var(--on-surface-dim); padding-bottom: 6px; position: relative; min-height: 32px;
+  transition: color var(--t-fast);
+}
+.filters button::after {
+  content: ''; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
+  background: var(--gold); transform: scaleX(0); transform-origin: left;
+  transition: transform var(--t-base) var(--ease-inout);
+}
+.filters button:hover { color: var(--on-surface); }
+.filters button.on { color: var(--on-surface); }
+.filters button.on::after { transform: scaleX(1); }
+
+/* En movil: tira deslizable en vez de cuatro filas apiladas */
+@media (max-width: 760px) {
+  .filters {
+    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+    -webkit-overflow-scrolling: touch; padding-bottom: var(--s2);
+  }
+  .filters::-webkit-scrollbar { display: none; }
+  .filters button { white-space: nowrap; }
+  /* La etiqueta de familia compite con la accion en una pieza estrecha */
+  .piece__hover { padding: var(--s3); }
+  .piece__hover .label { display: none; }
+  /* Con nombres de dos lineas, precio y nombre se alinean mal en fila */
+}
+
+/* ===================== CAMPANAS (ofertas) ===================== */
+.campaign {
+  position: relative; overflow: hidden; isolation: isolate;
+  background: var(--noir); color: var(--ivory);
+  min-height: clamp(520px, 74vh, 760px);
+  display: grid; align-items: center;
+}
+.campaign + .campaign { border-top: 1px solid rgba(244,241,234,0.1); }
+.campaign__texture {
+  position: absolute; inset: 0; z-index: 0;
+  background: var(--img-marble) center/cover; opacity: 0.22;
+  mask-image: linear-gradient(90deg, #000 0%, transparent 78%);
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, transparent 78%);
+}
+.campaign__in {
+  position: relative; z-index: 2;
+  padding: clamp(60px, 9vw, 120px) var(--gutter);
+  display: grid; grid-template-columns: 1fr; gap: clamp(36px, 6vw, 80px); align-items: center;
+}
+@media (min-width: 900px) { .campaign__in { grid-template-columns: 1.05fr 0.95fr; } }
+.campaign--flip .campaign__in > *:first-child { order: 2; }
+.campaign--flip .campaign__texture {
+  mask-image: linear-gradient(270deg, #000 0%, transparent 78%);
+  -webkit-mask-image: linear-gradient(270deg, #000 0%, transparent 78%);
+}
+.campaign__title { margin-top: var(--s5); }
+.campaign__line { margin-top: var(--s5); max-width: 30ch; color: var(--stone); }
+.campaign__price {
+  margin-top: clamp(24px, 3vw, 40px);
+  font-family: var(--font-display); font-size: var(--display-section);
+  line-height: 1; letter-spacing: var(--track-display);
+}
+.campaign__price sup { font-family: var(--font-ui); font-size: var(--label-size); letter-spacing: var(--label-track); vertical-align: super; color: var(--gold); margin-left: var(--s3); }
+.campaign__cta { margin-top: clamp(28px, 3.4vw, 44px); }
+/* Las dos piezas de una edicion, IGUALES.
+   Antes no lo eran por dos motivos a la vez: la segunda llevaba un desfase
+   vertical a proposito, y las fotos se pintaban con su proporcion original
+   —basta con que una sea 1:1 y la otra 4:5 para que las cajas no cuadren—.
+   Ahora manda la proporcion de producto de la casa (4:5) y el recorte lo
+   resuelve `cover`, como en el resto del catalogo. */
+.campaign__duo { display: flex; justify-content: center; align-items: start; gap: clamp(12px, 3vw, 40px); }
+.campaign__duo figure {
+  width: clamp(110px, 16vw, 210px);
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+.campaign__duo figure a { display: block; width: 100%; height: 100%; }
+.campaign__duo figure img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 42%;
+  display: block;
+}
+.campaign__duo svg { filter: drop-shadow(0 32px 40px rgba(0,0,0,0.6)); }
+
+/* ===================== FINDER FULLSCREEN ===================== */
+.finder-gate { position: relative; overflow: hidden; }
+.finder-gate__in { padding-inline: var(--gutter); display: grid; gap: var(--s6); justify-items: start; }
+
+.finder {
+  position: fixed; inset: 0; z-index: var(--z-overlay);
+  background: var(--noir); color: var(--ivory);
+  /* El overlay pinta oscuro pero no es .panel--black, asi que heredaba las
+     superficies del panel claro: un boton "macizo" salia tinta sobre negro.
+     Reasigna la familia oscura, como hace cualquier panel. */
+  --surface: var(--noir);
+  --surface-inset: var(--ink);
+  --on-surface: var(--ivory);
+  --on-surface-dim: var(--stone);
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--t-base) var(--ease-out);
+  display: grid; grid-template-rows: auto 1fr;
+  overflow-y: auto;
+}
+.finder.open { opacity: 1; pointer-events: auto; }
+.finder__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--s5); padding: var(--s5) var(--gutter); }
+.finder__progress { position: fixed; top: 0; left: 0; right: 0; height: 1px; background: rgba(244,241,234,0.14); z-index: 2; }
+.finder__progress i { display: block; height: 100%; width: 0; background: var(--gold); transition: width var(--t-slow) var(--ease-inout); }
+.finder__body {
+  /* "safe" center: cuando el paso no cabe en la pantalla, deja de centrar y
+     se alinea arriba. Con center a secas el titular se salia por encima del
+     borde superior, donde el scroll no puede llegar. */
+  display: grid; align-content: safe center; justify-items: start;
+  padding: clamp(24px, 6vh, 80px) var(--gutter) clamp(48px, 10vh, 120px);
+  gap: clamp(44px, 9vh, 96px);
+  min-height: 0;
+}
+.finder__q { max-width: 16ch; }
+.finder__opts { display: flex; flex-wrap: wrap; gap: clamp(18px, 2.6vh, 34px) clamp(28px, 4.5vw, 72px); max-width: 24ch; }
+/* Con pantalla ancha, las opciones fluyen en dos columnas. En una sola, un
+   paso de siete opciones empujaba el boton de avanzar fuera de la vista: la
+   accion principal no puede exigir scroll para descubrirse. */
+@media (min-width: 900px) {
+  .finder__opts { max-width: min(100%, 56rem); }
+}
+.finder__opt {
+  font-family: var(--font-display);
+  font-size: var(--display-section);
+  line-height: 1.06; letter-spacing: var(--track-display);
+  /* En reposo tambien tiene que leerse: rgba(...,.42) sobre negro daba 3,6:1.
+     --stone sobre el panel oscuro da ~6,7:1. */
+  color: var(--stone);
+  transition: color var(--t-base) var(--ease-out), transform var(--t-base) var(--ease-out);
+  position: relative; text-align: left;
+}
+.finder__opt:hover { color: var(--ivory); transform: translateX(10px); }
+.finder__opt.on { color: var(--ivory); }
+.finder__opt.on::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 4px; height: 1px; background: var(--gold);
+}
+/* Pie del cuestionario: acciones a la izquierda, ayuda a la derecha. Flex con
+   gap explicito y space-between — nada absoluto que pueda solaparse. */
+.finder__foot {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--sp-6); flex-wrap: wrap;
+}
+.finder__acts { display: flex; align-items: center; gap: var(--sp-6); flex-wrap: wrap; }
+.finder__hint { color: var(--on-surface-dim); text-align: right; }
+
+@media (max-width: 760px) {
+  /* Apilado: botones arriba, ayuda debajo */
+  .finder__foot { flex-direction: column; align-items: flex-start; gap: var(--sp-3); }
+  .finder__acts { gap: var(--sp-4); }
+  .finder__hint { text-align: left; }
+}
+
+/* Avanzar o no avanzar tiene que verse a un metro.
+   Inactivo: fantasma atenuado. Activo: macizo claro sobre texto oscuro. */
+.finder__foot .act[aria-disabled="true"] {
+  opacity: 1;                      /* el 0.4 global lo volvia ilegible */
+  pointer-events: auto;            /* para que se vea el cursor prohibido */
+  background: transparent;
+  color: var(--on-surface-dim);
+  border-color: var(--hairline);
+  cursor: not-allowed;
+}
+.finder__foot .act[aria-disabled="true"]::after { transform: translateY(101%); }
+.finder__foot .act[aria-disabled="false"] {
+  background: var(--on-surface);
+  border-color: var(--on-surface);
+  color: var(--surface);
+}
+.finder__foot .act[aria-disabled="false"]::after { background: var(--gold-light); }
+.finder__foot .act[aria-disabled="false"]:hover { color: var(--noir); border-color: var(--gold-light); }
+
+/* Resultados del finder: piezas, no filas de formulario */
+.finder__results { width: 100%; display: grid; gap: clamp(24px, 3vw, 48px); grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.finder__result { position: relative; }
+.finder__result .piece__stage { aspect-ratio: 3/4; }
+
+/* ===================== MUNDO VELMONT ===================== */
+.world { position: relative; overflow: hidden; }
+.world__in { padding-inline: var(--gutter); display: grid; gap: clamp(32px, 5vw, 72px); }
+@media (min-width: 900px) { .world__in { grid-template-columns: 0.9fr 1.1fr; align-items: center; } }
+.world__figure { position: relative; display: grid; place-items: center; aspect-ratio: 5/4; background: var(--noir-soft); overflow: hidden; }
+.world__figure svg { width: 34%; filter: drop-shadow(0 40px 50px rgba(0,0,0,0.6)); }
+.world__figure::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(60% 50% at 50% 45%, rgba(201,168,103,0.16), transparent 70%);
+}
+
+/* ===================== FOOTER ===================== */
+.foot { background: var(--noir); color: var(--stone); padding-block: var(--section-text) var(--sp-6); }
+.foot__in { padding-inline: var(--gutter); }
+/* Sello del footer: el monograma circular oficial entre dos filetes, que
+   repiten el motivo "—— FRAGANCES ——" del propio logo. 88px en escritorio:
+   por debajo, en pantallas 1x, el anillo del monograma se pierde. */
+.foot__seal {
+  display: flex; align-items: center; gap: clamp(20px, 3vw, 44px);
+  margin-bottom: clamp(56px, 7vw, 104px);
+}
+.foot__seal-line { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(201,168,103,0) 0%, rgba(201,168,103,0.42) 100%); }
+.foot__seal-line:last-child { background: linear-gradient(90deg, rgba(201,168,103,0.42) 0%, rgba(201,168,103,0) 100%); }
+.foot__seal a { display: block; flex: none; transition: opacity var(--t-base) var(--ease-out); }
+.foot__seal a:hover { opacity: 0.78; }
+.foot__seal img { width: 88px; height: 88px; }
+@media (max-width: 760px) {
+  .foot__seal img { width: 72px; height: 72px; }
+}
+.foot__cols { display: grid; gap: clamp(32px, 4vw, 60px); grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 860px) { .foot__cols { grid-template-columns: 1.3fr repeat(3, 0.9fr); } }
+.foot h4 { color: var(--ivory); margin-bottom: var(--s4); }
+.foot ul { display: grid; gap: var(--s3); }
+.foot a { font-size: var(--fs-small); transition: color var(--t-fast); }
+.foot a:hover { color: var(--ivory); }
+.foot__base {
+  margin-top: clamp(48px, 6vw, 90px); padding-top: var(--s5);
+  border-top: 1px solid rgba(244,241,234,0.12);
+  display: flex; justify-content: space-between; gap: var(--s4); flex-wrap: wrap;
+}
+
+/* ===================== DRAWER (bolsa / guardados) ===================== */
+.scrim {
+  position: fixed; inset: 0; z-index: var(--z-drawer);
+  background: rgba(8,8,10,0.58); backdrop-filter: blur(3px);
+  opacity: 0; pointer-events: none; transition: opacity var(--t-base);
+}
+.scrim.open { opacity: 1; pointer-events: auto; }
+
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: calc(var(--z-drawer) + 1);
+  width: min(460px, 100vw);
+  background: var(--ivory); color: var(--ink);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform var(--t-slow) var(--ease-inout);
+}
+.drawer.open { transform: none; }
+.drawer__head { display: flex; align-items: center; justify-content: space-between; padding: var(--s6) var(--s6) var(--s5); }
+.drawer__body { flex: 1; overflow-y: auto; padding: 0 var(--s6) var(--s6); }
+.drawer__foot { padding: var(--s5) var(--s6) var(--s6); border-top: 1px solid var(--hairline); display: grid; gap: var(--s4); }
+
+.bag-line { display: grid; grid-template-columns: 64px 1fr auto; gap: var(--s4); align-items: center; padding-block: var(--s5); border-top: 1px solid var(--hairline); }
+.bag-line:first-child { border-top: 0; }
+.bag-line__name { font-family: var(--font-display); font-size: var(--t-400); line-height: 1.2; }
+.bag-line__right { text-align: right; display: grid; gap: var(--s2); justify-items: end; }
+.stepper { display: inline-flex; align-items: center; gap: var(--s4); margin-top: var(--s3); }
+.stepper button { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid var(--hairline); font-size: var(--t-200); }
+.stepper button:hover { border-color: var(--on-surface); }
+.stepper span { font-variant-numeric: tabular-nums; font-size: var(--fs-small); min-width: 12px; text-align: center; }
+.mini { font-size: var(--t-100); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--on-surface-dim); }
+.mini:hover { color: var(--ink); }
+
+/* Promo: hilo de progreso, sin banners */
+.promo { margin-top: var(--s6); padding: var(--s5) 0; border-top: 1px solid var(--hairline); }
+.promo__bar { height: 1px; background: var(--hairline-strong); margin-top: var(--s4); position: relative; overflow: hidden; }
+.promo__bar i { position: absolute; inset: 0; background: var(--gold); transform-origin: left; transform: scaleX(0); transition: transform var(--t-slow) var(--ease-inout); }
+.promo__on { color: var(--gold-deep); }
+.promo s { color: var(--on-surface-dim); }
+
+.bag-suggest { margin-top: var(--s6); }
+.bag-suggest ul { display: grid; gap: var(--s4); margin-top: var(--s4); }
+.bag-suggest li { display: grid; grid-template-columns: 44px 1fr auto; gap: var(--s4); align-items: center; }
+.bag-totals { display: flex; justify-content: space-between; align-items: baseline; }
+.bag-totals strong { font-family: var(--font-display); font-size: 1.35rem; font-weight: 400; }
+.bag-empty { padding-block: var(--s10); display: grid; gap: var(--s5); justify-items: start; }
+
+/* ===================== BUSCADOR ===================== */
+.search {
+  position: fixed; inset: 0; z-index: var(--z-overlay);
+  background: rgba(8,8,10,0.97); color: var(--ivory);
+  opacity: 0; pointer-events: none; transition: opacity var(--t-base);
+  overflow-y: auto; padding: clamp(80px, 14vh, 180px) var(--gutter) var(--s9);
+}
+.search.open { opacity: 1; pointer-events: auto; }
+.search__close { position: absolute; top: 24px; right: var(--gutter); color: var(--ivory); }
+.search input {
+  width: 100%; background: transparent; border: 0; border-bottom: 1px solid rgba(244,241,234,0.2);
+  color: var(--ivory); font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4.4vw, 3.2rem); padding: var(--s5) 0; margin-top: var(--s5);
+}
+.search input:focus { outline: none; border-color: var(--gold); }
+.search input::placeholder { color: rgba(244,241,234,0.3); font-style: italic; }
+.search__out { margin-top: clamp(40px, 6vw, 80px); display: grid; gap: clamp(24px, 3vw, 44px); grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.search__note { margin-top: var(--s6); }
+
+/* ===================== ASESOR ===================== */
+.advisor-open {
+  position: fixed; right: var(--gutter); bottom: var(--s6); z-index: var(--z-drawer);
+  display: inline-flex; align-items: center; gap: var(--s3);
+  padding: 14px 22px; min-height: 48px;
+  background: var(--ivory); color: var(--ink);
+  font-size: var(--label-size); letter-spacing: var(--label-track); text-transform: uppercase; font-weight: 600;
+  transition: transform var(--t-base) var(--ease-out);
+}
+.advisor-open:hover { transform: translateY(-3px); }
+.advisor-open i { width: 5px; height: 5px; border-radius: 999px; background: var(--gold-deep); }
+
+.advisor {
+  position: fixed; right: var(--gutter); bottom: calc(var(--s6) + 62px); z-index: calc(var(--z-drawer) + 2);
+  width: min(380px, calc(100vw - 2 * var(--gutter)));
+  height: min(540px, 70vh);
+  background: var(--ivory); color: var(--ink);
+  display: flex; flex-direction: column;
+  opacity: 0; transform: translateY(14px); pointer-events: none;
+  transition: opacity var(--t-base) var(--ease-out), transform var(--t-base) var(--ease-out);
+}
+.advisor.open { opacity: 1; transform: none; pointer-events: auto; }
+.advisor__head { background: var(--noir); color: var(--ivory); padding: var(--s5); display: flex; justify-content: space-between; align-items: center; }
+.advisor__body { flex: 1; overflow-y: auto; padding: var(--s5); display: grid; gap: var(--s4); align-content: start; }
+.msg { max-width: 86%; font-size: var(--fs-small); line-height: 1.55; padding: 12px 16px; }
+.msg--bot { justify-self: start; background: var(--bone); }
+.msg--me { justify-self: end; background: var(--noir); color: var(--ivory); }
+.msg--items { max-width: 100%; background: transparent; padding: 0; display: grid; gap: var(--s3); }
+.advisor__item { display: grid; grid-template-columns: 38px 1fr auto; gap: var(--s3); align-items: center; border-top: 1px solid var(--hairline); padding-top: var(--s3); font-size: var(--fs-small); }
+.advisor__chips { display: flex; flex-wrap: wrap; gap: var(--s2); padding: 0 var(--s5) var(--s4); }
+.advisor__chips button { border: 1px solid var(--hairline); padding: 7px 13px; font-size: 11px; transition: border-color var(--t-fast); }
+.advisor__chips button:hover { border-color: var(--ink); }
+.advisor__form { display: flex; border-top: 1px solid var(--hairline); }
+.advisor__form input { flex: 1; border: 0; background: transparent; padding: var(--s5); font-size: var(--fs-small); }
+.advisor__form input:focus { outline: none; }
+.advisor__form button { padding: 0 var(--s5); }
+
+@media (max-width: 640px) {
+  .advisor-open span { display: none; }
+  .advisor-open { padding: 15px; right: 16px; bottom: 16px; }
+  .advisor { right: 12px; left: 12px; width: auto; bottom: 78px; }
+}
+
+/* ===================== FICHA DE PRODUCTO ===================== */
+.pdp { display: grid; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .pdp { grid-template-columns: 1.15fr 0.85fr; } }
+.pdp__stage {
+  position: relative; min-height: clamp(420px, 82vh, 900px);
+  display: grid; place-items: center;
+  background: radial-gradient(60% 50% at 50% 55%, rgba(201,168,103,0.12), transparent 70%), var(--noir);
+  overflow: hidden;
+  perspective: 1400px;
+}
+/* Leve inclinacion hacia el cursor (initPdpTilt) — variables compuestas en
+   CSS, igual que el parallax del hero, para no pisar otros transforms. */
+.pdp__stage svg {
+  width: min(46%, 320px); filter: drop-shadow(0 50px 60px rgba(0,0,0,0.6));
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 320ms var(--ease-out);
+}
+.pdp__stage img {
+  width: 100%; height: 100%; object-fit: cover;
+  transform: scale(1.02) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 320ms var(--ease-out);
+}
+.pdp__info { padding: clamp(48px, 7vw, 110px) var(--gutter); display: grid; align-content: center; gap: var(--s5); min-width: 0; }
+/* El frasco queda fijo en pantalla mientras la info (que con notas y perfil
+   olfativo es mas larga que un viewport) se desplaza normalmente a su lado
+   — el producto conserva el protagonismo y el CTA nunca esta lejos, sin
+   forzar una columna de texto larga a quedar "stuck" y cortada. */
+@media (min-width: 900px) {
+  /* Altura menor a la del viewport a propósito: dentro de la fila del grid
+     (tan alta como la info, que con notas y perfil es larga) esto deja
+     margen para que lo fijo se note casi todo el recorrido, no solo un
+     tramo corto. */
+  .pdp__stage { position: sticky; top: var(--header-h); align-self: start; height: min(76vh, 660px); min-height: 0; }
+}
+.pdp__name { margin-top: var(--s3); }
+/* El precio bajaba de --t-600: al lado del nombre competian y la columna se
+   leia como dos titulares. El nombre manda; el precio acompaña. */
+.pdp__price { font-family: var(--font-display); font-size: var(--t-500); }
+/* Las cifras alineadas vienen de body; en los precios ademas van tabulares,
+   para que los totales no bailen al cambiar la cantidad. */
+.pdp__price, .bag-totals strong, .ck__total { font-variant-numeric: lining-nums tabular-nums; }
+
+/* ==========================================================================
+   SELECTOR DEL COMBO (Simple Bundles)
+   La app inyecta un <select> por cada fragancia que elige el cliente, con
+   `name="properties[...]"`. Sin vestir salian con el estilo por omision del
+   navegador —caja gris de sistema— en medio de una ficha en serif y
+   Manrope. Se enganchan por el nombre y no por una clase porque la app no
+   pone ninguna.
+   ========================================================================== */
+.pdp__info select[name^="properties["] {
+  width: 100%;
+  font-family: var(--font-ui);
+  font-size: var(--t-200);
+  color: var(--on-surface);
+  background: transparent;
+  border: 0;
+  border-bottom: var(--hairline-width) solid var(--hairline-strong);
+  border-radius: 0;
+  padding: var(--s3) 0;
+  min-height: 44px;
+  cursor: pointer;
+  /* La flecha del sistema desentona: se dibuja una propia, fina y dorada. */
+  appearance: none; -webkit-appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--gold) 50%),
+                    linear-gradient(135deg, var(--gold) 50%, transparent 50%);
+  background-position: right 9px center, right 4px center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: var(--s5);
+  transition: border-color var(--t-fast) var(--ease-out);
+}
+.pdp__info select[name^="properties["]:hover { border-bottom-color: var(--gold); }
+.pdp__info select[name^="properties["]:focus-visible {
+  outline: 2px solid var(--gold); outline-offset: 3px; border-bottom-color: var(--gold);
+}
+/* --------------------------------------------------------------------------
+   Rejilla de piezas del combo. Un perfume no se elige leyendo su nombre en
+   una lista: se elige viendolo. Misma proporcion 4:5 y mismo orden de datos
+   que las piezas del catalogo —casa, nombre, precio— para que sea el mismo
+   idioma visual y no un widget pegado.
+   -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   FICHA DE COMBO — una pagina, no una ficha de producto
+   El combo no se mira, se arma: lo que importa son los perfumes, no la foto
+   del envoltorio. Asi que la maqueta de dos columnas (escenario a la
+   izquierda, datos apretados a la derecha) se deshace y pasa a leerse como
+   una coleccion: titulo arriba y las piezas a todo el ancho.
+
+   La clase la pone el JS cuando encuentra los desplegables de la app, no
+   Liquid: solo entonces sabemos que esta ficha es realmente un combo.
+   -------------------------------------------------------------------------- */
+@media (min-width: 900px) {
+  .pdp--combo { grid-template-columns: 1fr; }
+}
+.pdp--combo .pdp__stage { display: none; }
+.pdp--combo .pdp__info {
+  padding: var(--section-text) var(--gutter);
+  align-content: start;
+  max-width: none;
+}
+.pdp--combo .pdp__name { font-size: var(--display-hero); line-height: 0.92; max-width: 14ch; }
+/* El precio y el boton no se pierden arriba: acompanan al titular. */
+.pdp--combo .pdp__price { font-size: var(--t-600); }
+/* El "2 ×" acompaña, no compite: mismo cuerpo, peso normal, algo más tenue.
+   Es la misma lectura que ya usa la portada en «2 × $280.000». */
+.pdp__par { color: var(--on-surface-dim); font-weight: 400; }
+/* A todo el ancho, la rejilla es EXACTAMENTE la del catalogo: mismas
+   columnas, mismos huecos. Con `auto-fill` salian siete columnas de 169px,
+   que es mirar sellos, no perfumes. */
+.pdp--combo .bundle-pick {
+  margin-top: var(--s4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 3.4vw, 64px) clamp(20px, 2.6vw, 44px);
+}
+@media (min-width: 760px)  { .pdp--combo .bundle-pick { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1200px) { .pdp--combo .bundle-pick { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.pdp--combo label[for^="primera-"], .pdp--combo label[for^="segunda-"] {
+  padding-top: var(--s5);
+  border-top: var(--hairline-width) solid var(--hairline);
+  margin-top: var(--s5);
+}
+
+/* --------------------------------------------------------------------------
+   El boton de añadir, fijo al pie mientras se elige.
+   Medido: en la ficha del combo quedaba en y=6253 de una pagina de 7056px
+   (7935 de 8888 en movil). El cliente elegia arriba y tenia que bajar seis
+   mil pixeles para encontrarlo. Ahora acompaña.
+   -------------------------------------------------------------------------- */
+.pdp--combo .pdp__cta {
+  position: sticky; bottom: 0; z-index: 4;
+  flex-wrap: wrap;
+  margin-top: var(--s5);
+  padding-block: var(--s4);
+  padding-bottom: max(var(--s4), env(safe-area-inset-bottom));
+  background: var(--surface);
+  border-top: var(--hairline-width) solid var(--hairline);
+}
+/* La barra de compra flotante sobra aqui: serian dos barras a la vez. */
+.pdp--combo ~ .buybar, body.ficha-combo .buybar { display: none !important; }
+
+/* Aviso mientras falten fragancias por elegir. No es un error: es una
+   instruccion, asi que va en la voz de la casa y no en rojo de alarma. */
+.bundle-aviso {
+  flex-basis: 100%;          /* linea propia encima de los botones */
+  margin: 0 0 var(--s3);
+  font-family: var(--font-ui); font-size: var(--t-100); font-weight: var(--w-label);
+  letter-spacing: var(--track-eyebrow); text-transform: uppercase;
+  color: var(--gold-deep);
+}
+.bundle-aviso[hidden] { display: none; }
+/* El boton deshabilitado por falta de eleccion se lee como apagado, no como
+   agotado: sigue siendo la accion, solo que todavia no toca. */
+.pdp--combo .act--solid:disabled { opacity: .45; cursor: not-allowed; }
+
+/* Las fragancias elegidas, dentro de la linea del combo en la bolsa. */
+.bag-line__eleccion { display: grid; gap: 2px; margin-top: var(--s2); }
+.bag-line__elec {
+  display: grid; grid-template-columns: auto 1fr; gap: var(--s3);
+  font-family: var(--font-ui); font-size: var(--t-100);
+  color: var(--on-surface); line-height: 1.4;
+}
+.bag-line__elec i {
+  font-style: normal; color: var(--on-surface-dim);
+  letter-spacing: var(--track-eyebrow); text-transform: uppercase;
+  /* La etiqueta no se estira: el nombre del perfume manda. */
+  white-space: nowrap;
+}
+@media (max-width: 460px) {
+  .bag-line__elec { grid-template-columns: 1fr; gap: 0; }
+}
+
+.bundle-pick {
+  display: grid;
+  /* `auto-fill` y no consultas de pantalla: esto vive dentro de la columna de
+     la ficha, que mide ~600px aunque el monitor tenga 1440. Con media queries
+     por viewport salian cuatro columnas de 99px —imposible elegir un perfume
+     mirando eso—. Asi el numero de columnas lo decide el hueco real. */
+  grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+  gap: var(--s4) var(--s3);
+  margin-top: var(--s3);
+}
+
+.bundle-pick__it {
+  display: grid; gap: 3px; justify-items: start; text-align: left;
+  padding: 0; border: 0; background: none; cursor: pointer;
+  color: var(--on-surface);
+}
+.bundle-pick__img {
+  display: block; width: 100%; aspect-ratio: 4 / 5;
+  overflow: hidden; background: var(--surface-2);
+  /* El filete marca la seleccion; en reposo es transparente para que no haya
+     salto de tamano al elegir. */
+  outline: var(--hairline-width) solid transparent;
+  outline-offset: 0;
+  transition: outline-color var(--t-fast) var(--ease-out);
+}
+.bundle-pick__img img {
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%;
+  display: block;
+  transition: transform var(--t-slow) var(--ease-out);
+}
+.bundle-pick__it:hover .bundle-pick__img { outline-color: var(--hairline-strong); }
+.bundle-pick__it:hover .bundle-pick__img img { transform: scale(1.04); }
+.bundle-pick__it:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+.bundle-pick__it.on .bundle-pick__img { outline: 2px solid var(--gold); }
+.bundle-pick__it.on .bundle-pick__nom { color: var(--gold-deep); }
+
+.bundle-pick__casa {
+  font-family: var(--font-ui); font-size: var(--t-100); font-weight: var(--w-label);
+  letter-spacing: var(--track-eyebrow); text-transform: uppercase;
+  color: var(--stone); margin-top: var(--s2);
+}
+.bundle-pick__nom {
+  font-family: var(--font-display); font-size: var(--t-300); font-weight: var(--w-display);
+  line-height: 1.15; color: var(--on-surface);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.bundle-pick__pre { font-family: var(--font-ui); font-size: var(--t-100); color: var(--on-surface-dim); }
+
+@media (prefers-reduced-motion: reduce) {
+  .bundle-pick__it:hover .bundle-pick__img img { transform: none; }
+  .bundle-pick__img, .bundle-pick__img img { transition: none; }
+}
+
+/* La etiqueta que pone la app ("PRIMERA FRAGANCIA") con la voz de la casa. */
+.pdp__info label[for^="primera-"], .pdp__info label[for^="segunda-"] {
+  display: block;
+  font-family: var(--font-ui); font-size: var(--t-100); font-weight: var(--w-label);
+  letter-spacing: var(--track-eyebrow); text-transform: uppercase;
+  color: var(--on-surface-dim);
+  margin-bottom: var(--s2);
+}
+
+/* ==========================================================================
+   FICHA OLFATIVA
+   Tres peldaños con filete: salida, corazon, fondo. Es informacion de
+   perfumeria, no una tabla de especificaciones, asi que la nota va en serif y
+   el peldaño en la letra de sistema, pequeña y espaciada.
+   ========================================================================== */
+.notas { display: grid; gap: var(--s5); }
+.notas__piramide {
+  display: grid;
+  border-top: var(--hairline-width) solid var(--hairline);
+}
+.notas__paso {
+  display: grid; grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: var(--s4);
+  padding-block: var(--s3);
+  border-bottom: var(--hairline-width) solid var(--hairline);
+  align-items: baseline;
+}
+.notas__paso-t { color: var(--on-surface-dim); }
+.notas__paso-v {
+  margin: 0;
+  font-family: var(--font-display);
+  /* Cormorant tiene la x baja: a 16px las notas se leian como letra chica. */
+  font-size: var(--t-400); font-weight: var(--w-display);
+  line-height: 1.3;
+  color: var(--on-surface);
+}
+.notas__datos { margin: 0; display: grid; gap: var(--s3); }
+/* 11.5rem y no 8.5: «CONCENTRACIÓN» en versalitas espaciadas mide ~135px y se
+   montaba encima de su valor. Los peldaños (Salida/Corazón/Fondo) si caben en
+   8.5rem, por eso llevan su propia medida. */
+.notas__datos > div { display: grid; grid-template-columns: 11.5rem minmax(0, 1fr); gap: var(--s4); align-items: baseline; }
+.notas__datos dt { color: var(--on-surface-dim); }
+.notas__datos dd { margin: 0; font-size: var(--t-200); color: var(--on-surface); }
+
+/* En movil la etiqueta no cabe al lado: se apila y se aprieta el interlineado. */
+@media (max-width: 760px) {
+  .notas__paso, .notas__datos > div { grid-template-columns: 1fr; gap: var(--s2); }
+  .notas__paso { padding-block: var(--s4); }
+}
+.pdp__cta { display: flex; gap: clamp(20px, 3vw, 40px); flex-wrap: wrap; align-items: center; margin-top: var(--s4); }
+.pdp__cta form { flex: 1 1 260px; }
+.pdp__cta form .act, .pdp__cta > .act { justify-content: center; min-width: 260px; }
+
+.spec { border-top: 1px solid var(--hairline); padding-top: var(--s5); margin-top: var(--s3); display: grid; gap: var(--s5); }
+.spec__row { display: grid; grid-template-columns: 8rem 1fr; gap: var(--s4); align-items: baseline; }
+.spec__val { font-size: var(--fs-small); }
+.spec__val span + span::before { content: ' · '; color: var(--on-surface-dim); }
+
+/* Perfil olfativo: filetes, no barras gordas */
+.profile { display: grid; gap: var(--s4); }
+.profile__row { display: grid; grid-template-columns: 7rem 1fr; gap: var(--s4); align-items: center; }
+.profile__track { height: 1px; background: var(--hairline-strong); position: relative; }
+.profile__track i { position: absolute; left: 0; top: -1px; height: 3px; background: var(--gold); }
+
+/* ===================== CHECKOUT ===================== */
+.ck { display: grid; grid-template-columns: 1fr; gap: clamp(40px, 6vw, 90px); padding: clamp(40px, 6vw, 90px) var(--gutter); }
+@media (min-width: 900px) { .ck { grid-template-columns: 1.1fr 0.9fr; } }
+.ck__form { display: grid; gap: var(--s5); min-width: 0; }
+.field { display: grid; gap: var(--s2); min-width: 0; }
+.field input, .field select {
+  width: 100%; min-width: 0; padding: 14px 0; background: transparent;
+  border: 0; border-bottom: 1px solid var(--hairline); color: var(--on-surface);
+}
+.field input:focus, .field select:focus { outline: none; border-color: var(--gold); }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s5); }
+@media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
+.ck__summary { align-self: start; background: var(--surface-2); padding: clamp(28px, 3vw, 44px); display: grid; gap: var(--s4); }
+@media (min-width: 900px) { .ck__summary { position: sticky; top: var(--s7); } }
+.ck__line { display: grid; grid-template-columns: 46px 1fr auto; gap: var(--s4); align-items: center; }
+.ck__totals { border-top: 1px solid var(--hairline); padding-top: var(--s4); display: grid; gap: var(--s3); }
+.ck__total { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-display); font-size: 1.3rem; }
+
+/* ==========================================================================
+   CAPA TACTIL — va al final para ganar sobre las definiciones base.
+   Se activa por puntero grueso O por ancho: hay equipos tactiles que
+   reportan `pointer: fine`, y en ellos el hover tampoco es fiable.
+   ========================================================================== */
+@media (pointer: coarse), (max-width: 760px) {
+  /* Sin hover, los metadatos y la accion de cada pieza deben verse siempre */
+  .piece__hover { opacity: 1; transform: none; }
+  .piece__save { opacity: 1; transform: none; width: 44px; height: 44px; }
+
+  /* Enlaces del pie y de navegacion: 44px de alto real. Medidos daban 10px
+     (Instagram, WhatsApp) y 18px (columnas del pie). */
+  .foot a, .foot .label, .hdr__nav a { min-height: 44px; display: inline-flex; align-items: center; }
+  .menu__foot a, .hdr__mark { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+
+  /* Areas de toque minimas (44px) */
+  .link, .mini { min-height: 44px; align-items: center; }
+  .mini { display: inline-flex; }
+  .icon-btn { width: 44px; height: 44px; }
+  .stepper button { width: 40px; height: 40px; }
+  .filters button { min-height: 44px; }
+  .advisor__chips button { min-height: 40px; }
+  .advisor__form button { min-height: 48px; }
+  .finder__opt { min-height: 48px; }
+}
+
+/* ==========================================================================
+   CAPA MOVIL — experiencia diseñada para el celular, no el escritorio
+   apilado. Va al final del archivo para ganar la cascada.
+   ========================================================================== */
+
+/* --- Galeria deslizable de la coleccion (en vez de 6 piezas en columna) --- */
+.swipe-hint { display: none; }
+@media (max-width: 859px) {
+  .composition {
+    display: flex; gap: 14px;
+    overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter);
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+  .composition::-webkit-scrollbar { display: none; }
+  /* Todas del mismo ancho. Alternar 76%/64% daba ritmo en una rejilla, pero
+     en un carrusel de arrastre se lee como que las fotos estan descuadradas. */
+  .composition > * { flex: 0 0 76%; margin-top: 0 !important; scroll-snap-align: start; }
+
+  .swipe-hint {
+    display: flex; align-items: center; gap: var(--s4);
+    padding: var(--s5) var(--gutter) 0;
+  }
+  .swipe-hint i { flex: 1; height: 1px; background: var(--hairline-strong); position: relative; overflow: hidden; }
+  .swipe-hint b {
+    position: absolute; inset: 0; background: var(--gold);
+    transform-origin: left; transform: scaleX(var(--p, 0.18));
+    transition: transform 120ms linear;
+  }
+}
+
+/* --- Campañas: en movil el texto siempre va primero --- */
+@media (max-width: 899px) {
+  .campaign--flip .campaign__in > *:first-child { order: 0; }
+  .campaign { min-height: 0; }
+  .campaign__duo figure { width: 38vw; }
+}
+
+/* --- Finder tactil: filas completas con filete, no palabras sueltas --- */
+@media (max-width: 760px) {
+  .finder__body { align-content: start; padding-top: var(--s6); padding-bottom: 120px; gap: var(--s6); }
+  .finder__opts { display: grid; gap: 0; max-width: none; width: 100%; }
+  .finder__opt {
+    display: flex; justify-content: space-between; align-items: center;
+    width: 100%; padding: 14px 0; min-height: 60px;
+    font-size: 1.65rem; border-bottom: 1px solid var(--hairline);
+  }
+  .finder__opt::before { content: none; }
+  .finder__opt:hover { transform: none; }
+  .finder__opt.on { color: var(--ivory); }
+  .finder__opt.on::after {
+    position: static; content: ''; width: 8px; height: 8px; border-radius: 999px;
+    background: var(--gold); flex: none;
+  }
+  /* Continuar siempre alcanzable con el pulgar */
+  .finder__foot {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 3;
+    padding: var(--s4) var(--gutter) calc(var(--s4) + env(safe-area-inset-bottom));
+    /* Fondo SOLIDO: con degradado, las opciones se veian a traves de la barra
+       y parecia que CONTINUAR estaba encima del texto. El desvanecido va
+       arriba, fuera de la barra, donde no hay nada que tapar. */
+    background: var(--noir);
+  }
+  .finder__foot::before {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 100%; height: 56px;
+    background: linear-gradient(180deg, rgba(8,8,10,0), var(--noir));
+    pointer-events: none;
+  }
+  .finder__foot .act { flex: 1; justify-content: center; }
+  /* El pie es fijo para que Continuar quede al alcance del pulgar, asi que la
+     lista tiene que reservarle sitio: sin esto, las ultimas opciones quedaban
+     debajo de la barra y no habia forma de llegar a ellas. */
+  /* El que desplaza es el cuerpo, no el overlay: como elemento de rejilla con
+     altura acotada, su relleno inferior no alargaba el scroll del padre y las
+     ultimas opciones quedaban inalcanzables debajo de la barra fija. */
+  .finder__body {
+    overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain;
+    padding-bottom: calc(var(--sp-20) + env(safe-area-inset-bottom));
+  }
+  .finder__results { grid-template-columns: repeat(2, 1fr); gap: var(--s5) 14px; }
+}
+
+/* --- Ficha de producto: el precio asoma sobre el pliegue --- */
+@media (max-width: 899px) {
+  .pdp__stage { min-height: 0; height: 58svh; }
+  .pdp__stage svg { width: min(46%, 220px); }
+  .pdp__info { padding-top: var(--s7); padding-bottom: var(--s8); }
+  .pdp__name { font-size: clamp(2.2rem, 10vw, 3rem); }
+}
+
+/* --- Barra de compra fija (movil): aparece cuando el boton principal sale
+       de pantalla, para que comprar nunca quede a mas de un toque --- */
+.buybar { display: none; }
+@media (max-width: 899px) {
+  .buybar {
+    display: flex; align-items: center; gap: var(--s4);
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: calc(var(--z-drawer) - 1);
+    padding: 12px var(--gutter) calc(12px + env(safe-area-inset-bottom));
+    background: rgba(244,241,234,0.94);
+    backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-top: 1px solid var(--hairline);
+    color: var(--ink);
+    transform: translateY(105%);
+    transition: transform var(--t-base) var(--ease-out);
+  }
+  .buybar.on { transform: none; }
+  .buybar__meta { flex: 1; min-width: 0; display: grid; gap: 2px; }
+  .buybar__name { font-family: var(--font-display); font-size: 1.05rem; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .buybar .act { padding: 14px 22px; flex: none; }
+}
+
+/* --- Asesor en movil: boton circular reconocible, no un cuadro con un punto --- */
+/* El default va ANTES del bloque movil: si quedara despues, lo pisaria. */
+.advisor-open svg { display: none; }
+@media (max-width: 640px) {
+  .advisor-open {
+    width: 52px; height: 52px; padding: 0; border-radius: var(--radius);
+    justify-content: center; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom));
+    background: var(--noir); color: var(--ivory);
+    border: 1px solid rgba(201,168,103,0.45);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+    transition: transform var(--t-base) var(--ease-out), bottom var(--t-base) var(--ease-out);
+  }
+  .advisor-open i { display: none; }
+  .advisor-open svg { display: block; }
+  .advisor { bottom: calc(80px + env(safe-area-inset-bottom)); }
+}
+
+/* Con la barra de compra a la vista (hasta 899px, tablet incluida) el asesor
+   sube por encima de ella: nunca tapa el boton de anadir. */
+@media (max-width: 899px) {
+  .advisor-open { transition: transform var(--t-base) var(--ease-out), bottom var(--t-base) var(--ease-out); }
+  body.has-buybar .advisor-open { bottom: calc(84px + env(safe-area-inset-bottom)); }
+  body.has-buybar .advisor { bottom: calc(148px + env(safe-area-inset-bottom)); }
+}
+
+/* Ficha: el escenario negro ocupa todo el ancho en movil y la columna
+   izquierda en escritorio. Lo que el header tenga encima va en marfil hasta
+   que se fija con su propio fondo claro. */
+@media (max-width: 899px) {
+  body[data-page="product"] .hdr:not(.is-stuck) { color: var(--ivory); }
+}
+/* En ESCRITORIO el nav NO va en marfil. La regla daba por hecho que el
+   escenario negro del producto quedaba debajo del menu, y no es asi: medido
+   sobre los pixeles, esa franja es crema y el menu salia marfil sobre crema
+   —diferencia de tono CERO, invisible— en las 195 fichas. En movil si se
+   solapan de verdad (encabezado 0→84, escenario 0→490), y ahi el marfil se
+   queda.
+
+   La ficha de combo es la excepcion de la excepcion: ahi el escenario esta
+   oculto, asi que tampoco en movil hay negro debajo. */
+body.ficha-combo .hdr:not(.is-stuck),
+body.ficha-combo .hdr:not(.is-stuck) .hdr__nav { color: var(--ink); }
+
+/* ==========================================================================
+   CAPA SHOPIFY — lo que el prototipo no necesitaba porque no era una tienda:
+   miniaturas y variantes de la ficha, rejillas de catalogo, paginacion,
+   paginas de contenido y el encabezado de seccion (que alli iba en linea).
+   Va al final para poder apoyarse en todo lo anterior.
+   ========================================================================== */
+
+/* --- Encabezado de seccion (antes eran estilos en linea en el HTML) --- */
+.section-head {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: var(--s6); flex-wrap: wrap;
+  margin-bottom: clamp(48px, 6vw, 96px);
+}
+.section-head__title { margin-top: var(--s5); }
+.section-head__lede { margin: var(--s4) 0 0; max-width: 46ch; font-size: var(--t-300); line-height: var(--lh-body); color: var(--on-surface-dim); }
+
+.collection-head { display: grid; gap: var(--s5); margin-bottom: var(--sp-8); }
+.collection-head .lede { margin-top: var(--s2); }
+/* La cabecera ya trae su propio margen inferior: si ademas la banda pone
+   padding, el hueco hasta los filtros se duplica (eran 72 + 115 = 187px). */
+.band--head { padding-bottom: 0; }
+
+/* --- Filtros por casa: enlaces, no botones anidados ---
+   Una sola fila que se desplaza, nunca una parrilla que se amontona. El
+   degradado se come el canal lateral, que esta vacio mientras no hay
+   desplazamiento: asi no recorta el primer filtro cuando caben todos. --- */
+.filters {
+  display: flex; flex-wrap: nowrap; gap: var(--sp-4);
+  padding-inline: var(--gutter); padding-block: var(--sp-1);
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scrollbar-width: none; -ms-overflow-style: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent 100%);
+}
+.filters::-webkit-scrollbar { display: none; }
+
+.filters .filter {
+  font-size: var(--label-size); letter-spacing: var(--label-track);
+  text-transform: uppercase; font-weight: 600;
+  color: var(--on-surface-dim); position: relative;
+  /* 44px de alto real de zona tactil, en toda anchura de pantalla */
+  min-height: 44px; display: inline-flex; align-items: center;
+  padding-inline: var(--sp-1); white-space: nowrap; flex: 0 0 auto;
+  transition: color var(--t-fast);
+}
+.filters .filter::after {
+  content: ''; position: absolute; left: var(--sp-1); right: var(--sp-1);
+  bottom: calc(50% - 0.9em); height: 1px;
+  background: var(--gold); transform: scaleX(0); transform-origin: left;
+  transition: transform var(--t-base) var(--ease-inout);
+}
+.filters .filter:hover, .filters .filter.on { color: var(--on-surface); }
+.filters .filter.on::after { transform: scaleX(1); }
+@media (max-width: 760px) { .filters { gap: var(--sp-3); } }
+
+/* ==========================================================================
+   21 · LAS CASAS — marquesina tipografica
+   --------------------------------------------------------------------------
+   Tres tiras a borde completo en deriva. Los nombres son CONTENIDO, no
+   metadatos: serif, caja alta y baja, tamano de entradilla. El tratamiento
+   de eyebrow (12px, versalitas, tracking 0.34em) daba 21 elementos del mismo
+   peso y el ojo los saltaba.
+   ========================================================================== */
+.houses { padding-block: var(--section-product); }
+
+/* El encabezado se queda dentro del contenedor de texto; las tiras se salen. */
+.marquee-set {
+  margin-top: var(--sp-12);
+  display: grid;
+  gap: var(--sp-6);
+}
+
+/* A borde completo sin romper el flujo ni provocar scroll horizontal:
+   100vw centrado con margen negativo calculado desde el centro. */
+.marquee {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  overflow: hidden;
+}
+.marquee__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  will-change: transform;
+}
+
+/* Un nombre nunca se parte: es la primera condicion de aceptacion. */
+.house {
+  font-family: var(--font-display);
+  font-size: var(--t-600);
+  font-weight: var(--w-display);
+  letter-spacing: var(--track-display);
+  line-height: 1.2;
+  text-transform: none;
+  white-space: nowrap;
+  color: var(--on-surface-dim);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  transition: color var(--t-base) var(--ease-out);
+}
+
+/* Subrayado que se traza de izquierda a derecha. */
+.house::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 6px; height: 1px;
+  background: var(--gold);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .45s var(--ease-out);
+}
+.house:hover, .house:focus-visible { color: var(--ivory); }
+.house:hover::after, .house:focus-visible::after { transform: scaleX(1); }
+
+/* Separador en dorado, no un hueco en blanco. */
+.house__sep {
+  font-family: var(--font-display);
+  font-size: var(--t-600);
+  line-height: 1;
+  color: var(--gold);
+  padding-inline: var(--sp-6);
+  user-select: none;
+}
+
+/* Mientras se arrastra, el cursor lo dice y no se selecciona texto. */
+.marquee.is-dragging { cursor: grabbing; }
+.marquee.is-dragging .marquee__track { user-select: none; }
+.marquee.is-dragging .house { pointer-events: none; }
+
+@media (max-width: 760px) {
+  .house, .house__sep { font-size: var(--t-500); }
+  .house__sep { padding-inline: var(--sp-4); }
+  .marquee-set { gap: var(--sp-4); }
+}
+
+/* ==========================================================================
+   Reduced-motion: las tiras NO se mueven, pero siguen completas.
+   Se convierten en tres filas con desplazamiento horizontal manual — todos
+   los nombres alcanzables. Sin movimiento, nunca sin visibilidad.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent 100%);
+  }
+  .marquee::-webkit-scrollbar { display: none; }
+  .marquee__track { transform: none !important; padding-inline: var(--gutter); }
+  .house::after { transition: none; }
+}
+
+/* --- Guardados: misma linea que el cajon, en columna ancha --- */
+.saved-page { padding-bottom: var(--sp-16); }
+.saved-list { display: grid; gap: 0; max-width: var(--column); box-sizing: content-box; }
+.saved-list .bag-line:first-child { border-top: 1px solid var(--hairline); }
+
+/* --- Pieza sin foto --- */
+.piece__placeholder {
+  color: var(--on-surface-dim); opacity: 0.5;
+}
+
+/* --- Portada: foto de producto enmarcada (no recortada sobre transparente) --- */
+.hero__stage--framed {
+  width: clamp(220px, 32vw, 460px);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  box-shadow: var(--shadow-bottle, 0 60px 70px rgba(0,0,0,0.65));
+}
+.hero__stage--framed img { width: 100%; height: 100%; object-fit: cover; }
+.hero__stage img { width: 100%; height: auto; }
+.hero__reflect img { width: 100%; height: auto; }
+
+/* --- La casa --- */
+.world__title { margin-top: var(--s5); max-width: 18ch; }
+.world__text { margin-top: 28px; }
+.world__text p { margin: 0 0 var(--s4); }
+.world__text p:last-child { margin-bottom: 0; }
+.world__cta { margin-top: 40px; }
+.world__figure img { width: 100%; height: 100%; object-fit: cover; }
+
+/* --- Ficha: miniaturas y opciones de variante --- */
+.pdp__thumbs {
+  position: absolute; left: var(--s5); bottom: var(--s5); z-index: 2;
+  display: flex; gap: var(--s3);
+}
+.pdp__thumb {
+  width: 54px; height: 68px; overflow: hidden;
+  border: 1px solid transparent; opacity: 0.55;
+  transition: opacity var(--t-fast), border-color var(--t-fast);
+}
+.pdp__thumb img { width: 100%; height: 100%; object-fit: cover; }
+.pdp__thumb:hover, .pdp__thumb.on { opacity: 1; border-color: var(--gold); }
+
+.pdp__opts { display: flex; flex-wrap: wrap; gap: var(--s3); }
+.pdp__opt {
+  font-size: var(--fs-small); letter-spacing: var(--track-eyebrow);
+  padding: 10px 18px; min-height: 44px;
+  border: 1px solid var(--hairline); color: var(--on-surface-dim);
+  transition: border-color var(--t-fast), color var(--t-fast);
+}
+.pdp__opt:hover { color: var(--on-surface); }
+.pdp__opt.on { border-color: var(--on-surface); color: var(--on-surface); }
+
+.pdp__form { display: grid; gap: var(--s5); }
+.pdp__price s { margin-left: var(--s3); }
+
+/* --- Bolsa a pagina completa --- */
+.cart-page { display: grid; gap: 0; margin-top: var(--s7); }
+.cart-page__foot {
+  margin-top: var(--s7); padding-top: var(--s5);
+  border-top: 1px solid var(--hairline);
+  display: grid; gap: var(--s4); justify-items: start;
+  max-width: 420px; margin-left: auto;
+}
+.cart-page__foot .act { width: 100%; }
+.bag-line img { width: 64px; height: 80px; object-fit: cover; }
+
+/* --- Paginacion --- */
+.pager {
+  margin-top: clamp(48px, 6vw, 90px); padding-top: var(--s5);
+  border-top: 1px solid var(--hairline);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s5);
+}
+
+/* --- Paginas de contenido --- */
+.page-body { display: grid; gap: var(--s6); max-width: 70ch; }
+.rte { color: var(--on-surface-dim); line-height: 1.7; }
+.rte h2, .rte h3 { font-family: var(--font-display); color: var(--on-surface); margin: var(--s7) 0 var(--s4); font-weight: 400; }
+.rte h2 { font-size: var(--fs-h2); }
+.rte h3 { font-size: var(--fs-h3); }
+.rte p { margin: 0 0 var(--s5); }
+.rte a { text-decoration: underline; text-underline-offset: 4px; }
+.rte ul { list-style: disc; padding-left: 1.2em; display: grid; gap: var(--s2); margin-bottom: var(--s5); }
+
+/* --- 404 --- */
+.notfound { background: var(--noir); color: var(--ivory); min-height: 70svh; display: grid; align-content: center; }
+.notfound__in { display: grid; gap: var(--s5); justify-items: start; }
+.notfound__cta { display: flex; gap: var(--s5); align-items: center; flex-wrap: wrap; margin-top: var(--s4); }
+
+/* --- Resultados del buscador: la pieza tambien sirve como enlace directo --- */
+.search .piece__stage { aspect-ratio: 4/5; background: var(--noir-soft); }
+.search .piece__stage img { width: 100%; height: 100%; object-fit: cover; }
+.search .piece__name { color: var(--ivory); }
+.search .price { color: var(--ivory); }
+
+/* El logotipo va centrado en absoluto, pero por debajo de 560px su mitad mas
+   los iconos no caben en el canal: se montaba encima del de buscar (pasa
+   igual en el original). Ahi deja de estar centrado y pasa a ser el primer
+   elemento de la fila, que es la unica forma de que nunca colisione. */
+@media (max-width: 560px) {
+  .hdr__mark { position: static; transform: none; margin-right: auto; }
+  .hdr__mark img { height: 22px; }
+  .hdr.is-stuck .hdr__mark img { height: 19px; }
+}
+
+/* --- Paginas internas: el encabezado es fijo, hay que dejarle sitio.
+       Sin esto el indice de seccion queda debajo de la barra en movil,
+       donde --band-tight (64px) es menor que --header-h (84px). --- */
+.band--below-header { padding-top: calc(var(--header-h) + var(--sp-12)); }
+
+/* --- Catalogo --- */
+.collection-head__title { margin-top: 28px; max-width: 14ch; }
+.collection-head__note { margin-top: 28px; }
+
+/* ==========================================================================
+   CABECERA DE COLECCION — dos columnas
+   Todo apilado a la izquierda dejaba la mitad derecha vacia y el texto caia
+   en bloque bajo el titular. Con el titular a un lado y la nota al otro, en
+   una medida legible, el aire pasa a ser composicion y no hueco.
+   ========================================================================== */
+.collection-head__lead { display: grid; gap: var(--s4); align-content: start; }
+.collection-head__lead .collection-head__title { margin-top: 0; }
+
+@media (min-width: 900px) {
+  .collection-head {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 42ch);
+    column-gap: clamp(40px, 6vw, 110px);
+    /* `start`, no `end`: la nota suele ser mucho mas alta que el titular y
+       alinear por abajo dejaba el titulo flotando al fondo de la fila. */
+    align-items: start;
+    margin-bottom: var(--sp-6);
+  }
+  .collection-head__note { margin: 0; }
+
+  /* A tamano de portada. A 46px el titulo no sostenia su columna y quedaban
+     510px de crema vacia debajo mientras la nota corria por el otro lado.
+     Grande, ocupa el sitio que le toca y el aire pasa a ser composicion. */
+  .collection-head__title {
+    font-size: var(--display-hero);
+    line-height: 0.92;
+    max-width: 11ch;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   La descripcion la escribe el comerciante en el panel, y puede llegar con
+   marcado pegado de cualquier parte: en esta tienda vino HTML de una ventana
+   de chat —14 <div> y 2 <section> con clases que aqui no existen, 2678 bytes
+   para 366 caracteres de texto—. Esto la devuelve a la tipografia de la casa
+   pase lo que pase.
+
+   `display: contents` saca los envoltorios del arbol de cajas sin borrar su
+   contenido: los parrafos vuelven a ser hijos directos y el interlineado deja
+   de depender de una maqueta ajena.
+   -------------------------------------------------------------------------- */
+.collection-head__note > div,
+.collection-head__note div,
+.collection-head__note section,
+.collection-head__note article { display: contents; }
+
+.collection-head__note * {
+  font: inherit; color: inherit; letter-spacing: inherit;
+  max-width: none; background: none; text-align: inherit;
+}
+.collection-head__note p { margin: 0 0 var(--s3); }
+.collection-head__note p:last-child { margin-bottom: 0; }
+.collection-head__note h1, .collection-head__note h2,
+.collection-head__note h3, .collection-head__note h4 {
+  font-family: var(--font-ui); font-size: var(--t-100); font-weight: var(--w-label);
+  letter-spacing: var(--track-eyebrow); text-transform: uppercase;
+  color: var(--on-surface); margin: 0 0 var(--s4);
+}
+.collection-head__note strong, .collection-head__note b {
+  font-weight: 600; color: var(--on-surface);
+}
+.collection-head__note ul, .collection-head__note ol {
+  margin: var(--s3) 0 0; padding-left: 1.1em;
+}
+.collection-head__note a { color: var(--on-surface); text-decoration: underline; text-underline-offset: 3px; }
+.collection-filters { margin-bottom: clamp(40px, 5vw, 72px); }
+.collection-body { padding-bottom: var(--band); }
+.collection-empty { display: grid; gap: var(--s5); justify-items: start; }
+.pager > span:empty { display: block; }
+
+/* --- Paginas claras. En el prototipo esto iba como estilo en linea en cada
+       <body> (collection.html, product.html, checkout). Aqui se resuelve por
+       plantilla: sin esto el fondo del documento sigue siendo negro y solo
+       las secciones se ven claras, con franjas negras entre ellas. --- */
+body.template-collection,
+body.template-search,
+body.template-page,
+body.template-list-collections,
+body.template-product,
+body.template-cart {
+  background: var(--ivory);
+  color: var(--ink);
+}

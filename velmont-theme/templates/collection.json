@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "index": "La colección",
+        "heading_catalog": "Todas las piezas",
+        "note": "Seleccionadas una por una.",
+        "show_filters": true,
+        "filter_collections": [
+          "para-el",
+          "para-ella",
+          "unisex"
+        ],
+        "per_page": 24,
+        "houses": "MATAI, LATTAFA, ARMAF, ILMIN, AHLI, BLACK OUD"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

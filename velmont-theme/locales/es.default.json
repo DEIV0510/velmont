@@ -1,0 +1,87 @@
+{
+  "general": {
+    "404": {
+      "title": "Esta página",
+      "subtitle": "no dejó huella.",
+      "text": "El enlace que seguiste no existe o la pieza ya no está disponible.",
+      "cta": "Ver la colección"
+    },
+    "cart": {
+      "title": "Bolsa",
+      "items": "piezas",
+      "empty": "Tu bolsa está vacía.",
+      "continue": "Ver la colección",
+      "subtotal": "Subtotal",
+      "checkout": "Finalizar compra",
+      "taxes_note": "Impuestos y envío se calculan en el pago.",
+      "remove": "Quitar",
+      "increase": "Sumar una",
+      "decrease": "Quitar una",
+      "added": "Añadido a la bolsa"
+    },
+    "saved": {
+      "title": "Guardados",
+      "empty": "Todavía no has guardado ninguna pieza."
+    },
+    "search": {
+      "title": "Buscar",
+      "placeholder": "Escribe el nombre de una fragancia",
+      "results": "resultados",
+      "for": "para",
+      "no_results": "Sin resultados. Prueba con otro nombre.",
+      "typing": "Escribe para buscar"
+    },
+    "pagination": {
+      "label": "Paginación",
+      "previous": "Anterior",
+      "next": "Siguiente"
+    }
+  },
+  "products": {
+    "product": {
+      "add": "Añadir",
+      "sold_out": "Agotado",
+      "save": "Guardar {{ title }}",
+      "save_short": "Guardar",
+      "from_price": "Desde {{ price }}",
+      "type": "Tipo",
+      "details": "Detalles",
+      "shipping": "Envío",
+      "view_image": "Ver imagen {{ index }}",
+      "family": "Familia olfativa"
+    }
+  },
+  "collections": {
+    "general": {
+      "items": "piezas",
+      "all": "Todas",
+      "filter": "Filtrar",
+      "empty": "No hay fragancias con esa combinación. Prueba con otra.",
+      "see_all": "Ver todo el catálogo",
+      "title": "Colecciones",
+      "index": "Las marcas"
+    }
+  },
+  "sections": {
+    "collection": {
+      "empty": "Elige una colección en los ajustes de esta sección."
+    }
+  },
+  "quiz": {
+    "title": "Descubre tu marca personal"
+  },
+  "accessibility": {
+    "skip_to_text": "Ir al contenido",
+    "close": "Cerrar",
+    "menu": "Menú",
+    "main_nav": "Navegación principal"
+  },
+  "motion": {
+    "cursor": {
+      "view": "Ver",
+      "swipe": "Desliza",
+      "add": "Añadir",
+      "discover": "Descubre"
+    }
+  }
+}

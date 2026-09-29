@@ -1,0 +1,51 @@
+{%- comment -%}
+  Hilo de confianza: una fila con filete arriba y abajo. Sin iconos y sin
+  tarjetas — cuatro micro-etiquetas a secas, como en el original.
+{%- endcomment -%}
+<section {% render 'panel', color: section.settings.panel, extra: 'thread' %}>
+  <div class="thread__in">
+    {%- for block in section.blocks -%}
+      <span class="label" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hilo de confianza",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "panel",
+      "label": "Panel",
+      "options": [
+        { "value": "cream", "label": "Crema" },
+        { "value": "black", "label": "Negro" },
+        { "value": "ink", "label": "Tinta" }
+      ],
+      "default": "cream"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Dato",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "Envíos a toda Colombia" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Hilo de confianza",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Envíos a toda Colombia" } },
+        { "type": "item", "settings": { "text": "Pago seguro" } },
+        { "type": "item", "settings": { "text": "Asesoría personal" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

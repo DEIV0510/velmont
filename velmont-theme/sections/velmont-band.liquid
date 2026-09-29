@@ -1,0 +1,101 @@
+{%- liquid
+  assign lines = section.settings.heading | newline_to_br | split: '<br />'
+  assign last = lines.size | minus: 1
+  assign con_texto = false
+  if section.settings.heading != blank or section.settings.text != blank or section.settings.cta_label != blank
+    assign con_texto = true
+  endif
+-%}
+
+{%- comment -%}
+  Banda editorial: panoramica 21:9 a borde completo. Su trabajo es cortar los
+  tramos largos de texto, asi que va a 100vw y no dentro de la columna.
+
+  Sin imagen no se renderiza nada: una banda vacia es peor que no tenerla.
+  Maximo dos en la home — tres bandas iguales serian otro muro, horizontal.
+{%- endcomment -%}
+
+{%- if section.settings.image -%}
+  <section {% render 'panel', color: section.settings.panel, extra: 'band-wide' %}{% if con_texto %} data-band-text{% endif %} data-parallax>
+    <div class="band-wide__media">
+      <img src="{{ section.settings.image | image_url: width: 3000 }}"
+           srcset="{{ section.settings.image | image_url: width: 1200 }} 1200w,
+                   {{ section.settings.image | image_url: width: 2000 }} 2000w,
+                   {{ section.settings.image | image_url: width: 3000 }} 3000w"
+           sizes="100vw"
+           alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+           width="{{ section.settings.image.width }}"
+           height="{{ section.settings.image.height }}"
+           loading="lazy">
+    </div>
+
+    {%- if con_texto -%}
+      <div class="band-wide__copy">
+        {%- if section.settings.index != blank -%}
+          <span class="section-index" data-reveal>{{ section.settings.index }}</span>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 class="band-wide__title">
+            {%- for line in lines -%}
+              {%- assign clean = line | strip -%}
+              {%- if clean != blank -%}
+                <span class="band-wide__line" data-reveal>
+                  {%- if forloop.index0 == last and section.settings.italic_last -%}<em>{{ clean }}</em>{%- else -%}{{ clean }}{%- endif -%}
+                </span>
+              {%- endif -%}
+            {%- endfor -%}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.text != blank -%}
+          <p class="lede band-wide__text" data-reveal>{{ section.settings.text }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.cta_label != blank -%}
+          <div class="band-wide__cta" data-reveal>
+            <a href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}"
+               class="act" data-cursor-label="{{ 'motion.cursor.discover' | t }}">{{ section.settings.cta_label }}</a>
+            {%- if section.settings.link_label != blank and settings.whatsapp != blank -%}
+              <a href="{{ settings.whatsapp }}" class="link" target="_blank" rel="noopener">{{ section.settings.link_label }}</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Banda editorial",
+  "tag": "section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Panorámica", "info": "21:9 (3000×1286). Muy oscura y con aire negro a los lados para que el texto respire. Sin imagen, la sección no aparece." },
+    {
+      "type": "header",
+      "content": "Texto superpuesto"
+    },
+    { "type": "paragraph", "content": "Déjalo todo vacío para una banda de puro respiro visual, sin texto." },
+    { "type": "text", "id": "index", "label": "Índice" },
+    { "type": "textarea", "id": "heading", "label": "Titular" },
+    { "type": "checkbox", "id": "italic_last", "label": "Última línea en cursiva", "default": true },
+    { "type": "textarea", "id": "text", "label": "Texto" },
+    { "type": "text", "id": "cta_label", "label": "Botón" },
+    { "type": "url", "id": "cta_url", "label": "Destino del botón" },
+    { "type": "text", "id": "link_label", "label": "Enlace de WhatsApp", "info": "Usa el número de Ajustes del tema → Marca." },
+    {
+      "type": "select",
+      "id": "panel",
+      "label": "Panel",
+      "options": [
+        { "value": "black", "label": "Negro" },
+        { "value": "ink", "label": "Tinta" },
+        { "value": "cream", "label": "Crema" }
+      ],
+      "default": "black"
+    }
+  ],
+  "presets": [{ "name": "Banda editorial" }]
+}
+{% endschema %}

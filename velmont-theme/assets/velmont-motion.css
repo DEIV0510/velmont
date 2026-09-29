@@ -1,0 +1,711 @@
+/* ==========================================================================
+   VELMONT — capa de movimiento
+   Portada de velmontprueba.vercel.app. Solo se animan transform, opacity y
+   filter: nada que dispare layout. Carga DESPUES de base.css para poder
+   apoyarse en sus componentes.
+   ========================================================================== */
+
+
+
+/* Columna estrecha: el salto entre 100vw y esto es lo que da el impacto */
+.column {
+  /* content-box a proposito: el maximo debe aplicar al TEXTO, no al texto mas
+     el canal. Con border-box, 700px menos dos canales de 86 dejaba 528px de
+     medida real y la columna se quedaba corta. */
+  box-sizing: content-box;
+  max-width: var(--column);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.column--left { margin-inline: 0 auto; }
+
+/* ==========================================================================
+   2 · REVEALS
+   Progressive enhancement: sin JS no se oculta nada (la clase .js-motion la
+   pone el <head> de theme.liquid solo si hay JS y no se pide menos movimiento).
+   ========================================================================== */
+/* El estado y el escalonado los define base.css con --reveal-delay. Aqui
+   solo se anade la pista de composicion: duplicar la regla con --i * 90ms
+   pisaba la cascada de 70ms calculada en JS. */
+.js-motion [data-reveal] { will-change: opacity, transform; }
+.js-motion [data-reveal].is-visible { opacity: 1; transform: none; will-change: auto; }
+
+/* Variantes laterales */
+.js-motion [data-reveal].reveal-x { transform: translateX(-36px); }
+.js-motion [data-reveal].reveal-x-rev { transform: translateX(36px); }
+.js-motion [data-reveal].reveal-x.is-visible,
+.js-motion [data-reveal].reveal-x-rev.is-visible { transform: none; }
+
+/* ==========================================================================
+   3 · HERO CON SCRUB
+   .hero-wrap mide 180vh; dentro, un bloque pegajoso de una pantalla. El
+   scroll escribe --hero-fade y --bg-cream, y el CSS compone todo desde ahi:
+   una sola variable mueve opacidad, desplazamiento, escala y desenfoque.
+   ========================================================================== */
+.hero-wrap {
+  position: relative;
+  /* UNA pantalla, ni un pixel mas. Antes 130vh con un velo crema que subia
+     encima: medido, el velo llegaba a opaco a los 270px de scroll y quedaban
+     870px —casi una pantalla entera— de rectangulo crema vacio antes de que
+     asomara "La fragancia es memoria". Ahora el scrub corre mientras la
+     portada se va de cuadro, que es recorrido que ya existia. */
+  height: 100vh; height: 100svh;
+  background: var(--noir);
+}
+.hero-stick {
+  position: sticky; top: 0;
+  height: 100vh; height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* Con barra de anuncio la portada empieza 32px mas abajo: se descuentan para
+   que siga siendo UNA pantalla. Medido sin esto, el pie del hero (envios,
+   pago, asesoria) quedaba justo por debajo del borde. :where() deja la
+   especificidad en la de .hero-wrap, asi las reglas de movil y de menos
+   movimiento (height: auto), que van despues, siguen mandando. */
+:where(body:has(.announce)) .hero-wrap,
+:where(body:has(.announce)) .hero-stick {
+  height: calc(100vh - var(--announce-h)); height: calc(100svh - var(--announce-h));
+}
+
+.hero-copy {
+  position: relative; z-index: 4;
+  height: 100%;
+  padding-bottom: calc(var(--s7) + 40px);
+  display: flex; flex-direction: column; justify-content: center;
+  padding-inline: var(--gutter);
+  padding-top: var(--header-h);
+  /* opacity/transform/filter los gobierna el scrub de GSAP. Una sola
+     autoridad por propiedad: dos mecanismos sobre la misma se pisan. */
+  will-change: opacity, transform, filter;
+}
+
+/* ---- Fondo de video a sangre completa -----------------------------------
+   El clip es 16:9 y la portada casi nunca lo es, asi que `cover` recorta: el
+   frasco va centrado en el cuadro, de modo que el recorte se come el anillo
+   de ingredientes por los lados y nunca el producto.
+
+   El velo NO es decoracion: el anillo lleva magnolia, limon y jazmin, que son
+   casi blancos, y el titular es marfil. Sin el, el contraste se hunde cada
+   vez que una flor pasa por detras del texto. Pesa mas a la izquierda, que es
+   donde cae el titular, y remata arriba (cabecera) y abajo (pie del hero). */
+.hero-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.hero-bg video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(8,8,10,.96) 0%, rgba(8,8,10,.90) 30%, rgba(8,8,10,.76) 52%, rgba(8,8,10,.30) 76%, rgba(8,8,10,.42) 100%),
+    linear-gradient(180deg, rgba(8,8,10,.66) 0%, rgba(8,8,10,0) 24%, rgba(8,8,10,0) 56%, rgba(8,8,10,.78) 100%);
+}
+/* Con el video puesto, el halo dorado solo enturbia: ya hay luz en el cuadro. */
+.hero-wrap--video .hero-halo { display: none; }
+/* Sobre un panel liso, --on-surface-dim es jerarquia. Sobre video en
+   movimiento es texto que se pierde: medido en movil, estos enlaces caian a
+   4,14:1 sobre la etiqueta plateada del frasco. Encima del clip van a color
+   pleno y la jerarquia la marcan el tamano y el espacio, no el gris. */
+.hero-wrap--video .hero__cols a { color: var(--on-surface); }
+.hero-wrap--video .hero__cols a:hover,
+.hero-wrap--video .hero__cols a:focus-visible { color: var(--gold); }
+/* Y la marca de agua compite con el anillo. Se deja apenas como filigrana. */
+.hero-wrap--video .hero__wordmark { opacity: .05; }
+
+@media (max-width: 760px) {
+  /* En vertical el recorte es brutal (de 16:9 a ~9:16 se pierde tres cuartos
+     del ancho) y el texto ocupa TODO el ancho, asi que no hay lado limpio al
+     que empujarlo: el velo tiene que ser parejo. Medido, sin esto los
+     enlaces de coleccion caian a 1,34:1 sobre la etiqueta plateada. */
+  .hero-bg::after {
+    background:
+      linear-gradient(180deg, rgba(8,8,10,.88) 0%, rgba(8,8,10,.74) 28%, rgba(8,8,10,.72) 62%, rgba(8,8,10,.92) 100%);
+  }
+  /* Ademas se baja el brillo del clip: en el movil el frasco ocupa la pantalla
+     entera y el texto le cae encima si o si. */
+  .hero-bg video { filter: brightness(.72); }
+}
+
+/* Halo: respira detras del producto. Solo opacity y scale — animar blur a
+   pantalla completa cuesta ~1s por frame. */
+.hero-halo {
+  position: absolute; z-index: 1;
+  left: 50%; top: 46%;
+  width: min(92vw, 1100px); aspect-ratio: 1;
+  /* El centrado va por la propiedad translate, NO por transform: asi GSAP
+     puede animar transform (escala y parallax) sin destruir el centrado. */
+  translate: -50% -50%;
+  background: radial-gradient(circle, rgba(201,168,103,.20) 0%, rgba(201,168,103,.06) 38%, transparent 68%);
+  pointer-events: none;
+  opacity: .4;
+}
+@keyframes ambientBreathe {
+  0%, 100% { opacity: .4; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: .65; transform: translate(-50%, -50%) scale(1.08); }
+}
+
+.hero-figure {
+  position: absolute; z-index: 2;
+  right: clamp(-2vw, 3vw, 7vw); bottom: 6vh;
+  width: clamp(200px, 26vw, 380px);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  box-shadow: var(--shadow-bottle);
+}
+.hero-figure img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Meta y cue van DENTRO de .hero-copy: asi heredan su opacidad y se van con
+   el titular, sin reglas propias que mantener en sincronia. El cue va a la
+   izquierda porque a la derecha chocaba con la foto del producto.
+
+   left: var(--gutter), no 0. Un absoluto se posiciona contra el borde del
+   PADDING BOX del ancestro, o sea por fuera del padding-inline de .hero-copy:
+   con left:0 el riel quedaba en x=0 mientras el titular y el menu estaban en
+   x=110. Es el mismo valor que usan .hero__meta y .hero__scroll en base.css y
+   en el prototipo. */
+.hero-meta {
+  position: absolute; left: var(--gutter); bottom: 0;
+  display: flex; align-items: center; gap: var(--s5);
+}
+.hero-cue {
+  position: absolute; left: var(--gutter); bottom: calc(var(--s7) + 6px);
+  display: flex; align-items: center; gap: var(--s3);
+}
+.hero-cue i {
+  display: block; width: 52px; height: 1px;
+  background: rgba(244,241,234,.28); position: relative; overflow: hidden;
+}
+.hero-cue i::after {
+  content: ''; position: absolute; inset: 0; background: var(--gold);
+  animation: scrollCue 2.2s var(--ease-soft) infinite;
+}
+@keyframes scrollCue {
+  0% { transform: translateX(-100%); }
+  60%, 100% { transform: translateX(100%); }
+}
+
+/* Cascada de entrada: cada hijo del hero entra 90ms despues del anterior,
+   una vez que el loader se va. Es lo que se lee como "caro". */
+.js-motion .hero-copy [data-hero-in] {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity .9s var(--ease), transform .9s var(--ease);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+.js-motion .hero-in .hero-copy [data-hero-in] { opacity: 1; transform: none; }
+.js-motion .hero-figure { opacity: 0; transition: opacity 1.1s var(--ease) .45s; }
+.js-motion .hero-in .hero-figure { opacity: 1; }
+
+@media (max-width: 900px) {
+  .hero-wrap { height: auto; }
+  .hero-stick { position: relative; height: auto; min-height: 100svh; }
+  .hero-copy { padding-top: calc(var(--header-h) + 12vh); padding-bottom: 46vh; }
+  .hero-figure { width: min(56vw, 250px); right: -4vw; bottom: 4vh; }
+  .hero-meta { display: none; }
+  .hero-cue { left: var(--gutter); right: auto; }
+}
+
+/* ==========================================================================
+   4 · REJILLA ROTA
+   Asimetrica pero NO mas alta que una rejilla pareja: ningun span pasa de 4
+   de 12. La asimetria la dan el hueco negativo y el desfase, no el tamano.
+   ========================================================================== */
+@media (min-width: 1200px) {
+  .composition--broken {
+    grid-template-columns: repeat(12, 1fr);
+    gap: clamp(28px, 3vw, 56px) clamp(20px, 2.6vw, 44px);
+    align-items: start;
+  }
+  .composition--broken > *:nth-child(6n+1) { grid-column: 1 / span 4; }
+  .composition--broken > *:nth-child(6n+2) { grid-column: 6 / span 3; margin-top: 104px; }
+  .composition--broken > *:nth-child(6n+3) { grid-column: 9 / span 4; }
+  .composition--broken > *:nth-child(6n+4) { grid-column: 2 / span 3; margin-top: 128px; }
+  .composition--broken > *:nth-child(6n+5) { grid-column: 5 / span 4; }
+  .composition--broken > *:nth-child(6n+6) { grid-column: 10 / span 3; margin-top: 72px; }
+}
+/* Tablet: ocho columnas, dos piezas por fila, mismos desfases a escala */
+@media (min-width: 860px) and (max-width: 1199px) {
+  .composition--broken {
+    grid-template-columns: repeat(8, 1fr);
+    gap: clamp(28px, 3vw, 48px) clamp(20px, 2.6vw, 36px);
+    align-items: start;
+  }
+  .composition--broken > *:nth-child(4n+1) { grid-column: 1 / span 4; }
+  .composition--broken > *:nth-child(4n+2) { grid-column: 6 / span 3; margin-top: 72px; }
+  .composition--broken > *:nth-child(4n+3) { grid-column: 2 / span 3; margin-top: 28px; }
+  .composition--broken > *:nth-child(4n+4) { grid-column: 5 / span 4; margin-top: 96px; }
+}
+
+/* ==========================================================================
+   5 · TILT 3D EN LAS PIEZAS
+   El angulo lo escribe el JS en --rx/--ry. Sin transicion mientras el cursor
+   se mueve (meteria retardo); solo al salir.
+   ========================================================================== */
+@media (hover: hover) and (pointer: fine) {
+  .js-motion .piece[data-tilt] { perspective: 900px; }
+  .js-motion .piece[data-tilt] .piece__stage {
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(var(--tz, 0px));
+    transform-style: preserve-3d;
+    box-shadow: var(--tilt-shadow, 0 0 0 rgba(0,0,0,0));
+  }
+  .js-motion .piece[data-tilt].is-leaving .piece__stage {
+    transition: transform .24s var(--ease-soft), box-shadow .24s var(--ease-soft);
+  }
+  /* Empuje de camara sobre la propia foto: los productos tienen una sola
+     imagen, asi que no hay crossfade posible (ver plan, A-b). */
+  .js-motion .piece[data-tilt] .piece__stage img {
+    transition: transform .9s var(--ease-soft);
+  }
+  .js-motion .piece[data-tilt]:hover .piece__stage img { transform: scale(1.06) translateY(-1%); }
+}
+
+/* Cuando existan segundas fotos, el crossfade entra sin tocar nada mas */
+.piece__stage img + img.piece__alt { position: absolute; inset: 0; opacity: 0; transition: opacity .6s var(--ease); }
+.piece:hover .piece__stage img + img.piece__alt { opacity: 1; }
+
+/* ==========================================================================
+   6 · CURSOR CON ETIQUETA
+   ========================================================================== */
+/* El contenedor no dibuja caja (display: contents). Antes era fixed con
+   z-index, y eso lo aislaba: el mix-blend-mode del punto solo se mezclaba con
+   el contenedor vacio y salia marfil liso, invisible sobre las secciones
+   crema. Ahora el punto se mezcla con la pagina: invierte lo que tiene debajo
+   y se ve en cualquier fondo. La etiqueta no se mezcla: va en crema sobre
+   vidrio oscuro, como los controles de las piezas, y se lee igual sobre una
+   foto negra que sobre una blanca. */
+.cursor { display: contents; }
+.cursor-dot {
+  position: fixed; top: 0; left: 0; z-index: var(--z-cursor);
+  width: 10px; height: 10px; margin: -5px 0 0 -5px;
+  border-radius: 999px; background: var(--ivory);
+  mix-blend-mode: difference; pointer-events: none;
+  opacity: 0;
+  transition: opacity .2s var(--ease), width .24s var(--ease), height .24s var(--ease), margin .24s var(--ease);
+}
+.cursor.is-ready .cursor-dot { opacity: 1; }
+.cursor.is-active .cursor-dot { width: 54px; height: 54px; margin: -27px 0 0 -27px; }
+.cursor-label {
+  position: fixed; top: 0; left: 0; z-index: calc(var(--z-cursor) + 1);
+  padding: 5px 9px; pointer-events: none;
+  font-family: var(--font-ui); font-size: var(--t-100); letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase; color: var(--ivory);
+  background: rgba(8, 8, 10, 0.72);
+  opacity: 0; transition: opacity .2s var(--ease);
+  white-space: nowrap;
+}
+.cursor.is-ready.is-active .cursor-label { opacity: 1; }
+body.cursor-on, body.cursor-on a, body.cursor-on button { cursor: none; }
+body.cursor-on input, body.cursor-on textarea, body.cursor-on select { cursor: auto; }
+
+/* ==========================================================================
+   7 · LOADER
+   No bloquea el scroll y solo sale en la primera visita de la sesion. La
+   animacion es la del prototipo nuevo.
+   ========================================================================== */
+[data-loading-screen] {
+  position: fixed; inset: 0; z-index: 999;
+  background: var(--noir);
+  display: grid; place-items: center;
+  /* Canal y zonas seguras: en un telefono con muesca o barra de gestos, un
+     `place-items: center` a secas puede dejar el logo debajo del hardware. */
+  padding: max(var(--gutter), env(safe-area-inset-left)) var(--gutter)
+           max(var(--gutter), env(safe-area-inset-bottom)) var(--gutter);
+  transition: opacity .7s var(--ease-soft);
+}
+[data-loading-screen].out { opacity: 0; pointer-events: none; }
+
+.loader__in { display: grid; justify-items: center; }
+
+/* El lockup completo. Manda el ANCHO y la altura sale de la proporcion, que
+   es como se comporta un logotipo; con `height: auto` no hay salto cuando
+   entra el archivo. */
+.loader__logo {
+  display: block;
+  width: min(30vw, 340px); height: auto;
+  opacity: 0;
+  animation: loaderLogo 1s var(--ease-soft) forwards;
+}
+.loader-line {
+  width: 0; height: 1px; margin-top: var(--s5);
+  background: var(--gold-line);
+  animation: loaderLine .9s var(--ease-soft) .3s forwards;
+}
+@keyframes loaderLogo {
+  from { opacity: 0; transform: translateY(12px) scale(.985); filter: blur(7px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes loaderLine { to { width: var(--loader-line-w, min(30vw, 340px)); } }
+
+/* Movil: el logo pasa a mandar sobre el ancho de pantalla, no sobre el del
+   escritorio. Antes la marca escrita media 306 px en una pantalla de 390
+   —el 78%, pegada a los dos bordes—. */
+@media (max-width: 760px) {
+  .loader__logo { width: min(62vw, 260px); }
+  .loader-line { --loader-line-w: min(62vw, 260px); }
+}
+/* Telefono apaisado o pantalla muy baja: manda la ALTURA o el logo no cabe. */
+@media (max-height: 520px) {
+  .loader__logo { width: auto; height: min(56vh, 220px); }
+  .loader-line { --loader-line-w: min(46vw, 200px); }
+}
+
+/* ==========================================================================
+   8 · MENOS MOVIMIENTO
+   Se apagan scrub, cursor, parallax, halo y cascada. Los reveals quedan en
+   fundido simple, sin desplazamiento.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .hero-wrap { height: auto; }
+  .hero-stick { position: relative; height: auto; min-height: 100svh; }
+  .hero-copy { opacity: 1 !important; transform: none !important; filter: none !important; }
+  .hero-halo, .hero-cue i::after { animation: none; }
+  .cursor { display: none; }
+  .js-motion [data-reveal] { transform: none; transition: opacity .4s linear; }
+  .js-motion [data-reveal].reveal-x,
+  .js-motion [data-reveal].reveal-x-rev { transform: none; }
+  .js-motion .hero-copy [data-hero-in] { transform: none; }
+  .js-motion .piece[data-tilt] .piece__stage,
+  .js-motion .piece[data-tilt] .piece__stage img { transform: none !important; }
+  /* La pantalla de carga SI aparece con menos movimiento: lo que se quita es
+     el recorrido, no la marca. El logo entero desde el primer pintado, la
+     linea ya crecida y la salida sin fundido. Nunca `display:none` ni
+     opacity 0 aqui. */
+  [data-loading-screen] { transition: none; }
+  .loader__logo { animation: none; opacity: 1; transform: none; filter: none; }
+  .loader-line { animation: none; width: var(--loader-line-w, min(30vw, 340px)); }
+}
+
+/* Hero: la marca de agua y el titular conviven con el bloque pegajoso */
+.hero-stick .hero__wordmark {
+  position: absolute; z-index: 1; left: 50%; bottom: clamp(18px, 3vh, 40px);
+  transform: translateX(-50%);
+  width: min(92vw, 1500px); opacity: .075;
+  pointer-events: none; user-select: none;
+}
+.hero-stick .hero__wordmark img { width: 100%; height: auto; }
+.hero-copy .hero__title { max-width: 18ch; }
+.hero-copy .hero__line { display: block; }
+.hero-copy .hero__kicker { display: block; color: var(--gold); margin-bottom: var(--s6); }
+/* Marfil pleno, no gris: va sobre el video y el velo solo garantiza el
+   contraste del color pleno. Ancho de lectura, no de titular. */
+.hero-copy .hero__lede {
+  margin: clamp(20px, 2.4vw, 32px) 0 0; max-width: 38ch;
+  font-size: var(--t-400); line-height: 1.5; color: var(--ivory);
+}
+.hero-copy .hero__lede + .hero__actions { margin-top: clamp(24px, 3vw, 40px); }
+.hero-copy .hero__actions { margin-top: clamp(28px, 4vw, 52px); display: flex; gap: var(--s4); flex-wrap: wrap; }
+@media (max-width: 900px) {
+  .hero-stick .hero__wordmark { width: 94vw; bottom: 2vh; opacity: .09; }
+}
+
+/* ==========================================================================
+   9 · DECLARACION
+   El titular sigue siendo grande, pero dentro de la columna: asi ocupa dos
+   lineas en vez de extenderse a lo ancho, y el respiro lo marca el texto.
+   ========================================================================== */
+.statement { padding-block: var(--section-text); }
+.statement__in { display: grid; gap: clamp(28px, 3vw, 44px); }
+.statement__quote {
+  font-family: var(--font-display);
+  font-size: var(--display-section);
+  font-weight: 400; line-height: 1.02; letter-spacing: var(--track-display);
+  margin: 0;
+}
+.statement__line { display: block; }
+.statement__aside { max-width: 46ch; margin: 0; }
+
+/* Paneles contiguos del mismo tono: los rellenos se SUMAN y dejan un vacio que
+   se lee como un error. Medido en movil: 256px de crema sin nada entre el
+   final de la Declaracion y "01 — La coleccion". Cuando se tocan, el de abajo
+   cede.
+
+   El selector salta el envoltorio a proposito. Shopify mete cada seccion
+   dentro de su propio <section class="shopify-section">, asi que los paneles
+   NUNCA son hermanos: la regla `.panel + .panel > .band` que habia aqui venia
+   del prototipo, donde el marcado era plano, y en la tienda no llego a
+   aplicarse ni una vez. */
+.shopify-section:has(> .panel--cream) + .shopify-section > .panel--cream,
+.shopify-section:has(> .panel--ink)   + .shopify-section > .panel--ink,
+.shopify-section:has(> .panel--black) + .shopify-section > .panel--black {
+  padding-top: clamp(40px, 3.8vw, 55px);
+}
+/* Y cede tambien el de ARRIBA. Con que cediera solo el de abajo seguian
+   quedando 200px de crema en escritorio (128 del inferior de la Declaracion
+   + 72 del superior de la Coleccion): el relleno grande es el de abajo del
+   primero, asi que si no se toca, no hay arreglo posible desde el segundo. */
+.shopify-section:has(> .panel--cream):has(+ .shopify-section > .panel--cream) > .panel--cream,
+.shopify-section:has(> .panel--ink):has(+ .shopify-section > .panel--ink) > .panel--ink,
+.shopify-section:has(> .panel--black):has(+ .shopify-section > .panel--black) > .panel--black {
+  padding-bottom: clamp(48px, 4.6vw, 66px);
+}
+
+/* Ediciones: la composicion invertida se marca con atributo porque la clase
+   del panel la escribe el snippet. */
+.campaign[data-flip] .campaign__in > *:first-child { order: 2; }
+.campaign[data-flip] .campaign__texture {
+  mask-image: linear-gradient(270deg, #000 0%, transparent 78%);
+  -webkit-mask-image: linear-gradient(270deg, #000 0%, transparent 78%);
+}
+@media (max-width: 899px) { .campaign[data-flip] .campaign__in > *:first-child { order: 0; } }
+
+/* Quiz y La casa: el texto va en columna, la imagen sigue a borde */
+/* Alineada a la izquierda, como el titular del hero, los titulos de seccion y
+   el muro de casas. Con `margin-inline: auto 0` la columna se pegaba al borde
+   derecho y dejaba 945px vacios a la izquierda: no sobraba aire, faltaba
+   alineacion. El aire a la derecha es el mismo que tiene el resto. */
+.finder-gate__in { max-width: var(--column); box-sizing: content-box; margin-inline: 0 auto; }
+
+/* Seccion de texto, no de producto: le tocan 128, no 192. */
+.finder-gate { padding-block: var(--section-text); }
+.world__text, .world__title { max-width: 46ch; }
+
+/* ==========================================================================
+   10 · CUESTIONARIO — cruce lateral entre pasos
+   El paso saliente pasa a absoluto durante el cruce: si no, empujaria al
+   entrante y la altura daria un salto.
+   ========================================================================== */
+.finder__body { position: relative; }
+.finder__step {
+  display: grid; align-content: safe center; justify-items: start;
+  gap: clamp(44px, 9vh, 96px);
+  width: 100%;
+  transition: opacity .42s var(--ease), transform .46s var(--ease);
+}
+.finder__step.is-enter { opacity: 0; transform: translateX(46px); }
+.finder__step.is-enter.from-left { transform: translateX(-46px); }
+.finder__step.is-exit {
+  position: absolute; inset: 0;
+  opacity: 0; transform: translateX(-46px);
+  pointer-events: none;
+}
+.finder__step.is-exit.to-right { transform: translateX(46px); }
+
+/* El escalonado dentro del paso lo calcula initReveal() como en cualquier
+   otra seccion: un solo mecanismo (--reveal-delay), no dos compitiendo. */
+
+@media (max-width: 760px) {
+  .finder__step { gap: var(--s6); }
+}
+
+/* ==========================================================================
+   11 · CIERRE
+   ========================================================================== */
+.closing { padding-block: var(--section-text); }
+.closing__in { display: grid; gap: clamp(24px, 3vw, 40px); justify-items: start; }
+.closing__title {
+  font-family: var(--font-display);
+  font-size: var(--display-section);
+  font-weight: 400; line-height: 1.04; letter-spacing: var(--track-display);
+  margin: 0;
+}
+.closing__line { display: block; }
+.closing__text { margin: 0; max-width: 46ch; }
+.closing__cta { display: flex; align-items: center; gap: clamp(20px, 3vw, 40px); flex-wrap: wrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .finder__step { transition: none; }
+  .finder__step.is-enter, .finder__step.is-exit { transform: none; }
+}
+
+/* ==========================================================================
+   12 · SISTEMA DE PROPORCIONES
+   4:5 vertical = producto · 3:2 horizontal = escena · 21:9 = banda editorial.
+   Una sola proporcion por seccion; la variedad viene de la escala, nunca de
+   mezclar proporciones dentro de la misma rejilla.
+   ========================================================================== */
+
+/* --- La casa: escena 3:2. Antes era una caja 1.25 con una foto 0.80 y cover,
+       que descartaba el 36% de la imagen. --- */
+.world__figure { aspect-ratio: 3 / 2; }
+.world__figure img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; }
+/* Sin escena todavia: una sola columna, sin marco vacio */
+.world__in--solo { grid-template-columns: 1fr !important; }
+.world__in--solo > div:last-child { max-width: var(--column); }
+
+/* --- Producto: el interes visual esta por encima del centro --- */
+.piece__stage img, .hero-figure img { object-position: 50% 42%; }
+
+/* --- Banda editorial 21:9 a borde completo --- */
+.band-wide { position: relative; width: 100%; overflow: hidden; }
+.band-wide__media { position: relative; width: 100%; aspect-ratio: 21 / 9; background: var(--noir); }
+.band-wide__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+/* Velo solo cuando hay texto encima: la banda sola no se toca */
+[data-band-text] .band-wide__media::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(8,8,10,.82) 0%, rgba(8,8,10,.45) 46%, rgba(8,8,10,.12) 100%);
+}
+.band-wide__copy {
+  position: absolute; inset: 0; z-index: 2;
+  display: grid; align-content: center; justify-items: start;
+  gap: clamp(16px, 2vw, 28px);
+  padding-inline: var(--gutter);
+  color: var(--ivory);
+}
+.band-wide__title {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: var(--display-section); line-height: var(--lh-display); letter-spacing: var(--track-display);
+  margin: 0; max-width: 16ch;
+}
+.band-wide__line { display: block; }
+.band-wide__text { margin: 0; max-width: 40ch; color: var(--sand); }
+.band-wide__cta { display: flex; gap: clamp(18px, 2.4vw, 34px); align-items: center; flex-wrap: wrap; }
+
+/* En movil una 21:9 deja el texto sin sitio: la banda se hace mas alta y el
+   texto pasa debajo, sobre el panel. */
+@media (max-width: 760px) {
+  .band-wide__media { aspect-ratio: 16 / 10; }
+  [data-band-text] .band-wide__copy {
+    position: static; padding-block: var(--s7);
+    background: var(--surface); color: var(--on-surface);
+  }
+  [data-band-text] .band-wide__media::after { background: linear-gradient(180deg, transparent 40%, rgba(8,8,10,.35) 100%); }
+  .band-wide__text { color: var(--on-surface-dim); }
+}
+
+/* --- Momentos: escenas 3:2 en tira arrastrable (reutiliza el .reel) --- */
+.moments__track {
+  display: flex; gap: clamp(20px, 2.6vw, 44px);
+  overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
+  -webkit-overflow-scrolling: touch; cursor: grab;
+  padding-inline: var(--gutter); padding-bottom: 4px;
+}
+.moments__track::-webkit-scrollbar { display: none; }
+.moments__track.dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.moment { flex: 0 0 clamp(280px, 42vw, 620px); scroll-snap-align: start; }
+.moment__media { aspect-ratio: 3 / 2; overflow: hidden; background: var(--surface-2); }
+.moment__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s var(--ease-soft); }
+.moment:hover .moment__media img { transform: scale(1.04); }
+.moment__copy { padding-top: var(--s4); display: grid; gap: var(--s2); }
+.moment__title { font-family: var(--font-display); font-weight: 400; font-size: var(--t-500); line-height: 1.15; margin: 0; }
+.moment__text { margin: 0; max-width: 34ch; }
+@media (max-width: 760px) { .moment { flex-basis: 84%; } }
+
+/* El cierre en modo banda: el texto se apoya a la izquierda, no centrado */
+.closing--wide .closing__in { padding-block: 0; }
+
+/* El hilo de confianza, fundido en la Declaracion: filete y fila, sin panel
+   propio. Una franja de 60px con su propio color entre dos paneles era ruido. */
+.statement__thread {
+  display: flex; flex-wrap: wrap; gap: clamp(20px, 5vw, 80px);
+  justify-content: space-between; align-items: center;
+  margin-top: clamp(48px, 6vw, 96px);
+  padding-top: var(--sp-3);
+  padding-inline: var(--gutter);
+  border-top: var(--hairline-width) solid var(--hairline);
+}
+
+/* ==========================================================================
+   13 · TITULARES PALABRA POR PALABRA
+   La caja recorta y el interior sube. El clip-path lo anima GSAP; si las
+   librerias no llegan, el titular nunca se parte y se lee normal.
+   ========================================================================== */
+.pal { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.pal__in { display: inline-block; will-change: transform, clip-path; }
+
+/* ==========================================================================
+   14 · ZOOM LENTO DE LA FOTO DENTRO DEL MARCO
+   El marco no se mueve: se mueve la foto dentro. Es lo que separa una ficha
+   de catalogo de una de revista.
+   ========================================================================== */
+.piece__stage { overflow: hidden; }
+.piece__stage img { transition: transform 900ms var(--ease-out); }
+.piece:hover .piece__stage img,
+.piece:focus-within .piece__stage img { transform: scale(1.04); }
+
+/* ==========================================================================
+   15 · SUBRAYADO DEL NAV — trazo de izquierda a derecha
+   ========================================================================== */
+.hdr__nav a { position: relative; }
+.hdr__nav a::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 6px; height: 1px;
+  background: currentColor; transform: scaleX(0); transform-origin: left;
+  transition: transform .5s var(--ease-out);
+}
+.hdr__nav a:hover::after,
+.hdr__nav a:focus-visible::after,
+.hdr__nav a[aria-current]::after { transform: scaleX(1); }
+
+/* ==========================================================================
+   16 · COLECCION ANCLADA EN HORIZONTAL
+   El ancho de pieza es fijo: si dependiera del contenido, el recorrido
+   cambiaria al cargar las fotos y el pin quedaria descuadrado.
+   ========================================================================== */
+.pin-h { overflow: hidden; }
+.pin-h__track {
+  display: flex; align-items: start;
+  gap: var(--gap-grid);
+  padding-inline: var(--gutter);
+  will-change: transform;
+}
+.pin-h__track > * { flex: 0 0 clamp(230px, 21vw, 330px); }
+@media (max-width: 899px) {
+  /* En movil manda el carrusel de arrastre que ya existe: nada de anclar. */
+  .pin-h__track { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .pin-h__track::-webkit-scrollbar { display: none; }
+  .pin-h__track > * { scroll-snap-align: start; }
+}
+
+/* ==========================================================================
+   17 · RECOMPENSAS — corazon y pieza recien anadida
+   ========================================================================== */
+@keyframes latido {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.32); }
+  100% { transform: scale(1); }
+}
+.piece__save.just-on svg,
+[data-save].just-on svg { animation: latido 420ms var(--ease-out); }
+
+@keyframes destello {
+  0% { background: rgba(201, 168, 103, .22); }
+  100% { background: transparent; }
+}
+.bag-line.is-new { animation: destello 1200ms var(--ease-out); }
+
+/* ==========================================================================
+   18 · TRANSICION ENTRE PAGINAS
+   View Transitions nativas: 0 KB, no intercepta clicks y no rompe el
+   atras/adelante ni el checkout externo.
+   ========================================================================== */
+::view-transition-old(root) { animation: vtSale 200ms var(--ease-inout) both; }
+::view-transition-new(root) { animation: vtEntra 320ms var(--ease-out) both; }
+@keyframes vtSale { to { opacity: 0; } }
+@keyframes vtEntra { from { opacity: 0; } }
+
+/* ==========================================================================
+   19 · CONTRATO DE REDUCED-MOTION PARA TODO LO NUEVO
+   Sin recorrido, pero visible y en su sitio. Ninguna de estas reglas oculta.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .pal__in { clip-path: none !important; transform: none !important; }
+  .piece:hover .piece__stage img,
+  .piece:focus-within .piece__stage img { transform: none; }
+  .piece__stage img { transition: none; }
+  .hdr__nav a::after { transition: none; }
+  .piece__save.just-on svg, [data-save].just-on svg, .bag-line.is-new { animation: none; }
+  .pin-h__track { transform: none !important; }
+  .hero-halo { opacity: .4; }
+}
+
+/* ==========================================================================
+   20 · HEADER QUE SE APARTA
+   Baja el scroll, la barra se va; sube, vuelve. Con reduced-motion no se
+   mueve nunca: una barra que desaparece es movimiento, no decoracion.
+   ========================================================================== */
+.hdr { transition: transform .45s var(--ease-out), height var(--t-base) var(--ease-out), background var(--t-base) var(--ease-out); }
+.hdr--away { transform: translateY(-100%); }
+@media (prefers-reduced-motion: reduce) {
+  .hdr { transition: none; }
+  .hdr--away { transform: none; }
+}
+
+/* Accesos a las colecciones bajo los botones del hero. Fila discreta: no
+   compiten con las dos acciones principales. */
+.hero__cols {
+  display: flex; flex-wrap: wrap; gap: var(--sp-4);
+  margin-top: var(--sp-4);
+}
+.hero__cols a {
+  font-family: var(--font-ui); font-size: var(--t-100); font-weight: var(--w-label);
+  letter-spacing: var(--track-eyebrow); text-transform: uppercase;
+  color: var(--on-surface-dim);
+  min-height: 44px; display: inline-flex; align-items: center;
+  transition: color var(--t-fast) var(--ease-out);
+}
+.hero__cols a:hover, .hero__cols a:focus-visible { color: var(--on-surface); }

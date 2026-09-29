@@ -1,0 +1,149 @@
+{%- liquid
+  assign seal = section.settings.seal | default: settings.logo_seal
+-%}
+
+<footer class="foot" id="contacto">
+  <div class="foot__in">
+    {%- if section.settings.show_seal -%}
+      <div class="foot__seal">
+        <span class="foot__seal-line" aria-hidden="true"></span>
+        <a href="{{ routes.root_url }}" aria-label="{{ settings.brand_name | default: shop.name | escape }}">
+          {%- if seal -%}
+            <img src="{{ seal | image_url: width: 176 }}" alt="{{ settings.brand_name | default: shop.name | escape }}" width="88" height="88" loading="lazy">
+          {%- else -%}
+            <img src="{{ 'velmont-seal.webp' | asset_url }}" alt="{{ settings.brand_name | default: shop.name | escape }}" width="88" height="88" loading="lazy">
+          {%- endif -%}
+        </a>
+        <span class="foot__seal-line" aria-hidden="true"></span>
+      </div>
+    {%- endif -%}
+
+    <div class="foot__cols">
+      {%- for block in section.blocks -%}
+        {%- comment -%}
+          El cuerpo se arma antes de pintar la columna: si un bloque se queda
+          sin nada que mostrar —por ejemplo, un menu cuyos enlaces apuntan
+          todos a paginas que todavia no existen— no se emite ni su titulo.
+          Un encabezado suelto es peor que una columna de menos.
+        {%- endcomment -%}
+        {%- capture cuerpo -%}
+          {%- case block.type -%}
+            {%- when 'text' -%}
+              {%- if block.settings.text != blank -%}
+                <p class="fine">{{ block.settings.text }}</p>
+              {%- endif -%}
+
+            {%- when 'menu' -%}
+              {%- comment -%}
+                Los enlaces escritos mandan sobre el menu de Shopify: un menu
+                no puede tener anclas como #ediciones, y aqui hacen falta.
+              {%- endcomment -%}
+              {%- capture filas -%}
+                {%- if block.settings.links != blank -%}
+                  {%- assign rows = block.settings.links | newline_to_br | split: '<br />' -%}
+                  {%- for row in rows -%}
+                    {%- assign clean = row | strip -%}
+                    {%- if clean != blank -%}
+                      {%- assign parts = clean | split: '|' -%}
+                      {%- assign href = parts[1] | default: '#' | strip -%}
+                      {%- assign first = href | slice: 0 -%}
+                      {%- if first == '#' -%}
+                        {%- assign href = routes.root_url | append: href -%}
+                      {%- endif -%}
+                      {%- comment -%}
+                        Una pagina que aun no se ha creado devuelve 404: no se
+                        enlaza. En cuanto exista, el enlace vuelve solo.
+                      {%- endcomment -%}
+                      {%- assign vale = true -%}
+                      {%- if href contains '/pages/' -%}
+                        {%- assign handle = href | split: '/pages/' | last | split: '?' | first | split: '#' | first | strip -%}
+                        {%- unless pages[handle].handle == handle -%}
+                          {%- assign vale = false -%}
+                        {%- endunless -%}
+                      {%- endif -%}
+                      {%- if vale -%}
+                        <li><a href="{{ href }}"{% if parts[1] contains '#descubre' %} data-quiz-open{% endif %}>{{ parts[0] | strip }}</a></li>
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- elsif block.settings.menu != blank -%}
+                  {%- for link in block.settings.menu.links -%}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {%- endfor -%}
+                {%- endif -%}
+              {%- endcapture -%}
+              {%- assign filas_limpias = filas | strip -%}
+              {%- if filas_limpias != blank -%}<ul>{{ filas }}</ul>{%- endif -%}
+
+            {%- when 'contact' -%}
+              {%- capture contacto -%}
+                {%- if settings.whatsapp != blank -%}
+                  <li><a href="{{ settings.whatsapp }}" target="_blank" rel="noopener">WhatsApp</a></li>
+                {%- endif -%}
+                {%- if settings.instagram != blank -%}
+                  <li><a href="{{ settings.instagram }}" target="_blank" rel="noopener">Instagram</a></li>
+                {%- endif -%}
+              {%- endcapture -%}
+              {%- assign contacto_limpio = contacto | strip -%}
+              {%- if contacto_limpio != blank -%}<ul>{{ contacto }}</ul>{%- endif -%}
+          {%- endcase -%}
+        {%- endcapture -%}
+
+        {%- assign cuerpo_limpio = cuerpo | strip -%}
+        {%- if cuerpo_limpio != blank -%}
+          <div {{ block.shopify_attributes }}>
+            {%- if block.settings.title != blank -%}<h4 class="label">{{ block.settings.title }}</h4>{%- endif -%}
+            {{ cuerpo }}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="foot__base">
+      <span class="label">&copy; {{ 'now' | date: '%Y' }} {{ settings.brand_name | default: shop.name }}</span>
+      {%- if settings.city_line != blank -%}
+        <span class="label">{{ settings.city_line }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pie de página",
+  "class": "shopify-section--footer",
+  "settings": [
+    { "type": "checkbox", "id": "show_seal", "label": "Mostrar el sello", "default": true },
+    { "type": "image_picker", "id": "seal", "label": "Sello", "info": "Se muestra a 88 px (72 px en móvil)." }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Columna de texto",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "La casa" },
+        { "type": "textarea", "id": "text", "label": "Texto", "default": "Perfumería seleccionada, pieza por pieza. Envíos a toda Colombia." }
+      ]
+    },
+    {
+      "type": "menu",
+      "name": "Columna de enlaces",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Explorar" },
+        { "type": "textarea", "id": "links", "label": "Enlaces", "default": "Colección | /collections/all\nDescubre tu marca personal | #descubre\nEdiciones | #ediciones", "info": "Uno por línea: Texto | enlace. Admite anclas (#ediciones)." },
+        { "type": "link_list", "id": "menu", "label": "…o un menú de Shopify", "info": "Solo se usa si dejas los enlaces vacíos." }
+      ]
+    },
+    {
+      "type": "contact",
+      "name": "Columna de contacto",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Contacto" },
+        { "type": "paragraph", "content": "Los enlaces salen de WhatsApp e Instagram en Ajustes del tema → Marca." }
+      ]
+    }
+  ],
+  "max_blocks": 4
+}
+{% endschema %}

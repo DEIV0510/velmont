@@ -1,0 +1,72 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "color_noir": "#08080A",
+    "color_noir_soft": "#101013",
+    "color_ink": "#16161A",
+    "color_ivory": "#F4F1EA",
+    "color_bone": "#E9E4D9",
+    "color_stone": "#9C958A",
+    "color_stone_deep": "#6A645B",
+    "color_gold": "#C9A867",
+    "color_gold_light": "#E4D3AB",
+    "color_gold_deep": "#8A6F3C",
+    "color_champagne": "#D8C7A6",
+    "font_display": "'Cormorant Garamond', 'Cormorant', Georgia, serif",
+    "font_ui": "'Manrope', 'Segoe UI', -apple-system, sans-serif",
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap",
+    "fs_mega": "clamp(3.5rem, 13vw, 13rem)",
+    "fs_display": "clamp(2.75rem, 7.5vw, 7rem)",
+    "fs_h2": "clamp(1.9rem, 3.6vw, 3.4rem)",
+    "fs_h3": "clamp(1.15rem, 1.5vw, 1.6rem)",
+    "fs_lede": "clamp(1rem, 0.5vw + 0.9rem, 1.15rem)",
+    "fs_small": "0.8125rem",
+    "label_size": "0.625rem",
+    "label_track": "0.34em",
+    "space_band": "clamp(96px, 13vw, 220px)",
+    "space_band_tight": "clamp(64px, 8vw, 120px)",
+    "space_gutter": "clamp(20px, 6vw, 110px)",
+    "header_height": 84,
+    "border_radius": 0,
+    "hairline_light": 14,
+    "hairline_dark": 16,
+    "shadow_bottle": "0 60px 70px rgba(0,0,0,0.65)",
+    "button_padding": "18px 34px",
+    "button_min_height": 48,
+    "button_weight": 600,
+    "t_fast": 240,
+    "t_base": 520,
+    "t_slow": 900,
+    "t_cine": 1400,
+    "enable_cursor": true,
+    "enable_parallax": true,
+    "enable_loader": true,
+    "brand_name": "VELMONT",
+    "whatsapp": "https://wa.me/573103608872",
+    "instagram": "https://instagram.com/velmont.fragances",
+    "city_line": "Bogotá · Colombia",
+    "content_for_index": [],
+    "blocks": {
+      "124348908681409149": {
+        "type": "shopify://apps/simple-bundles-kits/blocks/simple-bundles-v2/e553276b-36b2-446d-b80a-aa47fe5f96ac",
+        "disabled": false,
+        "settings": {
+          "select_placeholder": "Elige una fragancia",
+          "disable_oos_options": true,
+          "show_price_variance": true,
+          "rank_options_by_price_diff": true,
+          "custom_css": "",
+          "custom_js": ""
+        }
+      }
+    }
+  }
+}

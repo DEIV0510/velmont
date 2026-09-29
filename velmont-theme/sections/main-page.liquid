@@ -1,0 +1,12 @@
+<section class="band band--below-header" data-tone="light">
+  <div class="wrap page-body">
+    <h1 class="display" data-reveal><span class="line-mask"><span>{{ page.title }}</span></span></h1>
+    {%- if page.content != blank -%}
+      <div class="rte" data-reveal>{{ page.content }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Página", "tag": "section", "settings": [] }
+{% endschema %}

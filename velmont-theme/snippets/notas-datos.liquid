@@ -1,0 +1,162 @@
+{%- comment -%}
+  FICHA OLFATIVA — generado desde Velmont_notas_perfumes.xlsx (hoja "Fichas").
+
+  Nada de esto esta inventado: familia, piramide, ocasion y concentracion salen
+  de la hoja del comerciante, con su nivel de confianza revisado uno a uno. Las
+  fichas que la propia hoja marca NO ENCONTRADO se quedan fuera: antes un hueco
+  que un dato que nadie ha podido confirmar.
+
+  Los datos y el marcado van JUNTOS porque {% raw %}{% render %}{% endraw %} aisla el ambito y un
+  "assign" hecho en otro snippet no saldria de el.
+
+  Mandan los metacampos si algun dia existen: este bloque solo aparece cuando el
+  producto no trae ya su propia ficha.
+
+  GENERADO — no editar a mano; si cambia la hoja, se regenera.
+{%- endcomment -%}
+
+{%- liquid
+  assign fila = ''
+  case product.handle
+    when 'zenith'
+      assign fila = 'Floral frutal con toques orientales§Manzana roja, lirio de los valles§Ámbar, bergamota, coñac, mirra, nardo§Jazmín, vainilla§Día a día y ocasiones especiales, cualquier clima§EDP 50 ml'
+    when 'nautica-voyage'
+      assign fila = 'Amaderada acuática§Hojas verdes, manzana§Loto, mimosa§Almizcle, cedro, musgo de roble, ámbar§Día, verano, oficina y uso casual§EDT'
+    when 'vega-gold'
+      assign fila = 'Frutal floral dulce§Fresa, frambuesa, lichi, ciruela§Rosa, magnolia§Ámbar, vainilla§Noches y eventos donde quieras destacar§EDP 60 ml (frasco con escarcha de oro 24K)'
+    when 'millionarie'
+      assign fila = 'Gourmand amaderada ambarada§Champaña, bergamota de Calabria, papiro, naranja y limón sicilianos§Iris, cacao, frutas exuberantes§Vainilla de Madagascar, ámbar, oud, almizcle blanco§Noche y ocasiones especiales§Elixir de Parfum'
+    when 'aqua-paris'
+      assign fila = 'Acuática marina cítrica§Bergamota, toronja, acordes marinos, vetiver§Ambroxan (ámbar gris)§Sándalo, cedro§Día y noche en clima cálido; primavera, verano y otoño§Elixir de Parfum'
+    when 'beso-de-dragon'
+      assign fila = 'Oriental amaderada especiada§Especias y cítricos§Flores y maderas§Vainilla, almizcle, maderas§Noche§Elixir de Parfum'
+    when 'gold-ingot'
+      assign fila = 'Cítrica amaderada§Bergamota, toronja, lima, mandarina§Jazmín, incienso, grosella negra, cedro§Ámbar, pachulí, cedro, vainilla, musgo de roble§Día y noche, todo el año§Extrait de Parfum 80 ml'
+    when 'acid-rain'
+      assign fila = 'Amaderada especiada / gourmand§Trufa, tiaré, enebro, ylang-ylang, frangipani, bergamota, mandarina, cidra§Iris, pimienta rosa, nardo, durazno, flor de loto§Cacao tostado, pachulí, vainilla, mirra, ámbar, sándalo, musgo de roble, almizcle blanco§Noche, clima fresco§Extrait de Parfum 80 ml'
+    when 'babylon'
+      assign fila = 'Oriental especiada resinosa§Azafrán, toronja rosada§Oud, rosa de Taif§Caña de azúcar, almizcle blanco, benjuí, musgo de roble, almendra amarga§Otoño, invierno y noches frescas§Extrait de Parfum 50 ml'
+    when 'lotus'
+      assign fila = 'Floral frutal con fondo amaderado gourmand§Arándano, hoja de violeta, casia, albahaca§Frangipani, cedro, canela§Gamuza, caramelo, benjuí, pachulí, vetiver, vainilla§Primavera, verano y noches cálidas§Extrait de Parfum 50 ml'
+    when 'denali'
+      assign fila = 'Oriental cítrica amaderada§Azafrán, naranja, mandarina, romero§Praliné, haba tonka, caléndula§Musgo de roble, Iso E Super, cedro§Primavera, otoño y clima templado§Extrait de Parfum 50 ml'
+    when 'taj-madal'
+      assign fila = 'Frutal floral ambarada§Fresa, ruibarbo, naranja sanguina, canela, tomillo§Azafrán, iris, jazmín§Bálsamo de gurjún, bálsamo de Tolú, mirra, oud, ámbar gris, cuero, vainilla, láudano§Otoño, invierno, noches especiales y eventos formales§Extrait de Parfum 50 ml'
+    when 'empire-state'
+      assign fila = 'Amaderada especiada ambarada§Jengibre, bergamota, pimienta rosa, notas verdes§Rosa turca, cardamomo, grosella negra§Benjuí, sándalo, ámbar gris, pachulí, almizcle, vainilla, cedro§Otoño, invierno y noches especiales; de día en clima templado§Extrait de Parfum 50 ml'
+    when 'torre-eifel'
+      assign fila = 'Frutal floral ambarada§Mango, azafrán, bergamota§Oud, rosa búlgara, jazmín, incienso§Musgo de roble, haba tonka, caña de azúcar, ámbar, vainilla, almizcle blanco, sándalo§Otoño, invierno y noches especiales; diario en clima templado§Extrait de Parfum 50 ml'
+    when 'burj-khalifa'
+      assign fila = 'Oriental amaderada (rosa y oud)§Rosa, frambuesa, abedul, limón§Rosa búlgara, azafrán, geranio, oud, violeta, incienso§Benjuí, canela, vainilla, ámbar§Noche y ocasiones especiales§Extrait de Parfum 50 ml'
+    when 'ghighen-itza'
+      assign fila = 'Frutal floral ambarada§Ylang-ylang, bergamota, jazmín de agua, notas verdes, rosa§Durazno, caramelo, lirio, violeta, cipriol, flor de pera, heliotropo§Coco, madera de cachemira, ámbar, tonka, vainilla, almizcle, ébano, guayaco§Primavera, verano, viajes; día o noche§Extrait de Parfum 50 ml'
+    when 'amber-black'
+      assign fila = 'Oriental vainilla§Incienso, azafrán, nuez moscada, mandarina§Guayaco, pachulí, ámbar, vetiver§Chocolate, tabaco, oud, almizcle§Noche y clima fresco§Extrait de Parfum 50 ml'
+    when 'oud-noir'
+      assign fila = 'Amaderada aromática§Cipriol, mandarina, petitgrain, grosella negra§Pachulí, madera de cachemira, caramelo§Vetiver, oud, cuero, ámbar, láudano§Noche§Extrait de Parfum 50 ml'
+    when 'oriental-rose'
+      assign fila = 'Amaderada especiada§Azafrán, ciruela, naranja§Rosa, oud, pachulí§Almizcle, miel, vetiver§Noche y ocasiones especiales§Extrait de Parfum 50 ml'
+    when 'oriental-elixir'
+      assign fila = 'Amaderada chipre con matices orientales§Bergamota, limón, mandarina§Violeta, raíz de iris, rosa, ylang-ylang, pachulí§Cuero, guayaco, ámbar, sándalo, vainilla de Madagascar§Día o noche, todo el año§Extrait de Parfum 50 ml'
+    when 'latin-rose'
+      assign fila = 'Cuero§Cuero, pimienta negra§Rosa, sándalo§Almizcle, ámbar§Noche§Extrait de Parfum 50 ml'
+    when 'vip-carat'
+      assign fila = 'Aromática frutal§Pera, hierba, mandarina§Rosa, pimienta negra, magnolia§Pachulí, almizcle§Noche y ocasiones especiales; otoño e invierno§Extrait de Parfum 50 ml'
+    when 'passion'
+      assign fila = 'Frutal tropical con cuero y oud§Carambola, frutas tropicales, naranja§Cuero, rosa, pachulí§Oud, ámbar, caramelo§Otoño e invierno; atemporal§50 ml (EDP o Extrait según la tienda)'
+    when 'opulent'
+      assign fila = 'Cítrica floral con cuero§Bergamota, pomelo, higo§Violeta, jacinto, lirio de los valles§Cuero, vetiver, ambroxan§Eventos formales y noche§EDP 50 ml'
+    when 'okinawa-2'
+      assign fila = 'Frutal floral§Mora, fresa, lichi§Rosa§(no publicado)§Día a día, de la mañana a la noche§Extrait de Parfum 50 ml'
+    when 'terren'
+      assign fila = 'Aromática amaderada§Pimienta blanca, pomelo, bergamota, limón, caviar§Notas acuáticas, lavanda§Maderas, haba tonka, pachulí, vetiver, vainilla, cistus§Día o noche, todo el año§Extrait de Parfum 50 ml'
+    when 'by-drew'
+      assign fila = 'Amaderada especiada§Rosa, limón, cipriol§Madera de cachemira, ámbar, notas ozónicas§Oud, almizcle, musgo§Días frescos y lluviosos, otoño§Extrait de Parfum 50 ml'
+    when 'oud-vanilla'
+      assign fila = 'Oriental vainilla (gourmand)§Whisky, haba tonka, avellana, caramelo§Vainilla, rosa, jazmín, violeta§Oud, ámbar, almizcle, musgo§Noche y clima frío§Extrait de Parfum 50 ml'
+    when 'regio'
+      assign fila = 'Afrutada amaderada§Bergamota, pimienta rosa, elemí§Lavanda, geranio, romero§Vainilla, pachulí, cedro§Día, primavera y verano§Extrait de Parfum 50 ml'
+    when 'verona'
+      assign fila = 'Afrutada floral§Bergamota, toronja, fresa, rosa§Piña, frambuesa, zanahoria, melocotón, nuez, jazmín§Vetiver, sándalo, almizcle, vainilla§Citas y día en clima templado§Extrait de Parfum 50 ml'
+    when 'sorrento'
+      assign fila = 'Especiada ambarada amaderada§Azafrán, geranio, rosa§Pachulí, cedro, ámbar§Almizcle, cuero, musgo, oud§Noche y temporadas frías§Extrait de Parfum 50 ml'
+    when 'napoli'
+      assign fila = 'Afrutada floral§Mango, naranja, frambuesa, manzana§Jazmín, flor de azahar, caramelo, coco§Cedro, pachulí, vainilla de Madagascar, almizcle§Día, primavera y verano§Extrait de Parfum 50 ml'
+    when 'kingdelary'
+      assign fila = 'Oriental amaderada§Especias finas y destellos cítricos§Resinas preciosas, ámbar§Maderas oscuras, almizcles§Noche§Extrait de Parfum 50 ml'
+    when 'toscana'
+      assign fila = 'Oriental amaderada§Abedul, cedro, pachulí§Ámbar, sándalo§Vainilla, láudano, haba tonka, bálsamo de Tolú, almizcle§Noche, otoño e invierno§Extrait de Parfum 50 ml'
+    when 'palermo'
+      assign fila = 'Floral frutal ambarada§Bergamota, aldehídos, ciruela§Rosa, violeta, lirio§Ámbar, sándalo, almizcle, vainilla§Día o noche, versátil§Extrait de Parfum 50 ml'
+    when 'roma'
+      assign fila = 'Amaderada floral§Cítricos frescos§Rosa, jazmín§Maderas nobles, ámbar§Eventos formales, otoño e invierno§Extrait de Parfum 50 ml'
+    when 'milano'
+      assign fila = 'Floral verde amaderada§Bergamota, cardamomo, pera, eucalipto, hojas de violeta§Violeta, iris, ámbar, incienso, lirio de los valles§Sándalo, vetiver, tabaco, oud, almizcle§Versátil; el fondo de tabaco y oud brilla de noche§Extrait de Parfum 50 ml'
+    when 'di-parma'
+      assign fila = 'Amaderada floral§Bergamota, limón§Jazmín, violeta, iris, ylang-ylang§Cedro, pachulí, vetiver, almizcle§Uso diario y oficina§Extrait de Parfum 50 ml'
+    when 'genova'
+      assign fila = 'Afrutada floral§Bergamota, pera, fresa, frambuesa, nuez moscada§Violeta, magnolia, peonía§Ámbar, vainilla, vetiver, almizcle§Día, primavera y verano§Extrait de Parfum 50 ml'
+    when 'club-de-nuit-urban-elixir-edp-105-ml'
+      assign fila = 'Ámbar aromática especiada§Bergamota, pimienta rosa, jazmín, flor de azahar§Lavanda, elemí, geranio, vetiver, azafrán, tagete§Ambroxan, ámbar, cedro, pachulí, láudano§Noche y ocasiones formales, otoño e invierno§EDP 105 ml'
+    when 'club-de-nuit-intense-3-6-edt-m'
+      assign fila = 'Amaderada especiada§Limón, piña, bergamota, grosella negra, manzana§Abedul, jazmín, rosa§Almizcle, ámbar gris, pachulí, vainilla§Versátil, todo el año§EDT'
+    when 'club-de-nuit-sillage-3-6-edp-m'
+      assign fila = 'Floral amaderada almizclada§Bergamota, limón, lima, grosella negra, hoja de violeta, jengibre§Rosa, iris, jazmín§Ambroxan, almizcle, sándalo, cedro§Día, oficina, primavera y verano§EDP'
+    when 'stallion-53-hombre'
+      assign fila = 'Amaderada con cuero§Cardamomo, violeta§Ámbar, iris§Sándalo, cuero, cedro de Virginia, papiro§Todo el año, fácil de llevar§EDP 100 ml'
+    when 'lattafa-badee-al-oud-noble-blush'
+      assign fila = 'Floral gourmand§Leche de rosas§Merengue, almendra§Vainilla, sándalo, almizcle§Clima fresco y noche§EDP 100 ml'
+    when 'rayhaan-elixir-hombre-100ml'
+      assign fila = 'Cítrica aromática§Bergamota, limón, mandarina, cardamomo§Lavanda, ciprés§Ámbar§Día y clima cálido§EDP 100 ml'
+    when 'rayhan-pacific-aloha'
+      assign fila = 'Acuática frutal§Naranja sanguina, melón, limón§Sandía, coco§Notas marinas, amberwood, cacao§Verano, playa y día§EDP 100 ml'
+    when 'rayhan-obsidian'
+      assign fila = 'Amaderada§Iris, cítricos§Cuero§Sándalo, ambreta, cedro, oud§Noche, ocasiones formales, otoño e invierno§EDP 100 ml'
+    when 'odyssey-tyrant-special-edition-3-4-edp-m'
+      assign fila = 'Oriental amaderada§Pomelo, cítricos§Pimienta, lavanda, geranio, elemí§Ambroxan, maderas, vetiver, cedro§Día, oficina y clima cálido§EDP 100 ml (Special Edition)'
+    when '212-nyc-men-200ml'
+      assign fila = 'Amaderada floral almizclada§Notas verdes, pomelo, especias, bergamota, lavanda, petitgrain§Jengibre, violeta, gardenia, salvia, pimienta verde§Almizcle, sándalo, incienso, vetiver, guayaco, láudano§Día, oficina, todo el año§EDT 200 ml'
+    when 'oomph'
+      assign fila = 'Frutal floral oriental§Piña, manzana, ciruela, fresa§Iris, jazmín, lirio, rosa§Almizcle, cedro, sándalo, pachulí, cipriol, ámbar gris§Día, clima cálido§Extrait de Parfum 30 ml'
+    when 'arte'
+      assign fila = 'Floral ámbar§Flor de azahar, geranio§Jazmín, rosa, lirio de los valles§Ámbar, haba tonka, notas balsámicas§Uso diario§Extrait de Parfum 30 ml'
+    when 'kakuno'
+      assign fila = 'Ámbar amaderada balsámica§Caramelo, frutos silvestres, pimienta rosa, durazno, láudano, fresa§Cipriol, jengibre, cuero, rosa, pachulí, azafrán§Bálsamo del Perú, oud, benjuí, vainilla, almizcle§Noche§Extrait de Parfum 30 ml'
+    when 'roso'
+      assign fila = 'Floral cítrica ambarada§Bergamota, mandarina, ruibarbo§Rosa, jazmín, nuez moscada§Almizcle blanco, cedro, ámbar, incienso, vainilla, vetiver§Noche y ocasiones especiales§Extrait de Parfum 30 ml'
+  endcase
+-%}
+
+{%- if fila != blank -%}
+  {%- assign c = fila | split: '§' -%}
+  {%- assign n_familia = c[0] -%}
+  {%- assign n_salida  = c[1] -%}
+  {%- assign n_corazon = c[2] -%}
+  {%- assign n_fondo   = c[3] -%}
+  {%- assign n_ideal   = c[4] -%}
+  {%- assign n_conc    = c[5] -%}
+
+  <div class="notas" data-reveal>
+    {%- if n_salida != '-' or n_corazon != '-' or n_fondo != '-' -%}
+      <div class="notas__piramide">
+        {%- if n_salida != '-' -%}
+          <div class="notas__paso"><span class="label notas__paso-t">Salida</span><p class="notas__paso-v">{{ n_salida }}</p></div>
+        {%- endif -%}
+        {%- if n_corazon != '-' -%}
+          <div class="notas__paso"><span class="label notas__paso-t">Corazón</span><p class="notas__paso-v">{{ n_corazon }}</p></div>
+        {%- endif -%}
+        {%- if n_fondo != '-' -%}
+          <div class="notas__paso"><span class="label notas__paso-t">Fondo</span><p class="notas__paso-v">{{ n_fondo }}</p></div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if n_familia != '-' or n_ideal != '-' or n_conc != '-' -%}
+      <dl class="notas__datos">
+        {%- if n_familia != '-' -%}<div><dt class="label">Familia</dt><dd>{{ n_familia }}</dd></div>{%- endif -%}
+        {%- if n_conc != '-' -%}<div><dt class="label">Concentración</dt><dd>{{ n_conc }}</dd></div>{%- endif -%}
+        {%- if n_ideal != '-' -%}<div><dt class="label">Ideal para</dt><dd>{{ n_ideal }}</dd></div>{%- endif -%}
+      </dl>
+    {%- endif -%}
+  </div>
+{%- endif -%}

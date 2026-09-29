@@ -1,0 +1,101 @@
+{%- comment -%}
+  Las marcas que trabajamos — marquesina tipografica.
+
+  La lista NO se escribe a mano: sale de collections.all.all_vendors, asi que
+  una casa nueva aparece sola en cuanto entra su primer producto.
+
+  Sin logotipos: no los tenemos en calidad y usar marcas ajenas trae
+  problemas. Solo el nombre, en serif y a tamano de contenido: son nombres
+  propios, no etiquetas de sistema.
+
+  Los nombres se emiten TODOS en la primera tira. global.js los cuenta,
+  filtra los que no llegan al minimo, los ordena por volumen y los reparte
+  entre las tres. Si esa peticion falla se quedan todos en la primera tira:
+  sin deriva y sin jerarquia, pero completos y legibles. Nunca invisibles.
+
+  El campo Proveedor viene en mayusculas ("AL HARAMAIN"). Se recompone
+  palabra a palabra porque CSS no puede: `capitalize` no baja las mayusculas
+  que ya existen.
+{%- endcomment -%}
+
+{%- assign marcas = collections.all.all_vendors -%}
+
+{%- if marcas.size > 0 -%}
+  <section {% render 'panel', color: section.settings.panel, extra: 'houses' %} id="{{ section.settings.anchor | default: 'casas' }}">
+    {% render 'section-header',
+       index: section.settings.index,
+       title: section.settings.heading,
+       link_text: section.settings.link_text,
+       link_url: section.settings.link_url %}
+
+    {%- comment -%} Se compara con comas alrededor para que 'armaf' no case dentro de 'armafino'. {%- endcomment -%}
+    {%- assign ocultas = section.settings.hide | downcase | replace: ', ', ',' | replace: ' ,', ',' | prepend: ',' | append: ',' -%}
+
+    <div class="marquee-set" data-houses data-min="{{ section.settings.min_pieces }}">
+      <div class="marquee" data-marquee data-dir="left" data-seg="52">
+        <div class="marquee__track" data-track>
+          {%- for marca in marcas -%}
+            {%- assign clave = marca | strip | downcase -%}
+            {%- assign busca = clave | prepend: ',' | append: ',' -%}
+            {%- unless ocultas contains busca -%}
+              {%- if marca != blank -%}
+                {%- comment -%}
+                  Se compone con append, no con un espacio literal dentro del
+                  bucle: el control de espacios en blanco de Liquid se lo
+                  comia y salia "CarolinaHerrera".
+                {%- endcomment -%}
+                {%- assign trozos = marca | downcase | split: ' ' -%}
+                {%- assign bonito = '' -%}
+                {%- for t in trozos -%}
+                  {%- assign pieza = t | capitalize -%}
+                  {%- if forloop.first -%}
+                    {%- assign bonito = pieza -%}
+                  {%- else -%}
+                    {%- assign bonito = bonito | append: ' ' | append: pieza -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                <a class="house" href="{{ routes.collections_url }}/vendors?q={{ marca | url_encode }}" data-house="{{ marca | escape }}" data-cursor-label="{{ 'motion.cursor.view' | t }}">{{ bonito | strip }}</a><span class="house__sep" aria-hidden="true">·</span>
+              {%- endif -%}
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="marquee" data-marquee data-dir="right" data-seg="64">
+        <div class="marquee__track" data-track></div>
+      </div>
+
+      <div class="marquee" data-marquee data-dir="left" data-seg="70">
+        <div class="marquee__track" data-track></div>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Casas",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "index", "label": "Índice", "default": "Las marcas" },
+    { "type": "text", "id": "heading", "label": "Titular", "default": "Las marcas que trabajamos" },
+    { "type": "text", "id": "link_text", "label": "Enlace" },
+    { "type": "url", "id": "link_url", "label": "Destino del enlace" },
+    { "type": "text", "id": "anchor", "label": "Ancla", "default": "casas" },
+    { "type": "range", "id": "min_pieces", "label": "Mínimo de piezas por casa", "min": 1, "max": 6, "step": 1, "default": 2, "info": "Una casa con una sola pieza ensucia el muro. Con 1 salen todas." },
+    { "type": "text", "id": "hide", "label": "Casas a ocultar", "default": "diseñador, clavin klein", "info": "Separadas por comas. Para erratas del campo Proveedor o categorías que no son marcas. Lo suyo es corregirlas en el producto." },
+    {
+      "type": "select",
+      "id": "panel",
+      "label": "Panel",
+      "options": [
+        { "value": "ink", "label": "Tinta" },
+        { "value": "black", "label": "Negro" },
+        { "value": "cream", "label": "Crema" }
+      ],
+      "default": "ink"
+    }
+  ],
+  "presets": [{ "name": "Casas" }]
+}
+{% endschema %}

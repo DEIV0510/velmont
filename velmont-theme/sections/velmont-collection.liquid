@@ -1,0 +1,96 @@
+{%- comment -%}
+  02 — La colección. En escritorio es una composición asimétrica de 12
+  columnas (no una cuadrícula pareja); en ≤859 px se convierte en una galería
+  deslizable con indicador 01 / 06. Las piezas salen de una colección real.
+{%- endcomment -%}
+
+{%- liquid
+  assign source = section.settings.collection
+  assign limit = section.settings.count
+-%}
+
+<section {% render 'panel', color: section.settings.panel, extra: 'band band--tight' %} id="{{ section.settings.anchor | default: 'coleccion' }}"{% if section.settings.layout == "pinned" %} data-pin-h{% endif %}>
+  {% render 'section-header',
+     index: section.settings.index,
+     title: section.settings.heading,
+     lede: section.settings.lede,
+     link_text: section.settings.link_text,
+     link_url: source.url %}
+
+  {%- if source != blank and source.products_count > 0 -%}
+    {%- if section.settings.layout == "pinned" -%}
+      {%- comment -%}
+        Cinta anclada: la pagina se queda quieta y el catalogo avanza de lado.
+        En movil el JS no la engancha y queda como carrusel de arrastre, que
+        es el gesto natural ahi.
+      {%- endcomment -%}
+      <div class="pin-h__track" data-pin-track data-composition data-cursor-label="{{ 'motion.cursor.swipe' | t }}">
+        {%- for product in source.products limit: limit -%}
+          {% render 'piece', product: product, eager: forloop.first, sizes: '(min-width: 900px) 24vw, 76vw' %}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="composition composition--{{ section.settings.layout }}" data-composition>
+        {%- for product in source.products limit: limit -%}
+          {% render 'piece', product: product, eager: forloop.first, sizes: '(min-width: 1200px) 20vw, (min-width: 860px) 27vw, 76vw' %}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="swipe-hint" data-swipe-hint aria-hidden="true">
+      <span class="label" data-swipe-count>01 / {{ source.products.size | at_most: limit | prepend: '0' | slice: -2, 2 }}</span>
+      <i><b></b></i>
+      <span class="label">{{ section.settings.swipe_label }}</span>
+    </div>
+  {%- else -%}
+    <div class="wrap">
+      <p class="lede">{{ 'sections.collection.empty' | t }}</p>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Colección",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "index", "label": "Índice", "default": "02 — La colección" },
+    { "type": "text", "id": "heading", "label": "Titular", "default": "Nuestra selección" },
+    { "type": "text", "id": "lede", "label": "Frase bajo el titular", "default": "Perfumes elegidos por VELMONT." },
+    { "type": "collection", "id": "collection", "label": "Colección" },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Disposición",
+      "options": [
+        { "value": "even", "label": "Rejilla ordenada" },
+        { "value": "broken", "label": "Rejilla rota (editorial)" },
+        { "value": "editorial", "label": "Composición asimétrica" },
+        { "value": "pinned", "label": "Cinta horizontal anclada" }
+      ],
+      "default": "broken",
+      "info": "La rota es asimétrica pero ningún bloque pasa de 4 columnas de 12: no ocupa más alto que la ordenada. La asimétrica original se diseñó para ilustraciones con mucho aire y con fotos reales resulta enorme."
+    },
+    { "type": "range", "id": "count", "label": "Piezas a mostrar", "min": 3, "max": 12, "step": 1, "default": 6, "info": "La composición asimétrica está pensada para 6." },
+    { "type": "text", "id": "link_text", "label": "Enlace", "default": "Ver todo el catálogo" },
+    { "type": "text", "id": "swipe_label", "label": "Texto del indicador (móvil)", "default": "Desliza" },
+    {
+      "type": "header",
+      "content": "Opciones"
+    },
+    { "type": "text", "id": "anchor", "label": "Ancla", "default": "coleccion" },
+    {
+      "type": "select",
+      "id": "panel",
+      "label": "Panel",
+      "options": [
+        { "value": "cream", "label": "Crema" },
+        { "value": "black", "label": "Negro" },
+        { "value": "ink", "label": "Tinta" }
+      ],
+      "default": "cream"
+    }
+  ],
+  "presets": [{ "name": "Colección" }]
+}
+{% endschema %}

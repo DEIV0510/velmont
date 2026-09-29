@@ -1,0 +1,15 @@
+# config/settings_data.json es del COMERCIANTE, no del repositorio.
+#
+# Ahi viven dos cosas que no escribe nadie desde aqui:
+#   · los app embeds (el widget de Simple Bundles, por ejemplo), que Shopify
+#     registra solo cuando se activan desde el panel;
+#   · lo que el comerciante cambie en el personalizador (colores, logos,
+#     interruptores).
+#
+# Subir la copia local lo revertiria todo sin avisar. Si alguna vez hay que
+# cambiar un ajuste de tema desde aqui: primero `theme pull --only
+# config/settings_data.json` y comparar con la copia local, luego editar.
+# OJO: --only NO salta este archivo (probado 2026-09-29: el push dice
+# «complete» y no sube nada). Hay que apartar .shopifyignore solo durante esa
+# subida y devolverlo en el mismo comando.
+config/settings_data.json

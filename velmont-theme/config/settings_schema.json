@@ -1,0 +1,436 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "VELMONT",
+    "theme_version": "1.0.0",
+    "theme_author": "VELMONT",
+    "theme_documentation_url": "https://velmont-nine.vercel.app",
+    "theme_support_url": "https://wa.me/573103608872"
+  },
+  {
+    "name": "Colores",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Materia"
+      },
+      {
+        "type": "paragraph",
+        "content": "El lujo viene de la composición, la tipografía y el espacio. El dorado es solo filo y acento: nunca relleno grande."
+      },
+      {
+        "type": "color",
+        "id": "color_noir",
+        "label": "Negro profundo",
+        "default": "#08080A",
+        "info": "Fondo del hero, campañas, pie y superposiciones."
+      },
+      {
+        "type": "color",
+        "id": "color_noir_soft",
+        "label": "Negro suave",
+        "default": "#101013",
+        "info": "Superficie secundaria sobre fondo oscuro."
+      },
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "Tinta",
+        "default": "#16161A",
+        "info": "Texto principal sobre fondo claro."
+      },
+      {
+        "type": "color",
+        "id": "color_ivory",
+        "label": "Marfil",
+        "default": "#F4F1EA",
+        "info": "Texto sobre oscuro y fondo de los paneles."
+      },
+      {
+        "type": "color",
+        "id": "color_bone",
+        "label": "Hueso",
+        "default": "#E9E4D9",
+        "info": "Superficie secundaria sobre fondo claro."
+      },
+      {
+        "type": "color",
+        "id": "color_stone",
+        "label": "Piedra",
+        "default": "#9C958A",
+        "info": "Texto atenuado sobre oscuro."
+      },
+      {
+        "type": "color",
+        "id": "color_stone_deep",
+        "label": "Piedra profunda",
+        "default": "#6A645B",
+        "info": "Texto atenuado sobre claro."
+      },
+      {
+        "type": "header",
+        "content": "Dorado de marca"
+      },
+      {
+        "type": "color",
+        "id": "color_gold",
+        "label": "Dorado",
+        "default": "#C9A867"
+      },
+      {
+        "type": "color",
+        "id": "color_gold_light",
+        "label": "Dorado claro",
+        "default": "#E4D3AB"
+      },
+      {
+        "type": "color",
+        "id": "color_gold_deep",
+        "label": "Dorado profundo",
+        "default": "#8A6F3C"
+      },
+      {
+        "type": "color",
+        "id": "color_champagne",
+        "label": "Champán",
+        "default": "#D8C7A6"
+      }
+    ]
+  },
+  {
+    "name": "Tipografía",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "El sitio usa Cormorant Garamond (títulos) y Manrope (interfaz) desde Google Fonts. Si cambias las familias, revisa que los pesos elegidos existan."
+      },
+      {
+        "type": "text",
+        "id": "font_display",
+        "label": "Familia de títulos",
+        "default": "'Cormorant Garamond', 'Cormorant', Georgia, serif"
+      },
+      {
+        "type": "text",
+        "id": "font_ui",
+        "label": "Familia de interfaz",
+        "default": "'Manrope', 'Segoe UI', -apple-system, sans-serif"
+      },
+      {
+        "type": "text",
+        "id": "google_fonts_url",
+        "label": "URL de Google Fonts",
+        "default": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap"
+      },
+      {
+        "type": "header",
+        "content": "Escala"
+      },
+      {
+        "type": "paragraph",
+        "content": "Valores fluidos: el primero es el mínimo en móvil, el último el máximo en escritorio."
+      },
+      {
+        "type": "text",
+        "id": "fs_mega",
+        "label": "Mega (marca de agua)",
+        "default": "clamp(3.5rem, 13vw, 13rem)"
+      },
+      {
+        "type": "text",
+        "id": "fs_display",
+        "label": "Display (títulos de sección)",
+        "default": "clamp(2.75rem, 7.5vw, 7rem)"
+      },
+      {
+        "type": "text",
+        "id": "fs_h2",
+        "label": "H2",
+        "default": "clamp(1.9rem, 3.6vw, 3.4rem)"
+      },
+      {
+        "type": "text",
+        "id": "fs_h3",
+        "label": "H3",
+        "default": "clamp(1.15rem, 1.5vw, 1.6rem)"
+      },
+      {
+        "type": "text",
+        "id": "fs_lede",
+        "label": "Entradilla",
+        "default": "clamp(1rem, 0.5vw + 0.9rem, 1.15rem)"
+      },
+      {
+        "type": "text",
+        "id": "fs_small",
+        "label": "Pequeño",
+        "default": "0.8125rem"
+      },
+      {
+        "type": "header",
+        "content": "Micro-etiqueta"
+      },
+      {
+        "type": "paragraph",
+        "content": "La firma tipográfica de la casa: diminuta, en mayúsculas y muy espaciada."
+      },
+      {
+        "type": "text",
+        "id": "label_size",
+        "label": "Tamaño",
+        "default": "0.625rem"
+      },
+      {
+        "type": "text",
+        "id": "label_track",
+        "label": "Espaciado entre letras",
+        "default": "0.34em"
+      }
+    ]
+  },
+  {
+    "name": "Espaciado",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "El sitio no usa un contenedor centrado con ancho máximo: va de borde a borde y el margen lateral lo define el canal."
+      },
+      {
+        "type": "text",
+        "id": "space_band",
+        "label": "Respiro vertical de sección",
+        "default": "clamp(96px, 13vw, 220px)"
+      },
+      {
+        "type": "text",
+        "id": "space_band_tight",
+        "label": "Respiro vertical reducido",
+        "default": "clamp(64px, 8vw, 120px)"
+      },
+      {
+        "type": "text",
+        "id": "space_gutter",
+        "label": "Canal (margen lateral)",
+        "default": "clamp(20px, 6vw, 110px)"
+      },
+      {
+        "type": "range",
+        "id": "header_height",
+        "label": "Alto del encabezado",
+        "min": 60,
+        "max": 120,
+        "step": 2,
+        "unit": "px",
+        "default": 84
+      }
+    ]
+  },
+  {
+    "name": "Bordes y sombras",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "El diseño no usa esquinas redondeadas ni sombras en superficies: solo filetes de 1 px. Las sombras se reservan para los frascos."
+      },
+      {
+        "type": "range",
+        "id": "border_radius",
+        "label": "Radio de esquinas",
+        "min": 0,
+        "max": 16,
+        "step": 1,
+        "unit": "px",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "hairline_light",
+        "label": "Opacidad del filete (sobre claro)",
+        "min": 4,
+        "max": 40,
+        "step": 2,
+        "unit": "%",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "hairline_dark",
+        "label": "Opacidad del filete (sobre oscuro)",
+        "min": 4,
+        "max": 40,
+        "step": 2,
+        "unit": "%",
+        "default": 16
+      },
+      {
+        "type": "text",
+        "id": "shadow_bottle",
+        "label": "Sombra del frasco",
+        "default": "0 60px 70px rgba(0,0,0,0.65)"
+      }
+    ]
+  },
+  {
+    "name": "Botones",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "El botón no cambia de color: el relleno entra desde abajo al pasar el cursor."
+      },
+      {
+        "type": "text",
+        "id": "button_padding",
+        "label": "Relleno interno",
+        "default": "18px 34px"
+      },
+      {
+        "type": "range",
+        "id": "button_min_height",
+        "label": "Alto mínimo",
+        "min": 40,
+        "max": 64,
+        "step": 2,
+        "unit": "px",
+        "default": 48
+      },
+      {
+        "type": "range",
+        "id": "button_weight",
+        "label": "Grosor del texto",
+        "min": 400,
+        "max": 700,
+        "step": 100,
+        "default": 600
+      }
+    ]
+  },
+  {
+    "name": "Movimiento",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Lento, preciso, intencional. Todo se desactiva solo si el visitante pide menos movimiento en su sistema."
+      },
+      {
+        "type": "range",
+        "id": "t_fast",
+        "label": "Rápido",
+        "min": 120,
+        "max": 400,
+        "step": 20,
+        "unit": "ms",
+        "default": 240
+      },
+      {
+        "type": "range",
+        "id": "t_base",
+        "label": "Base",
+        "min": 300,
+        "max": 800,
+        "step": 20,
+        "unit": "ms",
+        "default": 520
+      },
+      {
+        "type": "range",
+        "id": "t_slow",
+        "label": "Lento",
+        "min": 500,
+        "max": 1400,
+        "step": 50,
+        "unit": "ms",
+        "default": 900
+      },
+      {
+        "type": "range",
+        "id": "t_cine",
+        "label": "Cinematográfico",
+        "min": 800,
+        "max": 2200,
+        "step": 50,
+        "unit": "ms",
+        "default": 1400
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_cursor",
+        "label": "Cursor de marca en escritorio",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_parallax",
+        "label": "Profundidad del hero con el ratón",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_loader",
+        "label": "Pantalla de carga en la primera visita",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Marca",
+    "settings": [
+      {
+        "type": "text",
+        "id": "brand_name",
+        "label": "Nombre de la marca",
+        "default": "VELMONT",
+        "info": "Es el que ve el cliente en el titulo, el pie y los textos alternativos. Si lo dejas vacio se usa el nombre de la tienda de Shopify."
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_wordmark",
+        "label": "Logotipo del encabezado",
+        "info": "Si lo dejas vacío se usa el archivo del tema. Se muestra a 26 px de alto."
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_loader",
+        "label": "Logotipo de la pantalla de carga",
+        "info": "El lockup completo, con sello. Si lo dejas vacío se usa el archivo del tema."
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_letters",
+        "label": "Letras para la marca de agua del hero"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_seal",
+        "label": "Sello del pie"
+      },
+      {
+        "type": "image_picker",
+        "id": "texture_marble",
+        "label": "Textura de mármol",
+        "info": "Fondo del hero y de las campañas."
+      },
+      {
+        "type": "header",
+        "content": "Contacto"
+      },
+      {
+        "type": "text",
+        "id": "whatsapp",
+        "label": "WhatsApp",
+        "default": "https://wa.me/573103608872"
+      },
+      {
+        "type": "text",
+        "id": "instagram",
+        "label": "Instagram",
+        "default": "https://instagram.com/velmont.fragances"
+      },
+      {
+        "type": "text",
+        "id": "city_line",
+        "label": "Ciudad",
+        "default": "Bogotá · Colombia"
+      }
+    ]
+  }
+]

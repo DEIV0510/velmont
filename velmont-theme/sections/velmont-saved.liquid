@@ -1,0 +1,42 @@
+{%- comment -%}
+  Guardados: la lista vive en el navegador del visitante, no en Shopify, asi
+  que el servidor no puede pintarla. El HTML trae el estado vacio ya escrito
+  —si el JS no llega, la pagina sigue diciendo algo— y global.js lo sustituye
+  por la lista real en cuanto arranca.
+{%- endcomment -%}
+
+<section class="band band--tight band--below-header band--head" data-tone="light">
+  <div class="wrap collection-head">
+    {%- if section.settings.index != blank -%}
+      <span class="section-index" data-reveal>{{ section.settings.index }}</span>
+    {%- endif -%}
+    <h1 class="display collection-head__title" data-reveal>
+      <span class="line-mask"><span>{{ section.settings.heading | default: page.title }}</span></span>
+    </h1>
+    {%- if section.settings.note != blank -%}
+      <div class="lede collection-head__note" data-reveal>{{ section.settings.note }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+<section class="band band--flush" data-tone="light">
+  <div class="wrap saved-page" data-saved-page>
+    <div class="bag-empty">
+      <p class="lede">{{ 'general.saved.empty' | t }}</p>
+      <a class="act" href="{{ routes.all_products_collection_url }}">{{ 'general.cart.continue' | t }}</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Guardados",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "index", "label": "Índice", "default": "Tu selección" },
+    { "type": "text", "id": "heading", "label": "Titular", "default": "Guardados" },
+    { "type": "text", "id": "note", "label": "Texto bajo el titular", "default": "Las piezas que has apartado. Se quedan en este navegador." }
+  ],
+  "presets": [{ "name": "Guardados" }]
+}
+{% endschema %}

@@ -1,0 +1,37 @@
+{%- paginate search.results by 24 -%}
+<section class="band band--tight band--below-header" data-tone="light">
+  <div class="wrap collection-head">
+    <span class="section-index" data-reveal>{{ 'general.search.title' | t }}</span>
+    <h1 class="display" data-reveal>
+      <span class="line-mask"><span>{%- if search.performed and search.terms != blank -%}{{ search.terms | escape }}{%- else -%}{{ 'general.search.title' | t }}{%- endif -%}</span></span>
+    </h1>
+  </div>
+
+  {%- if search.performed and search.results_count > 0 -%}
+    <div class="grid-quiet">
+      {%- for item in search.results -%}
+        {%- if item.object_type == 'product' -%}
+          {% render 'piece', product: item %}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="wrap pager">
+        {%- if paginate.previous -%}<a class="link" href="{{ paginate.previous.url }}">{{ 'general.pagination.previous' | t }}</a>{%- endif -%}
+        <span class="label">{{ paginate.current_page }} / {{ paginate.pages }}</span>
+        {%- if paginate.next -%}<a class="link" href="{{ paginate.next.url }}">{{ 'general.pagination.next' | t }}</a>{%- endif -%}
+      </nav>
+    {%- endif -%}
+  {%- elsif search.performed -%}
+    <div class="wrap">
+      <p class="lede">{{ 'general.search.no_results' | t }}</p>
+      <a class="act" href="{{ routes.all_products_collection_url }}">{{ 'general.cart.continue' | t }}</a>
+    </div>
+  {%- endif -%}
+</section>
+{%- endpaginate -%}
+
+{% schema %}
+{ "name": "Búsqueda", "tag": "section", "settings": [] }
+{% endschema %}

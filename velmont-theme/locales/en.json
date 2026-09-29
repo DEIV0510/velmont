@@ -1,0 +1,87 @@
+{
+  "general": {
+    "404": {
+      "title": "This page",
+      "subtitle": "left no trace.",
+      "text": "The link you followed doesn't exist, or the piece is no longer available.",
+      "cta": "View the collection"
+    },
+    "cart": {
+      "title": "Bag",
+      "items": "pieces",
+      "empty": "Your bag is empty.",
+      "continue": "View the collection",
+      "subtotal": "Subtotal",
+      "checkout": "Checkout",
+      "taxes_note": "Taxes and shipping calculated at checkout.",
+      "remove": "Remove",
+      "increase": "Add one",
+      "decrease": "Remove one",
+      "added": "Added to bag"
+    },
+    "saved": {
+      "title": "Saved",
+      "empty": "You haven't saved any piece yet."
+    },
+    "search": {
+      "title": "Search",
+      "placeholder": "Type the name of a fragrance",
+      "results": "results",
+      "for": "for",
+      "no_results": "No results. Try another name.",
+      "typing": "Type to search"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "previous": "Previous",
+      "next": "Next"
+    }
+  },
+  "products": {
+    "product": {
+      "add": "Add",
+      "sold_out": "Sold out",
+      "save": "Save {{ title }}",
+      "save_short": "Save",
+      "from_price": "From {{ price }}",
+      "type": "Type",
+      "details": "Details",
+      "shipping": "Shipping",
+      "view_image": "View image {{ index }}",
+      "family": "Olfactive family"
+    }
+  },
+  "collections": {
+    "general": {
+      "items": "pieces",
+      "all": "All",
+      "filter": "Filter",
+      "empty": "No fragrances match that combination. Try another one.",
+      "see_all": "See the whole catalogue",
+      "title": "Collections",
+      "index": "The houses"
+    }
+  },
+  "sections": {
+    "collection": {
+      "empty": "Pick a collection in this section's settings."
+    }
+  },
+  "quiz": {
+    "title": "Discover your signature"
+  },
+  "accessibility": {
+    "skip_to_text": "Skip to content",
+    "close": "Close",
+    "menu": "Menu",
+    "main_nav": "Main navigation"
+  },
+  "motion": {
+    "cursor": {
+      "view": "View",
+      "swipe": "Drag",
+      "add": "Add",
+      "discover": "Discover"
+    }
+  }
+}

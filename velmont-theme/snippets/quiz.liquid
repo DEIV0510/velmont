@@ -1,0 +1,16 @@
+{%- comment -%}
+  Carcasa del "Descubre tu marca personal". Las preguntas NO viven aqui: las emite la
+  seccion velmont-discover-quiz como JSON desde sus bloques, para que sean
+  editables. Si la seccion no esta en la pagina, quiz.js no engancha nada y
+  los enlaces "Descubre" navegan a su href normal.
+{%- endcomment -%}
+<section class="finder grain" data-lenis-prevent data-quiz data-tone="dark" aria-hidden="true" role="dialog" aria-modal="true" aria-label="{{ 'quiz.title' | t }}">
+  <div class="finder__progress"><i data-quiz-bar></i></div>
+  <div class="finder__bar">
+    <span class="label" data-quiz-step></span>
+    <button class="icon-btn" data-quiz-close aria-label="{{ 'accessibility.close' | t }}">
+      {% render 'icon', name: 'close', size: 18 %}
+    </button>
+  </div>
+  <div class="finder__body" data-quiz-body></div>
+</section>

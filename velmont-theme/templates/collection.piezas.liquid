@@ -1,0 +1,10 @@
+{%- layout none -%}
+{%- comment -%}
+  Vista alterna que devuelve solo las piezas de una coleccion, sin plantilla.
+  La consume quiz.js para pintar el resultado del cuestionario sin recargar
+  la pagina: /collections/<handle>?view=piezas&limit=4
+{%- endcomment -%}
+{%- assign limit = request.get_params.limit | default: 4 | times: 1 -%}
+{%- for product in collection.products limit: limit -%}
+  <div class="finder__result">{% render 'piece', product: product, reveal: false %}</div>
+{%- endfor -%}

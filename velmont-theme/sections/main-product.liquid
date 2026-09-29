@@ -1,0 +1,256 @@
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign images = product.images
+-%}
+
+<div class="pdp" data-tone="light">
+  <div class="pdp__stage" data-tone="dark" data-pdp-stage>
+    {%- if product.featured_image -%}
+      <img src="{{ product.featured_image | image_url: width: 1400 }}"
+           srcset="{{ product.featured_image | image_url: width: 700 }} 700w,
+                   {{ product.featured_image | image_url: width: 1000 }} 1000w,
+                   {{ product.featured_image | image_url: width: 1400 }} 1400w"
+           sizes="(min-width: 900px) 55vw, 100vw"
+           alt="{{ product.featured_image.alt | default: product.title | escape }}"
+           width="{{ product.featured_image.width }}"
+           height="{{ product.featured_image.height }}"
+           fetchpriority="high"
+           data-pdp-image>
+    {%- endif -%}
+
+    {%- if images.size > 1 -%}
+      <div class="pdp__thumbs" data-pdp-thumbs>
+        {%- for image in images limit: 6 -%}
+          <button class="pdp__thumb{% if forloop.first %} on{% endif %}"
+                  data-pdp-thumb="{{ image | image_url: width: 1400 }}"
+                  aria-label="{{ 'products.product.view_image' | t: index: forloop.index }}">
+            <img src="{{ image | image_url: width: 160 }}" alt="" width="80" height="100" loading="lazy">
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="pdp__info">
+    {%- comment -%}
+      Cuando un producto no trae Proveedor, Shopify devuelve el nombre de la
+      tienda. En el combo salia "MI TIENDA" encima del titulo, que no es una
+      casa perfumera y ademas delata que la tienda sigue sin renombrar. Si el
+      proveedor es el nombre de la tienda, no es un dato: es el hueco.
+    {%- endcomment -%}
+    {%- liquid
+      assign casa = product.vendor
+      assign marca = settings.brand_name | default: shop.name
+      if casa == shop.name or casa == marca
+        assign casa = ''
+      endif
+    -%}
+    {%- if casa != blank -%}
+      <span class="label" data-reveal>{{ casa }}</span>
+    {%- endif -%}
+
+    <h1 class="display pdp__name" data-reveal>{{ product.title }}</h1>
+
+    <div class="pdp__price" data-reveal>
+      {%- if variant.compare_at_price > variant.price -%}
+        {{ variant.price | money_without_trailing_zeros }} <s class="price">{{ variant.compare_at_price | money_without_trailing_zeros }}</s>
+      {%- else -%}
+        {{ variant.price | money_without_trailing_zeros }}
+      {%- endif -%}
+    </div>
+
+    {%- comment -%}
+      La descripcion la escribe la casa, producto por producto. El catalogo se
+      importo con un parrafo autogenerado igual para todos; mientras siga en
+      los datos, el tema no lo pinta: un texto de relleno se nota mas que un
+      hueco. En cuanto haya descripcion escrita de verdad, se renderiza.
+    {%- endcomment -%}
+    {%- liquid
+      assign descripcion = product.description
+      if descripcion contains 'Una pieza seleccionada para descubrir tu próxima firma olfativa'
+        assign descripcion = blank
+      elsif descripcion contains 'Consulta disponibilidad y recibe atención personalizada'
+        assign descripcion = blank
+      endif
+    -%}
+    {%- if descripcion != blank -%}
+      <div class="lede pdp__desc" data-reveal>{{ descripcion }}</div>
+    {%- endif -%}
+
+    {%- comment -%}
+      Piramide olfativa. Es lo que separa una ficha de catalogo de una ficha
+      de perfumeria: sin esto la columna se quedaba en marca, nombre, precio y
+      boton, y se leia igual para los 195 productos.
+    {%- endcomment -%}
+    {% render 'notas-datos', product: product %}
+
+    {%- comment -%}
+      Piezas del combo, para el selector visual.
+
+      La app de bundles pinta un <select> por fragancia y ahi solo hay texto:
+      "9PM BLACK" en una caja gris. Un perfume no se elige leyendo un nombre,
+      se elige viendolo. Aqui se emiten los datos (foto, casa, precio) y
+      global.js dibuja encima una rejilla como la del catalogo; el <select>
+      sigue existiendo debajo y es el que manda el dato al carrito, asi que si
+      el JS no corre el combo se puede comprar igual.
+    {%- endcomment -%}
+    {%- if section.settings.bundle_source != blank -%}
+      <script type="application/json" data-bundle-piezas>
+        [
+          {%- for p in section.settings.bundle_source.products -%}
+            {"t": {{ p.title | json }},
+             "img": {{ p.featured_image | image_url: width: 420 | json }},
+             "casa": {{ p.vendor | json }},
+             "precio": {{ p.price | money_without_trailing_zeros | json }}}
+            {%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
+      </script>
+    {%- endif -%}
+
+    {%- form 'product', product, id: 'VelmontProductForm', class: 'pdp__form' -%}
+      {%- unless product.has_only_default_variant -%}
+        <div class="spec" data-reveal>
+          {%- for option in product.options_with_values -%}
+            <div class="spec__row">
+              <span class="label">{{ option.name }}</span>
+              <div class="pdp__opts" data-option-index="{{ forloop.index0 }}">
+                {%- for value in option.values -%}
+                  <button type="button"
+                          class="pdp__opt{% if option.selected_value == value %} on{% endif %}"
+                          data-option-value="{{ value | escape }}">{{ value }}</button>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endunless -%}
+
+      <select name="id" class="visually-hidden" data-variant-select aria-hidden="true" tabindex="-1">
+        {%- for v in product.variants -%}
+          <option value="{{ v.id }}"
+                  {% if v == variant %}selected{% endif %}
+                  {% unless v.available %}disabled{% endunless %}
+                  data-options="{{ v.options | join: '||' | escape }}"
+                  data-price="{{ v.price | money_without_trailing_zeros }}">{{ v.title }}</option>
+        {%- endfor -%}
+      </select>
+
+      <div class="pdp__cta" data-reveal>
+        <button type="submit"
+                name="add"
+                class="act act--solid"
+                data-add-main
+                {% unless variant.available %}disabled{% endunless %}>
+          {%- if variant.available -%}{{ 'products.product.add' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+        </button>
+
+        <button type="button" class="link" data-save="{{ product.handle }}" aria-pressed="false">
+          {{ 'products.product.save_short' | t }}
+        </button>
+      </div>
+    {%- endform -%}
+
+    {%- comment -%}
+      Ficha tecnica: una fila solo existe si hay dato REAL del producto.
+      - Tipo: solo si dice algo. "Perfume" en una perfumeria es tautologia.
+      - Familia olfativa: metafield que rellena la casa.
+      - Las etiquetas de marketing del import ("Para descubrir") no son datos.
+      - La nota de envio es una promesa global, no una especificacion: si el
+        comerciante no la escribe, no aparece (por omision viene vacia).
+      Si no queda ninguna fila, la tabla entera no se renderiza.
+    {%- endcomment -%}
+    {%- if section.settings.show_meta -%}
+      {%- liquid
+        assign generico = 'perfume,perfumes,fragancia,fragancias,default title,varios'
+        assign tipo = product.type | strip
+        assign tipo_clave = tipo | downcase
+        assign lista = generico | split: ','
+        if lista contains tipo_clave
+          assign tipo = blank
+        endif
+
+        assign familia = product.metafields.custom.familia_olfativa | default: ''
+        assign familia = familia | strip
+
+        assign filas = 0
+        if tipo != blank
+          assign filas = filas | plus: 1
+        endif
+        if familia != blank
+          assign filas = filas | plus: 1
+        endif
+        if section.settings.shipping_note != blank
+          assign filas = filas | plus: 1
+        endif
+      -%}
+      {%- if filas > 0 -%}
+        <div class="spec" data-reveal>
+          {%- if tipo != blank -%}
+            <div class="spec__row">
+              <span class="label">{{ 'products.product.type' | t }}</span>
+              <span class="spec__val">{{ tipo }}</span>
+            </div>
+          {%- endif -%}
+          {%- if familia != blank -%}
+            <div class="spec__row">
+              <span class="label">{{ 'products.product.family' | t }}</span>
+              <span class="spec__val">{{ familia }}</span>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.shipping_note != blank -%}
+            <div class="spec__row">
+              <span class="label">{{ 'products.product.shipping' | t }}</span>
+              <span class="spec__val">{{ section.settings.shipping_note }}</span>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{%- comment -%} Barra de compra fija en móvil: aparece cuando el botón principal sale de pantalla. {%- endcomment -%}
+<div class="buybar" data-buybar aria-hidden="true">
+  <div class="buybar__meta">
+    <span class="buybar__name">{{ product.title }}</span>
+    <span class="price" data-buybar-price>{{ variant.price | money_without_trailing_zeros }}</span>
+  </div>
+  <button class="act act--solid" data-buybar-add tabindex="-1" {% unless variant.available %}disabled{% endunless %}>
+    {{ 'products.product.add' | t }}
+  </button>
+</div>
+
+{%- if section.settings.related_collection != blank -%}
+  <section class="band band--tight" data-tone="light">
+    {% render 'section-header', index: section.settings.related_index, title: section.settings.related_heading %}
+    <div class="reel" data-reel>
+      {%- for p in section.settings.related_collection.products limit: 10 -%}
+        {%- unless p.id == product.id -%}
+          {% render 'piece', product: p, reveal: false %}
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+<script type="application/ld+json">{{ product | structured_data }}</script>
+
+{% schema %}
+{
+  "name": "Ficha de producto",
+  "tag": "section",
+  "settings": [
+    { "type": "checkbox", "id": "show_meta", "label": "Mostrar la ficha técnica", "default": true },
+    { "type": "text", "id": "shipping_note", "label": "Nota de envío", "info": "Déjalo vacío si no quieres la fila. No se inventa nada." },
+    {
+      "type": "header",
+      "content": "También te puede interesar"
+    },
+    { "type": "collection", "id": "related_collection", "label": "Colección relacionada" },
+    { "type": "collection", "id": "bundle_source", "label": "Piezas del combo", "info": "Sólo para fichas de combo. De aquí salen las fotos del selector visual: tiene que ser la misma colección que cargaste en la app de bundles." },
+    { "type": "text", "id": "related_index", "label": "Índice", "default": "También" },
+    { "type": "text", "id": "related_heading", "label": "Titular", "default": "De la misma casa" }
+  ]
+}
+{% endschema %}

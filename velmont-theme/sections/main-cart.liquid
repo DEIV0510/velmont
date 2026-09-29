@@ -1,0 +1,97 @@
+<section class="band band--tight" data-tone="light">
+  <div class="wrap">
+    <span class="section-index" data-reveal>{{ cart.item_count }} {{ 'general.cart.items' | t }}</span>
+    <h1 class="display" data-reveal><span class="line-mask"><span>{{ 'general.cart.title' | t }}</span></span></h1>
+  </div>
+
+  {%- if cart.item_count > 0 -%}
+    <form action="{{ routes.cart_url }}" method="post" class="wrap cart-page" data-cart-form>
+      {%- for item in cart.items -%}
+        <div class="bag-line" data-cart-line="{{ forloop.index }}">
+          <a href="{{ item.url }}" aria-label="{{ item.product.title | escape }}">
+            {%- if item.image -%}
+              <img src="{{ item.image | image_url: width: 128 }}" alt="{{ item.product.title | escape }}" width="64" height="80" loading="lazy">
+            {%- endif -%}
+          </a>
+
+          <div>
+            <a href="{{ item.url }}"><span class="bag-line__name">{{ item.product.title }}</span></a>
+            {%- unless item.product.has_only_default_variant -%}
+              <span class="label">{{ item.variant.title }}</span>
+            {%- endunless -%}
+
+            {%- comment -%}
+              Las fragancias elegidas dentro de un combo. Mismo criterio que la
+              bolsa lateral: se paga por dos perfumes concretos y tienen que
+              verse. Las propiedades que empiezan por "_" son internas de las
+              apps y no se muestran.
+            {%- endcomment -%}
+            {%- assign hay = false -%}
+            {%- for pr in item.properties -%}
+              {%- unless pr.last == blank or pr.first == blank -%}
+                {%- unless pr.first contains '_' and forloop.first == false -%}{%- endunless -%}
+                {%- assign ini = pr.first | slice: 0 -%}
+                {%- unless ini == '_' -%}{%- assign hay = true -%}{%- endunless -%}
+              {%- endunless -%}
+            {%- endfor -%}
+            {%- if hay -%}
+              <div class="bag-line__eleccion">
+                {%- for pr in item.properties -%}
+                  {%- assign ini = pr.first | slice: 0 -%}
+                  {%- unless pr.last == blank or ini == '_' -%}
+                    <span class="bag-line__elec"><i>{{ pr.first }}</i>{{ pr.last }}</span>
+                  {%- endunless -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+            <div class="stepper">
+              <button type="button" data-qty="{{ forloop.index }}" data-delta="-1" aria-label="{{ 'general.cart.decrease' | t }}">−</button>
+              <span>{{ item.quantity }}</span>
+              <button type="button" data-qty="{{ forloop.index }}" data-delta="1" aria-label="{{ 'general.cart.increase' | t }}">+</button>
+            </div>
+          </div>
+
+          <div class="bag-line__right">
+            {%- if item.original_line_price > item.final_line_price -%}
+              <span class="price promo__on">{{ item.final_line_price | money_without_trailing_zeros }}</span>
+              <s class="price">{{ item.original_line_price | money_without_trailing_zeros }}</s>
+            {%- else -%}
+              <span class="price">{{ item.final_line_price | money_without_trailing_zeros }}</span>
+            {%- endif -%}
+            <button type="button" class="mini" data-qty="{{ forloop.index }}" data-remove>{{ 'general.cart.remove' | t }}</button>
+          </div>
+        </div>
+      {%- endfor -%}
+
+      {%- if cart.cart_level_discount_applications.size > 0 -%}
+        <div class="promo">
+          {%- for discount in cart.cart_level_discount_applications -%}
+            <p class="label promo__on">{{ discount.title }} · −{{ discount.total_allocated_amount | money_without_trailing_zeros }}</p>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="cart-page__foot">
+        <div class="bag-totals">
+          <span class="label">{{ 'general.cart.subtotal' | t }}</span>
+          <strong>{{ cart.total_price | money_without_trailing_zeros }}</strong>
+        </div>
+        <p class="mini">{{ 'general.cart.taxes_note' | t }}</p>
+        <button type="submit" name="checkout" class="act act--solid">{{ 'general.cart.checkout' | t }}</button>
+      </div>
+    </form>
+  {%- else -%}
+    <div class="wrap bag-empty">
+      <p class="lede">{{ 'general.cart.empty' | t }}</p>
+      <a class="act" href="{{ routes.all_products_collection_url }}">{{ 'general.cart.continue' | t }}</a>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Bolsa",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

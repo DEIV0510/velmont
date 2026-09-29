@@ -1,0 +1,93 @@
+{%- comment -%}
+  La "pieza": la unidad editorial que reemplaza a la tarjeta de producto.
+  Sin marco ni bloque de datos apilados: imagen con aire, nombre en serif,
+  precio discreto y metadatos que solo aparecen al pasar el cursor.
+
+  Uso: {% render 'piece', product: product, reveal: true %}
+
+  La etiqueta de edicion sale de la coleccion real a la que pertenece el
+  producto, no de un dato escrito a mano.
+{%- endcomment -%}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign edition = ''
+  for c in product.collections
+    if c.handle == '2-matai-x-450-000'
+      assign edition = 'Selección MATAI'
+      break
+    elsif c.handle == '2-x-280-000'
+      assign edition = 'Dúo VELMONT'
+      break
+    endif
+  endfor
+
+  assign meta = ''
+  for tag in product.tags
+    if tag == 'EDP' or tag == 'EDT' or tag == 'Parfum' or tag contains ' ml'
+      if meta == ''
+        assign meta = tag
+      else
+        assign meta = meta | append: ' · ' | append: tag
+      endif
+    endif
+  endfor
+-%}
+
+<article class="piece"{% unless reveal == false %} data-reveal="wipe"{% endunless %}{% unless tilt == false %} data-tilt{% endunless %} data-cursor-label="{{ 'motion.cursor.view' | t }}">
+  <div class="piece__stage">
+    {%- if edition != blank -%}
+      <span class="label piece__edit">{{ edition }}</span>
+    {%- endif -%}
+
+    <button class="piece__save"
+            data-save="{{ product.handle }}"
+            aria-label="{{ 'products.product.save' | t: title: product.title }}"
+            aria-pressed="false">{% render 'icon', name: 'heart', size: 15 %}</button>
+
+    {%- if product.featured_image -%}
+      <img src="{{ product.featured_image | image_url: width: 800 }}"
+           srcset="{{ product.featured_image | image_url: width: 400 }} 400w,
+                   {{ product.featured_image | image_url: width: 600 }} 600w,
+                   {{ product.featured_image | image_url: width: 800 }} 800w,
+                   {{ product.featured_image | image_url: width: 1200 }} 1200w"
+           sizes="{{ sizes | default: '(min-width: 1200px) 20vw, (min-width: 860px) 27vw, 46vw' }}"
+           alt="{{ product.featured_image.alt | default: product.title | escape }}"
+           width="{{ product.featured_image.width }}"
+           height="{{ product.featured_image.height }}"
+           loading="{% if eager %}eager{% else %}lazy{% endif %}"
+           {% if eager %}fetchpriority="high"{% endif %}>
+    {%- else -%}
+      <span class="piece__placeholder label">{{ settings.brand_name | default: shop.name }}</span>
+    {%- endif -%}
+
+    <div class="piece__hover">
+      <span class="label">{{ meta }}</span>
+      {%- if variant.available -%}
+        <button class="link piece__add" data-add="{{ variant.id }}">{{ 'products.product.add' | t }}</button>
+      {%- else -%}
+        <span class="label">{{ 'products.product.sold_out' | t }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <a class="piece__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}"></a>
+
+  {%- comment -%}
+    Jerarquia de lectura: casa → nombre → descriptor olfativo → precio.
+    El precio nunca compite con el nombre, y el descriptor solo existe si
+    hay dato real en el metafield: sin el, la linea no se renderiza.
+  {%- endcomment -%}
+  {%- assign familia = product.metafields.custom.familia_olfativa | default: '' -%}
+  {%- assign familia = familia | strip -%}
+  <div class="piece__meta">
+    {%- if product.vendor != blank -%}
+      <span class="piece__house">{{ product.vendor }}</span>
+    {%- endif -%}
+    <h3 class="piece__name">{{ product.title }}</h3>
+    {%- if familia != blank -%}
+      <span class="piece__notes">{{ familia }}</span>
+    {%- endif -%}
+    {% render 'price', product: product %}
+  </div>
+</article>

@@ -1,0 +1,133 @@
+{%- liquid
+  assign wordmark = section.settings.logo | default: settings.logo_wordmark
+-%}
+
+<header class="hdr" data-hdr>
+  <div class="hdr__in">
+    <nav class="hdr__nav" aria-label="{{ 'accessibility.main_nav' | t }}">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.settings.on_desktop -%}
+            {%- liquid
+              assign url = block.settings.url
+              assign first = url | slice: 0
+              if first == '#'
+                assign url = routes.root_url | append: url
+              endif
+            -%}
+            <a href="{{ url }}"
+               {% if block.settings.url contains '#descubre' %}data-quiz-open{% endif %}
+               {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- endfor -%}
+      {%- endif -%}
+    </nav>
+
+    <a href="{{ routes.root_url }}" class="hdr__mark" aria-label="{{ settings.brand_name | default: shop.name | escape }}">
+      {%- if wordmark -%}
+        <img src="{{ wordmark | image_url: width: 900 }}"
+             alt="{{ settings.brand_name | default: shop.name | escape }}"
+             width="{{ wordmark.width }}" height="{{ wordmark.height }}">
+      {%- else -%}
+        <img src="{{ 'velmont-wordmark.png' | asset_url }}" alt="{{ settings.brand_name | default: shop.name | escape }}" width="1550" height="343">
+      {%- endif -%}
+    </a>
+
+    <div class="hdr__acts">
+      <button class="icon-btn" data-search-open aria-label="{{ 'general.search.title' | t }}">
+        {% render 'icon', name: 'search' %}
+      </button>
+
+      <button class="icon-btn" data-saved-open aria-label="{{ 'general.saved.title' | t }}">
+        {% render 'icon', name: 'heart' %}
+        <span class="count off" data-saved-count>0</span>
+      </button>
+
+      <button class="icon-btn" data-bag-open aria-label="{{ 'general.cart.title' | t }}">
+        {% render 'icon', name: 'bag' %}
+        <span class="count{% if cart.item_count == 0 %} off{% endif %}" data-bag-count>{{ cart.item_count }}</span>
+      </button>
+
+      <button class="icon-btn burger" data-menu-open aria-label="{{ 'accessibility.menu' | t }}" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+{%- comment -%} Menu a pantalla completa: se abre con clip-path, no con opacidad. {%- endcomment -%}
+<div class="menu" data-menu data-tone="dark">
+  <button class="icon-btn menu__close" data-menu-close aria-label="{{ 'accessibility.close' | t }}">
+    {% render 'icon', name: 'close', size: 18 %}
+  </button>
+
+  <nav class="menu__list" data-menu-list aria-label="{{ 'accessibility.menu' | t }}">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign url = block.settings.url
+        assign first = url | slice: 0
+        if first == '#'
+          assign url = routes.root_url | append: url
+        endif
+        assign label = block.settings.label_long | default: block.settings.label
+      -%}
+      <a href="{{ url }}"
+         data-visual="{{ forloop.index0 }}"
+         {% if block.settings.url contains '#descubre' %}data-quiz-open{% endif %}
+         {{ block.shopify_attributes }}>
+        <span class="idx">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>{{ label }}
+      </a>
+    {%- endfor -%}
+  </nav>
+
+  <div class="menu__visual" data-menu-visual>
+    {%- for block in section.blocks -%}
+      {%- if block.settings.image -%}
+        <figure class="{% if forloop.first %}on{% endif %}">
+          <img src="{{ block.settings.image | image_url: width: 900 }}"
+               alt="" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}" loading="lazy">
+        </figure>
+      {%- else -%}
+        <figure class="{% if forloop.first %}on{% endif %}"></figure>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="menu__foot">
+    {%- if settings.instagram != blank -%}
+      <a class="label" href="{{ settings.instagram }}" target="_blank" rel="noopener">Instagram</a>
+    {%- endif -%}
+    {%- if settings.whatsapp != blank -%}
+      <a class="label" href="{{ settings.whatsapp }}" target="_blank" rel="noopener">WhatsApp</a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Encabezado",
+  "class": "shopify-section--header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logotipo", "info": "Se muestra a 26 px de alto (22 px al fijarse)." },
+    { "type": "link_list", "id": "menu", "label": "Menú de reserva", "info": "Solo se usa si no hay ninguna entrada abajo. Un menú de Shopify no permite enlaces de ancla como #ediciones." }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Entrada del menú",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Texto", "default": "Colección" },
+        { "type": "text", "id": "label_long", "label": "Texto en el menú grande", "info": "Si lo dejas vacío se usa el de arriba." },
+        { "type": "text", "id": "url", "label": "Enlace", "default": "/collections/all", "info": "Una ruta (/collections/…), un ancla (#ediciones) o una dirección completa. Si termina en #descubre, abre el cuestionario." },
+        { "type": "checkbox", "id": "on_desktop", "label": "Mostrar en la barra de escritorio", "default": true },
+        { "type": "image_picker", "id": "image", "label": "Imagen", "info": "Aparece al pasar el cursor por esta entrada en el menú grande." }
+      ]
+    }
+  ],
+  "max_blocks": 7
+}
+{% endschema %}

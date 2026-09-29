@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "guardados": {
+      "type": "velmont-saved",
+      "settings": {
+        "index": "Tu selección",
+        "heading": "Guardados",
+        "note": "Las piezas que has apartado. Se quedan en este navegador."
+      }
+    }
+  },
+  "order": ["guardados"]
+}

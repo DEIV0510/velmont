@@ -1,0 +1,178 @@
+{%- comment -%}
+  03 — Descubre. La sección visible es la puerta; el cuestionario en sí vive
+  en un overlay global (snippets/quiz.liquid) para poder abrirse desde el
+  encabezado, el menú, la portada o el pie.
+
+  Las preguntas son bloques y se emiten como JSON: así son editables desde el
+  editor de temas y quiz.js no necesita saber nada del contenido.
+{%- endcomment -%}
+
+{%- liquid
+  assign lines = section.settings.heading | newline_to_br | split: '<br />'
+  assign last = lines.size | minus: 1
+-%}
+
+<section {% render 'panel', color: section.settings.panel, extra: 'band finder-gate' %} id="{{ section.settings.anchor | default: 'descubre' }}">
+  <div class="finder-gate__in">
+    {%- if section.settings.index != blank -%}
+      <span class="section-index" data-reveal>{{ section.settings.index }}</span>
+    {%- endif -%}
+
+    <h2 class="display" data-reveal style="max-width:14ch">
+      {%- for line in lines -%}
+        {%- assign clean = line | strip -%}
+        {%- if clean != blank -%}
+          <span class="line-mask"{% unless forloop.first %}{% endunless %}>
+            <span>{% if forloop.index0 == last and section.settings.italic_last %}<em>{{ clean }}</em>{% else %}{{ clean }}{% endif %}</span>
+          </span>
+        {%- endif -%}
+      {%- endfor -%}
+    </h2>
+
+    {%- if section.settings.text != blank -%}
+      <p class="lede" data-reveal>{{ section.settings.text }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.cta_label != blank -%}
+      <button class="act" data-quiz-open data-reveal>{{ section.settings.cta_label }}</button>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%} Datos del cuestionario para quiz.js {%- endcomment -%}
+<script type="application/json" data-quiz-data>
+{
+  "resultIndex": {{ section.settings.result_index | json }},
+  "resultHeading": {{ section.settings.result_heading | json }},
+  "resultEmpty": {{ section.settings.result_empty | json }},
+  "resultCta": {{ section.settings.result_cta | json }},
+  "resultCtaUrl": {{ section.settings.result_cta_url | default: routes.all_products_collection_url | json }},
+  "restart": {{ section.settings.restart_label | json }},
+  "next": {{ section.settings.next_label | json }},
+  "back": {{ section.settings.back_label | json }},
+  "reading": {{ section.settings.reading_label | json }},
+  "steps": [
+    {%- for block in section.blocks -%}
+      {
+        "title": {{ block.settings.title | json }},
+        "multi": {{ block.settings.multi | json }},
+        "max": {{ block.settings.max | json }},
+        "hint": {{ block.settings.hint | json }},
+        "options": [
+          {%- assign opts = block.settings.options | newline_to_br | split: '<br />' -%}
+          {%- for opt in opts -%}
+            {%- assign clean = opt | strip -%}
+            {%- if clean != blank -%}
+              {%- assign parts = clean | split: '|' -%}
+              {
+                "label": {{ parts[0] | strip | json }},
+                "handle": {{ parts[1] | default: '' | strip | json }}
+              }{% unless forloop.last %},{% endunless %}
+            {%- endif -%}
+          {%- endfor -%}
+        ]
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "Descubre (cuestionario)",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "index", "label": "Índice", "default": "03 — Descubre" },
+    { "type": "textarea", "id": "heading", "label": "Titular", "default": "¿Qué define\ntu presencia?" },
+    { "type": "checkbox", "id": "italic_last", "label": "Última línea en cursiva", "default": true },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Cuatro preguntas y te decimos cuál es la tuya, sin recorrer el catálogo entero ni pelear con filtros." },
+    { "type": "text", "id": "cta_label", "label": "Botón", "default": "Comenzar" },
+    {
+      "type": "header",
+      "content": "Resultado"
+    },
+    { "type": "text", "id": "reading_label", "label": "Mientras calcula", "default": "Leyendo tu perfil…" },
+    { "type": "text", "id": "result_index", "label": "Índice del resultado", "default": "Tu marca personal" },
+    { "type": "text", "id": "result_heading", "label": "Titular del resultado", "default": "Esto te define" },
+    { "type": "text", "id": "result_empty", "label": "Sin coincidencias", "default": "Prueba con otra combinación." },
+    { "type": "text", "id": "result_cta", "label": "Botón del resultado", "default": "Ver toda la colección" },
+    { "type": "url", "id": "result_cta_url", "label": "Destino del botón" },
+    { "type": "text", "id": "restart_label", "label": "Volver a empezar", "default": "Empezar de nuevo" },
+    {
+      "type": "header",
+      "content": "Textos de navegación"
+    },
+    { "type": "text", "id": "next_label", "label": "Continuar", "default": "Continuar" },
+    { "type": "text", "id": "back_label", "label": "Atrás", "default": "Atrás" },
+    {
+      "type": "select",
+      "id": "panel",
+      "label": "Panel",
+      "options": [
+        { "value": "cream", "label": "Crema" },
+        { "value": "black", "label": "Negro" },
+        { "value": "ink", "label": "Tinta" }
+      ],
+      "default": "cream"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Pregunta",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Pregunta", "default": "¿Para quién?" },
+        { "type": "checkbox", "id": "multi", "label": "Permite varias respuestas", "default": false },
+        { "type": "range", "id": "max", "label": "Máximo de respuestas", "min": 1, "max": 4, "step": 1, "default": 2 },
+        { "type": "text", "id": "hint", "label": "Aviso bajo las opciones", "info": "Por ejemplo: «Elige hasta dos». Déjalo vacío si no hace falta." },
+        {
+          "type": "textarea",
+          "id": "options",
+          "label": "Opciones",
+          "default": "Para él | para-el\nPara ella | para-ella\nUnisex | unisex",
+          "info": "Una por línea, con el formato: Etiqueta | identificador-de-coleccion. El identificador decide qué se recomienda al final."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Descubre (cuestionario)",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "title": "¿Para quién?",
+            "options": "Para él | para-el\nPara ella | para-ella\nUnisex | unisex"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "title": "¿Cómo quieres que te recuerden?",
+            "multi": true,
+            "max": 2,
+            "hint": "Elige hasta dos",
+            "options": "Misterioso |\nElegante |\nIntenso |\nIrresistible |\nSofisticado |\nLuminoso |\nCálido |\nAtemporal |"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "title": "¿Dónde lo vas a usar?",
+            "options": "Todos los días |\nLa oficina |\nUna cita |\nLa noche |\nUn evento |\nEl viaje |"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "title": "¿Cuánto quieres que se note?",
+            "options": "Apenas un rastro |\nLo justo |\nQue no haya duda |"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

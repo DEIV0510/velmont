@@ -12,7 +12,11 @@
   Mandan los metacampos si algun dia existen: este bloque solo aparece cuando el
   producto no trae ya su propia ficha.
 
-  GENERADO — no editar a mano; si cambia la hoja, se regenera.
+  Con solo: 'familia' devuelve SOLO la familia, en texto plano, para la
+  tarjeta del catalogo: {% raw %}{% render 'notas-datos', product: p, solo: 'familia' %}{% endraw %}
+
+  GENERADO — no editar los datos a mano; si cambia la hoja, se regenera
+  (conservando el modo solo: 'familia' de abajo).
 {%- endcomment -%}
 
 {%- liquid
@@ -127,7 +131,12 @@
   endcase
 -%}
 
-{%- if fila != blank -%}
+{%- if solo == 'familia' -%}
+  {%- if fila != blank -%}
+    {%- assign c = fila | split: '§' -%}
+    {%- unless c[0] == '-' -%}{{ c[0] }}{%- endunless -%}
+  {%- endif -%}
+{%- elsif fila != blank -%}
   {%- assign c = fila | split: '§' -%}
   {%- assign n_familia = c[0] -%}
   {%- assign n_salida  = c[1] -%}

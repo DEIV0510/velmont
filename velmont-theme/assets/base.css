@@ -680,7 +680,10 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
   overflow: hidden;
   min-height: calc(2em * var(--lh-title));
 }
-.piece__notes { font-size: var(--t-200); letter-spacing: var(--track-body); color: var(--on-surface-dim); }
+.piece__notes {
+  font-size: var(--t-200); letter-spacing: var(--track-body); line-height: 1.4; color: var(--on-surface-dim);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
 .piece__meta .price { font-size: var(--t-200); color: var(--stone-deep); }
 /* Dorado sobre los arcos dorados de MATAI quedaba en 3:1. Mismo vidrio que
    los controles, un poco mas denso: el dorado necesita el 78% para llegar a
@@ -879,6 +882,39 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
   display: block;
 }
 .campaign__duo svg { filter: drop-shadow(0 32px 40px rgba(0,0,0,0.6)); }
+
+/* ===================== EDICIONES EN TARJETAS ===================== */
+/* Las dos ofertas lado a lado, justo despues de la portada (maqueta del
+   cliente). Texto a la izquierda, las dos fotos a la derecha; en movil, las
+   fotos arriba para que la tarjeta no quede mas alta que la pantalla. */
+.ediciones__grid { display: grid; gap: clamp(16px, 2vw, 28px); padding-inline: var(--gutter); }
+@media (min-width: 900px) { .ediciones__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.edicion {
+  position: relative; overflow: hidden;
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: center;
+  gap: clamp(16px, 2vw, 28px);
+  padding: clamp(24px, 3vw, 44px);
+  background: var(--noir); color: var(--ivory);
+  border: var(--hairline-width) solid var(--hairline);
+}
+.edicion__txt { display: grid; justify-items: start; gap: var(--s3); min-width: 0; }
+.edicion__titulo {
+  margin: var(--s2) 0 0;
+  font-family: var(--font-display); font-weight: 400; font-size: var(--t-600);
+  line-height: 1.04; letter-spacing: var(--track-display); text-transform: uppercase;
+}
+/* Medido a 1440: a --t-700 el precio se partia en «2 por / $450.000». Escala con
+   el ancho y cabe en una linea desde 900px hasta el escritorio grande. */
+.edicion__precio { margin: 0; font-family: var(--font-display); font-size: clamp(var(--t-500), 2.4vw, var(--t-600)); line-height: 1.05; }
+.edicion__antes { margin: 0; font-size: var(--t-200); color: var(--stone); }
+.edicion__texto { margin: 0; max-width: 32ch; font-size: var(--t-200); line-height: 1.5; color: var(--stone); }
+.edicion__cta { margin-top: var(--s3); }
+.edicion__duo { display: flex; justify-content: flex-end; gap: var(--s3); }
+.edicion__duo img { width: calc(50% - var(--s3) / 2); max-width: 190px; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+@media (max-width: 520px) {
+  .edicion { grid-template-columns: 1fr; }
+  .edicion__duo { order: -1; justify-content: flex-start; }
+}
 
 /* ===================== FINDER FULLSCREEN ===================== */
 .finder-gate { position: relative; overflow: hidden; }

@@ -6,6 +6,78 @@
   se renderiza con el filtro money, para que cambie solo si cambia el precio.
 {%- endcomment -%}
 
+{%- if section.settings.layout == 'cards' -%}
+  {%- comment -%}
+    Tarjetas lado a lado, como en la maqueta del cliente: la oferta se tiene
+    que entender sin bajar dos pantallas de paneles. «Por separado» NO se
+    escribe a mano: solo sale cuando TODA la coleccion comparte precio (MATAI,
+    13 a 290.000) y es ese precio por las unidades. Con precios mezclados
+    (el duo: de 110.000 a 170.000) no hay un «antes» honesto, y no se pinta.
+  {%- endcomment -%}
+  <section {% render 'panel', color: section.settings.panel, extra: 'band band--tight ediciones' %} id="{{ section.settings.anchor | default: 'ediciones' }}">
+    {% render 'section-header', index: section.settings.index, title: section.settings.heading, lede: section.settings.lede %}
+    <div class="ediciones__grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign source = block.settings.collection
+          assign precio = block.settings.promo_price | times: 100
+          assign antes = 0
+          if source != blank and block.settings.promo_price > 0
+            assign minimo = 0
+            assign maximo = 0
+            for p in source.products limit: 50
+              if forloop.first
+                assign minimo = p.price
+                assign maximo = p.price
+              endif
+              if p.price < minimo
+                assign minimo = p.price
+              endif
+              if p.price > maximo
+                assign maximo = p.price
+              endif
+            endfor
+            if minimo == maximo and minimo > 0
+              assign antes = minimo | times: block.settings.promo_units
+            endif
+          endif
+          assign destino = block.settings.cta_url | default: source.url | default: routes.all_products_collection_url
+        -%}
+        <article class="edicion grain" data-reveal {{ block.shopify_attributes }}>
+          <div class="edicion__txt">
+            {%- if block.settings.index != blank -%}
+              <span class="label label--gold">{{ block.settings.index }}</span>
+            {%- endif -%}
+            <h3 class="edicion__titulo">{{ block.settings.heading }}</h3>
+            {%- if block.settings.promo_price > 0 -%}
+              <p class="edicion__precio">{{ block.settings.promo_units }} por {{ precio | money_without_trailing_zeros }}</p>
+              {%- if antes > precio -%}
+                <p class="edicion__antes">Por separado <s>{{ antes | money_without_trailing_zeros }}</s></p>
+              {%- endif -%}
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="edicion__texto">{{ block.settings.text }}</p>
+            {%- endif -%}
+            {%- if block.settings.cta_label != blank -%}
+              <a href="{{ destino }}" class="act act--solid edicion__cta">{{ block.settings.cta_label }}</a>
+            {%- endif -%}
+          </div>
+          <div class="edicion__duo" aria-hidden="true">
+            {%- if source != blank -%}
+              {%- for product in source.products limit: 2 -%}
+                <img src="{{ product.featured_image | image_url: width: 400 }}"
+                     srcset="{{ product.featured_image | image_url: width: 200 }} 200w, {{ product.featured_image | image_url: width: 400 }} 400w"
+                     sizes="(min-width: 900px) 11vw, 40vw"
+                     alt="" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}"
+                     loading="lazy">
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </section>
+{%- else -%}
 <section id="{{ section.settings.anchor | default: 'ediciones' }}">
   {%- for block in section.blocks -%}
     {%- liquid
@@ -72,12 +144,42 @@
     </article>
   {%- endfor -%}
 </section>
+{%- endif -%}
 
 {% schema %}
 {
   "name": "Ediciones",
   "tag": "section",
   "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Disposición",
+      "options": [
+        { "value": "panels", "label": "Una campaña por pantalla" },
+        { "value": "cards", "label": "Tarjetas lado a lado" }
+      ],
+      "default": "panels",
+      "info": "Tarjetas: las ofertas se entienden de un vistazo, justo después de la portada."
+    },
+    {
+      "type": "header",
+      "content": "Encabezado (solo en tarjetas)"
+    },
+    { "type": "text", "id": "index", "label": "Índice", "default": "Ediciones" },
+    { "type": "text", "id": "heading", "label": "Titular", "default": "Ediciones especiales" },
+    { "type": "text", "id": "lede", "label": "Frase bajo el titular", "default": "Elige dos y paga un precio fijo por la pareja." },
+    {
+      "type": "select",
+      "id": "panel",
+      "label": "Panel",
+      "options": [
+        { "value": "black", "label": "Negro" },
+        { "value": "ink", "label": "Tinta" },
+        { "value": "cream", "label": "Crema" }
+      ],
+      "default": "ink"
+    },
     { "type": "text", "id": "anchor", "label": "Ancla", "default": "ediciones" }
   ],
   "blocks": [

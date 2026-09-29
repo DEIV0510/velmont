@@ -74,20 +74,25 @@
   <a class="piece__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}"></a>
 
   {%- comment -%}
-    Jerarquia de lectura: casa → nombre → descriptor olfativo → precio.
-    El precio nunca compite con el nombre, y el descriptor solo existe si
-    hay dato real en el metafield: sin el, la linea no se renderiza.
+    Jerarquia de lectura: casa → nombre → precio → familia olfativa.
+    La familia va la ULTIMA: solo la tienen los perfumes con ficha real (el
+    metafield o la hoja de notas del comerciante), y si fuera antes del precio
+    los precios de una misma fila quedarian a alturas distintas. Sin dato, la
+    linea no se renderiza: no se inventa un descriptor.
   {%- endcomment -%}
-  {%- assign familia = product.metafields.custom.familia_olfativa | default: '' -%}
-  {%- assign familia = familia | strip -%}
+  {%- assign familia = product.metafields.custom.familia_olfativa | default: '' | strip -%}
+  {%- if familia == blank -%}
+    {%- capture familia -%}{% render 'notas-datos', product: product, solo: 'familia' %}{%- endcapture -%}
+    {%- assign familia = familia | strip -%}
+  {%- endif -%}
   <div class="piece__meta">
     {%- if product.vendor != blank -%}
       <span class="piece__house">{{ product.vendor }}</span>
     {%- endif -%}
     <h3 class="piece__name">{{ product.title }}</h3>
+    {% render 'price', product: product %}
     {%- if familia != blank -%}
       <span class="piece__notes">{{ familia }}</span>
     {%- endif -%}
-    {% render 'price', product: product %}
   </div>
 </article>

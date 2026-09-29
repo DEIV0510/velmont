@@ -20,12 +20,19 @@
           "settings": {
             "text": "Asesoría personalizada"
           }
+        },
+        "originales": {
+          "type": "meta",
+          "settings": {
+            "text": "Perfumes originales"
+          }
         }
       },
       "block_order": [
         "envios",
         "pago",
-        "asesoria"
+        "asesoria",
+        "originales"
       ],
       "settings": {
         "kicker": "Perfumería multimarca",
@@ -74,18 +81,25 @@
           "settings": {
             "text": "Asesoría personal"
           }
+        },
+        "d3": {
+          "type": "item",
+          "settings": {
+            "text": "Perfumes originales"
+          }
         }
       },
       "block_order": [
         "d1",
         "d2",
+        "d3",
         "d4"
       ]
     },
     "coleccion": {
       "type": "velmont-collection",
       "settings": {
-        "index": "01 — La colección",
+        "index": "03 — La colección",
         "heading": "Nuestra selección",
         "count": 6,
         "link_text": "Ver todo el catálogo",
@@ -143,10 +157,10 @@
       ],
       "settings": {
         "index": "02 — Descubre",
-        "heading": "¿Qué define\ntu presencia?",
-        "italic_last": true,
-        "text": "Cuatro preguntas y te decimos cuál es la tuya, sin recorrer el catálogo entero ni pelear con filtros.",
-        "cta_label": "Comenzar",
+        "heading": "¿Qué quieres que\nrecuerden de ti?",
+        "italic_last": false,
+        "text": "Descubre el perfume que representa tu presencia: 4 preguntas, 1 minuto y una recomendación personalizada.",
+        "cta_label": "Descubrir mi perfume",
         "anchor": "descubre",
         "panel": "cream"
       }
@@ -157,10 +171,10 @@
         "matai": {
           "type": "edition",
           "settings": {
-            "index": "03 — Ediciones",
+            "index": "",
             "index_gold": false,
             "heading": "La selección MATAI",
-            "text": "Dos fragancias de la casa MATAI, elegidas para ir juntas.",
+            "text": "Elige dos fragancias de la casa MATAI.",
             "promo_units": 2,
             "promo_price": 450000,
             "cta_label": "Elegir las dos",
@@ -172,10 +186,10 @@
         "seleccion": {
           "type": "edition",
           "settings": {
-            "index": "Edición",
+            "index": "",
             "index_gold": true,
             "heading": "El dúo VELMONT",
-            "text": "Dos esencias de la promoción, elegidas por ti, al mismo precio.",
+            "text": "Elige tus dos favoritos de la selección.",
             "promo_units": 2,
             "promo_price": 280000,
             "cta_label": "Elegir las dos",
@@ -191,7 +205,12 @@
         "seleccion"
       ],
       "settings": {
-        "anchor": "ediciones"
+        "anchor": "ediciones",
+        "layout": "cards",
+        "index": "01 — Ediciones",
+        "heading": "Ediciones especiales",
+        "lede": "Elige dos y paga un precio fijo por la pareja.",
+        "panel": "ink"
       }
     },
     "casa": {
@@ -273,12 +292,12 @@
   },
   "order": [
     "hero",
-    "statement",
+    "ediciones",
+    "descubre",
     "coleccion",
     "casas",
-    "descubre",
+    "statement",
     "banda",
-    "ediciones",
     "momentos",
     "casa",
     "cierre"

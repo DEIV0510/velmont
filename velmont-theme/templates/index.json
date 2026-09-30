@@ -105,10 +105,13 @@
         "link_text": "Ver todo el catálogo",
         "swipe_label": "Desliza",
         "anchor": "coleccion",
-        "collection": "2-matai-x-450-000",
         "layout": "even",
         "panel": "cream",
-        "lede": "Perfumes elegidos por VELMONT."
+        "lede": "Perfumes elegidos por VELMONT.",
+        "rotate": true,
+        "exclude": [
+          "duo-velmont"
+        ]
       }
     },
     "descubre": {

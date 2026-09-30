@@ -34,7 +34,7 @@
   endfor
 -%}
 
-<article class="piece"{% unless reveal == false %} data-reveal="wipe"{% endunless %}{% unless tilt == false %} data-tilt{% endunless %} data-cursor-label="{{ 'motion.cursor.view' | t }}">
+<article class="piece" data-casa="{{ product.vendor | handleize }}"{% unless reveal == false %} data-reveal="wipe"{% endunless %}{% unless tilt == false %} data-tilt{% endunless %} data-cursor-label="{{ 'motion.cursor.view' | t }}">
   <div class="piece__stage">
     {%- if edition != blank -%}
       <span class="label piece__edit">{{ edition }}</span>

@@ -7,7 +7,100 @@
 {%- liquid
   assign source = section.settings.collection
   assign limit = section.settings.count
+  if section.settings.rotate and source == blank
+    assign source = collections.all
+  endif
+  if section.settings.layout == 'pinned'
+    assign tam = '(min-width: 900px) 24vw, 76vw'
+  else
+    assign tam = '(min-width: 1200px) 20vw, (min-width: 860px) 27vw, 76vw'
+  endif
 -%}
+
+{%- capture piezas -%}
+  {%- if section.settings.rotate -%}
+    {%- comment -%}
+      Rotacion. El cliente: «parece que solo vendemos MATAI, siempre aparece
+      MATAI». Se pinta una bolsa de ~4 veces las piezas a mostrar, repartida
+      por TODO el catalogo (una de cada `salto`, con un punto de arranque que
+      cambia cada dia), y el script de abajo elige al azar, en el navegador,
+      las que se ven, sin repetir casa. Tiene que ser en el navegador: Shopify
+      guarda la portada en cache y un azar hecho aqui se repetiria para todos.
+      Fuera: agotados, sin foto, lo que no es de una casa (el combo tiene de
+      casa el nombre de la tienda) y los productos excluidos a mano.
+    {%- endcomment -%}
+    {%- liquid
+      assign excluidos = '|'
+      for x in section.settings.exclude
+        assign excluidos = excluidos | append: x.handle | append: '|'
+      endfor
+      assign bolsa = limit | times: 4
+      assign salto = source.products_count | divided_by: bolsa | at_least: 1
+      assign inicio = 'now' | date: '%j' | modulo: salto
+      assign tomadas = 0
+    -%}
+    {%- paginate source.products by 250 -%}
+      {%- for p in source.products -%}
+        {%- liquid
+          assign marca = '|' | append: p.handle | append: '|'
+          assign vale = true
+          if p.available == false or p.featured_image == blank or p.vendor == blank or p.vendor == shop.name
+            assign vale = false
+          endif
+          if excluidos contains marca
+            assign vale = false
+          endif
+          assign turno = forloop.index0 | modulo: salto
+        -%}
+        {%- if vale and turno == inicio -%}
+          {% render 'piece', product: p, sizes: tam %}
+          {%- assign tomadas = tomadas | plus: 1 -%}
+          {%- if tomadas >= bolsa -%}{%- break -%}{%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endpaginate -%}
+  {%- else -%}
+    {%- for product in source.products limit: limit -%}
+      {% render 'piece', product: product, eager: forloop.first, sizes: tam %}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture rotar -%}
+  {%- if section.settings.rotate -%}
+    <script>
+      /* Elige al azar {{ limit }} piezas de la bolsa, sin repetir casa, y
+         QUITA el resto del documento: esconderlas no basta, las reglas
+         nth-child de la rejilla cuentan hijos. Va en linea y sin defer: corre
+         mientras se analiza la pagina, antes de que el carrusel y las
+         animaciones cuenten las piezas. */
+      (function () {
+        var caja = document.currentScript.previousElementSibling;
+        if (!caja) return;
+        var n = {{ limit }};
+        var piezas = Array.prototype.slice.call(caja.children);
+        for (var i = piezas.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = piezas[i]; piezas[i] = piezas[j]; piezas[j] = t;
+        }
+        var casas = {}, elegidas = [], resto = [];
+        piezas.forEach(function (p) {
+          var c = p.getAttribute('data-casa') || '';
+          if (elegidas.length < n && !casas[c]) { casas[c] = true; elegidas.push(p); } else { resto.push(p); }
+        });
+        while (elegidas.length < n && resto.length) elegidas.push(resto.shift());
+        piezas.forEach(function (p) { if (elegidas.indexOf(p) < 0) p.remove(); });
+        elegidas.forEach(function (p) { caja.appendChild(p); });
+        caja.removeAttribute('data-rotar');
+      })();
+    </script>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- if section.settings.rotate -%}
+  {%- comment -%} Sin JS, o hasta que corre el script: solo las primeras {{ limit }}. {%- endcomment -%}
+  <style>[data-rotar] > :nth-child(n + {{ limit | plus: 1 }}) { display: none; }</style>
+{%- endif -%}
 
 <section {% render 'panel', color: section.settings.panel, extra: 'band band--tight' %} id="{{ section.settings.anchor | default: 'coleccion' }}"{% if section.settings.layout == "pinned" %} data-pin-h{% endif %}>
   {% render 'section-header',
@@ -24,17 +117,11 @@
         En movil el JS no la engancha y queda como carrusel de arrastre, que
         es el gesto natural ahi.
       {%- endcomment -%}
-      <div class="pin-h__track" data-pin-track data-composition data-cursor-label="{{ 'motion.cursor.swipe' | t }}">
-        {%- for product in source.products limit: limit -%}
-          {% render 'piece', product: product, eager: forloop.first, sizes: '(min-width: 900px) 24vw, 76vw' %}
-        {%- endfor -%}
-      </div>
+      <div class="pin-h__track" data-pin-track data-composition{% if section.settings.rotate %} data-rotar{% endif %} data-cursor-label="{{ 'motion.cursor.swipe' | t }}">{{ piezas }}</div>
+      {{- rotar -}}
     {%- else -%}
-      <div class="composition composition--{{ section.settings.layout }}" data-composition>
-        {%- for product in source.products limit: limit -%}
-          {% render 'piece', product: product, eager: forloop.first, sizes: '(min-width: 1200px) 20vw, (min-width: 860px) 27vw, 76vw' %}
-        {%- endfor -%}
-      </div>
+      <div class="composition composition--{{ section.settings.layout }}" data-composition{% if section.settings.rotate %} data-rotar{% endif %}>{{ piezas }}</div>
+      {{- rotar -}}
     {%- endif -%}
 
     <div class="swipe-hint" data-swipe-hint aria-hidden="true">
@@ -58,6 +145,8 @@
     { "type": "text", "id": "heading", "label": "Titular", "default": "Nuestra selección" },
     { "type": "text", "id": "lede", "label": "Frase bajo el titular", "default": "Perfumes elegidos por VELMONT." },
     { "type": "collection", "id": "collection", "label": "Colección" },
+    { "type": "checkbox", "id": "rotate", "label": "Perfumes al azar, uno por casa", "default": false, "info": "Cada visita muestra otros perfumes, sin repetir casa, para que la portada no parezca de una sola marca. Sin colección elegida, salen de todo el catálogo." },
+    { "type": "product_list", "id": "exclude", "label": "Nunca mostrar en la rotación", "limit": 12, "info": "Por ejemplo, el producto del combo: no es un perfume." },
     {
       "type": "select",
       "id": "layout",

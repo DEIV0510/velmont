@@ -1237,6 +1237,11 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 .pdp__info select[name^="properties["]:focus-visible {
   outline: 2px solid var(--gold); outline-offset: 3px; border-bottom-color: var(--gold);
 }
+/* Con la rejilla montada el <select> queda oculto (.visually-hidden), pero la
+   regla de arriba y la que inyecta la app de bundles le devolvian width: 100%
+   y ganaban por especificidad. Medido en escritorio: 1425px de ancho, 70px
+   asomando por la derecha y la ficha del combo mas ancha que la pantalla. */
+.pdp__info select[name^="properties["].visually-hidden { width: 1px; height: 1px; padding: 0; margin: -1px; border: 0; }
 /* --------------------------------------------------------------------------
    Rejilla de piezas del combo. Un perfume no se elige leyendo su nombre en
    una lista: se elige viendolo. Misma proporcion 4:5 y mismo orden de datos

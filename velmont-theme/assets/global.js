@@ -332,6 +332,19 @@ function initBag() {
         const m = k.match(/^properties\[(.+)\]$/);
         if (m && String(v).trim()) props[m[1]] = v;
       }
+      // Combo: manda lo que dicen los <select> (lo que eligio el cliente), no
+      // los campos ocultos de la app, que pueden ir un paso atras (llegan con
+      // «9PM BLACK» y solo se ponen al dia con cada «change»). Y recompone
+      // _bundle_selection con el formato de la app, «A <> B», que es el que
+      // separa el combo en sus dos perfumes en el checkout.
+      const sels = [...form.querySelectorAll('select[name^="properties["]')];
+      if (sels.length) {
+        for (const s of sels) {
+          const m = s.name.match(/^properties\[(.+)\]$/);
+          if (m && s.value) props[m[1]] = s.value;
+        }
+        if ('_bundle_selection' in props) props._bundle_selection = sels.map((s) => s.value).join(' <> ');
+      }
       await addToCart(select.value, 1, props);
     } catch {
       form.submit();   // plan B: envio normal, que tambien lleva el formulario entero
@@ -735,9 +748,19 @@ function initBundlePicker() {
   // de revisar() y no en el clic: la app puede rehacer su widget justo
   // despues, y el reloj vuelve a montar las rejillas un instante mas tarde.
   let avanzar = false;
-  // Desplegables ya vaciados una vez (ver montar): por nombre, no por nodo,
-  // porque la app puede cambiar el nodo y traer ya la eleccion del cliente.
-  const vaciados = new Set();
+  // Lo que eligio el cliente, por nombre de desplegable: la UNICA fuente de
+  // verdad. La app dibuja sus <select> DOS veces al cargar (medido: a los ~400
+  // y ~900 ms) y la segunda llega otra vez con «9PM BLACK» en los dos: vaciar
+  // una sola vez dejaba el combo armado sin que el cliente eligiera nada. En
+  // cada vuelta del reloj se obliga a cada <select> a decir lo de este mapa.
+  const elecciones = new Map();
+  const imponer = (sel) => {
+    const quiere = elecciones.get(sel.name) || '';
+    if (sel.value === quiere) return false;
+    if (quiere && [...sel.options].some((o) => o.value === quiere)) { sel.value = quiere; return true; }
+    if (!quiere && sel.options[0] && !sel.options[0].value) { sel.selectedIndex = 0; return true; }
+    return false;
+  };
 
   const selects = () => $$('select[name^="properties["]');
   const elegida = (sel) => {
@@ -764,6 +787,19 @@ function initBundlePicker() {
   const revisar = () => {
     const todos = selects();
     if (!todos.length || !boton) return;
+    // Primero, que cada <select> y su rejilla digan lo que eligio el cliente.
+    todos.forEach((sel) => {
+      imponer(sel);
+      const rejilla = sel.nextElementSibling;
+      if (!rejilla?.classList.contains('bundle-pick')) return;
+      for (const b of rejilla.querySelectorAll('.bundle-pick__it')) {
+        const on = b.dataset.val === sel.value;
+        if (b.classList.contains('on') !== on) {
+          b.classList.toggle('on', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        }
+      }
+    });
     const abierto = pasoAbierto(todos);
 
     todos.forEach((sel, i) => {
@@ -773,7 +809,8 @@ function initBundlePicker() {
       rejilla.classList.toggle('is-cerrado', i !== abierto);
       const paso = rejilla.querySelector('.bundle-paso');
       if (!paso) return;
-      paso.querySelector('.bundle-paso__elegida').textContent = p ? p.t : '';
+      const nombre = paso.querySelector('.bundle-paso__elegida');
+      if (nombre.textContent !== (p ? p.t : '')) nombre.textContent = p ? p.t : '';
       paso.querySelector('.bundle-paso__cambiar').hidden = !(p && i !== abierto);
       paso.querySelector('.bundle-paso__espera').hidden = !(!p && i !== abierto);
     });
@@ -797,6 +834,11 @@ function initBundlePicker() {
       boton.closest('.pdp__cta')?.prepend(aviso);
     }
     const nombres = todos.map((s) => elegida(s)?.t).filter(Boolean);
+    // El reloj llama a revisar() cada 400 ms: el resumen solo se reescribe si
+    // cambio, o un lector de pantalla (aria-live) lo repetiria sin parar.
+    const clave = nombres.join('|') + '#' + faltan;
+    if (aviso.dataset.clave === clave) return;
+    aviso.dataset.clave = clave;
     aviso.replaceChildren();
     if (!nombres.length) {
       aviso.textContent = 'Elige tus dos fragancias';
@@ -833,7 +875,8 @@ function initBundlePicker() {
         duo.name = 'properties[_duo]';
         form.appendChild(duo);
       }
-      duo.value = faltan ? '' : todos.map((s) => elegida(s)?.h || '').join('|');
+      const valor = faltan ? '' : todos.map((s) => elegida(s)?.h || '').join('|');
+      if (duo.value !== valor) duo.value = valor;
     }
   };
 
@@ -865,12 +908,11 @@ function initBundlePicker() {
     const h = new URLSearchParams(location.search).get('elige');
     const p = h && porHandle.get(h);
     const primero = selects()[0];
-    if (p && primero && !primero.value) {
+    if (p && primero && !elecciones.has(primero.name)) {
       const opt = [...primero.options].find((o) => o.text.trim().toUpperCase() === String(p.t).trim().toUpperCase());
-      if (opt) {
-        primero.value = opt.value;
-        primero.dispatchEvent(new Event('change', { bubbles: true }));
-      }
+      // Sin «change»: la app se pone al dia cuando el cliente elija el
+      // segundo, y al añadir se manda lo que dicen los <select> (ver submit).
+      if (opt) { elecciones.set(primero.name, opt.value); imponer(primero); }
     }
   };
 
@@ -929,6 +971,7 @@ function initBundlePicker() {
           // Volver a pulsar la elegida la quita: elegir tiene que poder
           // deshacerse sin recargar.
           const nuevo = sel.value === opt.value ? '' : opt.value;
+          if (nuevo) elecciones.set(sel.name, nuevo); else elecciones.delete(sel.name);
           sel.value = nuevo;
           // `change` SI hace falta aqui: con el la app rehace sus campos
           // ocultos (_bundle_selection), que son los que separan el combo en
@@ -957,10 +1000,7 @@ function initBundlePicker() {
       // boton esta bloqueado, y cada eleccion si lo dispara.
       // Solo la PRIMERA vez que aparece cada uno: si la app lo vuelve a
       // dibujar, ya trae lo que el cliente eligio y no se le borra.
-      if (!vaciados.has(sel.name)) {
-        vaciados.add(sel.name);
-        if (sel.options[0] && !sel.options[0].value && sel.selectedIndex !== 0) sel.selectedIndex = 0;
-      }
+      imponer(sel);
 
       sel.addEventListener('change', () => { marcar(); revisar(); });
       sel.classList.add('visually-hidden');

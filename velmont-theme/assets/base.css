@@ -1184,8 +1184,32 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
   transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
   transition: transform 320ms var(--ease-out);
 }
-.pdp__stage img {
-  width: 100%; height: 100%; object-fit: cover;
+/* La foto ENTERA, nunca recortada. Las fotos son verticales (187 de 196 en
+   4:5 y el resto aun mas altas) y en escritorio el escenario es apaisado
+   (~1075×660 a 1870px de ancho): con `cover` se perdia la mitad del frasco y
+   en las de Mundus solo se veia la tapa. Ahora `contain`, y el hueco de los
+   lados lo llena la misma foto ampliada y desenfocada (--pdp-foto, la pone
+   main-product): en las escenas oscuras sigue el ambiente dorado, en las de
+   fondo blanco los lados quedan blancos. Sin franjas negras. */
+.pdp__stage::before {
+  content: ''; position: absolute; inset: -60px; z-index: 0;
+  background: var(--pdp-foto, none) center / cover no-repeat;
+  filter: blur(40px);
+  pointer-events: none;
+  /* Aparece cuando initProduct confirma que la foto es una escena; si es de
+     estudio (fondo liso), los lados toman su color y esto no se pinta. */
+  opacity: 0; transition: opacity .35s var(--ease-out);
+}
+.pdp__stage--escena::before { opacity: 1; }
+.pdp__stage--liso { background: var(--pdp-liso); }
+.pdp__stage--liso::before { display: none; }
+/* Absoluta y no como celda de la rejilla: el escenario es un grid de fila
+   automatica, asi que el `height: 100%` de la foto no se resolvia y la foto
+   media su alto natural (1088×1733 en un escenario de 660 de alto) — se
+   recortaba con `cover` y tambien con `contain`. Medido con su caja real. */
+.pdp__stage > img {
+  position: absolute; inset: 0; z-index: 1;
+  width: 100%; height: 100%; object-fit: contain;
   transform: scale(1.02) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
   transition: transform 320ms var(--ease-out);
 }

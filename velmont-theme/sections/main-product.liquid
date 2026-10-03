@@ -4,7 +4,13 @@
 -%}
 
 <div class="pdp" data-tone="light">
-  <div class="pdp__stage" data-tone="dark" data-pdp-stage>
+  {%- comment -%}
+    --pdp-foto: la misma foto, pequeña, para el fondo desenfocado que rellena
+    los lados (la principal va entera, sin recortar; ver .pdp__stage en base.css).
+    data-foto-borde: una copia diminuta para medir el borde: si es un fondo
+    liso de estudio, los lados van de ese color y no desenfocados (initProduct).
+  {%- endcomment -%}
+  <div class="pdp__stage" data-tone="dark" data-pdp-stage{% if product.featured_image %} style="--pdp-foto: url('{{ product.featured_image | image_url: width: 400 }}')" data-foto-borde="{{ product.featured_image | image_url: width: 64 }}"{% endif %}>
     {%- if product.featured_image -%}
       <img src="{{ product.featured_image | image_url: width: 1400 }}"
            srcset="{{ product.featured_image | image_url: width: 700 }} 700w,

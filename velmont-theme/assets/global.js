@@ -580,6 +580,44 @@ function initProduct() {
   if (!stage) return;
 
   const main = $('[data-pdp-image]');
+
+  // Relleno de los lados de la foto (que va entera, sin recortar). Se mide el
+  // borde de una copia diminuta: si es un fondo liso de estudio (las fotos de
+  // Mundus, en blanco), los lados toman ese color; si es una escena (las de
+  // arcos dorados), se deja el desenfoque de la propia foto. Desenfocar una
+  // foto blanca arrastraba el gris del frasco a los lados y se veia sucio.
+  const borde = stage.dataset.fotoBorde;
+  if (borde) {
+    const escena = () => stage.classList.add('pdp__stage--escena');
+    const muestra = new Image();
+    muestra.crossOrigin = 'anonymous';
+    muestra.onload = () => {
+      try {
+        const w = 32, h = 40;
+        const lienzo = document.createElement('canvas');
+        lienzo.width = w; lienzo.height = h;
+        const cx = lienzo.getContext('2d');
+        cx.drawImage(muestra, 0, 0, w, h);
+        const d = cx.getImageData(0, 0, w, h).data;
+        let n = 0, lisos = 0, r = 0, g = 0, b = 0;
+        for (let y = 0; y < h; y++) {
+          for (let x = 0; x < w; x++) {
+            if (x > 1 && x < w - 2 && y > 1 && y < h - 2) continue;   // solo el marco
+            const i = (y * w + x) * 4;
+            n += 1; r += d[i]; g += d[i + 1]; b += d[i + 2];
+            const hi = Math.max(d[i], d[i + 1], d[i + 2]), lo = Math.min(d[i], d[i + 1], d[i + 2]);
+            if (lo > 215 && hi - lo < 24) lisos += 1;
+          }
+        }
+        if (lisos / n < 0.85) { escena(); return; }
+        stage.style.setProperty('--pdp-liso', `rgb(${Math.round(r / n)}, ${Math.round(g / n)}, ${Math.round(b / n)})`);
+        stage.classList.add('pdp__stage--liso');
+      } catch { escena(); }
+    };
+    muestra.onerror = escena;
+    muestra.src = borde;
+  }
+
   $$('[data-pdp-thumb]').forEach((btn) => {
     btn.addEventListener('click', () => {
       if (!main) return;

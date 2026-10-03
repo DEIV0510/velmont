@@ -8,8 +8,23 @@
     <form action="{{ routes.cart_url }}" method="post" class="wrap cart-page" data-cart-form>
       {%- for item in cart.items -%}
         <div class="bag-line" data-cart-line="{{ forloop.index }}">
+          {%- comment -%}
+            Combo: las fotos de los dos perfumes elegidos (propiedad privada
+            _duo), no la del producto combo. Igual que en la bolsa lateral.
+          {%- endcomment -%}
+          {%- assign duo = item.properties['_duo'] | default: '' -%}
           <a href="{{ item.url }}" aria-label="{{ item.product.title | escape }}">
-            {%- if item.image -%}
+            {%- if duo != blank -%}
+              {%- assign duo_h = duo | split: '|' -%}
+              <span class="bag-line__duo">
+                {%- for h in duo_h limit: 2 -%}
+                  {%- assign pd = all_products[h] -%}
+                  {%- if pd.featured_image -%}
+                    <img src="{{ pd.featured_image | image_url: width: 128 }}" alt="{{ pd.title | escape }}" width="44" height="55" loading="lazy">
+                  {%- endif -%}
+                {%- endfor -%}
+              </span>
+            {%- elsif item.image -%}
               <img src="{{ item.image | image_url: width: 128 }}" alt="{{ item.product.title | escape }}" width="64" height="80" loading="lazy">
             {%- endif -%}
           </a>

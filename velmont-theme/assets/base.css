@@ -629,7 +629,13 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
    El escenario sube por encima del enlace y deja pasar los clics, salvo en
    sus botones. Solo cuando no es el enlace el mismo (colecciones, guardados). */
 .piece__stage:not(a) { z-index: 2; pointer-events: none; container-type: inline-size; }
-.piece__stage:not(a) button { pointer-events: auto; }
+.piece__stage:not(a) :is(button, a) { pointer-events: auto; }
+/* «Elegir para el dúo» (coleccion del combo): en piezas estrechas, «Elegir». */
+.piece__add-corto { display: none; }
+@container (max-width: 240px) {
+  .piece__add-largo { display: none; }
+  .piece__add-corto { display: inline; }
+}
 /* La etiqueta de edicion comparte fila con el corazon (44px a la derecha).
    Medido a 390px: la pieza del catalogo mide 162px y «Selección MATAI» se
    partia en dos y se metia debajo del corazon. Nunca invade su hueco, y si
@@ -1270,9 +1276,14 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 .pdp--combo .pdp__name { font-size: var(--display-hero); line-height: 0.92; max-width: 14ch; }
 /* El precio y el boton no se pierden arriba: acompanan al titular. */
 .pdp--combo .pdp__price { font-size: var(--t-600); }
-/* El "2 ×" acompaña, no compite: mismo cuerpo, peso normal, algo más tenue.
-   Es la misma lectura que ya usa la portada en «2 × $280.000». */
-.pdp__par { color: var(--on-surface-dim); font-weight: 400; }
+/* «$280.000 POR LOS DOS»: el precio es por la pareja y se dice al lado, en
+   voz de etiqueta, para que no compita con la cifra. */
+.pdp__par {
+  font-family: var(--font-ui); font-size: var(--t-200); font-weight: var(--w-label);
+  letter-spacing: var(--track-eyebrow); text-transform: uppercase;
+  color: var(--on-surface-dim); vertical-align: middle;
+}
+.pdp__como { margin: var(--s3) 0 0; max-width: 46ch; font-size: var(--t-300); line-height: 1.5; color: var(--on-surface-dim); }
 /* A todo el ancho, la rejilla es EXACTAMENTE la del catalogo: mismas
    columnas, mismos huecos. Con `auto-fill` salian siete columnas de 169px,
    que es mirar sellos, no perfumes. */
@@ -1283,11 +1294,49 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 }
 @media (min-width: 760px)  { .pdp--combo .bundle-pick { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (min-width: 1200px) { .pdp--combo .bundle-pick { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+/* La etiqueta de la app («PRIMERA FRAGANCIA») la sustituye la cabecera de
+   cada paso (.bundle-paso), que ademas dice cual se eligio. Se oculta a la
+   vista; los lectores de pantalla siguen teniendo el grupo con su nombre. */
 .pdp--combo label[for^="primera-"], .pdp--combo label[for^="segunda-"] {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   El duo en dos pasos. Antes eran dos rejillas de 23 perfumes, una debajo de
+   otra: la segunda empezaba ~2000px mas abajo, el cliente elegia uno arriba
+   y no sabia que faltaba bajar, y si tocaba otro en la misma rejilla
+   CAMBIABA el primero en vez de sumarlo. Ahora solo esta abierto el paso que
+   toca; el hecho se cierra en una linea con la elegida y «Cambiar».
+   -------------------------------------------------------------------------- */
+.pdp--combo .bundle-pick { scroll-margin-top: calc(var(--header-h) + var(--s4)); }
+.bundle-paso {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; flex-wrap: wrap; gap: var(--s2) var(--s4);
   padding-top: var(--s5);
   border-top: var(--hairline-width) solid var(--hairline);
-  margin-top: var(--s5);
 }
+.bundle-paso__n {
+  display: inline-grid; place-items: center; flex: none;
+  width: 30px; height: 30px; border-radius: 999px;
+  border: var(--hairline-width) solid var(--gold);
+  font-family: var(--font-ui); font-size: var(--t-100); font-weight: var(--w-label); color: var(--gold-deep);
+}
+.bundle-paso__t {
+  font-family: var(--font-ui); font-size: var(--t-100); font-weight: var(--w-label);
+  letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--on-surface-dim);
+}
+.bundle-paso__elegida {
+  font-family: var(--font-display); font-size: var(--t-500); font-weight: var(--w-display);
+  text-transform: uppercase; line-height: 1.1; color: var(--on-surface);
+}
+.bundle-paso__elegida:empty { display: none; }
+.bundle-paso__espera { font-size: var(--t-200); color: var(--on-surface-dim); }
+.bundle-paso__cambiar { margin-left: auto; }
+.bundle-paso [hidden] { display: none; }
+/* Paso cerrado: queda la cabecera y desaparecen las piezas. */
+.bundle-pick.is-cerrado > .bundle-pick__it { display: none; }
+.pdp--combo .bundle-pick.is-cerrado { row-gap: 0; }
 
 /* --------------------------------------------------------------------------
    El boton de añadir, fijo al pie mientras se elige.
@@ -1317,6 +1366,9 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
   color: var(--gold-deep);
 }
 .bundle-aviso[hidden] { display: none; }
+/* Con eleccion, la barra dice que lleva: «Tu dúo: X + Y · ahorras Z». */
+.bundle-aviso b { font-weight: 700; color: var(--on-surface); }
+.bundle-aviso__ahorro { color: var(--gold-deep); }
 /* El boton deshabilitado por falta de eleccion se lee como apagado, no como
    agotado: sigue siendo la accion, solo que todavia no toca. */
 .pdp--combo .act--solid:disabled { opacity: .45; cursor: not-allowed; }
@@ -1336,6 +1388,36 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 }
 @media (max-width: 460px) {
   .bag-line__elec { grid-template-columns: 1fr; gap: 0; }
+}
+/* Las dos fotos del duo, montadas en el hueco de una: la bolsa enseña los
+   frascos que el cliente eligio, no la foto del producto combo. */
+.bag-line__duo { position: relative; display: block; width: 64px; height: 80px; }
+.bag-line .bag-line__duo img {
+  position: absolute; width: 44px; height: 55px; object-fit: cover;
+  background: var(--surface-2); outline: 2px solid var(--surface);
+}
+.bag-line .bag-line__duo img:first-child { left: 0; top: 0; }
+.bag-line .bag-line__duo img:last-child { right: 0; bottom: 0; }
+
+/* Coleccion del combo: como funciona, antes de las piezas. Sin esto, «2 por
+   280.000» invitaba a añadir dos sueltos, que se cobran a precio normal. */
+.combo-aviso {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--s4) var(--s6);
+  margin-top: var(--s6);
+  padding: var(--s5) clamp(20px, 3vw, 40px);
+  border: var(--hairline-width) solid var(--gold);
+  background: color-mix(in srgb, var(--gold) 7%, transparent);
+}
+.combo-aviso__txt { display: grid; gap: var(--s2); max-width: 62ch; }
+.combo-aviso__txt p { margin: 0; font-size: var(--t-300); line-height: 1.5; color: var(--on-surface); }
+
+/* Ficha de un perfume: a que promocion entra y como se usa. */
+.pdp__promos { display: grid; gap: var(--s3); margin-top: var(--s5); }
+.pdp__promo {
+  margin: 0; display: grid; gap: var(--s2); justify-items: start;
+  padding: var(--s4); border: var(--hairline-width) solid var(--hairline-strong);
+  font-size: var(--t-200); line-height: 1.5; color: var(--on-surface);
 }
 
 .bundle-pick {

@@ -48,7 +48,9 @@
       "details": "Detalles",
       "shipping": "Envío",
       "view_image": "Ver imagen {{ index }}",
-      "family": "Familia olfativa"
+      "family": "Familia olfativa",
+      "pick_for_duo": "Elegir para el dúo",
+      "pick_short": "Elegir"
     }
   },
   "collections": {
@@ -60,6 +62,11 @@
       "see_all": "Ver todo el catálogo",
       "title": "Colecciones",
       "index": "Las marcas"
+    },
+    "combo": {
+      "how": "Cómo funciona",
+      "text_html": "Elige tus dos perfumes en el <strong>{{ title }}</strong> y paga {{ price }} por los dos. Toca cualquier perfume para empezar tu dúo con él.",
+      "cta": "Armar mi dúo"
     }
   },
   "sections": {

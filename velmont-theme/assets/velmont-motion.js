@@ -807,7 +807,7 @@ function initCursor() {
     // Sobre un boton DENTRO de la zona (Añadir, el corazon de la pieza) la
     // etiqueta mentiria: diria «Ver» y el clic añade. Y el disco lo taparia.
     // Ahi vuelve el punto pequeño.
-    const control = e.target.closest('button, input, select, textarea');
+    const control = e.target.closest('button, input, select, textarea, .piece__add');
     if (zona && !(control && control !== zona && zona.contains(control))) {
       cursor.classList.add('is-active');
       label.textContent = zona.dataset.cursorLabel;

@@ -95,12 +95,20 @@
       el JS no corre el combo se puede comprar igual.
     {%- endcomment -%}
     {%- if section.settings.bundle_source != blank -%}
-      <script type="application/json" data-bundle-piezas>
+      {%- comment -%}
+        h (handle) y c (precio en centavos) sirven para tres cosas: preelegir
+        un perfume que llega desde la coleccion (?elige=handle), calcular cuanto
+        se ahorra el cliente con su pareja, y guardar en la linea del carrito
+        que dos perfumes eligio (_duo) para pintar sus fotos en la bolsa.
+      {%- endcomment -%}
+      <script type="application/json" data-bundle-piezas data-precio-combo="{{ product.price }}">
         [
           {%- for p in section.settings.bundle_source.products -%}
             {"t": {{ p.title | json }},
+             "h": {{ p.handle | json }},
              "img": {{ p.featured_image | image_url: width: 420 | json }},
              "casa": {{ p.vendor | json }},
+             "c": {{ p.price }},
              "precio": {{ p.price | money_without_trailing_zeros | json }}}
             {%- unless forloop.last -%},{%- endunless -%}
           {%- endfor -%}
@@ -150,6 +158,44 @@
         </button>
       </div>
     {%- endform -%}
+
+    {%- comment -%}
+      Promociones a las que entra este perfume. Funcionan distinto y eso es lo
+      que confundia: la de MATAI se aplica sola en la bolsa al llevar dos; la
+      del duo SOLO existe si se arma en su ficha (dos sueltos se cobran a precio
+      normal). Se dice aqui, donde el cliente decide.
+    {%- endcomment -%}
+    {%- liquid
+      assign handles = product.collections | map: 'handle'
+      assign combo = section.settings.bundle_product
+      assign en_duo = false
+      if combo != blank and section.settings.bundle_source != blank and combo.id != product.id
+        if handles contains section.settings.bundle_source.handle
+          assign en_duo = true
+        endif
+      endif
+      assign auto = section.settings.auto_promo_collection
+      assign en_auto = false
+      if auto != blank and section.settings.auto_promo_text != blank
+        if handles contains auto.handle
+          assign en_auto = true
+        endif
+      endif
+    -%}
+    {%- if en_duo or en_auto -%}
+      <div class="pdp__promos" data-reveal>
+        {%- if en_auto -%}
+          <p class="pdp__promo"><span class="label label--gold">{{ auto.title }}</span>{{ section.settings.auto_promo_text }}</p>
+        {%- endif -%}
+        {%- if en_duo -%}
+          <p class="pdp__promo">
+            <span class="label label--gold">{{ combo.title }}</span>
+            Este perfume entra en el dúo: elige otro y paga {{ combo.price | money_without_trailing_zeros }} por los dos.
+            <a class="link" href="{{ combo.url }}?elige={{ product.handle }}">Armar mi dúo con este</a>
+          </p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
 
     {%- comment -%}
       Ficha tecnica: una fila solo existe si hay dato REAL del producto.
@@ -249,6 +295,9 @@
     },
     { "type": "collection", "id": "related_collection", "label": "Colección relacionada" },
     { "type": "collection", "id": "bundle_source", "label": "Piezas del combo", "info": "Sólo para fichas de combo. De aquí salen las fotos del selector visual: tiene que ser la misma colección que cargaste en la app de bundles." },
+    { "type": "product", "id": "bundle_product", "label": "Ficha del combo", "info": "El producto donde se arma el combo (el Dúo VELMONT). Cada perfume de «Piezas del combo» muestra un enlace a él, porque dos sueltos se cobran a precio normal." },
+    { "type": "collection", "id": "auto_promo_collection", "label": "Promoción automática", "info": "Colección con descuento automático en la bolsa (2 MATAI X 450.000). Sus perfumes muestran el texto de abajo." },
+    { "type": "text", "id": "auto_promo_text", "label": "Texto de la promoción automática", "default": "Lleva dos y el descuento se aplica solo en la bolsa." },
     { "type": "text", "id": "related_index", "label": "Índice", "default": "También" },
     { "type": "text", "id": "related_heading", "label": "Titular", "default": "De la misma casa" }
   ]

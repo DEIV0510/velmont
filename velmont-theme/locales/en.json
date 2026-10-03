@@ -48,7 +48,9 @@
       "details": "Details",
       "shipping": "Shipping",
       "view_image": "View image {{ index }}",
-      "family": "Olfactive family"
+      "family": "Olfactive family",
+      "pick_for_duo": "Pick for the duo",
+      "pick_short": "Pick"
     }
   },
   "collections": {
@@ -60,6 +62,11 @@
       "see_all": "See the whole catalogue",
       "title": "Collections",
       "index": "The houses"
+    },
+    "combo": {
+      "how": "How it works",
+      "text_html": "Pick your two perfumes in the <strong>{{ title }}</strong> and pay {{ price }} for both. Tap any perfume to start your duo with it.",
+      "cta": "Build my duo"
     }
   },
   "sections": {

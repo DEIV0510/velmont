@@ -144,10 +144,33 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel
 /* ---------------- Bolsa ---------------- */
 const bag = $('[data-bag]');
 
+/* La linea de un combo enseña los dos perfumes elegidos (propiedad privada
+   _duo, ver initBundlePicker), no la foto del producto combo: un cliente que
+   eligio dos frascos y ve otra cosa en su bolsa duda de lo que compro. */
+const fotosDuo = new Map();
+async function pintarDuo(raiz) {
+  for (const im of raiz.querySelectorAll('img[data-duo-h]:not([src])')) {
+    const h = im.dataset.duoH;
+    try {
+      if (!fotosDuo.has(h)) {
+        fotosDuo.set(h, fetch(`${routes.root || '/'}products/${encodeURIComponent(h)}.js`)
+          .then((r) => r.json()).then((p) => p.featured_image || ''));
+      }
+      const src = await fotosDuo.get(h);
+      if (src) im.src = src.replace(/(\.[a-z]+)(\?|$)/i, '_128x$1$2');
+    } catch { /* sin foto: queda el hueco, el nombre sigue debajo */ }
+  }
+}
+
 function lineHTML(item, index) {
-  const img = item.image
-    ? `<img src="${item.image.replace(/(\.[a-z]+)(\?|$)/i, '_128x$1$2')}" alt="" width="64" height="80" loading="lazy">`
-    : '';
+  const duo = item.properties && item.properties._duo
+    ? String(item.properties._duo).split('|').filter(Boolean).slice(0, 2)
+    : [];
+  const img = duo.length
+    ? `<span class="bag-line__duo">${duo.map((h) => `<img data-duo-h="${h}" alt="" width="44" height="55">`).join('')}</span>`
+    : item.image
+      ? `<img src="${item.image.replace(/(\.[a-z]+)(\?|$)/i, '_128x$1$2')}" alt="" width="64" height="80" loading="lazy">`
+      : '';
   const discounted = item.original_line_price > item.final_line_price;
 
   // Lo que el cliente eligio dentro de un combo. Sin esto la bolsa decia solo
@@ -210,6 +233,7 @@ function renderBag(cart) {
     .join('');
 
   body.innerHTML = cart.items.map(lineHTML).join('') + (discounts ? `<div class="promo">${discounts}</div>` : '');
+  pintarDuo(body);
   foot?.removeAttribute('hidden');
   const total = $('[data-bag-total]');
   if (total) total.textContent = money(cart.total_price);
@@ -695,6 +719,8 @@ function initBundlePicker() {
   let piezas = [];
   try { piezas = JSON.parse(datos.textContent); } catch { return; }
   const porTitulo = new Map(piezas.map((p) => [String(p.t).trim().toUpperCase(), p]));
+  const porHandle = new Map(piezas.map((p) => [p.h, p]));
+  const precioCombo = parseInt(datos.dataset.precioCombo, 10) || 0;
   // NO se guarda el contenedor: la app reemplaza el subarbol de .pdp__info,
   // y una referencia vieja apunta a un nodo ya desconectado. Se busca
   // siempre desde el documento.
@@ -703,31 +729,154 @@ function initBundlePicker() {
   // de eleccion nunca debe DESbloquear algo que Shopify dio por agotado.
   const bloqueadoDeOrigen = boton ? boton.disabled : false;
   let aviso = null;
+  // Paso reabierto con «Cambiar». Sin el, esta abierto el primero sin elegir.
+  let reabierto = null;
+  // Tras elegir hay que llevar al cliente al paso siguiente. Se hace dentro
+  // de revisar() y no en el clic: la app puede rehacer su widget justo
+  // despues, y el reloj vuelve a montar las rejillas un instante mas tarde.
+  let avanzar = false;
+  // Desplegables ya vaciados una vez (ver montar): por nombre, no por nodo,
+  // porque la app puede cambiar el nodo y traer ya la eleccion del cliente.
+  const vaciados = new Set();
 
-  /** El boton solo se abre cuando estan elegidas TODAS las fragancias. */
+  const selects = () => $$('select[name^="properties["]');
+  const elegida = (sel) => {
+    if (!sel.value) return null;
+    const texto = sel.options[sel.selectedIndex]?.text || '';
+    return porTitulo.get(texto.trim().toUpperCase()) || { t: texto.trim() };
+  };
+  const pasoAbierto = (todos) => (reabierto !== null && reabierto < todos.length
+    ? reabierto
+    : todos.findIndex((s) => !s.value));
+  const ir = (el) => {
+    if (!el) return;
+    const lenis = window.VelmontLenis;
+    if (lenis && typeof lenis.scrollTo === 'function') lenis.scrollTo(el, { offset: -110 });
+    else el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  /* ---------------------------------------------------------------------
+     Todo sale de los valores de los <select>: que paso esta abierto, el
+     resumen de la barra fija, el boton y el dato _duo. Asi, si la app
+     rehace su widget y el reloj vuelve a montar las rejillas, el estado se
+     recompone igual sin guardarlo en ningun otro sitio.
+     --------------------------------------------------------------------- */
   const revisar = () => {
-    const todos = $$('select[name^="properties["]');
-    if (!todos.length || !boton || bloqueadoDeOrigen) return;
+    const todos = selects();
+    if (!todos.length || !boton) return;
+    const abierto = pasoAbierto(todos);
+
+    todos.forEach((sel, i) => {
+      const rejilla = sel.nextElementSibling;
+      if (!rejilla || !rejilla.classList.contains('bundle-pick')) return;
+      const p = elegida(sel);
+      rejilla.classList.toggle('is-cerrado', i !== abierto);
+      const paso = rejilla.querySelector('.bundle-paso');
+      if (!paso) return;
+      paso.querySelector('.bundle-paso__elegida').textContent = p ? p.t : '';
+      paso.querySelector('.bundle-paso__cambiar').hidden = !(p && i !== abierto);
+      paso.querySelector('.bundle-paso__espera').hidden = !(!p && i !== abierto);
+    });
+
+    if (avanzar && todos.every((s) => s.nextElementSibling?.classList.contains('bundle-pick'))) {
+      avanzar = false;
+      // Al siguiente paso abierto; si ya estan los dos, al primero, para que
+      // se vean juntas las dos elecciones y, debajo, el boton.
+      ir((abierto >= 0 ? todos[abierto] : todos[0]).nextElementSibling);
+    }
+
+    if (bloqueadoDeOrigen) return;
     const faltan = todos.filter((s) => !s.value).length;
     boton.disabled = faltan > 0;
-    if (!aviso) {
+    if (!aviso || !aviso.isConnected) {
       aviso = document.createElement('p');
       aviso.className = 'bundle-aviso';
+      aviso.setAttribute('aria-live', 'polite');
       // DENTRO del grupo de acciones, no antes: ese grupo se queda fijo al pie
-      // mientras el cliente elige, y el aviso tiene que viajar con el.
+      // mientras el cliente elige, y el resumen tiene que viajar con el.
       boton.closest('.pdp__cta')?.prepend(aviso);
     }
-    aviso.textContent = faltan === 0
-      ? ''
-      : faltan === todos.length
-        ? 'Elige tus dos fragancias'
-        : 'Falta la segunda fragancia';
-    aviso.hidden = faltan === 0;
+    const nombres = todos.map((s) => elegida(s)?.t).filter(Boolean);
+    aviso.replaceChildren();
+    if (!nombres.length) {
+      aviso.textContent = 'Elige tus dos fragancias';
+    } else {
+      const b = document.createElement('b');
+      b.textContent = nombres.join(' + ');
+      aviso.append('Tu dúo: ', b);
+      if (faltan) {
+        aviso.append(' · falta la segunda');
+      } else {
+        // El ahorro solo se dice si lo hay. Con los perfumes mas baratos de
+        // la seleccion, la pareja suelta cuesta MENOS que el combo: ahi no se
+        // promete nada.
+        const suelto = todos.reduce((t, s) => t + (elegida(s)?.c || 0), 0);
+        const ahorro = suelto - precioCombo;
+        if (precioCombo && ahorro > 0) {
+          const s = document.createElement('span');
+          s.className = 'bundle-aviso__ahorro';
+          s.textContent = ` · Por separado ${money(suelto)}: ahorras ${money(ahorro)}`;
+          aviso.append(s);
+        }
+      }
+    }
+
+    // _duo: los dos perfumes elegidos, por handle. Es privado (empieza por
+    // «_», no se le muestra al cliente) y sirve para pintar sus fotos en la
+    // bolsa y en el carrito en vez de la foto del producto combo.
+    const form = boton.form;
+    if (form) {
+      let duo = form.querySelector('input[name="properties[_duo]"]');
+      if (!duo) {
+        duo = document.createElement('input');
+        duo.type = 'hidden';
+        duo.name = 'properties[_duo]';
+        form.appendChild(duo);
+      }
+      duo.value = faltan ? '' : todos.map((s) => elegida(s)?.h || '').join('|');
+    }
+  };
+
+  let fichaLista = false;
+  const prepararFicha = () => {
+    if (fichaLista) return;
+    fichaLista = true;
+    // «$280.000 por los dos». Antes decia «2 × $280.000», que se lee como dos
+    // veces 280.000. El precio es por la PAREJA, y asi se dice; debajo, como
+    // funciona, en una linea.
+    const precio = $('.pdp__price');
+    if (precio && !precio.dataset.par) {
+      precio.dataset.par = '1';
+      const n = document.createElement('span');
+      n.className = 'pdp__par';
+      n.textContent = 'por los dos';
+      precio.append(' ', n);
+      const como = document.createElement('p');
+      como.className = 'pdp__como';
+      como.textContent = `Elige dos perfumes de la selección y paga ${money(precioCombo)} por los dos, en dos pasos.`;
+      precio.insertAdjacentElement('afterend', como);
+    }
+    if (boton && !boton.dataset.duo && !bloqueadoDeOrigen) {
+      boton.dataset.duo = '1';
+      boton.textContent = 'Añadir el dúo';
+    }
+    // Llega preelegido desde la coleccion o desde la ficha de un perfume
+    // (?elige=handle): ese perfume queda como primera fragancia.
+    const h = new URLSearchParams(location.search).get('elige');
+    const p = h && porHandle.get(h);
+    const primero = selects()[0];
+    if (p && primero && !primero.value) {
+      const opt = [...primero.options].find((o) => o.text.trim().toUpperCase() === String(p.t).trim().toUpperCase());
+      if (opt) {
+        primero.value = opt.value;
+        primero.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    }
   };
 
   const montar = () => {
-    for (const sel of $$('select[name^="properties["]')) {
-      if (sel.dataset.picker) continue;
+    selects().forEach((sel, i) => {
+      if (sel.dataset.picker) return;
       // OJO: la marca de "ya procesado" se pone al FINAL, no aqui. La app
       // inyecta el <select> y sus opciones por separado, asi que este bucle
       // puede encontrarlo todavia vacio; si se marcaba de entrada, ese
@@ -737,7 +886,27 @@ function initBundlePicker() {
       rejilla.className = 'bundle-pick';
       rejilla.setAttribute('role', 'group');
       const etiqueta = sel.id ? document.querySelector(`label[for="${sel.id}"]`) : null;
-      if (etiqueta) rejilla.setAttribute('aria-label', etiqueta.textContent.trim());
+      const titulo = (etiqueta?.textContent || '').trim() || (i === 0 ? 'Primera fragancia' : 'Segunda fragancia');
+      rejilla.setAttribute('aria-label', titulo);
+
+      // Cabecera del paso, DENTRO de la rejilla (a todo el ancho): asi el
+      // <select> sigue teniendo la rejilla justo al lado, que es lo que mira
+      // el reloj para saber si hay que volver a montar.
+      const paso = document.createElement('div');
+      paso.className = 'bundle-paso';
+      paso.innerHTML =
+        `<span class="bundle-paso__n" aria-hidden="true">${i + 1}</span>` +
+        '<span class="bundle-paso__t"></span>' +
+        '<span class="bundle-paso__elegida"></span>' +
+        '<span class="bundle-paso__espera" hidden>Primero elige la anterior</span>' +
+        '<button type="button" class="link bundle-paso__cambiar" hidden>Cambiar</button>';
+      paso.querySelector('.bundle-paso__t').textContent = titulo;
+      paso.querySelector('.bundle-paso__cambiar').addEventListener('click', () => {
+        reabierto = i;
+        revisar();
+        ir(rejilla);
+      });
+      rejilla.appendChild(paso);
 
       for (const opt of sel.options) {
         if (!opt.value) continue;                 // el "Elige una fragancia"
@@ -747,27 +916,35 @@ function initBundlePicker() {
         b.className = 'bundle-pick__it';
         b.dataset.val = opt.value;
         b.setAttribute('aria-pressed', 'false');
+        // «Suelto»: es el precio del frasco solo. Sin la palabra, 169.000
+        // debajo de cada perfume competia con el 280.000 del combo.
         b.innerHTML =
           `<span class="bundle-pick__img">${
             p && p.img ? `<img src="${p.img}" alt="" width="420" height="525" loading="lazy" decoding="async">` : ''
           }</span>` +
           `<span class="bundle-pick__casa">${p && p.casa ? p.casa : ''}</span>` +
           `<span class="bundle-pick__nom">${opt.text}</span>` +
-          `<span class="bundle-pick__pre">${p && p.precio ? p.precio : ''}</span>`;
+          `<span class="bundle-pick__pre">${p && p.precio ? `Suelto ${p.precio}` : ''}</span>`;
         b.addEventListener('click', () => {
           // Volver a pulsar la elegida la quita: elegir tiene que poder
           // deshacerse sin recargar.
-          sel.value = sel.value === opt.value ? '' : opt.value;
+          const nuevo = sel.value === opt.value ? '' : opt.value;
+          sel.value = nuevo;
+          // `change` SI hace falta aqui: con el la app rehace sus campos
+          // ocultos (_bundle_selection), que son los que separan el combo en
+          // dos perfumes en el checkout. Medido sin el: seguian diciendo
+          // «9PM BLACK <> 9PM BLACK», lo que la app trae puesto.
           sel.dispatchEvent(new Event('change', { bubbles: true }));
           marcar();
+          if (nuevo) { reabierto = null; avanzar = true; }
           revisar();
         });
         rejilla.appendChild(b);
       }
-      if (!rejilla.children.length) continue;
+      if (!rejilla.querySelector('.bundle-pick__it')) return;
 
       const marcar = () => {
-        for (const b of rejilla.children) {
+        for (const b of rejilla.querySelectorAll('.bundle-pick__it')) {
           const on = b.dataset.val === sel.value;
           b.classList.toggle('on', on);
           b.setAttribute('aria-pressed', on ? 'true' : 'false');
@@ -776,13 +953,13 @@ function initBundlePicker() {
       // El widget llega con la PRIMERA fragancia ya puesta en los DOS
       // desplegables. Un cliente que no se fije añade dos veces el mismo
       // perfume creyendo que ha elegido. Se vacian: elegir tiene que ser un
-      // acto, no un descuido.
-      // SIN disparar `change`: la app escucha ese evento y rehace su widget
-      // entero, llevandose por delante la rejilla recien puesta. Se cambia el
-      // valor en silencio; el evento solo se dispara cuando elige el cliente,
-      // que es cuando la app tiene algo de lo que enterarse.
-      if (sel.options[0] && !sel.options[0].value && sel.selectedIndex !== 0) {
-        sel.selectedIndex = 0;
+      // acto, no un descuido. SIN `change`: hasta que el cliente elija, el
+      // boton esta bloqueado, y cada eleccion si lo dispara.
+      // Solo la PRIMERA vez que aparece cada uno: si la app lo vuelve a
+      // dibujar, ya trae lo que el cliente eligio y no se le borra.
+      if (!vaciados.has(sel.name)) {
+        vaciados.add(sel.name);
+        if (sel.options[0] && !sel.options[0].value && sel.selectedIndex !== 0) sel.selectedIndex = 0;
       }
 
       sel.addEventListener('change', () => { marcar(); revisar(); });
@@ -800,19 +977,8 @@ function initBundlePicker() {
       // Y avisa al <body>: sin escenario negro, el menu tiene que volver a
       // tinta o se queda marfil sobre crema, o sea invisible.
       document.body.classList.add('ficha-combo');
-
-      // "2 × $280.000": el precio del combo es por PAREJA, y a secas se lee
-      // como si fuera el de un frasco. Se marca aqui y no en Liquid por lo
-      // mismo: hasta este momento no se sabe que la ficha es un combo.
-      const precio = $('.pdp__price');
-      if (precio && !precio.dataset.par) {
-        precio.dataset.par = '1';
-        const n = document.createElement('span');
-        n.className = 'pdp__par';
-        n.textContent = '2 ×';
-        precio.prepend(n, ' ');
-      }
-    }
+    });
+    if (document.querySelector('.bundle-pick')) prepararFicha();
   };
 
   // Se reintenta con un temporizador, NO con un MutationObserver.
@@ -822,22 +988,14 @@ function initBundlePicker() {
   // observada— y colgaba la pagina en un bucle; y ademas no avisaba de forma
   // fiable cuando la app rellenaba las opciones del <select>. Un sondeo corto
   // y acotado es aburrido, pero se comporta siempre igual.
-  const yaEstan = () => {
-    const s = $$('select[name^="properties["]');
-    return s.length > 0 && s.every((x) => x.dataset.picker);
-  };
-
-  // El reloj NO se para al primer exito.
   //
-  // La app vuelve a dibujar su widget despues de que nosotros montemos la
-  // rejilla, y se la lleva por delante. Si el reloj se detenia al conseguirlo
-  // una vez, la rejilla desaparecia para siempre y la pagina se quedaba con
-  // los desplegables de la app. Asi que se vigila: mientras falte una rejilla
-  // por cada desplegable, se vuelve a montar.
+  // El reloj NO se para al primer exito: la app vuelve a dibujar su widget
+  // despues de que nosotros montemos la rejilla, y se la lleva por delante.
+  // Mientras falte una rejilla por cada desplegable, se vuelve a montar.
   let intentos = 0;
   const reloj = setInterval(() => {
     intentos += 1;
-    const sels = $$('select[name^="properties["]');
+    const sels = selects();
     const faltanRejillas = sels.length > document.querySelectorAll('.bundle-pick').length;
     if (faltanRejillas) {
       // Se quitan las marcas viejas: los <select> pueden ser otros nodos.

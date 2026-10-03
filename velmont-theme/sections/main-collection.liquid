@@ -26,6 +26,18 @@
   if current_tags.size > 0
     assign filtering = true
   endif
+
+  comment
+    La coleccion del combo anuncia «2 por 280.000», pero el precio fijo SOLO
+    existe en la ficha del combo: dos perfumes añadidos sueltos desde aqui se
+    cobraban a su precio normal (169.000 + 169.000 = 338.000). En ella cada
+    pieza lleva al combo con ese perfume ya elegido, y arriba se explica.
+  endcomment
+  assign combo = section.settings.combo_product
+  assign combo_url = ''
+  if combo != blank and section.settings.combo_collection != blank and collection.handle == section.settings.combo_collection.handle
+    assign combo_url = combo.url
+  endif
 -%}
 
 <section class="band band--tight band--below-header band--head" data-tone="light">
@@ -49,6 +61,19 @@
       <div class="lede collection-head__note" data-reveal>{{ note }}</div>
     {%- endif -%}
   </div>
+
+  {%- if combo_url != blank -%}
+    {%- assign precio_combo = combo.price | money_without_trailing_zeros -%}
+    <div class="wrap">
+      <div class="combo-aviso" data-reveal>
+        <div class="combo-aviso__txt">
+          <span class="label label--gold">{{ 'collections.combo.how' | t }}</span>
+          <p>{{ 'collections.combo.text_html' | t: title: combo.title, price: precio_combo }}</p>
+        </div>
+        <a class="act act--solid" href="{{ combo_url }}">{{ 'collections.combo.cta' | t }}</a>
+      </div>
+    </div>
+  {%- endif -%}
 </section>
 
 {%- if section.settings.show_filters -%}
@@ -87,7 +112,7 @@
     {%- if collection.products.size > 0 -%}
       <div class="grid-quiet">
         {%- for product in collection.products -%}
-          {% render 'piece', product: product, eager: forloop.first %}
+          {% render 'piece', product: product, eager: forloop.first, combo_url: combo_url %}
         {%- endfor -%}
       </div>
 
@@ -135,7 +160,13 @@
       "type": "header",
       "content": "Rejilla"
     },
-    { "type": "range", "id": "per_page", "label": "Piezas por página", "min": 8, "max": 48, "step": 4, "default": 24 }
+    { "type": "range", "id": "per_page", "label": "Piezas por página", "min": 8, "max": 48, "step": 4, "default": 24 },
+    {
+      "type": "header",
+      "content": "Combo de precio fijo"
+    },
+    { "type": "collection", "id": "combo_collection", "label": "Colección del combo", "info": "La del «2 por $N» (2 X 280.000). En ella se explica cómo funciona y cada perfume lleva a la ficha del combo, porque añadidos sueltos se cobran a precio normal." },
+    { "type": "product", "id": "combo_product", "label": "Ficha del combo", "info": "El producto donde se arma (Dúo VELMONT)." }
   ]
 }
 {% endschema %}

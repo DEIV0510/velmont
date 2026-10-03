@@ -63,7 +63,17 @@
 
     <div class="piece__hover">
       <span class="label">{{ meta }}</span>
-      {%- if variant.available -%}
+      {%- comment -%}
+        combo_url: en la coleccion del combo la pieza no se añade suelta (se
+        cobraria a precio normal): lleva a la ficha del combo con este perfume
+        ya elegido. Texto corto en piezas estrechas (ver @container en base.css).
+      {%- endcomment -%}
+      {%- if combo_url != blank and variant.available -%}
+        <a class="link piece__add" href="{{ combo_url }}?elige={{ product.handle }}">
+          <span class="piece__add-largo">{{ 'products.product.pick_for_duo' | t }}</span>
+          <span class="piece__add-corto">{{ 'products.product.pick_short' | t }}</span>
+        </a>
+      {%- elsif variant.available -%}
         <button class="link piece__add" data-add="{{ variant.id }}">{{ 'products.product.add' | t }}</button>
       {%- else -%}
         <span class="label">{{ 'products.product.sold_out' | t }}</span>

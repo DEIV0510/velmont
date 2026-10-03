@@ -4,7 +4,10 @@
       "type": "main-product",
       "settings": {
         "bundle_source": "2-x-280-000",
-        "shipping_note": "A toda Colombia"
+        "shipping_note": "A toda Colombia",
+        "bundle_product": "duo-velmont",
+        "auto_promo_collection": "2-matai-x-450-000",
+        "auto_promo_text": "Lleva dos MATAI y pagas $450.000 por los dos: el descuento se aplica solo en la bolsa."
       }
     }
   },

@@ -12,6 +12,12 @@ const routes = V.routes || {};
 const motion = V.motion || {};
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const money = (cents) => '$' + Math.round(cents / 100).toLocaleString('es-CO');
+// La busqueda predictiva devuelve el precio en pesos y como texto ("500000.00"),
+// no en centavos como el carrito: sin esto salia tal cual, sin $ ni puntos.
+const precioBusqueda = (txt) => {
+  const n = parseFloat(txt);
+  return Number.isFinite(n) ? money(Math.round(n * 100)) : '';
+};
 const $ = (sel, scope = document) => scope.querySelector(sel);
 const $$ = (sel, scope = document) => [...scope.querySelectorAll(sel)];
 
@@ -567,7 +573,7 @@ function initSearch() {
           </a>
           <div class="piece__meta">
             <div><h3 class="piece__name">${p.title}</h3><span class="label piece__house">${p.vendor || ''}</span></div>
-            <span class="price">${p.price || ''}</span>
+            <span class="price">${precioBusqueda(p.price)}</span>
           </div>
         </article>`).join('');
     }, 220);

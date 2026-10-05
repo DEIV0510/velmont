@@ -1047,6 +1047,31 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 @media (max-width: 760px) {
   .foot__seal img { width: 72px; height: 72px; }
 }
+/* Guia del duo 2 x 280 (bloque «duo» del footer): un recuadro con filete dorado
+   y tres pasos numerados, encima de las columnas. */
+.foot__duo {
+  border: 1px solid rgba(201,168,103,0.34);
+  padding: clamp(22px, 3vw, 40px);
+  margin-bottom: clamp(48px, 6vw, 88px);
+  display: grid; gap: var(--s5);
+}
+.foot__duo-head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s3) var(--s5); flex-wrap: wrap; }
+.foot .foot__duo h4 { margin: 0; color: var(--gold); }
+.foot a.foot__duo-cta { color: var(--ivory); }
+.foot__duo-pasos { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s4); counter-reset: paso; }
+.foot__duo-pasos li {
+  counter-increment: paso;
+  display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: var(--s3); align-items: baseline;
+  color: var(--ivory); font-size: var(--fs-small); line-height: 1.6;
+}
+.foot__duo-pasos li::before {
+  content: counter(paso);
+  font-family: var(--font-display); font-size: var(--t-500); line-height: 1; color: var(--gold);
+  font-variant-numeric: lining-nums;
+}
+@media (min-width: 860px) {
+  .foot__duo-pasos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 48px); }
+}
 .foot__cols { display: grid; gap: clamp(32px, 4vw, 60px); grid-template-columns: repeat(2, 1fr); }
 @media (min-width: 860px) { .foot__cols { grid-template-columns: 1.3fr repeat(3, 0.9fr); } }
 .foot h4 { color: var(--ivory); margin-bottom: var(--s4); }
@@ -1556,8 +1581,14 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 .pdp__cta form .act, .pdp__cta > .act { justify-content: center; min-width: 260px; }
 
 .spec { border-top: 1px solid var(--hairline); padding-top: var(--s5); margin-top: var(--s3); display: grid; gap: var(--s5); }
-.spec__row { display: grid; grid-template-columns: 8rem 1fr; gap: var(--s4); align-items: baseline; }
-.spec__val { font-size: var(--fs-small); }
+/* Misma rejilla que la ficha olfativa de arriba (Familia, Concentración…): con
+   una columna propia de 8rem, «Envío» quedaba a otra altura y en movil el
+   valor se iba lejos de su etiqueta. */
+.spec__row { display: grid; grid-template-columns: 11.5rem minmax(0, 1fr); gap: var(--s4); align-items: baseline; }
+.spec__val { font-size: var(--t-200); color: var(--on-surface); }
+@media (max-width: 760px) {
+  .spec__row { grid-template-columns: 1fr; gap: var(--s2); }
+}
 .spec__val span + span::before { content: ' · '; color: var(--on-surface-dim); }
 
 /* Perfil olfativo: filetes, no barras gordas */

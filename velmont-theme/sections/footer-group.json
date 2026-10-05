@@ -31,9 +31,16 @@
           "settings": {
             "title": "Contacto"
           }
+        },
+        "duo": {
+          "type": "duo",
+          "settings": {
+            "product": "duo-velmont"
+          }
         }
       },
       "block_order": [
+        "duo",
         "casa",
         "explorar",
         "ayuda",

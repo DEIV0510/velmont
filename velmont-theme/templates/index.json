@@ -38,10 +38,12 @@
         "kicker": "Perfumería multimarca",
         "heading": "Tu esencia.\nTu marca personal.",
         "italic_last": false,
+        "lede": "Perfumes de casas como MATAI, Lattafa y Armaf, elegidos para dejar una impresión que permanece.",
         "primary_label": "Descubrir perfumes",
         "secondary_label": "Descubre tu marca personal",
-        "scroll_label": "Desliza",
         "product": "zenith",
+        "show_video": true,
+        "show_stage": false,
         "collections": [
           "2-matai-x-450-000",
           "2-x-280-000",
@@ -49,20 +51,11 @@
           "para-ella",
           "unisex"
         ],
-        "show_stage": false,
-        "show_video": true,
-        "lede": "Perfumes de casas como MATAI, Lattafa y Armaf, elegidos para dejar una impresión que permanece."
+        "scroll_label": "Desliza"
       }
     },
     "statement": {
       "type": "velmont-statement",
-      "settings": {
-        "heading": "La fragancia\nes memoria.",
-        "first_by_words": true,
-        "italic_last": true,
-        "text": "Es lo último que queda de ti cuando sales de una habitación. En VELMONT elegimos piezas para quien prefiere dejar recuerdo antes que llamar la atención.",
-        "panel": "cream"
-      },
       "blocks": {
         "d1": {
           "type": "item",
@@ -94,24 +87,31 @@
         "d2",
         "d3",
         "d4"
-      ]
+      ],
+      "settings": {
+        "heading": "La fragancia\nes memoria.",
+        "italic_last": true,
+        "first_by_words": true,
+        "text": "Es lo último que queda de ti cuando sales de una habitación. En VELMONT elegimos piezas para quien prefiere dejar recuerdo antes que llamar la atención.",
+        "panel": "cream"
+      }
     },
     "coleccion": {
       "type": "velmont-collection",
       "settings": {
         "index": "03 — La colección",
         "heading": "Nuestra selección",
-        "count": 6,
-        "link_text": "Ver todo el catálogo",
-        "swipe_label": "Desliza",
-        "anchor": "coleccion",
-        "layout": "even",
-        "panel": "cream",
         "lede": "Perfumes elegidos por VELMONT.",
         "rotate": true,
         "exclude": [
           "duo-velmont"
-        ]
+        ],
+        "layout": "even",
+        "count": 6,
+        "link_text": "Ver todo el catálogo",
+        "swipe_label": "Desliza",
+        "anchor": "coleccion",
+        "panel": "cream"
       }
     },
     "descubre": {
@@ -162,9 +162,8 @@
         "index": "02 — Descubre",
         "heading": "¿Qué quieres que\nrecuerden de ti?",
         "italic_last": false,
-        "text": "Descubre el perfume que representa tu presencia: 4 preguntas, 1 minuto y una recomendación personalizada.",
+        "text": "Descubre el perfume que representa tu personalidad: 4 preguntas, 1 minuto y una recomendación personalizada.",
         "cta_label": "Descubrir mi perfume",
-        "anchor": "descubre",
         "panel": "cream"
       }
     },
@@ -178,11 +177,11 @@
             "index_gold": false,
             "heading": "La selección MATAI",
             "text": "Elige dos fragancias de la casa MATAI.",
+            "collection": "2-matai-x-450-000",
             "promo_units": 2,
             "promo_price": 450000,
             "cta_label": "Elegir las dos",
             "flip": false,
-            "collection": "2-matai-x-450-000",
             "panel": "ink"
           }
         },
@@ -193,13 +192,13 @@
             "index_gold": true,
             "heading": "El dúo VELMONT",
             "text": "Elige tus dos favoritos de la selección.",
+            "collection": "2-x-280-000",
             "promo_units": 2,
             "promo_price": 280000,
             "cta_label": "Elegir las dos",
+            "cta_url": "/products/duo-velmont",
             "flip": true,
-            "collection": "2-x-280-000",
-            "panel": "ink",
-            "cta_url": "/products/duo-velmont"
+            "panel": "ink"
           }
         }
       },
@@ -208,12 +207,12 @@
         "seleccion"
       ],
       "settings": {
-        "anchor": "ediciones",
         "layout": "cards",
         "index": "01 — Ediciones",
         "heading": "Ediciones especiales",
         "lede": "Elige dos y paga un precio fijo por la pareja.",
-        "panel": "ink"
+        "panel": "ink",
+        "anchor": "ediciones"
       }
     },
     "casa": {
@@ -287,7 +286,7 @@
       "type": "velmont-houses",
       "settings": {
         "index": "",
-        "heading": "Las marcas que trabajamos",
+        "heading": "Nuestras marcas",
         "anchor": "casas",
         "panel": "ink"
       }

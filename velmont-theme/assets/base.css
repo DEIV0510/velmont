@@ -1232,6 +1232,10 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 /* Las cifras alineadas vienen de body; en los precios ademas van tabulares,
    para que los totales no bailen al cambiar la cantidad. */
 .pdp__price, .bag-totals strong, .ck__total { font-variant-numeric: lining-nums tabular-nums; }
+/* La descripcion llega en dos parrafos (las notas y luego el caracter); sin
+   margen se leian como uno solo. */
+.pdp__desc p { margin: 0; }
+.pdp__desc p + p { margin-top: var(--s3); }
 
 /* ==========================================================================
    SELECTOR DEL COMBO (Simple Bundles)

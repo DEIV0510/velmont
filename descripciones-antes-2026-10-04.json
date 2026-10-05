@@ -1,0 +1,982 @@
+[
+ {
+  "handle": "duo-velmont",
+  "title": "Dúo VELMONT",
+  "body_html": ""
+ },
+ {
+  "handle": "ember",
+  "title": "MATAI EMBER",
+  "body_html": "<p><strong>Ember</strong> de Matai.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "zenith",
+  "title": "MATAI ZENITH",
+  "body_html": "<p><strong>Zenith</strong> de Matai.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "nautica-voyage",
+  "title": "NÁUTICA VOYAGE",
+  "body_html": "<p><strong>Nautica Voyage</strong> de Nautica.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "vega-gold",
+  "title": "VEGA GOLD",
+  "body_html": "<p><strong>Vega Gold</strong> de Ahli.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "millionarie",
+  "title": "MILLIONAIRE",
+  "body_html": "<p><strong>Millionarie</strong> de Gevill.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "aqua-paris",
+  "title": "AQUA DE PARIS",
+  "body_html": "<p><strong>Aqua de Paris</strong> de Gevill.</p>\n<p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "beso-de-dragon",
+  "title": "BESO DE DRAGÓN",
+  "body_html": "<p><strong>Beso De Dragón</strong> de Gevill.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "amber-black",
+  "title": "AMBER BLACK",
+  "body_html": "<p><strong>Amber Black</strong> de Black Oud.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "gold-ingot",
+  "title": "GOLD IGNOT",
+  "body_html": "<p><strong>Gold Ingot</strong> de Devier.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "acid-rain",
+  "title": "ÁCID RAIN",
+  "body_html": "<p><strong>Ácid Rain</strong> de Devier.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "babylon",
+  "title": "BABYLON",
+  "body_html": "<p><strong>Babylon</strong> de Mundus.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lotus",
+  "title": "LOTUS",
+  "body_html": "<p><strong>Lotus</strong> de Mundus.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "denali",
+  "title": "DENALI",
+  "body_html": "<p><strong>Denali</strong> de Mundus.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "taj-madal",
+  "title": "TAJ MAHAL",
+  "body_html": "<p><strong>Taj Mahal</strong> de Mundus.</p>\n<p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "empire-state",
+  "title": "EMPIRE STATE",
+  "body_html": "<p><strong>Empire State</strong> de Mundus.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "torre-eifel",
+  "title": "TORRE EIFEL",
+  "body_html": "<p><strong>Torre Eifel</strong> de Mundus.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "burj-khalifa",
+  "title": "BURJ KHALIFA",
+  "body_html": "<p><strong>Burj Khalifa</strong> de Mundus.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "ghighen-itza",
+  "title": "GHIGHEN ITZA",
+  "body_html": "<p><strong>Ghighen Itza</strong> de Mundus.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "oud-noir",
+  "title": "OUD NOIR",
+  "body_html": "<p><strong>Oud Noir</strong> de Black Oud.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "oriental-rose",
+  "title": "ORIENTAL ROSE",
+  "body_html": "<p><strong>Oriental Rose</strong> de Black Oud.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "oriental-elixir",
+  "title": "ORIENTAL ELIXIR",
+  "body_html": "<p><strong>Oriental Elixir</strong> de Black Oud.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "latin-rose",
+  "title": "LATIN ROSE",
+  "body_html": "<p><strong>Latín Rose</strong> de Black Oud.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "vip-carat",
+  "title": "VIP CARAT",
+  "body_html": "<p><strong>Vip Carat</strong> de Black Oud.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "passion",
+  "title": "PASSION",
+  "body_html": "<p><strong>Passion</strong> de Black Oud.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "opulent",
+  "title": "OPULENT",
+  "body_html": "<p><strong>Opulent</strong> de Black Oud.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "okinawa-2",
+  "title": "OKINAWA",
+  "body_html": "<p><strong>Okinawa</strong> de Black Oud.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "terren",
+  "title": "TERREN",
+  "body_html": "<p><strong>Terren</strong> de Black Oud.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "by-drew",
+  "title": "BY DREW",
+  "body_html": "<p><strong>By Drew</strong> de Black Oud.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "oud-vanilla",
+  "title": "OUD VANILLA",
+  "body_html": "<p><strong>Oud Vanilla</strong> de Black Oud.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "regio",
+  "title": "REGGIO",
+  "body_html": "<p><strong>Regio</strong> de Emmir Milano.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "sanremo",
+  "title": "SANREMO",
+  "body_html": "<p><strong>Sanremo</strong> de Emmir Milano.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "verona",
+  "title": "VERONA",
+  "body_html": "<p><strong>Verona</strong> de Emmir Milano.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "sorrento",
+  "title": "SORRENTO",
+  "body_html": "<p><strong>Sorrento</strong> de Emmir Milano.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "napoli",
+  "title": "NAPOLI",
+  "body_html": "<p><strong>Napoli</strong> de Emmir Milano.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "kingdelary",
+  "title": "KINGDELARY",
+  "body_html": "<p><strong>Kingdelary</strong> de Emmir Milano.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "toscana",
+  "title": "TOSCANA",
+  "body_html": "<p><strong>Toscana</strong> de Emmir Milano.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "palermo",
+  "title": "PALERMO",
+  "body_html": "<p><strong>Palermo</strong> de Emmir Milano.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "roma",
+  "title": "ROMA",
+  "body_html": "<p><strong>Roma</strong> de Emmir Milano.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "milano",
+  "title": "MILANO",
+  "body_html": "<p><strong>Milano</strong> de Emmir Milano.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "di-parma",
+  "title": "DI PARMA",
+  "body_html": "<p><strong>Di Parma</strong> de Emmir Milano.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "genova",
+  "title": "GENOVA",
+  "body_html": "<p><strong>Génova</strong> de Emmir Milano.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "club-de-nuit-urban-elixir-edp-105-ml",
+  "title": "CLUN DE NUIT URBAN ELIXIR",
+  "body_html": "<p><strong>Club De Nuit Urban Elixir Edp 105 Ml</strong> de Armaf.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "club-de-nuit-intense-3-6-edt-m",
+  "title": "CLUB DE NUIT INTENSE",
+  "body_html": "<p><strong>Club De Nuit Intense 3.6 Edt M</strong> de Armaf.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "club-de-nuit-sillage-3-6-edp-m",
+  "title": "CLUB DE NUIT SILLAGE",
+  "body_html": "<p><strong>Club De Nuit Sillage 3.6 Edp M</strong> de Armaf.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "stallion-53-hombre",
+  "title": "STALLION 53",
+  "body_html": "<p><strong>Stallion 53 Hombre</strong> de Emper.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lattafa-badee-al-oud-noble-blush",
+  "title": "AL OUD NOBLE BLUSH",
+  "body_html": "<p><strong>Lattafa Badee Al Oud Noble Blush</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "rayhaan-elixir-hombre-100ml",
+  "title": "RAYHAAN PACÍFIC HOMBRE",
+  "body_html": "<p><strong>Rayhaan Elixir Hombre 100Ml</strong> de Rayhan.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "rayhan-pacific-aloha",
+  "title": "RAYHAN PASIFIC ALHOA",
+  "body_html": "<p><strong>Rayhan Pacific Aloha</strong> de Rayhan.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "rayhan-obsidian",
+  "title": "RAYHAAN OBSIDIAN",
+  "body_html": "<p><strong>Rayhan-Obsidian</strong> de Rayhan.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "odyssey-tyrant-special-edition-3-4-edp-m",
+  "title": "ODYSSEY TYRANT",
+  "body_html": "<p><strong>Odyssey Tyrant Special Edition 3.4 Edp M</strong> de Armaf.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "212-nyc-men-200ml",
+  "title": "212 NYC MEN",
+  "body_html": "<p><strong>212 Nyc Men 200Ml</strong> de Carolina Herrera.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "oomph",
+  "title": "IL OOMPH",
+  "body_html": "<p><strong>Oomph</strong> de Ilmin.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "arte",
+  "title": "IL ARTE",
+  "body_html": "<p><strong>Arte</strong> de Ilmin.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "kakuno",
+  "title": "IL KAKUNO",
+  "body_html": "<p><strong>Kakuno</strong> de Ilmin.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "roso",
+  "title": "IL ROSO",
+  "body_html": "<p><strong>Roso</strong> de Ilmin.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lattafa-al-noble-edp-100ml",
+  "title": "AL NOBLE LATTAFA",
+  "body_html": "<p><strong>Lattafa Al Noble Edp 100Ml</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "hayati-gold-elixir",
+  "title": "HAYATY GOLD ELIXIR",
+  "body_html": "<p><strong>Hayati Gold Elixir</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lattafa-eclaire-100ml",
+  "title": "ECLAIRE LATTAFA",
+  "body_html": "<p><strong>Lattafa Eclaire 100Ml</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "hawas-kobra-100ml",
+  "title": "HAWAS KOBRA",
+  "body_html": "<p><strong>Hawas Kobra 100Ml</strong> de Rasasi.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "khaltaat-al-arabia",
+  "title": "KHALTAAT AL ARABIA",
+  "body_html": "<p><strong>Khaltaat Al Arabia</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lattafa-khamrah-dukhan-100ml",
+  "title": "KHAMRAH DUKHAM",
+  "body_html": "<p><strong>Lattafa Khamrah Dukhan 100Ml</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "oud-for-glory",
+  "title": "OUD OF GLORY",
+  "body_html": "<p><strong>Oud For Glory</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "khamrah",
+  "title": "KHAMRAH",
+  "body_html": "<p><strong>Khamrah</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "khamrah-waha",
+  "title": "KHAMRAH WAHA",
+  "body_html": "<p><strong>Khamrah-Waha</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "apus",
+  "title": "AHLI APUS",
+  "body_html": "<p><strong>Apus</strong> de Ahli.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "ursa",
+  "title": "AHLI URSA",
+  "body_html": "<p><strong>Ursa</strong> de Ahli.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "alpha",
+  "title": "AHLI ALPHA",
+  "body_html": "<p><strong>Alpha</strong> de Ahli.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "sativa",
+  "title": "IL SATIVA",
+  "body_html": "<p><strong>Sativa</strong> de Ilmin.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lavish",
+  "title": "IL LAVISH",
+  "body_html": "<p><strong>Lavish</strong> de Ilmin.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lonve",
+  "title": "IL LONVE",
+  "body_html": "<p><strong>Lonve</strong> de Ilmin.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "dolce",
+  "title": "IL DOLCE",
+  "body_html": "<p><strong>Dolce</strong> de Ilmin.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "erotique",
+  "title": "IL EROTIQUE",
+  "body_html": "<p><strong>Erotique</strong> de Ilmin.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "sexuel",
+  "title": "IL SEXUEL",
+  "body_html": "<p><strong>Sexuel</strong> de Ilmin.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "piete-sc",
+  "title": "IL PIETE",
+  "body_html": "<p><strong>Piete-Sc</strong> de Ilmin.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "ego",
+  "title": "IL EGO",
+  "body_html": "<p><strong>Ego</strong> de Ilmin.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "male",
+  "title": "IL MALE",
+  "body_html": "<p><strong>Male</strong> de Ilmin.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "peace",
+  "title": "IL PEACE",
+  "body_html": "<p><strong>Peace</strong> de Ilmin.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "mexico",
+  "title": "IL MÉXICO",
+  "body_html": "<p><strong>Mexico</strong> de Ilmin.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "orgasme",
+  "title": "IL ORGASME",
+  "body_html": "<p><strong>Orgasme</strong> de Ilmin.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lyra",
+  "title": "AHLI LYRA",
+  "body_html": "<p><strong>Lyra</strong> de Ahli.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "octans",
+  "title": "AHLI OCTANS",
+  "body_html": "<p><strong>Octans</strong> de Ahli.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "karpos",
+  "title": "AHLI KARPOS",
+  "body_html": "<p><strong>Karpos</strong> de Ahli.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "nocturn",
+  "title": "NOCTURNE",
+  "body_html": "<p><strong>Nocturn</strong> de Voet.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "belvet-flame",
+  "title": "VELVET FLAME",
+  "body_html": "<p><strong>Belvet Flame</strong> de Voet.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "golden-vibes",
+  "title": "GOLDEN VIBCE",
+  "body_html": "<p><strong>Golden Vibes</strong> de Voet.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "pearl-obsesion",
+  "title": "PEARL OBSESSION",
+  "body_html": "<p><strong>Pearl Obsesión</strong> de Voet.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "wild-caramel",
+  "title": "WILD CARAMEL",
+  "body_html": "<p><strong>Wild Caramel</strong> de Voet.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "noir-blossom",
+  "title": "NOOR BLOSSOM",
+  "body_html": "<p><strong>Noir Blossom</strong> de Voet.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "new-gotas-de-color-edt100ml",
+  "title": "NEW GOTAS DE COLOR",
+  "body_html": "<p><strong>New Gotas De Color Edt100Ml</strong> de Diseñador.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "ck-one-100ml",
+  "title": "Ck One",
+  "body_html": "<p><strong>Ck One 100Ml</strong> de Clavin Klein.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "armani-stronger-with-you-100ml",
+  "title": "ARMANI STRONGER WITH YOU",
+  "body_html": "<p><strong>Armani Stronger With You 100Ml</strong> de Armani.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "mont-blanck-explorer-100ml",
+  "title": "MONTBLANC EXPLORER",
+  "body_html": "<p><strong>Mont Blanck Explorer 100ML</strong> de Mont B..</p>\n<p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "island-breeze",
+  "title": "ISLAND BREEZE",
+  "body_html": "<p><strong>Island-Breeze</strong> de Armaf.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "yum-yum-100ml",
+  "title": "YUM YUM",
+  "body_html": "<p><strong>Yum Yum 100Ml</strong> de Armaf.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "nitro-red-3-4-edp-m",
+  "title": "NITRO RED",
+  "body_html": "<p><strong>Nitro Red 3.4 Edp M</strong> de Dumont.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "dumont-nitro-red-intense",
+  "title": "NOTRO RED INTENSE",
+  "body_html": "<p><strong>Dumont Nitro Red Intense</strong> de Dumont.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "ch-la-bomba-edp-80ml",
+  "title": "CAROLINA HERRERA LA BOMBA",
+  "body_html": "<p><strong>Ch La Bomba Edp 80Ml</strong> de Carolina Herrera.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "maison-alhambra-jean-lowe-azzure",
+  "title": "JEAN LOWE AZZURE",
+  "body_html": "<p><strong>Maison Alhambra Jean Lowe Azzure</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "afnan-turathi-electric-3-0-edp-u",
+  "title": "TURATHI ELECTRIC",
+  "body_html": "<p><strong>Afnan Turathi Electric 3.0 Edp U</strong> de Afnan.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "french-avenue-azzure-100ml",
+  "title": "AZZURE AOUD",
+  "body_html": "<p><strong>French Avenue Azzure 100Ml</strong> de French Ave..</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "french-avenue-liquid-brun",
+  "title": "LÍQUIDO BRUN",
+  "body_html": "<p><strong>French Avenue Liquid Brun</strong> de French Ave..</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "valentino-uomo-born-in-roma-100ml",
+  "title": "VALENTINO UOMO BORN IN ROMA",
+  "body_html": "<p><strong>Valentino Uomo Born In Roma 100Ml</strong> de Valentino.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "valentino-uomo-born-in-roma-fantasy-100ml",
+  "title": "VALENTINO BORN IN ROMA FANTASY",
+  "body_html": "<p><strong>Valentino Uomo Born In Roma Fantasy 100Ml</strong> de Valentino.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "hawas-edp-100ml-hombre",
+  "title": "HAWAS FOR HIM",
+  "body_html": "<p><strong>Hawas Edp 100Ml Hombre</strong> de Rasasi.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "maahir-legacy",
+  "title": "MAAHIR LEGACY",
+  "body_html": "<p><strong>Maahir Legacy</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lattafa-atlas",
+  "title": "LATTAFA ATLAS",
+  "body_html": "<p><strong>Lattafa Atlas</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lattafa-yara-candy-100ml",
+  "title": "LATTAFA YARA CANDY",
+  "body_html": "<p><strong>Lattafa Yara Candy 100Ml</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lattafa-asad-hombre-100ml",
+  "title": "LATTAFA ASAD HOMBRE",
+  "body_html": "<p><strong>Lattafa Asad Hombre 100Ml</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lattafa-asad-bourbon-100ml",
+  "title": "LATTAFA ASAD BOURBON",
+  "body_html": "<p><strong>Lattafa Asad Bourbon 100Ml</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lattafa-jasoor-men",
+  "title": "LATTAFA JASOOR MEN",
+  "body_html": "<p><strong>Lattafa Jasoor Men</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lattafa-mayar-100ml",
+  "title": "LATTAFA MAYAR",
+  "body_html": "<p><strong>Lattafa Mayar 100Ml</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "germany",
+  "title": "GERMANY 92",
+  "body_html": "<p><strong>Germany</strong> de Another Lab.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "italy",
+  "title": "ITALY 86",
+  "body_html": "<p><strong>Italy</strong> de Another Lab.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "rioh",
+  "title": "RIOH 99",
+  "body_html": "<p><strong>Rioh</strong> de Another Lab.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "odyssey-go-mango",
+  "title": "ODYSSEY-GO-MANGO",
+  "body_html": "<p><strong>Odyssey-Go-Mango</strong> de Armaf.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "odyssey-artisto",
+  "title": "ODYSSEY ARTISTO",
+  "body_html": "<p><strong>Odyssey-Artisto</strong> de Armaf.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "odysey-aqua",
+  "title": "ODYSEY AQUA",
+  "body_html": "<p><strong>Odysey Aqua</strong> de Armaf.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "club-de-nuit-milestone-unisex-105-ml",
+  "title": "CLUB DE NUIT MILESTONE",
+  "body_html": "<p><strong>Club De Nuit Milestone Unisex 105 Ml</strong> de Armaf.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "odyssey-mandarin-sky-3-4-edp-m",
+  "title": "ODYSSEY MANDARIN SKY",
+  "body_html": "<p><strong>Odyssey Mandarin Sky 3.4 Edp M</strong> de Armaf.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "club-de-nuit-maleka-3-6-edp-l",
+  "title": "CLUB DE NUIT MALEKA",
+  "body_html": "<p><strong>Club De Nuit Maleka 3.6 Edp L</strong> de Armaf.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "odyssey-candee-3-4-edp-l",
+  "title": "ODYSSEY CANDEE",
+  "body_html": "<p><strong>Odyssey Candee 3.4 Edp L</strong> de Armaf.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "odyssey-wild-one-100ml",
+  "title": "ODYSSEY WILD ONE",
+  "body_html": "<p><strong>Odyssey Wild One 100Ml</strong> de Armaf.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "odyssey-mandarin-sky-elixir-100-ml",
+  "title": "ODYSSEY MANDARÍN SKY ELIXIR",
+  "body_html": "<p><strong>Odyssey Mandarin Sky Elixir 100 Ml</strong> de Armaf.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "odysey-marshmallow",
+  "title": "ODYSEY MARSHMALLOW",
+  "body_html": "<p><strong>Odysey Marshmallow</strong> de Armaf.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "yara",
+  "title": "YARA",
+  "body_html": "<p><strong>Yara</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "virgo",
+  "title": "AHLI VIRGO",
+  "body_html": "<p><strong>Virgo</strong> de Ahli.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "vega",
+  "title": "AHLI VEGA",
+  "body_html": "<p><strong>Vega</strong> de Ahli.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "sahara",
+  "title": "MATAI SAHARA",
+  "body_html": "<p><strong>Sahara</strong> de Matai.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "oryx",
+  "title": "MATAI ORYX",
+  "body_html": "<p><strong>Oryx</strong> de Matai.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "mirza",
+  "title": "MATAI MIRZA",
+  "body_html": "<p><strong>Mirza</strong> de Matai.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lunar",
+  "title": "MATAI LUNAR",
+  "body_html": "<p><strong>Lunar</strong> de Matai.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "kaif",
+  "title": "MATAI KAIF",
+  "body_html": "<p><strong>Kaif</strong> de Matai.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "adhara",
+  "title": "MATAI ADHARA",
+  "body_html": "<p><strong>Adhara</strong> de Matai.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "emmer",
+  "title": "EMMER",
+  "body_html": "<p><strong>EMMER</strong> de Lattafa.</p>\n<p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "amber-skin",
+  "title": "AMBER SKIN",
+  "body_html": "<p><strong>Amber Skin</strong> de Voet.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "amber-mirage",
+  "title": "AMBER MIRAGE",
+  "body_html": "<p><strong>Amber Mirage</strong> de Voet.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "amber-arabian",
+  "title": "AMBER ARABIAN",
+  "body_html": "<p><strong>Amber Arabian</strong> de Devier.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "strong-as-metal",
+  "title": "STRONG AS METAL",
+  "body_html": "<p><strong>Strong As Metal</strong> de Devier.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "deep-smoke",
+  "title": "DEEP SMOKE",
+  "body_html": "<p><strong>Deep Smoke</strong> de Devier.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "imagine",
+  "title": "IMAGINE",
+  "body_html": "<p><strong>Imagine</strong> de Devier.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "forgive-us",
+  "title": "FORGIVE US",
+  "body_html": "<p><strong>Forgive Us</strong> de Devier.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "spice-mecican",
+  "title": "SPICE MEXICAN",
+  "body_html": "<p><strong>Spice Mecican</strong> de Devier.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "sinfonia-21",
+  "title": "SINFONÍA 21",
+  "body_html": "<p><strong>Sinfonía 21</strong> de Devier.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "aurora-pacifica",
+  "title": "AURORA PACÍFIC",
+  "body_html": "<p><strong>Aurora Pacífica</strong> de Devier.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "cabo-cristal",
+  "title": "CABO CRISTAL",
+  "body_html": "<p><strong>Cabo Cristal</strong> de Devier.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "alma-del-mar",
+  "title": "ALMA DEL MAR",
+  "body_html": "<p><strong>Alma Del Mar</strong> de Devier.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "overdose",
+  "title": "AHLI OVERDOSE",
+  "body_html": "<p><strong>Overdose</strong> de Ahli.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "macamel",
+  "title": "AHLI MACAMEL",
+  "body_html": "<p><strong>Macamel</strong> de Ahli.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "genimi",
+  "title": "AHLI GENIMI",
+  "body_html": "<p><strong>Genimi</strong> de Ahli.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "crux",
+  "title": "AHLI CRUX",
+  "body_html": "<p><strong>Crux</strong> de Ahli.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "corvus",
+  "title": "AHLI CORVUS",
+  "body_html": "<p><strong>Corvus</strong> de Ahli.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "canes",
+  "title": "AHLI CANES",
+  "body_html": "<p><strong>Canes</strong> de Ahli.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "rayhaan-tiger",
+  "title": "RAYHAAN TIGER",
+  "body_html": "<p><strong>Rayhaan Tiger</strong> de Rayhan.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "rayhaan-pacific-aura-hombre-100ml",
+  "title": "RAYHAAN PACIFIC AURA",
+  "body_html": "<p><strong>Rayhaan Pacific Aura Hombre 100Ml</strong> de Rayhan.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "hawas-tropical-100ml",
+  "title": "HAWAS TROPICAL",
+  "body_html": "<p><strong>Hawas Tropical 100Ml</strong> de Rasasi.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "hawas-malibu-hombre",
+  "title": "HAWAS MALIBU",
+  "body_html": "<p><strong>Hawas Malibu Hombre</strong> de Rasasi.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "hawas-london-100ml",
+  "title": "HAWAS LONDON",
+  "body_html": "<p><strong>Hawas London 100Ml</strong> de Rasasi.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "hawas-ice",
+  "title": "HAWAS ICE",
+  "body_html": "<p><strong>Hawas Ice</strong> de Rasasi.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "hawas-for-her",
+  "title": "HAWAS FOR HER",
+  "body_html": "<p><strong>Hawas For Her</strong> de Rasasi.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "hawas-fire-edp-100ml",
+  "title": "HAWAS FIRE EDP",
+  "body_html": "<p><strong>Hawas Fire Edp 100Ml</strong> de Rasasi.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "hawas-elixir-unisex-100ml",
+  "title": "HAWAS ELIXIR UNISEX",
+  "body_html": "<p><strong>Hawas Elixir Unisex 100Ml</strong> de Rasasi.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "hawas-eclat-for-her-100ml",
+  "title": "HAWAS ECLAT FOR HER",
+  "body_html": "<p><strong>Hawas Eclat For Her 100Ml</strong> de Rasasi.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "hawas-black-100ml",
+  "title": "HAWAS BLACK",
+  "body_html": "<p><strong>Hawas Black 100Ml</strong> de Rasasi.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "hawas-atlantis-100ml",
+  "title": "HAWAS ATLANTIS",
+  "body_html": "<p><strong>Hawas Atlantis 100Ml</strong> de Rasasi.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "noor",
+  "title": "MATAI NOOR",
+  "body_html": "<p><strong>Noor</strong> de Matai.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "nasim",
+  "title": "MATAI NASIM",
+  "body_html": "<p><strong>Nasim</strong> de Matai.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "celeste",
+  "title": "MATAI CELESTE",
+  "body_html": "<p><strong>Celeste</strong> de Matai.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "aura",
+  "title": "MATAI AURA",
+  "body_html": "<p><strong>Aura</strong> de Matai.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "maison-alhambra-delilah-pour-femme",
+  "title": "MAISON ALHAMBRA DELILAH POUR FEMME",
+  "body_html": "<p><strong>Maison Alhambra Delilah Pour Femme</strong> de Maison Alhambra.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lattafa-victoria-100ml",
+  "title": "LATTAFA VICTORIA",
+  "body_html": "<p><strong>Lattafa Victoria 100Ml</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lattafa-qaed-al-fursan-untamed",
+  "title": "LATTAFA QAED AL FURSAN UNTAMED",
+  "body_html": "<p><strong>Lattafa Qaed Al Fursan Untamed</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lattafa-qaed-al-fursan",
+  "title": "LATTAFA QAED AL FURSAN",
+  "body_html": "<p><strong>Lattafa Qaed Al Fursan</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "al-oud-sublime",
+  "title": "AL OUD SUBLIME",
+  "body_html": "<p><strong>Al Oud Sublime</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lattafa-khamrah-qahwa",
+  "title": "LATTAFA KHAMRAH QAHWA",
+  "body_html": "<p><strong>Lattafa Khamrah Qahwa</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lattafa-pride-art-of-universe",
+  "title": "LATTAFA PRIDE ART OF UNIVERSE",
+  "body_html": "<p><strong>Lattafa Pride Art Of Universe</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "maison-alhambra-jean-lowe-matriere",
+  "title": "MAISON ALHAMBRA JEAN LOWE MAITRE",
+  "body_html": "<p><strong>Maison Alhambra Jean Lowe Matriere</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "maison-alhambra-spectre-malachite",
+  "title": "MAISON ALHAMBRA SPECTRE MALACHITE",
+  "body_html": "<p><strong>Maison Alhambra Spectre Malachite</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "lattafa-musaman-white",
+  "title": "LATTAFA MUSAMAN WHITE",
+  "body_html": "<p><strong>Lattafa-Musaman-White</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "al-oud-honor-glory",
+  "title": "AL OUD HONOR & GLORY",
+  "body_html": "<p><strong>Al Oud Honor &amp; Glory</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "alhambra-jean-lowe-fraiche",
+  "title": "ALHAMBRA JEAN LOWE FRAICHE",
+  "body_html": "<p><strong>Alhambra Jean Lowe Fraiche</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "amethyst",
+  "title": "AMETHYST",
+  "body_html": "<p><strong>Amethyst</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "al-qiam-gold",
+  "title": "Al QUIAM GOLD",
+  "body_html": "<p><strong>Al Qiam Gold</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "ajwad-lattafa",
+  "title": "AJWAD LATTAFA",
+  "body_html": "<p><strong>Ajwad Lattafa</strong> de Lattafa.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "ariana-grande-thank-you-next-100ml",
+  "title": "ARIANA GRANDE THANK U NEXT",
+  "body_html": "<p><strong>Ariana Grande Thank You Next 100Ml</strong> de Ariana G.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "ariana-grande-thank-you-next2-0",
+  "title": "ARIANA GRANDE THANK U NEXT 2.0",
+  "body_html": "<p><strong>Ariana Grande Thank You Next2.0</strong> de Ariana G.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "ariana-grande-cloud",
+  "title": "ARIANA GRANDE CLOUD",
+  "body_html": "<p><strong>Ariana Grande Cloud</strong> de Ariana G.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "bharara-king-3-4",
+  "title": "BHARARA KING",
+  "body_html": "<p><strong>Bharara King 3.4</strong> de Bharara.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "al-haramain-amber-oud-rouge-unisex-edp-60-ml",
+  "title": "AMBER OUD ROUGE",
+  "body_html": "<p><strong>Al Haramain Amber Oud Rouge Unisex Edp 60 Ml</strong> de Al Haramain.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "al-haramain-amber-oud-gold-edp-60ml",
+  "title": "AMBER OUD GOLD",
+  "body_html": "<p><strong>Al Haramain Amber Oud Gold Edp 60Ml</strong> de Al Haramain.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "al-haramain-amber-oud-dubai-night-edp-100ml",
+  "title": "AMBER OUD DUBAI NIGHT",
+  "body_html": "<p><strong>Al Haramain Amber Oud Dubai Night Edp 100Ml</strong> de Al Haramain.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "9pm-elixir",
+  "title": "9PM ELIXIR",
+  "body_html": "<p><strong>9Pm Elixir</strong> de Afnan.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "9pm-black",
+  "title": "9PM BLACK",
+  "body_html": "<p><strong>9Pm Black</strong> de Afnan.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "9-pm-dive",
+  "title": "9PM DIVE",
+  "body_html": "<p><strong>9 Pm Dive</strong> de Afnan.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "sabah",
+  "title": "MATAI SABAH",
+  "body_html": "<p><strong>Sabah</strong> de Matai.</p><p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ },
+ {
+  "handle": "assad-elixir",
+  "title": "ASAD ELIXIR",
+  "body_html": "<p><strong>ASAD ELIXIR</strong> de Lattafa.</p>\n<p>Una pieza seleccionada para descubrir tu próxima firma olfativa. Consulta disponibilidad y recibe atención personalizada de Velmont Fragrances.</p>"
+ }
+]

@@ -1,0 +1,21 @@
+[
+ {
+  "handle": "karpos",
+  "nombre_identificado": "Ahli Karpos",
+  "familia": "Frutal amaderado",
+  "salida": "Mango, limón, jengibre",
+  "corazon": "Cumarina, jazmín",
+  "fondo": "Almizcle, notas amaderadas",
+  "notas": "",
+  "concentracion": "EDP",
+  "tam": "",
+  "genero": "Unisex",
+  "confianza": "alta",
+  "decision": "piramide",
+  "fuentes": [
+   "https://cdn.shopify.com/s/files/1/0657/5357/9711/files/KarposPiramide.jpg",
+   "https://ahlifragrances.com/products/ahli-karpus"
+  ],
+  "nota": "Tarjeta oficial de la tienda de la marca (subida 2026-02-17). Reemplaza la pirámide anterior (lima, manzana, mango, pimienta rosa / jengibre, jazmín, violeta, cedro / caramelo, haba tonka, ámbar, musgo de roble), que venía de una versión anterior de la web."
+ }
+]

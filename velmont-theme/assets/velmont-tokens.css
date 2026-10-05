@@ -27,10 +27,11 @@
 
   /* Dos voces, sin zona gris: serif SOLO para display (--t-700 y arriba),
      sans para todo lo demas. --t-500 y --t-600 son papeles de lectura. */
-  /* Cormorant Garamond: el contraste fino de la perfumeria europea, y en
-     mayusculas se sostiene sola (la eligio el cliente sobre una maqueta).
-     Tiene la altura de x baja: por debajo de --t-500 va en 500, no en 400. */
-  --font-display: 'Cormorant Garamond', 'Cormorant', Georgia, serif;
+  /* Bodoni Moda (elegida por el cliente el 2026-10-05 entre cuatro opciones,
+     «algo más luxury»): didona de moda, alto contraste. Es variable con eje de
+     tamaño óptico: en grande gana contraste y en pequeño se vuelve más
+     robusta sola, por eso va en 400 en todos los tamaños. Antes: Cormorant. */
+  --font-display: 'Bodoni Moda', 'Bodoni 72', Didot, Georgia, serif;
   --font-ui: 'Manrope', 'Segoe UI', -apple-system, sans-serif;
 
   /* Los dos unicos display de la home. Ambos extremos son escalones. */
@@ -39,12 +40,12 @@
 
   /* Interlinea SIEMPRE sin unidad: con unidad no hereda bien y vuelve a
      producir valores sueltos. Display entre 1.02 y 1.08; cuerpo 1.6. */
-  --lh-display: 1.02;
+  --lh-display: 1.06;   /* 1.02 con Cormorant; Bodoni sube las tildes y pide aire */
   --lh-title: 1.08;
   --lh-body: 1.6;
   --lh-eyebrow: 1;
 
-  --w-display: 500;           /* nombres de pieza y casas: serif pequeño      */
+  --w-display: 400;           /* Bodoni Moda: el tamaño óptico hace el resto */
   --w-body: 400;
   --w-label: 500;
 

@@ -1,0 +1,18 @@
+{%- comment -%}
+  Guia del duo 2 x 280: tres pasos para quien no adivina el selector de dos
+  pasos. Va en la ficha del duo, justo encima del selector, que es donde el
+  cliente se pierde (en el pie de pagina quedaba lejos y nadie la veia).
+  El precio sale del propio producto: si cambia, la guia cambia sola.
+
+  Uso: {% render 'guia-duo', duo: product %}
+{%- endcomment -%}
+{%- assign precio_duo = duo.price | money_without_trailing_zeros -%}
+<div class="guia-duo" data-reveal>
+  <span class="label guia-duo__t">{{ 'products.product.duo_guide_title' | t }}</span>
+  {%- comment -%} Cada paso va envuelto en un span: el li es una rejilla (numero | texto) y un <strong> suelto se iba a otra celda. {%- endcomment -%}
+  <ol class="guia-duo__pasos">
+    <li><span>{{ 'products.product.duo_step_1' | t }}</span></li>
+    <li><span>{{ 'products.product.duo_step_2' | t }}</span></li>
+    <li><span>{{ 'products.product.duo_step_3_html' | t: price: precio_duo }}</span></li>
+  </ol>
+</div>

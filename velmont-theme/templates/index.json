@@ -218,10 +218,10 @@
     "casa": {
       "type": "velmont-about",
       "settings": {
-        "index": "04 — La casa",
-        "heading": "«Pocas piezas, elegidas una a una».",
+        "index": "La casa",
+        "heading": "Piezas únicas.",
         "italic": true,
-        "text": "<p>VELMONT no fabrica, elige. Trabajamos con casas como MATAI para traer a Colombia piezas de carácter propio, en cantidades cortas.</p>",
+        "text": "<p>Somos embajadores en Colombia de casas con carácter propio: perfumes que te dan una identidad única.</p>",
         "link_text": "Conocer la colección",
         "anchor": "casa",
         "panel": "cream"

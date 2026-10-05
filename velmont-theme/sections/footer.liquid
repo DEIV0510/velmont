@@ -18,37 +18,8 @@
       </div>
     {%- endif -%}
 
-    {%- comment -%}
-      Guia del duo 2 x 280: tres pasos al pie de todas las paginas, para quien
-      no adivina el selector de dos pasos de la ficha. El precio y el enlace
-      salen del producto del duo, no se escriben a mano: si cambia el precio,
-      la guia cambia sola. [precio] en los textos se sustituye por ese precio.
-    {%- endcomment -%}
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'duo' and block.settings.product != blank -%}
-        {%- assign duo = block.settings.product -%}
-        {%- assign precio_duo = duo.price | money_without_trailing_zeros -%}
-        <div class="foot__duo" {{ block.shopify_attributes }}>
-          <div class="foot__duo-head">
-            <h4 class="label">{{ block.settings.title | replace: '[precio]', precio_duo }}</h4>
-            {%- if block.settings.cta != blank -%}
-              <a class="link foot__duo-cta" href="{{ duo.url }}">{{ block.settings.cta }}</a>
-            {%- endif -%}
-          </div>
-          {%- assign pasos = block.settings.steps | newline_to_br | split: '<br />' -%}
-          <ol class="foot__duo-pasos">
-            {%- for paso in pasos -%}
-              {%- assign texto_paso = paso | strip -%}
-              {%- if texto_paso != blank -%}<li>{{ texto_paso | replace: '[precio]', precio_duo }}</li>{%- endif -%}
-            {%- endfor -%}
-          </ol>
-        </div>
-      {%- endif -%}
-    {%- endfor -%}
-
     <div class="foot__cols">
       {%- for block in section.blocks -%}
-        {%- if block.type == 'duo' -%}{%- continue -%}{%- endif -%}
         {%- comment -%}
           El cuerpo se arma antes de pintar la columna: si un bloque se queda
           sin nada que mostrar —por ejemplo, un menu cuyos enlaces apuntan
@@ -171,19 +142,8 @@
         { "type": "text", "id": "title", "label": "Título", "default": "Contacto" },
         { "type": "paragraph", "content": "Los enlaces salen de WhatsApp e Instagram en Ajustes del tema → Marca." }
       ]
-    },
-    {
-      "type": "duo",
-      "name": "Guía del dúo",
-      "limit": 1,
-      "settings": [
-        { "type": "product", "id": "product", "label": "Producto del dúo", "info": "De aquí salen el precio y el enlace." },
-        { "type": "text", "id": "title", "label": "Título", "default": "Cómo armar tu dúo 2 × [precio]", "info": "[precio] se cambia por el precio del dúo." },
-        { "type": "textarea", "id": "steps", "label": "Pasos", "default": "Toca «Armar mi dúo», o «Elegir para el dúo» en cualquier perfume de la selección.\nElige la primera fragancia y después la segunda.\nToca «Añadir el dúo»: los dos perfumes van juntos a la bolsa por [precio].", "info": "Un paso por línea. [precio] se cambia por el precio del dúo." },
-        { "type": "text", "id": "cta", "label": "Enlace", "default": "Armar mi dúo" }
-      ]
     }
   ],
-  "max_blocks": 5
+  "max_blocks": 4
 }
 {% endschema %}

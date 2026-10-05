@@ -122,6 +122,11 @@
       </script>
     {%- endif -%}
 
+    {%- comment -%} En la ficha del duo, los tres pasos van justo encima del selector. {%- endcomment -%}
+    {%- if section.settings.bundle_product != blank and section.settings.bundle_product.id == product.id -%}
+      {% render 'guia-duo', duo: product %}
+    {%- endif -%}
+
     {%- form 'product', product, id: 'VelmontProductForm', class: 'pdp__form' -%}
       {%- unless product.has_only_default_variant -%}
         <div class="spec" data-reveal>

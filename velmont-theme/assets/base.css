@@ -1047,31 +1047,6 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 @media (max-width: 760px) {
   .foot__seal img { width: 72px; height: 72px; }
 }
-/* Guia del duo 2 x 280 (bloque «duo» del footer): un recuadro con filete dorado
-   y tres pasos numerados, encima de las columnas. */
-.foot__duo {
-  border: 1px solid rgba(201,168,103,0.34);
-  padding: clamp(22px, 3vw, 40px);
-  margin-bottom: clamp(48px, 6vw, 88px);
-  display: grid; gap: var(--s5);
-}
-.foot__duo-head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s3) var(--s5); flex-wrap: wrap; }
-.foot .foot__duo h4 { margin: 0; color: var(--gold); }
-.foot a.foot__duo-cta { color: var(--ivory); }
-.foot__duo-pasos { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s4); counter-reset: paso; }
-.foot__duo-pasos li {
-  counter-increment: paso;
-  display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: var(--s3); align-items: baseline;
-  color: var(--ivory); font-size: var(--fs-small); line-height: 1.6;
-}
-.foot__duo-pasos li::before {
-  content: counter(paso);
-  font-family: var(--font-display); font-size: var(--t-500); line-height: 1; color: var(--gold);
-  font-variant-numeric: lining-nums;
-}
-@media (min-width: 860px) {
-  .foot__duo-pasos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 48px); }
-}
 .foot__cols { display: grid; gap: clamp(32px, 4vw, 60px); grid-template-columns: repeat(2, 1fr); }
 @media (min-width: 860px) { .foot__cols { grid-template-columns: 1.3fr repeat(3, 0.9fr); } }
 .foot h4 { color: var(--ivory); margin-bottom: var(--s4); }
@@ -1337,6 +1312,27 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
   color: var(--on-surface-dim); vertical-align: middle;
 }
 .pdp__como { margin: var(--s3) 0 0; max-width: 46ch; font-size: var(--t-300); line-height: 1.5; color: var(--on-surface-dim); }
+/* Guia del duo (snippet guia-duo): tres pasos numerados justo encima del
+   selector de la ficha del duo. Filete dorado y numeros en el dorado oscuro,
+   que es el que se lee sobre marfil. */
+.guia-duo {
+  border: var(--hairline-width) solid var(--gold);
+  padding: clamp(18px, 2.4vw, 28px);
+  display: grid; gap: var(--s4);
+}
+.guia-duo__t { color: var(--gold-deep); }
+.guia-duo__pasos { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s3); counter-reset: paso; }
+.guia-duo__pasos li {
+  counter-increment: paso;
+  display: grid; grid-template-columns: 1.75rem minmax(0, 1fr); gap: var(--s3); align-items: baseline;
+  font-size: var(--t-300); line-height: 1.5; color: var(--on-surface);
+}
+.guia-duo__pasos li::before {
+  content: counter(paso);
+  font-family: var(--font-display); font-size: var(--t-500); line-height: 1; color: var(--gold-deep);
+  font-variant-numeric: lining-nums;
+}
+.guia-duo strong { font-weight: 600; }
 /* A todo el ancho, la rejilla es EXACTAMENTE la del catalogo: mismas
    columnas, mismos huecos. Con `auto-fill` salian siete columnas de 169px,
    que es mirar sellos, no perfumes. */

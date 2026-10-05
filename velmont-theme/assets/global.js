@@ -938,10 +938,14 @@ function initBundlePicker() {
       n.className = 'pdp__par';
       n.textContent = 'por los dos';
       precio.append(' ', n);
-      const como = document.createElement('p');
-      como.className = 'pdp__como';
-      como.textContent = `Elige dos perfumes de la selección y paga ${money(precioCombo)} por los dos, en dos pasos.`;
-      precio.insertAdjacentElement('afterend', como);
+      // Con la guia de tres pasos (snippet guia-duo, encima del selector) esta
+      // linea repetia lo mismo: solo se pone si la guia no esta.
+      if (!$('.guia-duo')) {
+        const como = document.createElement('p');
+        como.className = 'pdp__como';
+        como.textContent = `Elige dos perfumes de la selección y paga ${money(precioCombo)} por los dos, en dos pasos.`;
+        precio.insertAdjacentElement('afterend', como);
+      }
     }
     if (boton && !boton.dataset.duo && !bloqueadoDeOrigen) {
       boton.dataset.duo = '1';

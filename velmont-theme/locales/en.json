@@ -50,7 +50,11 @@
       "view_image": "View image {{ index }}",
       "family": "Olfactive family",
       "pick_for_duo": "Pick for the duo",
-      "pick_short": "Pick"
+      "pick_short": "Pick",
+      "duo_guide_title": "How to build your duo",
+      "duo_step_1": "Tap your first fragrance in the list below.",
+      "duo_step_2": "Tap the second one.",
+      "duo_step_3_html": "Tap “Add the duo”: both perfumes go to the bag together for <strong>{{ price }}</strong>."
     }
   },
   "collections": {

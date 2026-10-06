@@ -69,11 +69,16 @@ for (const d of inv) {
   });
 }
 
-// 3) Segunda pasada: solo lo que salió fiable.
-for (const f of ['reinvestigacion-ahli.json', 'reinvestigacion-otros.json', 'reinvestigacion-extra.json']) {
+// 3) Segunda pasada: solo lo que salió fiable. Los nuevos-*.json son los productos
+//    subidos el 2026-10-05 (mismo formato). Un duplicado de otro producto de la
+//    tienda (duplicado_de) copia la fila de ese producto, al final.
+const duplicados = new Map(); // handle -> handle original
+for (const f of ['reinvestigacion-ahli.json', 'reinvestigacion-otros.json', 'reinvestigacion-extra.json',
+                 'nuevos-a.json', 'nuevos-b.json', 'nuevos-c.json', 'nuevos-d.json', 'nuevos-e.json']) {
   if (!existe(f)) continue;
   for (const d of leer(f)) {
     if (filas.get(d.handle)?.origen === 'hoja') continue;
+    if (d.duplicado_de && d.decision === 'nada') { duplicados.set(d.handle, d.duplicado_de); continue; }
     if (d.decision === 'piramide') {
       filas.set(d.handle, { origen: f, c: [familiaFem(d.familia), d.salida, d.corazon, d.fondo, '', concLarga(d.concentracion, d.tam), d.notas] });
     } else if (d.decision === 'solo_familia' && d.familia) {
@@ -83,6 +88,15 @@ for (const f of ['reinvestigacion-ahli.json', 'reinvestigacion-otros.json', 'rei
       filas.set(d.handle, { origen: f, c: ['', '', '', '', '', concLarga(d.concentracion, d.tam), ''] });
     }
   }
+}
+
+// Duplicados: el mismo perfume subido dos veces lleva la misma ficha que el original.
+// sugardaddy-1 es el Sugardaddy de Fugazzi subido otra vez (19:45, ya con su marca).
+duplicados.set('sugardaddy-1', 'sugardaddy');
+for (const [h, original] of duplicados) {
+  const f = filas.get(original);
+  if (f && !filas.has(h)) filas.set(h, { origen: 'duplicado', c: [...f.c] });
+  else if (!f) console.warn('duplicado sin fila original:', h, '→', original);
 }
 
 // Correcciones puntuales de texto que el cliente vería (notas internas de la hoja).
@@ -189,6 +203,8 @@ const resumen = {
   hoja: [...filas.values()].filter((f) => f.origen === 'hoja').length,
   investigacion: [...filas.values()].filter((f) => f.origen === 'investigacion').length,
   segunda: [...filas.values()].filter((f) => f.origen.startsWith('reinv')).length,
+  nuevos: [...filas.values()].filter((f) => f.origen.startsWith('nuevos')).length,
+  duplicados: [...filas.values()].filter((f) => f.origen === 'duplicado').length,
   familias: [...new Set([...filas.values()].map((f) => limpio(f.c[0])))].length,
 };
 console.log(JSON.stringify(resumen));

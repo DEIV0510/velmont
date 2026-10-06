@@ -2188,3 +2188,25 @@ body.template-cart {
   background: var(--ivory);
   color: var(--ink);
 }
+
+/* ==========================================================================
+   VOZ EDITORIAL (2026-10-06, el dueño: «quiero letras más luxury»)
+   Las frases cortas de la casa —entradillas, notas de coleccion, textos de
+   promocion, cierres y mensajes vacios— van en la letra de los titulares, en
+   cursiva. La lectura larga (descripcion de producto) y la interfaz
+   (antetitulos, botones, precios, listas) siguen en Manrope, rectas.
+   Bodoni dibuja mas pequeño que Manrope al mismo tamaño: un escalon mas.
+   El tamaño del lema del hero vive en velmont-motion.css (.hero-copy .hero__lede).
+   ========================================================================== */
+.lede, .hero__lede, .section-head__lede, .collection-head__note,
+.world__text, .statement__aside, .moment__text, .edicion__texto, .campaign__line {
+  font-family: var(--font-display); font-style: italic; font-weight: 400; letter-spacing: 0.005em;
+}
+.lede { font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem); line-height: 1.45; }
+.section-head__lede { font-size: clamp(1.125rem, 1rem + 0.35vw, 1.3125rem); line-height: 1.45; }
+.world__text, .statement__aside { font-size: clamp(1.125rem, 1rem + 0.45vw, 1.375rem); line-height: 1.5; }
+.moment__text { font-size: 1.0625rem; line-height: 1.45; }
+.edicion__texto, .campaign__line { font-size: 1.0625rem; line-height: 1.45; }
+.pdp__desc { font-family: var(--font-ui); font-style: normal; font-size: var(--fs-lede); line-height: 1.65; letter-spacing: 0; }
+.collection-head__note h1, .collection-head__note h2, .collection-head__note h3, .collection-head__note h4,
+.collection-head__note h5, .collection-head__note h6, .collection-head__note li { font-style: normal; }

@@ -386,7 +386,8 @@ body.cursor-on input, body.cursor-on textarea, body.cursor-on select { cursor: a
    contraste del color pleno. Ancho de lectura, no de titular. */
 .hero-copy .hero__lede {
   margin: clamp(20px, 2.4vw, 32px) 0 0; max-width: 38ch;
-  font-size: var(--t-400); line-height: 1.5; color: var(--ivory);
+  /* Voz editorial (Bodoni en cursiva, ver base.css): un escalon mas que en Manrope. */
+  font-size: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem); line-height: 1.35; color: var(--ivory);
 }
 .hero-copy .hero__lede + .hero__actions { margin-top: clamp(24px, 3vw, 40px); }
 .hero-copy .hero__actions { margin-top: clamp(28px, 4vw, 52px); display: flex; gap: var(--s4); flex-wrap: wrap; }

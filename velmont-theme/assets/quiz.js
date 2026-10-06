@@ -154,6 +154,63 @@ export function initQuiz({ showPanel, closePanel, initReveal } = {}) {
     initReveal?.(paso);
   }
 
+  /*
+   * Recomendacion. Antes salian los 4 primeros de la coleccion del genero
+   * —los ultimos subidos, con repetidos— y las otras tres respuestas no
+   * contaban. Ahora cada respuesta suma familias olfativas y gana el perfume
+   * cuya familia (la linea bajo el precio) coincide con mas; los empates se
+   * barajan para que no salga siempre lo mismo. Un perfume publicado dos
+   * veces (IL ROSO e ILMIN IL ROSO) solo sale una.
+   * Las claves son las etiquetas de las opciones, sin tildes: si se cambia
+   * una en el editor, esa respuesta deja de sumar (no rompe nada).
+   */
+  const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim();
+  const PERFIL = {
+    misterio: ['oud', 'amaderad', 'ahumad', 'cuero', 'incienso', 'resin', 'oriental', 'ambar'],
+    elegancia: ['floral', 'chipre', 'iris', 'almizcl', 'aromatic', 'fougere'],
+    intensidad: ['especiad', 'oriental', 'oud', 'cuero', 'ambar', 'gourmand'],
+    magnetismo: ['ambar', 'vainill', 'gourmand', 'oriental', 'almizcl', 'dulce'],
+    sofisticacion: ['chipre', 'cuero', 'iris', 'amaderad', 'floral'],
+    luz: ['citric', 'acuatic', 'marin', 'fresc', 'verde', 'frutal', 'solar'],
+    calidez: ['ambar', 'vainill', 'gourmand', 'especiad', 'dulce', 'oriental'],
+    permanencia: ['oud', 'ambar', 'oriental', 'cuero', 'resin', 'extrait', 'parfum'],
+    'todos los dias': ['citric', 'acuatic', 'aromatic', 'fresc', 'floral', 'almizcl'],
+    'la oficina': ['citric', 'aromatic', 'acuatic', 'fresc', 'almizcl', 'verde'],
+    'una cita': ['ambar', 'vainill', 'gourmand', 'floral', 'oriental', 'almizcl'],
+    'la noche': ['oud', 'ambar', 'oriental', 'especiad', 'cuero', 'gourmand'],
+    'un evento': ['oriental', 'ambar', 'oud', 'floral', 'chipre'],
+    'el viaje': ['citric', 'acuatic', 'marin', 'fresc', 'aromatic'],
+    'apenas un rastro': ['citric', 'acuatic', 'fresc', 'almizcl', 'verde', 'toilette'],
+    'que no haya duda': ['oud', 'ambar', 'especiad', 'oriental', 'extrait', 'parfum', 'cuero'],
+  };
+  const clavesElegidas = () => Object.values(state.answers).flat().flatMap((l) => PERFIL[norm(l)] || []);
+  const llave = (p) => {
+    let t = norm(p.t);
+    const casa = norm(p.v);
+    if (casa && t.startsWith(casa + ' ')) t = t.slice(casa.length + 1);
+    return t.replace(/\b(edt|edp|parfum|extrait|eau de (toilette|parfum)|\d+ ?ml)\b/g, '').replace(/\s+/g, ' ').trim();
+  };
+  async function recomendar(handle) {
+    const res = await fetch(`/collections/${handle}?view=quiz`);
+    if (!res.ok) return '';
+    const lista = JSON.parse(await res.text());
+    const claves = clavesElegidas();
+    const vistos = new Set();
+    const elegidos = lista
+      .filter((p) => p.a && p.h !== 'duo-velmont')
+      .map((p) => {
+        const fam = norm(p.f);
+        const puntos = claves.reduce((n, c) => n + (fam.includes(c) ? 1 : 0), 0) + (fam ? 0.5 : 0);
+        return { ...p, puntos, azar: Math.random() };
+      })
+      .sort((x, y) => y.puntos - x.puntos || x.azar - y.azar)
+      .filter((p) => { const l = llave(p); if (vistos.has(l)) return false; vistos.add(l); return true; })
+      .slice(0, 4);
+    if (!elegidos.length) return '';
+    const html = await Promise.all(elegidos.map((p) => fetch(`/products/${p.h}?view=pieza`).then((r) => (r.ok ? r.text() : ''))));
+    return html.join('').trim();
+  }
+
   /** Coleccion elegida: la del paso mas reciente que aporte una. */
   function chosenHandle() {
     for (let i = state.i; i >= 0; i -= 1) {
@@ -175,9 +232,10 @@ export function initQuiz({ showPanel, closePanel, initReveal } = {}) {
     progreso(steps.length);
     mount(`<h2 class="display finder__q">${data.reading || 'Leyendo tu perfil…'}</h2>`);
 
-    const handle = chosenHandle();
+    const handle = chosenHandle() || 'all';
     let pieces = '';
-    if (handle) {
+    try { pieces = await recomendar(handle); } catch { /* abajo, el camino de siempre */ }
+    if (!pieces) {
       try {
         const res = await fetch(`/collections/${handle}?view=piezas&limit=4`);
         if (res.ok) pieces = (await res.text()).trim();

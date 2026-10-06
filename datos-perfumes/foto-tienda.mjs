@@ -69,11 +69,11 @@ if (modo === 'foto') {
     const dif = [];
     for (const k of Object.keys(x)) {
       let va = x[k], vb = y[k];
-      if (e && k === 'title') va = e.Title;
-      if (e && k === 'vendor') va = e.Vendor;
-      if (e && k === 'tags') va = e.Tags.split(',').map((s) => s.trim()).filter(Boolean).sort();
-      if (e && k === 'body_html') { va = norm(e['Body (HTML)']); vb = norm(vb); }
-      if (JSON.stringify(va) !== JSON.stringify(vb)) dif.push(`${k}: esperado ${JSON.stringify(va).slice(0, 140)} | hay ${JSON.stringify(vb).slice(0, 140)}`);
+      if (e && k === 'title' && e.Title !== undefined) va = e.Title;
+      if (e && k === 'vendor' && e.Vendor !== undefined) va = e.Vendor;
+      if (e && k === 'tags' && e.Tags !== undefined) va = e.Tags.split(',').map((s) => s.trim()).filter(Boolean).sort();
+      if (e && k === 'body_html' && e['Body (HTML)'] !== undefined) { va = norm(e['Body (HTML)']); vb = norm(vb); }
+      if (JSON.stringify(va) !== JSON.stringify(vb)) dif.push(`${k}: esperado ${String(JSON.stringify(va)).slice(0, 140)} | hay ${String(JSON.stringify(vb)).slice(0, 140)}`);
     }
     if (dif.length) { problemas++; console.log(`✗ ${h}${e ? ' (en el CSV)' : ' (NO estaba en el CSV)'}\n   ` + dif.join('\n   ')); }
     else if (e) aplicados++;

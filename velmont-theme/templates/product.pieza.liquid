@@ -1,0 +1,6 @@
+{%- layout none -%}
+{%- comment -%}
+  Una sola pieza, sin plantilla, para el resultado del cuestionario
+  (quiz.js elige los cuatro perfumes y pide cada uno): /products/<handle>?view=pieza
+{%- endcomment -%}
+<div class="finder__result">{% render 'piece', product: product, reveal: false %}</div>

@@ -78,9 +78,19 @@
 
 {%- if section.settings.show_filters -%}
   <nav class="filters collection-filters" aria-label="{{ 'collections.general.filter' | t }}">
-    <a href="{{ collection.url }}"
-       class="filter{% unless filtering %} on{% endunless %}"
-       {% unless filtering %}aria-current="true"{% endunless %}>{{ 'collections.general.all' | t }}</a>
+    {%- comment -%}
+      «Todas» es el catalogo completo. Antes apuntaba a la coleccion actual y
+      en PARA EL salian dos filtros activos a la vez (Todas y Para el).
+    {%- endcomment -%}
+    {%- liquid
+      assign en_todas = false
+      if collection.handle == 'all' and filtering == false
+        assign en_todas = true
+      endif
+    -%}
+    <a href="{{ routes.all_products_collection_url }}"
+       class="filter{% if en_todas %} on{% endif %}"
+       {% if en_todas %}aria-current="page"{% endif %}>{{ 'collections.general.all' | t }}</a>
 
     {%- comment -%} Colecciones reales elegidas por el comerciante (genero, ediciones…) {%- endcomment -%}
     {%- for c in section.settings.filter_collections -%}

@@ -61,6 +61,8 @@ const AJUSTES_TEXTO = {
   // El dueño lo tiene como unisex y la fuente (tiendas) es floja: sin «para hombre».
   'monaco-11': [['es un cítrico amaderado de Another Lab (A.LAB), fresco y pensado para hombre.', 'es un cítrico amaderado y fresco de Another Lab (A.LAB).']],
 };
+// Etiquetas de tamaño corregidas por la etiqueta del frasco (Another Lab: 90 ml, no 100).
+const TAGS_CAMBIO = { 'monaco-11': [['100 ml', '90 ml']], 'lyche-fiyi-88': [['100 ml', '90 ml']] };
 const filas = [];
 const revision = [];
 for (const p of lista) {
@@ -85,6 +87,7 @@ for (const p of lista) {
   const casaTag = `Casa: ${casa}`;
   let tags = p.tags.filter((t) => !t.startsWith('Casa: ') || t === casaTag);
   if (casa !== 'Mi tienda' && !tags.includes(casaTag)) tags = [...tags, casaTag];
+  for (const [x, y] of TAGS_CAMBIO[p.handle] || []) tags = tags.map((t) => (t === x ? y : t));
 
   const opt = p.options[0];
   const variante = p.variants[0];
@@ -115,7 +118,8 @@ const csvFilas = filas.filter((f) => (!solo || solo.includes(f.Handle)) && (!lis
 const cab = ['Handle', 'Title', 'Body (HTML)', 'Vendor', 'Tags', 'Option1 Name', 'Option1 Value'];
 const q = (v) => '"' + String(v ?? '').replace(/"/g, '""') + '"';
 const csv = cab.join(',') + '\n' + csvFilas.map((f) => cab.map((c) => q(f[c])).join(',')).join('\n') + '\n';
-const destino = solo ? SALIDA.replace('.csv', '-prueba.csv') : listos ? SALIDA.replace('.csv', '-lote1.csv') : SALIDA;
+const lote = process.argv.includes('--lote') ? process.argv[process.argv.indexOf('--lote') + 1] : null;
+const destino = lote ? SALIDA.replace('.csv', '-' + lote + '.csv') : solo ? SALIDA.replace('.csv', '-prueba.csv') : listos ? SALIDA.replace('.csv', '-lote1.csv') : SALIDA;
 fs.writeFileSync(destino, csv);
 
 console.table(revision);

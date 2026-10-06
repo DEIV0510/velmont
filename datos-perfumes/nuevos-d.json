@@ -148,7 +148,7 @@
       "https://www.manceraparfums.com/es/oriental/82-instant-crush.html",
       "https://www.fragrantica.com/perfume/Mancera/Instant-Crush-54885.html"
     ],
-    "nota": "Pirámide oficial (manceraparfums.com): Head Citrus Fruits, Saffron, Ginger; Heart Rose from Morocco, Egyptian Jasmine, precious Amber; Base Sandalwood, Oakmoss, Vanilla & White Musk. Familia oficial: «Amber Gourmand Eau de Parfum» (categoría Oriental); resumen de la marca: «Azafrán, ámbar y vainilla»; descripción: abre con «una frescura delicada», sigue con «un corazón sensual» y termina «suave, gourmand y adictiva». Se vende en 120 y 60 ml. Fragrantica da una lista más detallada (mandarina y bergamota de Sicilia, amberwood, hoja de pachulí) y la clasifica Oriental Floral, para mujeres y hombres; manda la oficial. La descripción del dueño es correcta en lo general, pero pone el ámbar en el fondo (la marca lo pone en el corazón) y omite el jengibre y el musgo de roble. «Eau de Parfum, unisex, 120 ml» es correcto. Vendor: estaba como «Mi tienda». El handle termina en «-1»: conviene revisar que no haya otro Instant Crush en la tienda.",
+    "nota": "Pirámide oficial (manceraparfums.com): Head Citrus Fruits, Saffron, Ginger; Heart Rose from Morocco, Egyptian Jasmine, precious Amber; Base Sandalwood, Oakmoss, Vanilla & White Musk. Familia oficial: «Amber Gourmand Eau de Parfum» (categoría Oriental); resumen de la marca: «Azafrán, ámbar y vainilla»; descripción: abre con «una frescura delicada», sigue con «un corazón sensual» y termina «suave, gourmand y adictiva». Se vende en 120 y 60 ml. Fragrantica da una lista más detallada (mandarina y bergamota de Sicilia, amberwood, hoja de pachulí) y la clasifica Oriental Floral, para mujeres y hombres; manda la oficial. La descripción del dueño es correcta en lo general, pero pone el ámbar en el fondo (la marca lo pone en el corazón) y omite el jengibre y el musgo de roble. «Eau de Parfum, unisex, 120 ml» es correcto. Vendor: estaba como «Mi tienda». El «-1» del handle no indica un duplicado: la búsqueda de la tienda solo devuelve este Instant Crush.",
     "texto": "<p>Cítricos, azafrán y jengibre abren Instant Crush con una frescura delicada. El corazón une la rosa de Marruecos, el jazmín egipcio y el ámbar, y el fondo se vuelve suave y goloso con sándalo, musgo de roble, vainilla y almizcle blanco.</p><p>Un ámbar gourmand unisex y opulento, que la casa resume en azafrán, ámbar y vainilla. Eau de Parfum de 120 ml.</p>"
   },
   {
@@ -174,5 +174,105 @@
     ],
     "nota": "Pirámide oficial (manceraparfums.com): Head Fresh Lemon of Calabria; Heart Turkish Delight with Rose; Base Cedarwood, Intense Vanilla & White Musk (la versión en español dice «Limón italiano / Rosa Loukoum / Madera de cedro, vainilla intensa y almizcle blanco»). Familia: categoría Gourmand, título «Rose Vanilla Eau de Parfum»; resumen de la marca: «Rosa loukoum, vainilla cremosa, azúcar»; la marca lo llama «un éxito unisex». Se vende en 120 y 60 ml. Fragrantica coincide en las notas (Oriental Vainilla, 2011, Pierre Montale) pero lo clasifica «para mujeres»; manda la marca (unisex). La descripción del dueño es correcta (rosa, limón, azúcar; vainilla, almizcle blanco y cedro) y «Eau de Parfum, unisex, 120 ml» también. Vendor: estaba como «Mi tienda».",
     "texto": "<p>Limón de Calabria abre Roses Vanille con un toque fresco. En el corazón aparece una rosa loukoum, dulce como la delicia turca, y el fondo se asienta en madera de cedro, vainilla intensa y almizcle blanco.</p><p>Un gourmand de rosa y vainilla cremosa con un punto de azúcar, que Mancera presenta como un éxito unisex. Eau de Parfum de 120 ml.</p>"
+  },
+  {
+    "handle": "montblanc-explorer-edp",
+    "nombre_identificado": "Montblanc Explorer (2019, de Jordi Fernández, Antoine Maisondieu y Olivier Pescheux), Eau de Parfum. La foto no muestra etiqueta ni tamaño: es el frasco del Explorer original, con funda negra de textura saffiano y el emblema de Montblanc (la marca lo describe como «classic black bottle»); la concentración EDP sale del título y de la etiqueta de la tienda.",
+    "familia": "Amaderada aromática",
+    "salida": "Bergamota, salvia",
+    "corazon": "Vetiver, cuero",
+    "fondo": "Pachulí, akigalawood, ambrofix",
+    "notas": "",
+    "concentracion": "EDP",
+    "tam": "",
+    "genero": "Hombre",
+    "vendor_correcto": "MONTBLANC",
+    "titulo_sugerido": "MONTBLANC EXPLORER EDP",
+    "duplicado_de": "",
+    "confianza": "alta",
+    "decision": "piramide",
+    "fuentes": [
+      "https://www.montblanc.com/en-co/fragrances/collection/explorer",
+      "https://www.montblanc.com/en-us/fragrances/collection/explorer",
+      "https://www.montblanc.com/es-co/explorer-eau-de-parfum-100-ml-MB124069.html",
+      "https://www.fragrantica.com/perfume/Montblanc/Explorer-52002.html"
+    ],
+    "nota": "ERROR en el título: dice «MONTBLACK»; la marca es MONTBLANC. Vendor: estaba como «Mi tienda». Fuente oficial: la página de la colección Explorer en montblanc.com (en-co y en-us) dice que el Explorer original viene en «classic black bottle», que «dries down for a universally appealing leathery and woody effect» y da: Top Bergamot, Pomarose, Sage; Heart Vetiver, Leather, Sandalwood; Base Patchouli, Ambrofix, Akigalawood; también dice que es «the perfect eau de parfum for men» y se vende en 60 y 100 ml (30 ml agotado). La ficha del producto en montblanc.com no trae notas (solo la etiqueta de familia «aromatic»). Fragrantica (Amaderada Aromática, para hombres): bergamota, pimienta rosa, salvia esclarea / vetiver de Haití, cuero / ambroxan, akigalawood, hoja de pachulí, vaina de cacao. Las dos fuentes no coinciden del todo: la pimienta rosa (Fragrantica y muchas tiendas, y la descripción del dueño) no está en el texto oficial, que pone «pomarose»; el sándalo solo está en el oficial y el cacao solo en Fragrantica. Por eso la pirámide lleva solo lo que dicen las dos (ambrofix y ambroxan son la misma familia de moléculas ambaradas). La descripción del dueño acierta en lo general (bergamota, pimienta rosa y salvia; vetiver, cuero y maderas). La tienda no indica el tamaño.",
+    "texto": "<p>Bergamota y salvia abren Explorer con un aire fresco y aromático. En el corazón aparecen el vetiver y el cuero, y el fondo se vuelve amaderado con pachulí, akigalawood y notas ambaradas.</p><p>Un amaderado aromático para hombre que Montblanc asocia con la aventura y la libertad, pensado para días de trabajo y de ocio. Eau de Parfum.</p>"
+  },
+  {
+    "handle": "nautica-blue-1",
+    "nombre_identificado": "Nautica Blue (2005, de Maurice Roucel), Eau de Toilette para hombre, 100 ml según la descripción del dueño. OJO con la foto: muestra el frasco «de vela» de Nautica con jugo turquesa, que es el aspecto del Nautica Classic (1992); el Nautica Blue usa el mismo frasco pero con jugo azul, justo el que aparece en la foto de «nautica-voyage-1».",
+    "familia": "Aromática acuática",
+    "salida": "Piña, bergamota, durazno",
+    "corazon": "Nenúfar, jazmín",
+    "fondo": "Sándalo, almizcle, cedro",
+    "notas": "",
+    "concentracion": "EDT",
+    "tam": "100 ml",
+    "genero": "Hombre",
+    "vendor_correcto": "NAUTICA",
+    "titulo_sugerido": "",
+    "duplicado_de": "",
+    "confianza": "media",
+    "decision": "piramide",
+    "fuentes": [
+      "https://www.fragrantica.com/perfume/Nautica/Nautica-Blue-2480.html",
+      "https://www.notino.co.uk/nautica/blue-eau-de-toilette-for-men/",
+      "https://www.fragrantica.com/perfume/Nautica/Nautica-2479.html",
+      "https://dhqvcp-bw.myshopify.com/products/nautica-blue-1.js"
+    ],
+    "nota": "Sin ficha oficial localizable (nautica.com no publica las notas de sus perfumes). Dos fuentes independientes coinciden: Fragrantica (Aromática Acuática, para hombres, 2005, Maurice Roucel): piña, bergamota, durazno / nenúfar, jazmín / sándalo, almizcle, cedro; Notino UK (categoría aromática acuática, Eau de Toilette): piña, bergamota, durazno / jazmín, loto / cedro, almizcle, sándalo. En el buscador aparece además un texto de prensa que repiten tiendas (acorde ozónico, bergamota y piña / jazmín, nenúfar y violeta acuática / almizcle, cedro y sándalo), sin durazno; no pude abrir esas páginas. La descripción del dueño es correcta (la pirámide de Fragrantica) y «EDT, hombre, 100 ml» también. PROBLEMA DE FOTO: según las imágenes de Fragrantica, el frasco turquesa con tapa de bola plateada es el Nautica Classic (1992, un chipre amaderado con aldehídos, otro perfume); el Nautica Blue es el mismo frasco en azul. La foto correcta de Nautica Blue parece ser la que se subió en «nautica-voyage-1». Conviene confirmar con el dueño qué frasco tiene y cambiar la imagen. Confianza media por eso y por no haber fuente oficial.",
+    "texto": "<p>Piña, bergamota y durazno abren Nautica Blue con una salida frutal y fresca. En el corazón aparecen el nenúfar, de aire acuático, y el jazmín, y el fondo se asienta en sándalo, almizcle y cedro.</p><p>Un aromático acuático para hombre, fresco y ligero, con aire de mar abierto. Eau de Toilette de 100 ml.</p>"
+  },
+  {
+    "handle": "nautica-voyage-1",
+    "nombre_identificado": "Por título y descripción: Nautica Voyage, Eau de Toilette para hombre (el mismo perfume que «nautica-voyage»). Pero la foto NO es de Voyage: muestra el frasco «de vela» con jugo azul, «NAUTICA» en vertical y tapa de bola plateada, que es el frasco de Nautica Blue.",
+    "familia": "",
+    "salida": "",
+    "corazon": "",
+    "fondo": "",
+    "notas": "",
+    "concentracion": "EDT",
+    "tam": "",
+    "genero": "Hombre",
+    "vendor_correcto": "NAUTICA",
+    "titulo_sugerido": "",
+    "duplicado_de": "nautica-voyage",
+    "confianza": "media",
+    "decision": "nada",
+    "fuentes": [
+      "https://dhqvcp-bw.myshopify.com/products/nautica-voyage-1.js",
+      "https://dhqvcp-bw.myshopify.com/products/nautica-voyage.js",
+      "https://dhqvcp-bw.myshopify.com/products/nautica-voyage-2.js",
+      "https://www.fragrantica.com/perfume/Nautica/Nautica-Blue-2480.html",
+      "https://www.fragrantica.com/perfume/Nautica/Nautica-Voyage-913.html"
+    ],
+    "nota": "DUPLICADO DE «nautica-voyage» por título y descripción: la descripción del dueño es la pirámide de Voyage (manzana verde y hojas verdes / loto y mimosa / almizcle, cedro, musgo de roble y ámbar), la misma que ya tiene el producto original, y el precio es el de «nautica-voyage-2» (120.000; el original está a 125.000). No dice tamaño ni concentración. ERROR DE FOTO: la imagen (WhatsApp 17.56.05) no es el frasco rectangular de Voyage sino el de Nautica Blue (mismo frasco que en Fragrantica). Lo más probable es que sea un primer intento fallido: tres minutos después el dueño creó «nautica-voyage-2» con la foto correcta de Voyage. Recomendación: borrar este producto (y también «nautica-voyage-2») y dejar «nautica-voyage». Si en realidad el dueño tiene un Nautica Blue para vender con esta foto, habría que cambiarle título y descripción, y esta foto serviría para «nautica-blue-1», cuya imagen turquesa parece de Nautica Classic.",
+    "texto": ""
+  },
+  {
+    "handle": "nautica-voyage-2",
+    "nombre_identificado": "Nautica Voyage, Eau de Toilette para hombre, 100 ml (la foto muestra el frasco rectangular azul con «NAUTICA VOYAGE» y la tapa plateada en forma de carrete, el mismo de la foto de «nautica-voyage»)",
+    "familia": "",
+    "salida": "",
+    "corazon": "",
+    "fondo": "",
+    "notas": "",
+    "concentracion": "EDT",
+    "tam": "100 ml",
+    "genero": "Hombre",
+    "vendor_correcto": "NAUTICA",
+    "titulo_sugerido": "",
+    "duplicado_de": "nautica-voyage",
+    "confianza": "alta",
+    "decision": "nada",
+    "fuentes": [
+      "https://dhqvcp-bw.myshopify.com/products/nautica-voyage-2.js",
+      "https://dhqvcp-bw.myshopify.com/products/nautica-voyage.js",
+      "https://www.fragrantica.com/perfume/Nautica/Nautica-Voyage-913.html"
+    ],
+    "nota": "ES EL MISMO PERFUME QUE «nautica-voyage» (NÁUTICA VOYAGE, creado el 12-09): mismo frasco en la foto (rectangular azul, tapa de carrete), mismo vendor (NAUTICA), Eau de Toilette para hombre. Precio 120.000 frente a 125.000 del original. Su descripción es genérica (fresco, limpio, acuático, para clima cálido) y dice «EAU DE TOILETTE | HOMBRE | 100 ML», que es correcto. Conviene dejar un solo producto: el original ya tiene ficha olfativa y texto.",
+    "texto": ""
   }
 ]

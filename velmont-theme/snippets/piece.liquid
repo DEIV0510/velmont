@@ -1,7 +1,7 @@
 {%- comment -%}
   La "pieza": la unidad editorial que reemplaza a la tarjeta de producto.
-  Sin marco ni bloque de datos apilados: imagen con aire, nombre en serif,
-  precio discreto y metadatos que solo aparecen al pasar el cursor.
+  Sin marco: imagen con aire, nombre en serif, precio en negrita y, debajo,
+  «Añadir» a todo el ancho. El corazon rojo queda siempre a la vista.
 
   Uso: {% render 'piece', product: product, reveal: true %}
 
@@ -12,15 +12,28 @@
 {%- liquid
   assign variant = product.selected_or_first_available_variant
   assign edition = ''
+  assign edition_corta = ''
+  assign en_duo = false
   for c in product.collections
     if c.handle == '2-matai-x-450-000'
       assign edition = 'Selección MATAI'
+      assign edition_corta = 'MATAI'
       break
     elsif c.handle == '2-x-280-000'
       assign edition = 'Dúo VELMONT'
+      assign edition_corta = 'Dúo'
+      assign en_duo = true
       break
     endif
   endfor
+
+  # La ficha donde se arma el duo: su precio sale del producto
+  if en_duo
+    assign duo = all_products['duo-velmont']
+    if duo.id == blank or duo.id == product.id
+      assign en_duo = false
+    endif
+  endif
 
   assign meta = ''
   for tag in product.tags
@@ -36,14 +49,31 @@
 
 <article class="piece" data-casa="{{ product.vendor | handleize }}"{% unless reveal == false %} data-reveal="wipe"{% endunless %}{% unless tilt == false %} data-tilt{% endunless %} data-cursor-label="{{ 'motion.cursor.view' | t }}">
   <div class="piece__stage">
-    {%- if edition != blank -%}
-      <span class="label piece__edit">{{ edition }}</span>
+    {%- comment -%}
+      Etiqueta del duo: al pasar el cursor (o al tocarla) se abre una pestaña
+      que explica que es, cuanto cuesta y donde se arma. Pedido del dueño: la
+      gente veia «Dúo VELMONT» sin saber que significaba.
+    {%- endcomment -%}
+    {%- if en_duo -%}
+      <div class="duo-tip" data-duo-tip>
+        <button type="button" class="label piece__edit duo-tip__btn" aria-expanded="false" aria-label="{{ 'products.product.duo_tip_label' | t: title: duo.title }}">
+          <span class="piece__edit-largo">{{ duo.title }}</span>
+          <span class="piece__edit-corto">{{ edition_corta }}</span>
+          <span class="duo-tip__i" aria-hidden="true">i</span>
+        </button>
+        {% render 'duo-tip-panel', duo: duo, product: product %}
+      </div>
+    {%- elsif edition != blank -%}
+      <span class="label piece__edit">
+        <span class="piece__edit-largo">{{ edition }}</span>
+        <span class="piece__edit-corto">{{ edition_corta }}</span>
+      </span>
     {%- endif -%}
 
     <button class="piece__save"
             data-save="{{ product.handle }}"
             aria-label="{{ 'products.product.save' | t: title: product.title }}"
-            aria-pressed="false">{% render 'icon', name: 'heart', size: 15 %}</button>
+            aria-pressed="false">{% render 'icon', name: 'heart', size: 20 %}</button>
 
     {%- if product.featured_image -%}
       <img src="{{ product.featured_image | image_url: width: 800 }}"
@@ -61,24 +91,11 @@
       <span class="piece__placeholder label">{{ settings.brand_name | default: shop.name }}</span>
     {%- endif -%}
 
-    <div class="piece__hover">
-      <span class="label">{{ meta }}</span>
-      {%- comment -%}
-        combo_url: en la coleccion del combo la pieza no se añade suelta (se
-        cobraria a precio normal): lleva a la ficha del combo con este perfume
-        ya elegido. Texto corto en piezas estrechas (ver @container en base.css).
-      {%- endcomment -%}
-      {%- if combo_url != blank and variant.available -%}
-        <a class="link piece__add" href="{{ combo_url }}?elige={{ product.handle }}">
-          <span class="piece__add-largo">{{ 'products.product.pick_for_duo' | t }}</span>
-          <span class="piece__add-corto">{{ 'products.product.pick_short' | t }}</span>
-        </a>
-      {%- elsif variant.available -%}
-        <button class="link piece__add" data-add="{{ variant.id }}">{{ 'products.product.add' | t }}</button>
-      {%- else -%}
-        <span class="label">{{ 'products.product.sold_out' | t }}</span>
-      {%- endif -%}
-    </div>
+    {%- if meta != blank -%}
+      <div class="piece__hover">
+        <span class="label">{{ meta }}</span>
+      </div>
+    {%- endif -%}
   </div>
 
   <a class="piece__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}"></a>
@@ -113,6 +130,29 @@
     {% render 'price', product: product %}
     {%- if familia != blank -%}
       <span class="piece__notes">{{ familia }}</span>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%}
+    La accion va debajo del nombre y del precio, a todo el ancho de la pieza:
+    encima de la foto se perdia (pedido del dueño, 2026-10-06). Se apoya en el
+    borde inferior para que en una fila todas queden a la misma altura.
+    combo_url: en la coleccion del combo la pieza no se añade suelta (se
+    cobraria a precio normal): lleva a la ficha del combo con este perfume
+    ya elegido. Texto corto en piezas estrechas (ver @container en base.css).
+  {%- endcomment -%}
+  <div class="piece__buy">
+    {%- if combo_url != blank and variant.available -%}
+      <a class="act piece__add" href="{{ combo_url }}?elige={{ product.handle }}">
+        <span class="piece__add-largo">{{ 'products.product.pick_for_duo' | t }}</span>
+        <span class="piece__add-corto">{{ 'products.product.pick_short' | t }}</span>
+      </a>
+    {%- elsif variant.available -%}
+      <button type="button" class="act piece__add" data-add="{{ variant.id }}">
+        {% render 'icon', name: 'bag', size: 16 %}<span>{{ 'products.product.add' | t }}</span>
+      </button>
+    {%- else -%}
+      <span class="act piece__add piece__add--off">{{ 'products.product.sold_out' | t }}</span>
     {%- endif -%}
   </div>
 </article>

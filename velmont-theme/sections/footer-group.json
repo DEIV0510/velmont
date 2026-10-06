@@ -29,7 +29,9 @@
         "contacto": {
           "type": "contact",
           "settings": {
-            "title": "Contacto"
+            "title": "Contacto",
+            "heading": "Asesoría personal",
+            "text": "Escríbenos y te ayudamos a elegir tu perfume."
           }
         }
       },

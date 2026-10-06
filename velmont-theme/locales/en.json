@@ -54,7 +54,14 @@
       "duo_guide_title": "How to build your duo",
       "duo_step_1": "Tap your first fragrance in the list below.",
       "duo_step_2": "Tap the second one.",
-      "duo_step_3_html": "Tap “Add the duo”: both perfumes go to the bag together for <strong>{{ price }}</strong>."
+      "duo_step_3_html": "Tap “Add the duo”: both perfumes go to the bag together for <strong>{{ price }}</strong>.",
+      "duo_tip_label": "What the {{ title }} is",
+      "duo_tip_html": "Two perfumes from this selection, your choice, for <strong>{{ price }}</strong>.",
+      "duo_tip_how": "It is put together on the duo page: you pick both and they go to the bag together.",
+      "duo_tip_cta": "Build my duo with this one",
+      "duo_tip_cta_short": "Build my duo",
+      "duo_tip_what": "What is it?",
+      "duo_promo_html": "This perfume is part of the duo: pick another one and pay <strong>{{ price }}</strong> for both."
     }
   },
   "collections": {

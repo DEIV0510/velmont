@@ -54,7 +54,14 @@
       "duo_guide_title": "Cómo armar tu dúo",
       "duo_step_1": "Toca tu primera fragancia en la lista de abajo.",
       "duo_step_2": "Toca la segunda.",
-      "duo_step_3_html": "Toca «Añadir el dúo»: los dos perfumes van juntos a la bolsa por <strong>{{ price }}</strong>."
+      "duo_step_3_html": "Toca «Añadir el dúo»: los dos perfumes van juntos a la bolsa por <strong>{{ price }}</strong>.",
+      "duo_tip_label": "Qué es el {{ title }}",
+      "duo_tip_html": "Dos perfumes de esta selección, a tu elección, por <strong>{{ price }}</strong>.",
+      "duo_tip_how": "Se arma en la ficha del dúo: eliges los dos y van juntos a la bolsa.",
+      "duo_tip_cta": "Armar mi dúo con este",
+      "duo_tip_cta_short": "Armar mi dúo",
+      "duo_tip_what": "¿Qué es?",
+      "duo_promo_html": "Este perfume entra en el dúo: elige otro y paga <strong>{{ price }}</strong> por los dos."
     }
   },
   "collections": {

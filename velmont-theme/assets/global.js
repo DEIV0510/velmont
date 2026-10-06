@@ -1118,6 +1118,42 @@ function limpiarTextosPegados() {
   }
 }
 
+/* ---------------- Pestaña del Dúo VELMONT ----------------
+   La etiqueta «Dúo VELMONT» de las piezas y el «¿Qué es?» de la ficha abren una
+   pestaña que explica el duo. Con cursor se abre sola al pasar por encima (CSS);
+   en tactil no hay hover, asi que el toque la abre y la cierra. Delegado en el
+   documento: tambien sirve para las piezas que llegan despues (cuestionario). */
+function initDuoTip() {
+  const cerrar = (salvo) => {
+    for (const tip of $$('[data-duo-tip].is-open')) {
+      if (tip === salvo) continue;
+      tip.classList.remove('is-open');
+      $('.duo-tip__btn', tip)?.setAttribute('aria-expanded', 'false');
+    }
+  };
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.duo-tip__btn');
+    if (btn) {
+      const tip = btn.closest('[data-duo-tip]');
+      e.preventDefault();
+      e.stopPropagation();
+      const abrir = !tip.classList.contains('is-open');
+      cerrar(tip);
+      tip.classList.toggle('is-open', abrir);
+      btn.setAttribute('aria-expanded', String(abrir));
+      return;
+    }
+    // Un toque en la pestaña (fuera de su enlace) la cierra, sin abrir la ficha
+    // que queda debajo. En piezas estrechas la pestaña tapa la etiqueta, asi
+    // que este es el gesto para cerrarla.
+    if (e.target.closest('.duo-tip__panel') && !e.target.closest('a')) e.preventDefault();
+    cerrar(null);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') cerrar(null);
+  });
+}
+
 async function boot() {
   limpiarTextosPegados();
   initHeader();
@@ -1128,6 +1164,7 @@ async function boot() {
   initProduct();
   initHouses();
   initBundlePicker();
+  initDuoTip();
   await cargarModulos();
   initSwipeHint();
   initReel();

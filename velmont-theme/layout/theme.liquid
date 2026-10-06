@@ -239,6 +239,20 @@
   <main id="MainContent" role="main" tabindex="-1">
     {{ content_for_layout }}
   </main>
+  {%- comment -%}
+    Una seccion que no pinta nada (la banda o los momentos sin imagen) deja su
+    envoltorio vacio en medio y la regla de paneles contiguos del mismo color
+    no veia a los vecinos: entre la Declaracion y «La casa» quedaban 210px de
+    crema vacia (320 en escritorio; el dueño lo señalo el 2026-10-06). Se
+    quitan antes de pintar, salvo en el editor, que necesita el envoltorio.
+  {%- endcomment -%}
+  {%- unless request.design_mode -%}
+    <script>
+      document.querySelectorAll('#MainContent > .shopify-section').forEach(function (s) {
+        if (!s.firstElementChild && !s.textContent.trim()) s.remove();
+      });
+    </script>
+  {%- endunless -%}
 
   {% sections 'footer-group' %}
 

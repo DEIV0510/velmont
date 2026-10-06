@@ -193,17 +193,34 @@
         endif
       endif
     -%}
+    {%- comment -%}
+      Titulo en la letra de los titulares y texto en la de la ficha: en
+      versalitas de 12px el aviso no se veia (pedido del dueño, 2026-10-06).
+      El «¿Qué es?» del duo abre la misma pestaña que la etiqueta de las piezas.
+    {%- endcomment -%}
     {%- if en_duo or en_auto -%}
       <div class="pdp__promos" data-reveal>
         {%- if en_auto -%}
-          <p class="pdp__promo"><span class="label label--gold">{{ auto.title }}</span>{{ section.settings.auto_promo_text }}</p>
+          <div class="pdp__promo">
+            <span class="pdp__promo-t">{{ auto.title }}</span>
+            <p>{{ section.settings.auto_promo_text }}</p>
+          </div>
         {%- endif -%}
         {%- if en_duo -%}
-          <p class="pdp__promo">
-            <span class="label label--gold">{{ combo.title }}</span>
-            Este perfume entra en el dúo: elige otro y paga {{ combo.price | money_without_trailing_zeros }} por los dos.
-            <a class="link" href="{{ combo.url }}?elige={{ product.handle }}">Armar mi dúo con este</a>
-          </p>
+          {%- assign precio_combo = combo.price | money_without_trailing_zeros -%}
+          <div class="pdp__promo pdp__promo--duo">
+            <div class="pdp__promo-head">
+              <span class="pdp__promo-t">{{ combo.title }}</span>
+              <div class="duo-tip duo-tip--ficha" data-duo-tip>
+                <button type="button" class="duo-tip__btn" aria-expanded="false" aria-label="{{ 'products.product.duo_tip_label' | t: title: combo.title }}">
+                  <span class="duo-tip__i" aria-hidden="true">i</span><span>{{ 'products.product.duo_tip_what' | t }}</span>
+                </button>
+                {% render 'duo-tip-panel', duo: combo %}
+              </div>
+            </div>
+            <p>{{ 'products.product.duo_promo_html' | t: price: precio_combo }}</p>
+            <a class="act pdp__promo-cta" href="{{ combo.url }}?elige={{ product.handle }}">{{ 'products.product.duo_tip_cta' | t }}</a>
+          </div>
         {%- endif -%}
       </div>
     {%- endif -%}

@@ -1,0 +1,23 @@
+{%- comment -%}
+  Pestaña que explica el Dúo VELMONT. La comparten la etiqueta de las piezas y
+  el aviso de la ficha de cada perfume. Precio y enlace salen del producto del
+  duo: si cambia el precio, la explicacion cambia sola.
+
+  Se abre al pasar el cursor, con el teclado (foco) o al tocar la etiqueta
+  (initDuoTip en global.js). Cerrada va con visibility: hidden, asi que ni se
+  lee ni se enfoca.
+
+  Uso: {% render 'duo-tip-panel', duo: duo, product: product %}
+{%- endcomment -%}
+{%- assign precio_duo = duo.price | money_without_trailing_zeros -%}
+<div class="duo-tip__panel">
+  <span class="duo-tip__t">{{ duo.title }}</span>
+  <p>{{ 'products.product.duo_tip_html' | t: price: precio_duo }}</p>
+  <p class="duo-tip__como">{{ 'products.product.duo_tip_how' | t }}</p>
+  {%- if product != blank -%}
+    <a class="duo-tip__cta" href="{{ duo.url }}?elige={{ product.handle }}">
+      <span class="duo-tip__cta-largo">{{ 'products.product.duo_tip_cta' | t }}</span>
+      <span class="duo-tip__cta-corto">{{ 'products.product.duo_tip_cta_short' | t }}</span>
+    </a>
+  {%- endif -%}
+</div>

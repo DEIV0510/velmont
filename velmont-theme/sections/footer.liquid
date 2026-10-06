@@ -18,8 +18,62 @@
       </div>
     {%- endif -%}
 
+    {%- comment -%}
+      Contacto: banda propia y destacada, por encima de las columnas. El dueño
+      lo pidio así (2026-10-06): quien se pierde busca como escribir, y en una
+      columna de enlaces de 14px no lo encontraba. Botones grandes con el
+      logotipo de cada red; el numero y la cuenta salen de los enlaces de
+      Ajustes del tema → Marca, nunca se escriben a mano.
+    {%- endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'contact' -%}
+        {%- if settings.whatsapp != blank or settings.instagram != blank -%}
+          {%- liquid
+            assign wa_num = settings.whatsapp | split: '?' | first | split: '/' | last | remove: '+' | strip
+            assign wa_txt = ''
+            assign wa_pre = wa_num | slice: 0, 2
+            if wa_pre == '57' and wa_num.size == 12
+              assign t1 = wa_num | slice: 2, 3
+              assign t2 = wa_num | slice: 5, 3
+              assign t3 = wa_num | slice: 8, 4
+              assign wa_txt = '+57 ' | append: t1 | append: ' ' | append: t2 | append: ' ' | append: t3
+            endif
+            assign ig_user = settings.instagram | split: '?' | first | split: '/' | last | strip
+          -%}
+          <div class="foot__contact" {{ block.shopify_attributes }}>
+            <div class="foot__contact-txt">
+              {%- if block.settings.title != blank -%}<h4 class="label label--gold">{{ block.settings.title }}</h4>{%- endif -%}
+              {%- if block.settings.heading != blank -%}<p class="foot__contact-t">{{ block.settings.heading }}</p>{%- endif -%}
+              {%- if block.settings.text != blank -%}<p class="foot__contact-p">{{ block.settings.text }}</p>{%- endif -%}
+            </div>
+            <div class="foot__contact-btns">
+              {%- if settings.whatsapp != blank -%}
+                <a class="foot-btn foot-btn--wa" href="{{ settings.whatsapp }}" target="_blank" rel="noopener">
+                  <span class="foot-btn__ico">{% render 'icon', name: 'whatsapp', size: 24 %}</span>
+                  <span class="foot-btn__txt">
+                    <span class="foot-btn__t">WhatsApp</span>
+                    {%- if wa_txt != blank -%}<span class="foot-btn__s">{{ wa_txt }}</span>{%- endif -%}
+                  </span>
+                </a>
+              {%- endif -%}
+              {%- if settings.instagram != blank -%}
+                <a class="foot-btn foot-btn--ig" href="{{ settings.instagram }}" target="_blank" rel="noopener">
+                  <span class="foot-btn__ico">{% render 'icon', name: 'instagram', size: 22 %}</span>
+                  <span class="foot-btn__txt">
+                    <span class="foot-btn__t">Instagram</span>
+                    {%- if ig_user != blank -%}<span class="foot-btn__s">@{{ ig_user }}</span>{%- endif -%}
+                  </span>
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+
     <div class="foot__cols">
       {%- for block in section.blocks -%}
+        {%- if block.type == 'contact' -%}{%- continue -%}{%- endif -%}
         {%- comment -%}
           El cuerpo se arma antes de pintar la columna: si un bloque se queda
           sin nada que mostrar —por ejemplo, un menu cuyos enlaces apuntan
@@ -74,18 +128,6 @@
               {%- endcapture -%}
               {%- assign filas_limpias = filas | strip -%}
               {%- if filas_limpias != blank -%}<ul>{{ filas }}</ul>{%- endif -%}
-
-            {%- when 'contact' -%}
-              {%- capture contacto -%}
-                {%- if settings.whatsapp != blank -%}
-                  <li><a href="{{ settings.whatsapp }}" target="_blank" rel="noopener">WhatsApp</a></li>
-                {%- endif -%}
-                {%- if settings.instagram != blank -%}
-                  <li><a href="{{ settings.instagram }}" target="_blank" rel="noopener">Instagram</a></li>
-                {%- endif -%}
-              {%- endcapture -%}
-              {%- assign contacto_limpio = contacto | strip -%}
-              {%- if contacto_limpio != blank -%}<ul>{{ contacto }}</ul>{%- endif -%}
           {%- endcase -%}
         {%- endcapture -%}
 
@@ -136,11 +178,13 @@
     },
     {
       "type": "contact",
-      "name": "Columna de contacto",
+      "name": "Contacto",
       "limit": 1,
       "settings": [
-        { "type": "text", "id": "title", "label": "Título", "default": "Contacto" },
-        { "type": "paragraph", "content": "Los enlaces salen de WhatsApp e Instagram en Ajustes del tema → Marca." }
+        { "type": "text", "id": "title", "label": "Antetítulo", "default": "Contacto" },
+        { "type": "text", "id": "heading", "label": "Titular", "default": "Asesoría personal" },
+        { "type": "textarea", "id": "text", "label": "Texto", "default": "Escríbenos y te ayudamos a elegir tu perfume." },
+        { "type": "paragraph", "content": "Va destacado encima de las columnas, con un botón por red. El número y la cuenta salen de WhatsApp e Instagram en Ajustes del tema → Marca." }
       ]
     }
   ],

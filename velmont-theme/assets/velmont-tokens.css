@@ -146,6 +146,9 @@
   --black: var(--noir);          /* panel oscuro                             */
   --cream: var(--ivory);         /* panel claro — el unico                   */
   /* --ink, --sand, --stone, --stone-deep y --gold* vienen de theme.liquid */
+  /* Rojo del corazon de las piezas (pedido del dueño, 2026-10-06): 5.2:1 sobre
+     marfil. Solo para «guardar»; no es un color de la marca. */
+  --rojo: #C8102E;
 
   --surface: var(--cream);
   --surface-inset: var(--sand);

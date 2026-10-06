@@ -1,0 +1,743 @@
+[
+ {
+  "id": 15410051875133,
+  "handle": "ahli-mexico-1",
+  "title": "AHLI MEXICO",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Casa: AHLI",
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><span>Fragancia </span><strong><span>unisex</span></strong><span>, intensa y sofisticada, con una combinación cálida de </span><strong><span>canela, cardamomo, flores, ámbar, oud y vainilla</span></strong><span>. Su aroma elegante y envolvente es perfecto para </span><strong><span>noches y ocasiones especiales</span></strong><span>.</span></p>\n<p> </p>",
+  "price": "350000.00",
+  "created_at": "2026-10-05T18:14:57-05:00"
+ },
+ {
+  "id": 15410052432189,
+  "handle": "ahli-swtzerland",
+  "title": "AHLI SWTZERLAND",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Casa: AHLI",
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><span>Fragancia </span><strong><span>unisex</span></strong><span>, fresca, limpia y sofisticada, con un aroma inspirado en la frescura de los Alpes. Combina </span><strong><span>bergamota, té verde, mandarina y lavanda</span></strong><span> con un fondo de </span><strong><span>sándalo, cedro y almizcle</span></strong><span>.</span></p>\n<p> </p>",
+  "price": "350000.00",
+  "created_at": "2026-10-05T18:16:25-05:00"
+ },
+ {
+  "id": 15410053316925,
+  "handle": "ahli-vega-gold",
+  "title": "AHLI VEGA GOLD",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Casa: AHLI",
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><span>Fragancia </span><strong><span>unisex</span></strong><span>, intensa y sofisticada, con un perfil </span><strong><span>amaderado, especiado y ambarado</span></strong><span>. Combina </span><strong><span>pimienta negra, cardamomo y bergamota</span></strong><span> con un fondo cálido y elegante. Perfecta para quienes buscan un aroma exclusivo y con mucha personalidad. </span></p>\n<p> </p>",
+  "price": "450000.00",
+  "created_at": "2026-10-05T18:18:49-05:00"
+ },
+ {
+  "id": 15410055446845,
+  "handle": "invictus-edt-100-ml",
+  "title": "INVICTUS EDT 100 ML",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "100 ml",
+   "Catálogo",
+   "EDT",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Una fragancia </span><strong><span>masculina, fresca y energética</span></strong><span>, con notas de </span><strong><span>toronja, hojas de laurel y jazmín</span></strong><span>, sobre un fondo de </span><strong><span>madera de guayaco, pachulí y ámbar gris</span></strong><span>. Perfecta para el hombre que busca un aroma </span><strong><span>deportivo, moderno y seductor</span></strong><span>.</span></p>",
+  "price": "530000.00",
+  "created_at": "2026-10-05T18:24:52-05:00"
+ },
+ {
+  "id": 15410056298813,
+  "handle": "jean-paul-gaultier-le-male-le-parfum",
+  "title": "JEAN PAUL GAULTIER LE MALE LE PARFUM",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "Para descubrir",
+   "Parfum",
+   "Velmont"
+  ],
+  "body_html": "<p><span>Fragancia </span><strong><span>masculina, intensa y sofisticada</span></strong><span>, con un aroma cálido y elegante que combina </span><strong><span>cardamomo, lavanda, iris y vainilla</span></strong><span>. Perfecta para la noche y ocasiones especiales.</span></p>\n<p> </p>",
+  "price": "390000.00",
+  "created_at": "2026-10-05T18:26:40-05:00"
+ },
+ {
+  "id": 15410057052477,
+  "handle": "rabanne-phantom-edt",
+  "title": "RABANNE PHANTOM EDT",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "EDT",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia </span><strong><span>masculina, fresca y seductora</span></strong><span>, con una combinación de </span><strong><span>limón, lavanda y vainilla</span></strong><span> que crea un aroma moderno, energético y adictivo. Ideal para el día a día o una salida especial.</span></p>",
+  "price": "420000.00",
+  "created_at": "2026-10-05T18:28:47-05:00"
+ },
+ {
+  "id": 15410058625341,
+  "handle": "1-million-edt-100-ml",
+  "title": "1 MILLION EDT 100 ml",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "EDT",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia </span><strong><span>masculina, elegante y seductora</span></strong><span>, con una combinación de </span><strong><span>mandarina, menta, canela y cuero</span></strong><span>, sobre un fondo cálido de </span><strong><span>ámbar, pachulí y maderas</span></strong><span>. Un aroma intenso y sofisticado, perfecto para destacar.</span></p>",
+  "price": "450000.00",
+  "created_at": "2026-10-05T18:31:10-05:00"
+ },
+ {
+  "id": 15410060067133,
+  "handle": "212-vip-men-edt",
+  "title": "212 VIP MEN EDT",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "EDT",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia </span><strong><span>masculina, fresca y sofisticada</span></strong><span>, con un aroma </span><strong><span>cítrico, amaderado y ligeramente especiado</span></strong><span>. Perfecta para el hombre moderno que busca un perfume elegante y versátil.</span></p>",
+  "price": "564000.00",
+  "created_at": "2026-10-05T18:32:40-05:00"
+ },
+ {
+  "id": 15410061771069,
+  "handle": "gaultier-divine-edp",
+  "title": "GAULTIER DIVINE EDP",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "EDP",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia </span><strong><span>femenina, floral y gourmand</span></strong><span>, con una combinación adictiva de </span><strong><span>sal marina, lirio y merengue</span></strong><span>. Un aroma </span><strong><span>luminoso, dulce y sofisticado</span></strong><span>, perfecto para destacar.</span></p>",
+  "price": "519000.00",
+  "created_at": "2026-10-05T18:34:37-05:00"
+ },
+ {
+  "id": 15410062262589,
+  "handle": "jean-paul-gaultier-le-male-edt",
+  "title": "JEAN PAUL GAULTIER LE MALE EDT",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "EDT",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia </span><strong><span>masculina, fresca y sensual</span></strong><span>, con una combinación icónica de </span><strong><span>menta, lavanda y vainilla</span></strong><span>. Un aroma limpio, cálido y elegante, perfecto para el día a día.</span></p>",
+  "price": "395000.00",
+  "created_at": "2026-10-05T18:35:56-05:00"
+ },
+ {
+  "id": 15410062721341,
+  "handle": "ch-men-edt",
+  "title": "CH MEN EDT",
+  "vendor": "CAROLINA HERRERA",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "EDT",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia </span><strong><span>masculina, elegante y sofisticada</span></strong><span>, con un aroma </span><strong><span>fresco, especiado y amaderado</span></strong><span>, ideal para el hombre moderno que busca destacar con un estilo distinguido.</span></p>",
+  "price": "400000.00",
+  "created_at": "2026-10-05T18:37:05-05:00"
+ },
+ {
+  "id": 15410064294205,
+  "handle": "bad-boy-edt",
+  "title": "BAD BOY EDT",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia </span><strong><span>masculina, intensa y seductora</span></strong><span>, con una combinación de </span><strong><span>pimienta, cacao, haba tonka y ámbar</span></strong><span>. Un aroma cálido, elegante y con carácter, perfecto para la noche y ocasiones especiales.</span></p>",
+  "price": "420000.00",
+  "created_at": "2026-10-05T18:38:27-05:00"
+ },
+ {
+  "id": 15410064654653,
+  "handle": "ch-carolina-herrera-edt",
+  "title": "CH CAROLINA HERRERA EDT",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "Para descubrir",
+   "Para Ella",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia </span><strong><span>femenina, elegante y sofisticada</span></strong><span>, con una combinación de </span><strong><span>bergamota, pomelo, rosa, jazmín y praliné</span></strong><span>, sobre un fondo de </span><strong><span>pachulí y sándalo</span></strong><span>. Un aroma fresco y sensual, perfecto para </span><strong><span>día y noche</span></strong><span>. </span></p>",
+  "price": "420000.00",
+  "created_at": "2026-10-05T18:39:36-05:00"
+ },
+ {
+  "id": 15410065768765,
+  "handle": "acqua-di-gio-edt",
+  "title": "ACQUA DI GIO EDT",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "EDT",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia masculina, fresca y elegante, con notas cítricas, acuáticas y amaderadas. Un clásico versátil, limpio y sofisticado, perfecto para el día a día.</span></p>",
+  "price": "550000.00",
+  "created_at": "2026-10-05T18:43:16-05:00"
+ },
+ {
+  "id": 15410066751805,
+  "handle": "my-way-edp",
+  "title": "MY WAY EDP",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "EDP",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia femenina, elegante y luminosa, con notas de bergamota, flor de azahar, nardos, jazmín y vainilla. Un aroma floral y sofisticado, ideal para destacar.</span></p>",
+  "price": "520000.00",
+  "created_at": "2026-10-05T18:44:48-05:00"
+ },
+ {
+  "id": 15410067013949,
+  "handle": "sugardaddy",
+  "title": "SUGARDADDY",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Casa: FUGAZZI"
+  ],
+  "body_html": "<p>Una fragancia unisex intensa, seductora y moderna que combina una apertura jugosa de mandarina, bergamota y grosella negra con un corazón cálido y especiado de nuez moscada, clavo y jazmín.</p>",
+  "price": "970000.00",
+  "created_at": "2026-10-05T18:45:26-05:00"
+ },
+ {
+  "id": 15410069799229,
+  "handle": "oudh-zuid",
+  "title": "OUDH ZUID",
+  "vendor": "FUGAZZI",
+  "product_type": "Perfume",
+  "tags": [
+   "100 ml",
+   "Casa: FUGAZZI",
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><span>Una fragancia </span><span>elegante y con mucha personalidad</span><span>, que comienza con la frescura de la </span><span>bergamota y la lavanda</span><span>. En el corazón, el </span><span>cardamomo, las semillas de zanahoria y el iris</span><span> aportan un carácter especiado, sofisticado y ligeramente empolvado.</span></p>\n<p><span>Su fondo de </span><span>Akigalawood, sándalo, almizcle y cuero</span><span> crea una estela cálida, amaderada y seductora, con un acabado moderno y refinado.</span></p>",
+  "price": "970000.00",
+  "created_at": "2026-10-05T18:50:45-05:00"
+ },
+ {
+  "id": 15410075205949,
+  "handle": "nocologne",
+  "title": "NOCOLOGNE",
+  "vendor": "FUGAZZI",
+  "product_type": "Perfume",
+  "tags": [
+   "100 ml",
+   "Casa: FUGAZZI",
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><span>Una fragancia </span><span>fresca y sofisticada</span><span>, con una salida vibrante de </span><span>bergamota de Calabria, toronja, limón y mandarina</span><span>. Su corazón combina </span><span>flor de naranjo, jengibre, mimosa, pimienta rosa y salvia</span><span>, creando un aroma aromático, limpio y con carácter.</span></p>\n<p><span>En el fondo, las </span><span>hierbas holandesas, cristales de ámbar, semilla de ambrette, musgo y vetiver</span><span> aportan profundidad y una elegancia moderna que permanece sobre la piel.<span class=\"Apple-converted-space\"> </span></span></p>",
+  "price": "970000.00",
+  "created_at": "2026-10-05T18:54:42-05:00"
+ },
+ {
+  "id": 15410077466941,
+  "handle": "stronger-with-you-edt",
+  "title": "Stronger With You EDT",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "EDT",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia masculina, cálida y seductora, con notas de castaña, vainilla, canela y cardamomo. Un aroma dulce y envolvente, perfecto para noches y ocasiones especiales.</span></p>",
+  "price": "480000.00",
+  "created_at": "2026-10-05T18:56:36-05:00"
+ },
+ {
+  "id": 15410079433021,
+  "handle": "orange-crush",
+  "title": "ORANGE CRUSH",
+  "vendor": "FUGAZZI",
+  "product_type": "Perfume",
+  "tags": [
+   "100 ml",
+   "Casa: FUGAZZI",
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><span>Una fragancia</span><span> cítrica y sofisticada</span><span>, construida alrededor de tres notas protagonistas: </span><span>naranja, ámbar blanco y maderas transparentes</span><span>. La naranja aporta una salida jugosa, fresca y ligeramente dulce; el ámbar blanco añade una calidez suave y envolvente, mientras que el fondo amaderado deja una sensación limpia, moderna y elegante.<span class=\"Apple-converted-space\"> </span></span></p>",
+  "price": "970000.00",
+  "created_at": "2026-10-05T18:57:57-05:00"
+ },
+ {
+  "id": 15410080383293,
+  "handle": "montblanc-explorer-edp",
+  "title": "MONTBLACK EXPLORER EDP",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "EDP",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia masculina, elegante y aventurera, con bergamota, pimienta rosa y salvia, sobre un fondo de vetiver, cuero y maderas. Un aroma amaderado y sofisticado, ideal para cualquier ocasión. </span></p>",
+  "price": "300000.00",
+  "created_at": "2026-10-05T18:58:35-05:00"
+ },
+ {
+  "id": 15410084544829,
+  "handle": "passionfroudh",
+  "title": "PASSIONFROUDH",
+  "vendor": "FUGAZZI",
+  "product_type": "Perfume",
+  "tags": [
+   "100 ml",
+   "Casa: FUGAZZI",
+   "Catálogo",
+   "Para descubrir",
+   "Unisex",
+   "Velmont"
+  ],
+  "body_html": "<p><span>Una fragancia </span><span>frutal y amaderada</span><span>, intensa y exótica. Abre con </span><span>jengibre, tagete y té negro</span><span>, dando una salida especiada y vibrante. En el corazón aparecen </span><span>maracuyá, mango, pimienta negra y rosa</span><span>, creando un contraste tropical, jugoso y sofisticado.<span class=\"Apple-converted-space\"> </span></span></p>\n<p><span>Su fondo de </span><span>olíbano, bálsamo de gurjun, cipriol y Oudh Assafi</span><span> aporta profundidad, humo y sensualidad, dejando una estela potente y elegante. Fugazzi la presenta como una combinación entre la energía de Brasil y el carácter lujoso de Oriente Medio.<span class=\"Apple-converted-space\"> </span></span></p>",
+  "price": "970000.00",
+  "created_at": "2026-10-05T19:01:59-05:00"
+ },
+ {
+  "id": 15410089525565,
+  "handle": "ilmin-il-ame",
+  "title": "ILMIN IL ÂME",
+  "vendor": "ILMIN",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><span>Fragancia intensa y sofisticada, con un carácter elegante y envolvente. Su concentración </span><strong><span>Extrait de Parfum</span></strong><span> ofrece una experiencia más profunda y duradera.</span></p>\n<p> </p>",
+  "price": "350000.00",
+  "created_at": "2026-10-05T19:05:33-05:00"
+ },
+ {
+  "id": 15410090213693,
+  "handle": "pomegranoudh",
+  "title": "POMEGRANOUDH",
+  "vendor": "FUGAZZI",
+  "product_type": "Perfume",
+  "tags": [
+   "100 ml",
+   "Casa: FUGAZZI",
+   "Catálogo",
+   "Para descubrir",
+   "Unisex",
+   "Velmont"
+  ],
+  "body_html": "<p><span>Una fragancia</span><span> frutal y amaderada</span><span>, intensa y sofisticada. Abre con </span><span>granada, bergamota y frutos rojos</span><span>, creando una salida jugosa, ligeramente ácida y muy atractiva. En el corazón, la </span><span>madera de oud y el pachulí</span><span> aportan profundidad, oscuridad y carácter.</span></p>\n<p><span>El fondo de </span><span>vainilla, ámbar seco y almizcle</span><span> suaviza la composición con una sensación cálida, sensual y elegante. Fugazzi la presenta como una fragancia de carácter nicho, con </span><span>alta intensidad y alta estela</span><span>.</span></p>",
+  "price": "970000.00",
+  "created_at": "2026-10-05T19:05:54-05:00"
+ },
+ {
+  "id": 15410091884861,
+  "handle": "ilmin-il-bee",
+  "title": "ILMIN IL BEE",
+  "vendor": "ILMIN",
+  "product_type": "Perfume",
+  "tags": [
+   "Casa: ILMIN",
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia dulce, cálida y envolvente, con un carácter elegante y sofisticado. Su concentración </span><strong><span>Extrait de Parfum</span></strong><span> ofrece una mayor intensidad y duración.</span></p>",
+  "price": "350000.00",
+  "created_at": "2026-10-05T19:07:10-05:00"
+ },
+ {
+  "id": 15410095194429,
+  "handle": "ilmin-il-climax",
+  "title": "ILMIN IL CLIMAX",
+  "vendor": "ILMIN",
+  "product_type": "",
+  "tags": [
+   "Casa: ILMIN",
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><span>Fragancia intensa, elegante y envolvente, con un carácter sofisticado y seductor. Su concentración </span><strong><span>Extrait de Parfum </span></strong><span>ofrece gran intensidad y duración.</span></p>\n<p> </p>",
+  "price": "350000.00",
+  "created_at": "2026-10-05T19:09:41-05:00"
+ },
+ {
+  "id": 15410098929981,
+  "handle": "cash-flower",
+  "title": "CASH FLOWER",
+  "vendor": "FUGAZZI",
+  "product_type": "Perfume",
+  "tags": [
+   "100 ml",
+   "Casa: FUGAZZI",
+   "Catálogo",
+   "Para descubrir",
+   "Unisex",
+   "Velmont"
+  ],
+  "body_html": "<p><span>Una fragancia</span><span> floral y especiada</span><span>, elegante y envolvente. Abre con </span><span>pétalos de rosa y rosa</span><span>, acompañados por un toque de </span><span>pimienta</span><span> que aporta contraste y personalidad. El </span><span>cashmere</span><span> le da una textura suave y aterciopelada, mientras que el corazón de </span><span>ámbar y almizcle</span><span> añade calidez y sensualidad.<span class=\"Apple-converted-space\"> </span></span></p>\n<p><span>El fondo de </span><span>sándalo</span><span> completa la composición con una sensación cremosa, refinada y duradera. Fugazzi la clasifica como una fragancia de </span><span>alta intensidad y alta estel</span></p>",
+  "price": "970000.00",
+  "created_at": "2026-10-05T19:11:18-05:00"
+ },
+ {
+  "id": 15410100863293,
+  "handle": "ilmin-il-excentrique",
+  "title": "ILMIN IL EXCENTRIQUE",
+  "vendor": "ILMIN",
+  "product_type": "",
+  "tags": [
+   "Casa: ILMIN",
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia elegante, intensa y sofisticada, con un carácter distintivo y envolvente. Su concentración </span><strong><span>Extrait de Parfum</span></strong><span>brinda mayor intensidad y duración.</span></p>",
+  "price": "350000.00",
+  "created_at": "2026-10-05T19:12:12-05:00"
+ },
+ {
+  "id": 15410102698301,
+  "handle": "ilmin-il-prospere",
+  "title": "ILMIN IL PROSPERE",
+  "vendor": "ILMIN",
+  "product_type": "",
+  "tags": [
+   "Casa: ILMIN",
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia intensa, elegante y sofisticada, con un aroma envolvente que destaca por su carácter distintivo. Su concentración </span><strong><span>Extrait de Parfum</span></strong><span> ofrece gran intensidad y duración.</span></p>",
+  "price": "350000.00",
+  "created_at": "2026-10-05T19:13:21-05:00"
+ },
+ {
+  "id": 15410104238397,
+  "handle": "ilmin-il-roso",
+  "title": "ILMIN IL ROSO",
+  "vendor": "ILMIN",
+  "product_type": "",
+  "tags": [
+   "Casa: ILMIN",
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia femenina, delicada y elegante, con un aroma floral y romántico. Su concentración </span><strong><span>Extrait de Parfum</span></strong><span> ofrece una experiencia intensa y duradera.</span></p>",
+  "price": "350000.00",
+  "created_at": "2026-10-05T19:14:33-05:00"
+ },
+ {
+  "id": 15410104402237,
+  "handle": "parfum-1",
+  "title": "PARFUM 1",
+  "vendor": "FUGAZZI",
+  "product_type": "Perfume",
+  "tags": [
+   "100 ml",
+   "Casa: FUGAZZI",
+   "Catálogo",
+   "Para descubrir",
+   "Unisex",
+   "Velmont"
+  ],
+  "body_html": "<p><span>Una fragancia </span><span>especiada y amaderada</span><span>, intensa y con mucha presencia. Abre con </span><span>cítricos frescos, grosella negra, menta verde y mandarina Satsuma</span><span>, creando una salida vibrante, fresca y ligeramente frutal.<span class=\"Apple-converted-space\"> </span></span></p>\n<p><span>En el corazón aparecen </span><span>davana, olíbano, flor de naranjo y pimienta rosa</span><span>, aportando un carácter aromático, especiado y elegante. Su fondo de </span><span>pachulí, almizcle, sándalo australiano y cedro</span><span> deja una estela cálida, profunda y sofisticada.<span class=\"Apple-converted-space\"> </span></span></p>",
+  "price": "970000.00",
+  "created_at": "2026-10-05T19:14:40-05:00"
+ },
+ {
+  "id": 15410107318589,
+  "handle": "ilmin-il-voss",
+  "title": "ILMIN IL VOSS",
+  "vendor": "ILMIN",
+  "product_type": "",
+  "tags": [
+   "Casa: ILMIN",
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia </span><strong><span>unisex</span></strong><span>, cálida y luminosa, con vainilla y mandarina en equilibrio, acompañadas de pimienta negra, jazmín, cedro, musgo y ámbar. Un aroma sofisticado, dulce y envolvente.</span></p>",
+  "price": "350000.00",
+  "created_at": "2026-10-05T19:16:30-05:00"
+ },
+ {
+  "id": 15410110759229,
+  "handle": "korbaj-amara",
+  "title": "KORBAJ AMARA",
+  "vendor": "KOBAJ",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "Para descubrir",
+   "Parfum",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia elegante y sofisticada, con un aroma intenso y envolvente. Ideal para quienes buscan una esencia exclusiva y de gran presencia. ✨ </span><strong><span>EXTRAIT DE PARFUM | UNISEX | 100 ML</span></strong></p>",
+  "price": "329000.00",
+  "created_at": "2026-10-05T19:19:26-05:00"
+ },
+ {
+  "id": 15410113249597,
+  "handle": "korbaj-emir",
+  "title": "KORBAJ EMIR",
+  "vendor": "KOBAJ",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia elegante, intensa y sofisticada, con una presencia envolvente y un carácter exclusivo. Ideal para quienes buscan un aroma refinado y duradero. ✨ </span><strong><span>EXTRAIT DE PARFUM | UNISEX | 100 ML</span></strong></p>",
+  "price": "350000.00",
+  "created_at": "2026-10-05T19:21:04-05:00"
+ },
+ {
+  "id": 15410116198717,
+  "handle": "korbaj-musky-signature",
+  "title": "KORBAJ MUSKY SIGNATURE",
+  "vendor": "KOBAJ",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia elegante, cálida y envolvente, con un carácter sofisticado y una estela duradera. Ideal para quienes buscan un aroma exclusivo y refinado. ✨ </span><strong><span>EXTRAIT DE PARFUM | UNISEX | 100 ML</span></strong></p>",
+  "price": "350000.00",
+  "created_at": "2026-10-05T19:22:55-05:00"
+ },
+ {
+  "id": 15410120163645,
+  "handle": "korbaj-toxic-desire",
+  "title": "KORBAJ TOXIC DESIRE",
+  "vendor": "KOBAJ",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<div>\n<div>\n<div>\n<div>\n<div>\n<div>\n<div>\n<div>\n<div>\n<div>\n<div>\n<div>\n<div>\n<div>\n<div>\n<div>\n<div>\n<div>\n<p><span>Fragancia intensa, seductora y envolvente, con un carácter profundo y sofisticado. Perfecta para quienes buscan una esencia con gran presencia y personalidad. 🖤 </span><strong><span>EXTRAIT DE PARFUM | UNISEX | 100 ML</span></strong></p>\n</div>\n</div>\n</div>\n</div>\n<span></span>\n</div>\n</div>\n<div>\n<div></div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n<div>\n<div>\n<div>\n<div>\n<div>\n<div><br></div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>",
+  "price": "350000.00",
+  "created_at": "2026-10-05T19:26:12-05:00"
+ },
+ {
+  "id": 15410120425789,
+  "handle": "monaco-11",
+  "title": "MÓNACO 11",
+  "vendor": "ANOTHER LAB",
+  "product_type": "Perfume",
+  "tags": [
+   "100 ml",
+   "Casa: ANOTHER LAB",
+   "Catálogo",
+   "Para descubrir",
+   "Para Ella",
+   "Para Él",
+   "Unisex",
+   "Velmont"
+  ],
+  "body_html": "<p><span>Una fragancia </span><span>fresca, cítrica y amaderada</span><span>, con un perfil elegante, moderno y deportivo. Abre con la energía vibrante del </span><span>limón de Amalfi, lima y pimienta negra</span><span>, creando una salida luminosa y ligeramente especiada.<span class=\"Apple-converted-space\"> </span></span></p>\n<p><span>En el corazón aparecen </span><span>flor de azahar y jazmín blanco</span><span>, que aportan limpieza y sofisticación. Su fondo de </span><span>ámbar cálido y maderas nobles</span><span> deja una estela refinada, envolvente y con mucha presencia</span></p>",
+  "price": "310000.00",
+  "created_at": "2026-10-05T19:27:11-05:00"
+ },
+ {
+  "id": 15410120851773,
+  "handle": "korbaj-rose-sands",
+  "title": "KORBAJ ROSE SANDS",
+  "vendor": "KOBAJ PREMIUM",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia dulce y cremosa, con caramelo y leche en la salida, miel y haba tonka en el corazón, y vainilla con almizcle blanco al fondo. Un gourmand cálido, envolvente y sofisticado. ✨ </span><strong><span>EXTRAIT DE PARFUM | UNISEX | 100 ML</span></strong><span></span></p>",
+  "price": "450000.00",
+  "created_at": "2026-10-05T19:28:14-05:00"
+ },
+ {
+  "id": 15410129240381,
+  "handle": "mancera-french-riviera",
+  "title": "MANCERA FRENCH RIVIERA",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><meta charset=\"UTF-8\"><span>Fragancia </span><strong><span>unisex</span></strong><span>, fresca y solar, con cítricos, jengibre y pimienta, sobre notas marinas, mimosa, tiaré y vetiver. Su fondo de ámbar, sal marina y almizcle blanco aporta una estela limpia y sofisticada.</span><br></p>",
+  "price": "550000.00",
+  "created_at": "2026-10-05T19:37:25-05:00"
+ },
+ {
+  "id": 15410129895741,
+  "handle": "mancera-instant-crush-1",
+  "title": "MANCERA INSTANT CRUSH",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia </span><strong><span>unisex</span></strong><span>, intensa y sofisticada, con cítricos y azafrán, un corazón floral y un fondo de ámbar, vainilla, sándalo y almizcle. Dulce, cálida y envolvente, con gran presencia. ✨ </span><strong><span>EAU DE PARFUM | UNISEX | 120 ML</span></strong></p>",
+  "price": "550000.00",
+  "created_at": "2026-10-05T19:39:07-05:00"
+ },
+ {
+  "id": 15410130682173,
+  "handle": "lyche-fiyi-88",
+  "title": "LYCHE FIYI 88",
+  "vendor": "ANOTHER LAB",
+  "product_type": "Perfume",
+  "tags": [
+   "100 ml",
+   "Casa: ANOTHER LAB",
+   "Catálogo",
+   "Para descubrir",
+   "Para Ella",
+   "Velmont"
+  ],
+  "body_html": "<p><span>Una fragancia </span><span>frutal y luminosa</span><span>, donde el </span><span>lichi</span><span> es el protagonista. Su salida combina lichi con </span><span>notas cítricas</span><span>, creando una sensación jugosa, fresca y tropical. En el corazón aparecen </span><span>frutos rojos, flores blancas y acordes tropicales</span><span>, aportando dulzura y un carácter delicado.<span class=\"Apple-converted-space\"> </span></span></p>\n<p><span>El fondo de </span><span>vainilla, almizcle y maderas suaves</span><span> aporta cremosidad y calidez, dejando una estela dulce, envolvente y muy agradable.<span class=\"Apple-converted-space\"> </span></span></p>",
+  "price": "310000.00",
+  "created_at": "2026-10-05T19:40:41-05:00"
+ },
+ {
+  "id": 15410130878781,
+  "handle": "mancera-roses-vanille",
+  "title": "MANCERA ROSES VANILLE",
+  "vendor": "Mi tienda",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia </span><strong><span>unisex</span></strong><span>, dulce y elegante, con rosa, limón, azúcar y un fondo cálido de vainilla, almizcle blanco y cedro. Un aroma romántico, intenso y envolvente. 🌹 </span><strong><span>EAU DE PARFUM | UNISEX | 120 ML</span></strong></p>",
+  "price": "500000.00",
+  "created_at": "2026-10-05T19:40:54-05:00"
+ },
+ {
+  "id": 15410132091197,
+  "handle": "nautica-voyage-1",
+  "title": "NAUTICA VOYAGE",
+  "vendor": "NAUTICA",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia </span><strong><span>masculina</span></strong><span>, fresca y acuática, con manzana verde y hojas verdes, seguida de loto y mimosa. Su fondo de almizcle, cedro, musgo de roble y ámbar aporta un aroma limpio y versátil.</span></p>",
+  "price": "120000.00",
+  "created_at": "2026-10-05T19:43:04-05:00"
+ },
+ {
+  "id": 15410134319421,
+  "handle": "sugardaddy-1",
+  "title": "SUGARDADDY",
+  "vendor": "FUGAZZI",
+  "product_type": "Perfume",
+  "tags": [
+   "100 ml",
+   "Casa: FUGAZZI",
+   "Catálogo",
+   "Para descubrir",
+   "Unisex",
+   "Velmont"
+  ],
+  "body_html": "<p><span>Una fragancia </span><span>dulce y sofisticada</span><span>, con una apertura frutal y luminosa de </span><span>mandarina, bergamota y grosella negra</span><span>. En el corazón aparecen matices especiados de </span><span>nuez moscada y clavo</span><span>, acompañados de </span><span>jazmín</span><span>, creando un contraste cálido, elegante y seductor.</span></p>\n<p><span>Su fondo de </span><span>cachemira, musgo y pachulí</span><span> aporta profundidad y una sensación envolvente, dejando una estela moderna y con mucha personalidad.</span></p>",
+  "price": "970000.00",
+  "created_at": "2026-10-05T19:45:49-05:00"
+ },
+ {
+  "id": 15410135466301,
+  "handle": "nautica-voyage-2",
+  "title": "NAUTICA VOYAGE",
+  "vendor": "NAUTICA",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Un aroma </span><strong><span>fresco, limpio y masculino</span></strong><span>, con un toque acuático y ligeramente dulce. Ideal para el día a día, especialmente en climas cálidos. 🌊 </span><strong><span>EAU DE TOILETTE | HOMBRE | 100 ML</span></strong></p>",
+  "price": "120000.00",
+  "created_at": "2026-10-05T19:46:41-05:00"
+ },
+ {
+  "id": 15410138218813,
+  "handle": "nautica-blue-1",
+  "title": "NAUTICA BLUE",
+  "vendor": "NAUTICA",
+  "product_type": "",
+  "tags": [
+   "Catálogo",
+   "Para descubrir",
+   "Velmont"
+  ],
+  "body_html": "<p><meta charset=\"UTF-8\"><span>Fragancia </span><strong><span>masculina, fresca y acuática</span></strong><span>, con bergamota, piña y durazno, acompañados de jazmín y lirio de agua. Su fondo de sándalo, cedro y almizcle le da un acabado limpio y agradable.  </span><strong><span>EAU DE TOILETTE | HOMBRE | 100 ML</span></strong><span></span></p>",
+  "price": "120000.00",
+  "created_at": "2026-10-05T19:49:07-05:00"
+ }
+]

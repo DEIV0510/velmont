@@ -96,8 +96,18 @@
     {%- assign familia = familia | strip -%}
   {%- endif -%}
   <div class="piece__meta">
-    {%- if product.vendor != blank -%}
-      <span class="piece__house">{{ product.vendor }}</span>
+    {%- comment -%}
+      Un producto subido sin proveedor trae el nombre de la tienda («Mi
+      tienda»): no es una casa y no se enseña como tal (igual que en la ficha).
+    {%- endcomment -%}
+    {%- liquid
+      assign casa = product.vendor
+      if casa == shop.name or casa == settings.brand_name or casa == 'Mi tienda'
+        assign casa = ''
+      endif
+    -%}
+    {%- if casa != blank -%}
+      <span class="piece__house">{{ casa }}</span>
     {%- endif -%}
     <h3 class="piece__name">{{ product.title }}</h3>
     {% render 'price', product: product %}

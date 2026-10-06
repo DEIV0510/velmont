@@ -38,7 +38,8 @@
             {%- assign clave = marca | strip | downcase -%}
             {%- assign busca = clave | prepend: ',' | append: ',' -%}
             {%- unless ocultas contains busca -%}
-              {%- if marca != blank -%}
+              {%- comment -%} El proveedor por defecto («Mi tienda», el nombre de la tienda) no es una casa. {%- endcomment -%}
+              {%- if marca != blank and marca != shop.name and marca != settings.brand_name and marca != 'Mi tienda' -%}
                 {%- comment -%}
                   Se compone con append, no con un espacio literal dentro del
                   bucle: el control de espacios en blanco de Liquid se lo

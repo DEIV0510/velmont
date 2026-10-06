@@ -12,6 +12,9 @@ const routes = V.routes || {};
 const motion = V.motion || {};
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const money = (cents) => '$' + Math.round(cents / 100).toLocaleString('es-CO');
+// Un producto subido sin proveedor trae el nombre de la tienda («Mi tienda»):
+// eso no es una casa perfumera y no se enseña como tal (window.VELMONT.sinCasa).
+const casaVisible = (v) => (v && !(window.VELMONT?.sinCasa || ['Mi tienda']).includes(v) ? v : '');
 // La busqueda predictiva devuelve el precio en pesos y como texto ("500000.00"),
 // no en centavos como el carrito: sin esto salia tal cual, sin $ ni puntos.
 const precioBusqueda = (txt) => {
@@ -504,7 +507,7 @@ function lineaGuardada(p) {
       <a href="${p.url}" tabindex="-1">${img}</a>
       <div>
         <a href="${p.url}"><span class="bag-line__name">${p.title}</span></a>
-        ${p.vendor ? `<span class="label">${p.vendor}</span>` : ''}
+        ${casaVisible(p.vendor) ? `<span class="label">${casaVisible(p.vendor)}</span>` : ''}
       </div>
       <div class="bag-line__right">
         <span class="price">${agotado ? '' : money(p.price)}</span>
@@ -572,7 +575,7 @@ function initSearch() {
             ${p.image ? `<img src="${p.image.replace(/(\.[a-z]+)(\?|$)/i, '_600x$1$2')}" alt="" loading="lazy">` : ''}
           </a>
           <div class="piece__meta">
-            <div><h3 class="piece__name">${p.title}</h3><span class="label piece__house">${p.vendor || ''}</span></div>
+            <div><h3 class="piece__name">${p.title}</h3><span class="label piece__house">${casaVisible(p.vendor)}</span></div>
             <span class="price">${precioBusqueda(p.price)}</span>
           </div>
         </article>`).join('');
@@ -1012,7 +1015,7 @@ function initBundlePicker() {
           `<span class="bundle-pick__img">${
             p && p.img ? `<img src="${p.img}" alt="" width="420" height="525" loading="lazy" decoding="async">` : ''
           }</span>` +
-          `<span class="bundle-pick__casa">${p && p.casa ? p.casa : ''}</span>` +
+          `<span class="bundle-pick__casa">${p ? casaVisible(p.casa) : ''}</span>` +
           `<span class="bundle-pick__nom">${opt.text}</span>` +
           `<span class="bundle-pick__pre">${p && p.precio ? `Suelto ${p.precio}` : ''}</span>`;
         b.addEventListener('click', () => {

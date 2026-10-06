@@ -47,7 +47,7 @@
     {%- liquid
       assign casa = product.vendor
       assign marca = settings.brand_name | default: shop.name
-      if casa == shop.name or casa == marca
+      if casa == shop.name or casa == marca or casa == 'Mi tienda'
         assign casa = ''
       endif
     -%}

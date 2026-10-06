@@ -144,6 +144,9 @@
     window.VELMONT = {
       shop: {{ shop.permanent_domain | json }},
       rootUrl: {{ routes.root_url | json }},
+      // Proveedores que no son una casa: el que Shopify pone por defecto (el
+      // nombre de la tienda) y la propia marca. No se enseñan como casa.
+      sinCasa: [{{ shop.name | json }}, {{ settings.brand_name | json }}, "Mi tienda"],
       routes: {
         cart_add: '{{ routes.cart_add_url }}',
         cart_change: '{{ routes.cart_change_url }}',

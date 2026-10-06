@@ -16,7 +16,7 @@
           "type": "menu",
           "settings": {
             "title": "Explorar",
-            "links": "Colección | /collections/all\nDescubre tu marca personal | #descubre\nEdiciones | #ediciones"
+            "links": "Colección | /collections/all\nDescubre tu marca personal | #descubre\nPromociones | #promociones"
           }
         },
         "ayuda": {

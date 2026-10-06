@@ -36,7 +36,7 @@
             {%- when 'menu' -%}
               {%- comment -%}
                 Los enlaces escritos mandan sobre el menu de Shopify: un menu
-                no puede tener anclas como #ediciones, y aqui hacen falta.
+                no puede tener anclas como #promociones, y aqui hacen falta.
               {%- endcomment -%}
               {%- capture filas -%}
                 {%- if block.settings.links != blank -%}
@@ -130,7 +130,7 @@
       "name": "Columna de enlaces",
       "settings": [
         { "type": "text", "id": "title", "label": "Título", "default": "Explorar" },
-        { "type": "textarea", "id": "links", "label": "Enlaces", "default": "Colección | /collections/all\nDescubre tu marca personal | #descubre\nEdiciones | #ediciones", "info": "Uno por línea: Texto | enlace. Admite anclas (#ediciones)." },
+        { "type": "textarea", "id": "links", "label": "Enlaces", "default": "Colección | /collections/all\nDescubre tu marca personal | #descubre\nPromociones | #promociones", "info": "Uno por línea: Texto | enlace. Admite anclas (#promociones)." },
         { "type": "link_list", "id": "menu", "label": "…o un menú de Shopify", "info": "Solo se usa si dejas los enlaces vacíos." }
       ]
     },

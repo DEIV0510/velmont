@@ -61,7 +61,7 @@ Todo se emite como variables CSS en `:root` desde `layout/theme.liquid`.
 | **Declaración** | Titular a dos líneas y texto de apoyo. La primera línea se revela palabra por palabra. |
 | **Colección** | La colección de la que salen las piezas, cuántas mostrar y la **disposición**: «Rejilla ordenada» (4 columnas, la que está puesta) o «Composición asimétrica» (la de 12 columnas del prototipo, pensada para ilustraciones de frasco con aire alrededor: con fotos que llenan el marco resulta enorme). En móvil, cualquiera de las dos se vuelve galería deslizable con indicador `01 / 08`. |
 | **Descubre (cuestionario)** | Cada pregunta es un bloque. Las opciones se escriben una por línea con el formato `Etiqueta \| identificador-de-coleccion`. Ese identificador decide qué se recomienda al final. |
-| **Ediciones** | Cada edición es un bloque: título, texto, colección participante (de ahí salen las dos fotos) y el precio del anuncio. |
+| **Promociones** (antes «Ediciones»; ancla `#promociones`) | Cada promoción es un bloque: título, texto, colección participante (de ahí salen las dos fotos) y el precio del anuncio. |
 | **La casa** | Índice, titular, texto enriquecido, enlace e imagen. |
 
 ### Encabezado y pie
@@ -94,7 +94,7 @@ locales/              es.default.json y en.json
 - **Ningún precio se escribe a mano.** Todo pasa por `money_without_trailing_zeros`
   y los totales de la bolsa se leen de `/cart.js`. Por eso un descuento automático
   de Shopify (2 MATAI × 450.000) aparece solo, sin tocar código.
-- **El precio de las ediciones es solo el anuncio.** El descuento real se configura
+- **El precio de las promociones es solo el anuncio.** El descuento real se configura
   en Descuentos → Descuento automático. Si cambias uno, cambia el otro.
 - **Los guardados viven en el navegador del visitante** (`localStorage`), sin cuenta.
 - **La pantalla de carga nunca bloquea el scroll** y solo sale en la primera visita

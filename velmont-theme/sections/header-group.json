@@ -32,8 +32,8 @@
         "ediciones": {
           "type": "link",
           "settings": {
-            "label": "Ediciones",
-            "url": "#ediciones",
+            "label": "Promociones",
+            "url": "#promociones",
             "on_desktop": true
           }
         },

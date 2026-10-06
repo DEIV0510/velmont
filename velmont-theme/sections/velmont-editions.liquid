@@ -14,7 +14,7 @@
     13 a 290.000) y es ese precio por las unidades. Con precios mezclados
     (el duo: de 110.000 a 170.000) no hay un «antes» honesto, y no se pinta.
   {%- endcomment -%}
-  <section {% render 'panel', color: section.settings.panel, extra: 'band band--tight ediciones' %} id="{{ section.settings.anchor | default: 'ediciones' }}">
+  <section {% render 'panel', color: section.settings.panel, extra: 'band band--tight ediciones' %} id="{{ section.settings.anchor | default: 'promociones' }}">
     {% render 'section-header', index: section.settings.index, title: section.settings.heading, lede: section.settings.lede %}
     <div class="ediciones__grid">
       {%- for block in section.blocks -%}
@@ -78,7 +78,7 @@
     </div>
   </section>
 {%- else -%}
-<section id="{{ section.settings.anchor | default: 'ediciones' }}">
+<section id="{{ section.settings.anchor | default: 'promociones' }}">
   {%- for block in section.blocks -%}
     {%- liquid
       assign source = block.settings.collection
@@ -148,7 +148,7 @@
 
 {% schema %}
 {
-  "name": "Ediciones",
+  "name": "Promociones",
   "tag": "section",
   "settings": [
     {
@@ -166,8 +166,8 @@
       "type": "header",
       "content": "Encabezado (solo en tarjetas)"
     },
-    { "type": "text", "id": "index", "label": "Índice", "default": "Ediciones" },
-    { "type": "text", "id": "heading", "label": "Titular", "default": "Ediciones especiales" },
+    { "type": "text", "id": "index", "label": "Índice", "default": "Promociones" },
+    { "type": "text", "id": "heading", "label": "Titular", "default": "Promociones especiales" },
     { "type": "text", "id": "lede", "label": "Frase bajo el titular", "default": "Elige dos y paga un precio fijo por la pareja." },
     {
       "type": "select",
@@ -180,14 +180,14 @@
       ],
       "default": "ink"
     },
-    { "type": "text", "id": "anchor", "label": "Ancla", "default": "ediciones" }
+    { "type": "text", "id": "anchor", "label": "Ancla", "default": "promociones" }
   ],
   "blocks": [
     {
       "type": "edition",
-      "name": "Edición",
+      "name": "Promoción",
       "settings": [
-        { "type": "text", "id": "index", "label": "Índice o etiqueta", "default": "04 — Ediciones" },
+        { "type": "text", "id": "index", "label": "Índice o etiqueta", "default": "Promoción" },
         { "type": "checkbox", "id": "index_gold", "label": "Mostrarlo como etiqueta dorada", "default": false },
         { "type": "text", "id": "heading", "label": "Titular", "default": "La selección MATAI" },
         { "type": "textarea", "id": "text", "label": "Texto", "default": "Dos fragancias de la casa MATAI, elegidas para ir juntas." },
@@ -219,13 +219,13 @@
   "max_blocks": 4,
   "presets": [
     {
-      "name": "Ediciones",
+      "name": "Promociones",
       "blocks": [
         { "type": "edition" },
         {
           "type": "edition",
           "settings": {
-            "index": "Edición",
+            "index": "Promoción",
             "index_gold": true,
             "heading": "El dúo VELMONT",
             "text": "Dos esencias de la promoción, elegidas por ti, al mismo precio.",

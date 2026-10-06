@@ -208,11 +208,11 @@
       ],
       "settings": {
         "layout": "cards",
-        "index": "01 — Ediciones",
-        "heading": "Ediciones especiales",
+        "index": "01 — Promociones",
+        "heading": "Promociones especiales",
         "lede": "Elige dos y paga un precio fijo por la pareja.",
         "panel": "ink",
-        "anchor": "ediciones"
+        "anchor": "promociones"
       }
     },
     "casa": {

@@ -414,6 +414,14 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
   .burger { display: flex; }
   [data-saved-open] { display: none; }
 }
+/* El nav comparte fila con el logotipo centrado. Con «Promociones» (antes
+   «Ediciones», 2026-10-05) y el tracking de antetitulo, a 1280 «La casa» se
+   montaba encima del logo. Hasta 1400 el nav se aprieta con el tracking que
+   ya usa el movil y un hueco que crece con el ancho (16px a 1181, 32px desde
+   ~1280); por encima cabe holgado y se queda como estaba. */
+@media (min-width: 1181px) and (max-width: 1399.98px) {
+  .hdr__nav { gap: clamp(var(--s4), calc(var(--s4) + (100vw - 1181px) * 0.16), var(--s6)); --label-track: 0.24em; }
+}
 @media (max-width: 420px) {
   .hdr__mark img { height: 20px; }
   .hdr__acts { gap: 0; }
@@ -1125,7 +1133,14 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 }
 .search input:focus { outline: none; border-color: var(--gold); }
 .search input::placeholder { color: rgba(244,241,234,0.3); font-style: italic; }
-.search__out { margin-top: clamp(40px, 6vw, 80px); display: grid; gap: clamp(24px, 3vw, 44px); grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+/* auto-FILL y no auto-fit: con auto-fit las columnas vacias se colapsaban y
+   dos resultados («eclaire») se estiraban a media pantalla cada uno, con el
+   nombre y el precio fuera de vista. Asi 2 resultados miden lo mismo que 12.
+   El min() deja 2 columnas en movil (antes 1, a todo el ancho). */
+.search__out {
+  margin-top: clamp(40px, 6vw, 80px); display: grid; gap: clamp(24px, 3vw, 44px);
+  grid-template-columns: repeat(auto-fill, minmax(min(170px, calc(50% - 12px)), 1fr));
+}
 .search__note { margin-top: var(--s6); }
 
 /* ===================== ASESOR ===================== */

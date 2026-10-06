@@ -1689,9 +1689,8 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
 }
 /* Hijo directo: la pestaña del «¿Qué es?» tambien lleva <p> y va con su letra. */
 .pdp__promo > p {
-  margin: 0; font-family: var(--font-display); font-weight: 400;
-  font-size: clamp(1.0625rem, 1rem + 0.2vw, 1.1875rem); line-height: 1.5;
-  font-variation-settings: 'opsz' 16;
+  margin: 0; font-family: var(--font-ui); font-weight: 500;
+  font-size: clamp(1.0625rem, 1rem + 0.2vw, 1.1875rem); line-height: 1.55;
 }
 .pdp__promo > p strong { font-weight: 700; }
 .pdp__promo-cta { margin-top: var(--s2); min-height: 48px; padding: 14px 26px; border-color: var(--on-surface); }
@@ -1792,12 +1791,13 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
   align-items: baseline;
 }
 .notas__paso-t { color: var(--on-surface-dim); }
+/* Notas en la letra clara, con cuerpo (el dueño eligió «textos en letra
+   clara», 2026-10-06). */
 .notas__paso-v {
   margin: 0;
-  font-family: var(--font-display);
-  /* Con la serif de titulo a 16px las notas se leian como letra chica. */
-  font-size: var(--t-400); font-weight: var(--w-display);
-  line-height: 1.3;
+  font-family: var(--font-ui);
+  font-size: 1.0625rem; font-weight: 600;
+  line-height: 1.45;
   color: var(--on-surface);
 }
 .notas__datos { margin: 0; display: grid; gap: var(--s3); }
@@ -1809,8 +1809,8 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
    «que se mantenga hasta acá» (el dueño, señalando de Salida a Concentración). */
 .notas__datos dd, .spec__val {
   margin: 0;
-  font-family: var(--font-display); font-size: var(--t-400); font-weight: var(--w-display);
-  line-height: 1.3; color: var(--on-surface);
+  font-family: var(--font-ui); font-size: 1.0625rem; font-weight: 600;
+  line-height: 1.45; color: var(--on-surface);
 }
 
 /* En movil la etiqueta no cabe al lado: se apila y se aprieta el interlineado. */
@@ -2437,34 +2437,29 @@ body.template-cart {
 body { font-variation-settings: 'opsz' var(--opsz-display); }
 
 /* ==========================================================================
-   VOZ EDITORIAL (2026-10-06, el dueño: «quiero letras más luxury»)
-   Las frases cortas de la casa —entradillas, notas de coleccion, textos de
-   promocion, cierres y mensajes vacios— van en la letra de los titulares, en
-   cursiva. La lectura larga (descripcion de producto) y la interfaz
-   (antetitulos, botones, precios, listas) siguen en Manrope, rectas.
-   Bodoni dibuja mas pequeño que Manrope al mismo tamaño: un escalon mas.
+   TEXTOS DE LECTURA (2026-10-06)
+   El dueño pidio letra «más legible» y eligio, viendo su ficha y sus tarjetas
+   con cuatro opciones, la A: los titulos, los nombres de perfume y los precios
+   siguen en Bodoni (son la marca) y todo lo que se lee de corrido va en
+   Manrope, recta y con cuerpo: entradillas, notas de coleccion, textos de
+   promocion, cierres, mensajes vacios, la descripcion y las notas de la ficha.
+   Esa misma mañana estas frases habian pasado a Bodoni cursiva («letras más
+   luxury»): en el celular los trazos finos se perdian.
    El tamaño del lema del hero vive en velmont-motion.css (.hero-copy .hero__lede).
    ========================================================================== */
 .lede, .hero__lede, .section-head__lede, .collection-head__note,
 .world__text, .statement__aside, .moment__text, .edicion__texto, .campaign__line {
-  font-family: var(--font-display); font-style: italic; font-weight: 400; letter-spacing: 0.005em;
+  font-family: var(--font-ui); font-style: normal; font-weight: 500; letter-spacing: 0;
 }
-.lede { font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem); line-height: 1.45; }
-.section-head__lede { font-size: clamp(1.125rem, 1rem + 0.35vw, 1.3125rem); line-height: 1.45; }
-.world__text, .statement__aside { font-size: clamp(1.125rem, 1rem + 0.45vw, 1.375rem); line-height: 1.5; }
-.moment__text { font-size: 1.0625rem; line-height: 1.45; }
-.edicion__texto, .campaign__line { font-size: 1.0625rem; line-height: 1.45; }
-/* Ficha: la descripcion va en la letra de los titulares, en redonda (no en
-   cursiva) y en tinta. El dueño (video del 2026-10-06): la ficha cambiaba de
-   letra tres veces —descripcion en palo seco, notas en Bodoni, familia y
-   concentracion otra vez en palo seco— y pidio una sola. Tamaño optico 16:
-   a cuerpo de lectura los trazos finos aguantan mejor que con el 28 de los
-   titulares. */
+.lede { font-size: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem); line-height: 1.55; }
+.section-head__lede { font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem); line-height: 1.55; }
+.world__text, .statement__aside { font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); line-height: 1.6; }
+.moment__text { font-size: 1rem; line-height: 1.55; }
+.edicion__texto, .campaign__line { font-size: 1rem; line-height: 1.55; }
+/* Ficha: descripcion, notas, familia, concentracion y envio en la misma
+   letra (el dueño, en su video: «que sea una tipografía»). */
 .pdp__desc {
-  font-family: var(--font-display); font-style: normal; font-weight: 400;
-  font-size: clamp(1.125rem, 1.06rem + 0.2vw, 1.25rem); line-height: 1.6; letter-spacing: 0.005em;
-  font-variation-settings: 'opsz' 16;
+  font-family: var(--font-ui); font-style: normal; font-weight: 500;
+  font-size: clamp(1.0625rem, 1.02rem + 0.2vw, 1.1875rem); line-height: 1.65; letter-spacing: 0;
   color: var(--on-surface);
 }
-.collection-head__note h1, .collection-head__note h2, .collection-head__note h3, .collection-head__note h4,
-.collection-head__note h5, .collection-head__note h6, .collection-head__note li { font-style: normal; }

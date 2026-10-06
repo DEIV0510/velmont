@@ -25,10 +25,10 @@
   --t-800: 4rem;       /* 64 — display secundario (ficha, no la home)        */
   --t-900: 6rem;       /* 96 — display del hero                              */
 
-  /* Excepcion pedida por el dueño (2026-10-06): las frases cortas de la casa
-     (entradillas, notas) van en Bodoni cursiva — «VOZ EDITORIAL» en base.css.
-     Dos voces, sin zona gris: serif SOLO para display (--t-700 y arriba),
-     sans para todo lo demas. --t-500 y --t-600 son papeles de lectura. */
+  /* Dos voces, sin zona gris: Bodoni para titulos, nombres de perfume y
+     precios; Manrope para todo lo que se lee de corrido (el dueño lo eligio
+     el 2026-10-06 por legibilidad — «TEXTOS DE LECTURA» en base.css; la
+     cursiva Bodoni de las frases cortas duro esa mañana). */
   /* Bodoni Moda (elegida por el cliente el 2026-10-05 entre cuatro opciones,
      «algo más luxury»): didona de moda, alto contraste. Es variable con eje de
      tamaño óptico: en grande gana contraste y en pequeño se vuelve más
@@ -50,8 +50,7 @@
   /* «La misma letra pero más grosor» (el dueño, 2026-10-06): sobre el video
      los trazos finos de Bodoni a 400 se perdían. 600 + tamaño óptico fijo en 28
      (ver --opsz-display): misma Bodoni, trazos finos más gruesos. Todas las
-     reglas en recto con la letra de titulares usan --w-display; la voz
-     editorial (cursiva) sigue en 400. */
+     reglas con la letra de titulares usan --w-display. */
   --w-display: 600;
   --opsz-display: 28;
   --w-body: 400;

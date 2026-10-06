@@ -6,7 +6,7 @@
         "envios": {
           "type": "meta",
           "settings": {
-            "text": "Envíos a toda Colombia"
+            "text": "Envíos a todo Colombia"
           }
         },
         "pago": {
@@ -60,7 +60,7 @@
         "d1": {
           "type": "item",
           "settings": {
-            "text": "Envíos a toda Colombia"
+            "text": "Envíos a todo Colombia"
           }
         },
         "d2": {

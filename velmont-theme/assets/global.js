@@ -1101,7 +1101,25 @@ function initBundlePicker() {
   revisar();
 }
 
+// El dueño escribe descripciones pegando texto de un chat: llegan con emojis y
+// con envoltorios vacíos (div con un <br>, section sin nada). La casa no usa
+// emojis: se quitan aquí, antes de que el bloque se revele. ©, ® y ™ se quedan.
+const EMOJI = /(?![©®™])\p{Extended_Pictographic}|[\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}️‍⃣]/gu;
+function limpiarTextosPegados() {
+  for (const raiz of $$('.collection-head__note, .pdp__desc')) {
+    const caminante = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT);
+    for (let n = caminante.nextNode(); n; n = caminante.nextNode()) {
+      const limpio = n.nodeValue.replace(EMOJI, '');
+      if (limpio !== n.nodeValue) n.nodeValue = limpio.replace(/ {2,}/g, ' ');
+    }
+    for (const el of $$('div, section, p, span', raiz)) {
+      if (el.isConnected && !el.textContent.trim() && !el.querySelector('img, video, iframe')) el.remove();
+    }
+  }
+}
+
 async function boot() {
+  limpiarTextosPegados();
   initHeader();
   initMenu();
   initBag();

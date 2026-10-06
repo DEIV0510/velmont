@@ -2135,17 +2135,39 @@ body.ficha-combo .hdr:not(.is-stuck) .hdr__nav { color: var(--ink); }
 }
 .collection-head__note p { margin: 0 0 var(--s3); }
 .collection-head__note p:last-child { margin-bottom: 0; }
-.collection-head__note h1, .collection-head__note h2,
-.collection-head__note h3, .collection-head__note h4 {
+/* Lo que deja escribir el editor de Shopify, con la tipografia de la casa
+   (el dueño pidio «sin emojis y tipografia mas luxury», 2026-10-05):
+   Titulo 3-6 = antetitulo con filete dorado; Titulo 1-2 = la oferta, en la
+   letra de los titulares; parrafo = entradilla; lista = datos entre filetes,
+   sin viñetas. El enfasis va en tinta, no en peso: nada de negritas gruesas.
+   Los emojis los quita global.js (limpiarTextosPegados). */
+.collection-head__note h3, .collection-head__note h4,
+.collection-head__note h5, .collection-head__note h6 {
+  display: flex; align-items: center; gap: var(--s3);
   font-family: var(--font-ui); font-size: var(--t-100); font-weight: var(--w-label);
-  letter-spacing: var(--track-eyebrow); text-transform: uppercase;
-  color: var(--on-surface); margin: 0 0 var(--s4);
+  letter-spacing: var(--track-eyebrow); line-height: var(--lh-eyebrow); text-transform: uppercase;
+  color: var(--on-surface-dim); margin: 0 0 var(--s5);
 }
-.collection-head__note strong, .collection-head__note b {
-  font-weight: 600; color: var(--on-surface);
+.collection-head__note h3::before, .collection-head__note h4::before,
+.collection-head__note h5::before, .collection-head__note h6::before {
+  content: ''; flex: none; width: clamp(24px, 3vw, 40px); height: 1px; background: var(--gold);
 }
+.collection-head__note h1, .collection-head__note h2 {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: clamp(var(--t-500), 2.4vw, var(--t-600)); line-height: var(--lh-title);
+  letter-spacing: var(--track-display); text-transform: uppercase;
+  color: var(--on-surface); margin: 0 0 var(--s5);
+}
+.collection-head__note strong, .collection-head__note b { font-weight: inherit; color: var(--on-surface); }
 .collection-head__note ul, .collection-head__note ol {
-  margin: var(--s3) 0 0; padding-left: 1.1em;
+  list-style: none; margin: var(--s6) 0 0; padding: 0;
+  border-top: var(--hairline-width) solid var(--hairline-strong);
+}
+.collection-head__note li {
+  font-family: var(--font-ui); font-size: var(--t-100); font-weight: var(--w-label);
+  letter-spacing: 0.2em; line-height: 1.5; text-transform: uppercase;
+  color: var(--on-surface); padding: var(--s3) 0;
+  border-bottom: var(--hairline-width) solid var(--hairline);
 }
 .collection-head__note a { color: var(--on-surface); text-decoration: underline; text-underline-offset: 3px; }
 .collection-filters { margin-bottom: clamp(40px, 5vw, 72px); }

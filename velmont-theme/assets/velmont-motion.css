@@ -405,7 +405,7 @@ body.cursor-on input, body.cursor-on textarea, body.cursor-on select { cursor: a
 .statement__quote {
   font-family: var(--font-display);
   font-size: var(--display-section);
-  font-weight: 400; line-height: 1.02; letter-spacing: var(--track-display);
+  font-weight: var(--w-display); line-height: 1.02; letter-spacing: var(--track-display);
   margin: 0;
 }
 .statement__line { display: block; }
@@ -492,7 +492,7 @@ body.cursor-on input, body.cursor-on textarea, body.cursor-on select { cursor: a
 .closing__title {
   font-family: var(--font-display);
   font-size: var(--display-section);
-  font-weight: 400; line-height: 1.04; letter-spacing: var(--track-display);
+  font-weight: var(--w-display); line-height: 1.04; letter-spacing: var(--track-display);
   margin: 0;
 }
 .closing__line { display: block; }
@@ -539,7 +539,7 @@ body.cursor-on input, body.cursor-on textarea, body.cursor-on select { cursor: a
   color: var(--ivory);
 }
 .band-wide__title {
-  font-family: var(--font-display); font-weight: 400;
+  font-family: var(--font-display); font-weight: var(--w-display);
   font-size: var(--display-section); line-height: var(--lh-display); letter-spacing: var(--track-display);
   margin: 0; max-width: 16ch;
 }
@@ -573,7 +573,7 @@ body.cursor-on input, body.cursor-on textarea, body.cursor-on select { cursor: a
 .moment__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s var(--ease-soft); }
 .moment:hover .moment__media img { transform: scale(1.04); }
 .moment__copy { padding-top: var(--s4); display: grid; gap: var(--s2); }
-.moment__title { font-family: var(--font-display); font-weight: 400; font-size: var(--t-500); line-height: 1.15; margin: 0; }
+.moment__title { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--t-500); line-height: 1.15; margin: 0; }
 .moment__text { margin: 0; max-width: 34ch; }
 @media (max-width: 760px) { .moment { flex-basis: 84%; } }
 

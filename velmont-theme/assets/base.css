@@ -90,25 +90,25 @@ h1, h2, h3, h4, p, figure { margin: 0; }
 .display {
   font-family: var(--font-display);
   font-size: var(--fs-display);
-  font-weight: 400;
+  font-weight: var(--w-display);
   line-height: 0.94;
   letter-spacing: var(--track-display);
 }
 .mega {
   font-family: var(--font-display);
   font-size: var(--fs-mega);
-  font-weight: 400;
+  font-weight: var(--w-display);
   line-height: 0.82;
   letter-spacing: var(--track-display);
 }
 .h2 {
   font-family: var(--font-display);
   font-size: var(--fs-h2);
-  font-weight: 400;
+  font-weight: var(--w-display);
   line-height: 1.04;
   letter-spacing: var(--track-display);
 }
-.h3 { font-family: var(--font-display); font-size: var(--fs-h3); font-weight: 400; line-height: 1.2; }
+.h3 { font-family: var(--font-display); font-size: var(--fs-h3); font-weight: var(--w-display); line-height: 1.2; }
 /* Titulares en mayusculas, como en la maqueta que eligio el cliente. Cada
    seccion tiene su clase de titular; la regla es una sola para todas. */
 .display, .h2, .campaign__title, .statement__quote, .closing__title, .band-wide__title { text-transform: uppercase; }
@@ -444,7 +444,7 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
   display: flex; flex-direction: column; gap: clamp(6px, 1.4vw, 18px);
 }
 .menu__list a {
-  font-family: var(--font-display);
+  font-family: var(--font-display); font-weight: var(--w-display);
   font-size: var(--display-section);
   line-height: 1.02; letter-spacing: var(--track-display);
   color: var(--ivory); opacity: 0.45;
@@ -875,7 +875,7 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 .campaign__line { margin-top: var(--s5); max-width: 30ch; color: var(--stone); }
 .campaign__price {
   margin-top: clamp(24px, 3vw, 40px);
-  font-family: var(--font-display); font-size: var(--display-section);
+  font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--display-section);
   line-height: 1; letter-spacing: var(--track-display);
 }
 .campaign__price sup { font-family: var(--font-ui); font-size: var(--label-size); letter-spacing: var(--label-track); vertical-align: super; color: var(--gold); margin-left: var(--s3); }
@@ -918,12 +918,12 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 .edicion__txt { display: grid; justify-items: start; gap: var(--s3); min-width: 0; }
 .edicion__titulo {
   margin: var(--s2) 0 0;
-  font-family: var(--font-display); font-weight: 400; font-size: var(--t-600);
+  font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--t-600);
   line-height: 1.04; letter-spacing: var(--track-display); text-transform: uppercase;
 }
 /* Medido a 1440: a --t-700 el precio se partia en «2 por / $450.000». Escala con
    el ancho y cabe en una linea desde 900px hasta el escritorio grande. */
-.edicion__precio { margin: 0; font-family: var(--font-display); font-size: clamp(var(--t-500), 2.4vw, var(--t-600)); line-height: 1.05; }
+.edicion__precio { margin: 0; font-family: var(--font-display); font-weight: var(--w-display); font-size: clamp(var(--t-500), 2.4vw, var(--t-600)); line-height: 1.05; }
 .edicion__antes { margin: 0; font-size: var(--t-200); color: var(--stone); }
 .edicion__texto { margin: 0; max-width: 32ch; font-size: var(--t-200); line-height: 1.5; color: var(--stone); }
 .edicion__cta { margin-top: var(--s3); }
@@ -975,7 +975,7 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
   .finder__opts { max-width: min(100%, 56rem); }
 }
 .finder__opt {
-  font-family: var(--font-display);
+  font-family: var(--font-display); font-weight: var(--w-display);
   font-size: var(--display-section);
   line-height: 1.06; letter-spacing: var(--track-display);
   /* En reposo tambien tiene que leerse: rgba(...,.42) sobre negro daba 3,6:1.
@@ -1094,7 +1094,7 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 
 .bag-line { display: grid; grid-template-columns: 64px 1fr auto; gap: var(--s4); align-items: center; padding-block: var(--s5); border-top: 1px solid var(--hairline); }
 .bag-line:first-child { border-top: 0; }
-.bag-line__name { font-family: var(--font-display); font-size: var(--t-400); line-height: 1.2; }
+.bag-line__name { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--t-400); line-height: 1.2; }
 .bag-line__right { text-align: right; display: grid; gap: var(--s2); justify-items: end; }
 .stepper { display: inline-flex; align-items: center; gap: var(--s4); margin-top: var(--s3); }
 .stepper button { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid var(--hairline); font-size: var(--t-200); }
@@ -1114,7 +1114,7 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 .bag-suggest ul { display: grid; gap: var(--s4); margin-top: var(--s4); }
 .bag-suggest li { display: grid; grid-template-columns: 44px 1fr auto; gap: var(--s4); align-items: center; }
 .bag-totals { display: flex; justify-content: space-between; align-items: baseline; }
-.bag-totals strong { font-family: var(--font-display); font-size: 1.35rem; font-weight: 400; }
+.bag-totals strong { font-family: var(--font-display); font-size: 1.35rem; font-weight: var(--w-display); }
 .bag-empty { padding-block: var(--s10); display: grid; gap: var(--s5); justify-items: start; }
 
 /* ===================== BUSCADOR ===================== */
@@ -1128,7 +1128,7 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 .search__close { position: absolute; top: 24px; right: var(--gutter); color: var(--ivory); }
 .search input {
   width: 100%; background: transparent; border: 0; border-bottom: 1px solid rgba(244,241,234,0.2);
-  color: var(--ivory); font-family: var(--font-display);
+  color: var(--ivory); font-family: var(--font-display); font-weight: var(--w-display);
   font-size: clamp(1.6rem, 4.4vw, 3.2rem); padding: var(--s5) 0; margin-top: var(--s5);
 }
 .search input:focus { outline: none; border-color: var(--gold); }
@@ -1247,7 +1247,7 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 .pdp__name { margin-top: var(--s3); }
 /* El precio bajaba de --t-600: al lado del nombre competian y la columna se
    leia como dos titulares. El nombre manda; el precio acompaña. */
-.pdp__price { font-family: var(--font-display); font-size: var(--t-500); }
+.pdp__price { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--t-500); }
 /* Las cifras alineadas vienen de body; en los precios ademas van tabulares,
    para que los totales no bailen al cambiar la cantidad. */
 .pdp__price, .bag-totals strong, .ck__total { font-variant-numeric: lining-nums tabular-nums; }
@@ -1348,7 +1348,7 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 }
 .guia-duo__pasos li::before {
   content: counter(paso);
-  font-family: var(--font-display); font-size: var(--t-500); line-height: 1; color: var(--gold-deep);
+  font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--t-500); line-height: 1; color: var(--gold-deep);
   font-variant-numeric: lining-nums;
 }
 .guia-duo strong { font-weight: 600; }
@@ -1628,7 +1628,7 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
 @media (min-width: 900px) { .ck__summary { position: sticky; top: var(--s7); } }
 .ck__line { display: grid; grid-template-columns: 46px 1fr auto; gap: var(--s4); align-items: center; }
 .ck__totals { border-top: 1px solid var(--hairline); padding-top: var(--s4); display: grid; gap: var(--s3); }
-.ck__total { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-display); font-size: 1.3rem; }
+.ck__total { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-display); font-weight: var(--w-display); font-size: 1.3rem; }
 
 /* ==========================================================================
    CAPA TACTIL — va al final para ganar sobre las definiciones base.
@@ -1764,7 +1764,7 @@ body[data-hdr="light"] .hdr.is-stuck { background: rgba(244,241,234,0.82); }
   }
   .buybar.on { transform: none; }
   .buybar__meta { flex: 1; min-width: 0; display: grid; gap: 2px; }
-  .buybar__name { font-family: var(--font-display); font-size: 1.05rem; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .buybar__name { font-family: var(--font-display); font-weight: var(--w-display); font-size: 1.05rem; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .buybar .act { padding: 14px 22px; flex: none; }
 }
 
@@ -1927,7 +1927,7 @@ body.ficha-combo .hdr:not(.is-stuck) .hdr__nav { color: var(--ink); }
 
 /* Separador en dorado, no un hueco en blanco. */
 .house__sep {
-  font-family: var(--font-display);
+  font-family: var(--font-display); font-weight: var(--w-display);
   font-size: var(--t-600);
   line-height: 1;
   color: var(--gold);
@@ -2040,7 +2040,7 @@ body.ficha-combo .hdr:not(.is-stuck) .hdr__nav { color: var(--ink); }
 /* --- Paginas de contenido --- */
 .page-body { display: grid; gap: var(--s6); max-width: 70ch; }
 .rte { color: var(--on-surface-dim); line-height: 1.7; }
-.rte h2, .rte h3 { font-family: var(--font-display); color: var(--on-surface); margin: var(--s7) 0 var(--s4); font-weight: 400; }
+.rte h2, .rte h3 { font-family: var(--font-display); color: var(--on-surface); margin: var(--s7) 0 var(--s4); font-weight: var(--w-display); }
 .rte h2 { font-size: var(--fs-h2); }
 .rte h3 { font-size: var(--fs-h3); }
 .rte p { margin: 0 0 var(--s5); }
@@ -2188,6 +2188,11 @@ body.template-cart {
   background: var(--ivory);
   color: var(--ink);
 }
+
+/* Tamaño óptico fijo de Bodoni (ver --opsz-display en velmont-tokens.css):
+   en automático, a tamaño de titular elige el corte más fino y los trazos
+   delgados desaparecen sobre el video. Se hereda; Manrope no tiene ese eje. */
+body { font-variation-settings: 'opsz' var(--opsz-display); }
 
 /* ==========================================================================
    VOZ EDITORIAL (2026-10-06, el dueño: «quiero letras más luxury»)

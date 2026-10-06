@@ -47,28 +47,57 @@
           nunca llega. El clip del movil pesa 567 KB, asi que precargarlo sale
           barato.
         {%- endcomment -%}
+        {%- comment -%}
+          Tres clips (hero3, hero4 y hero5 del dueño, 2026-10-06; el de Black
+          Oud «Dubai Night» ya no sale). Cada visita ve uno distinto al de la
+          vez anterior: el script de abajo lo elige en el navegador, porque la
+          portada sale de la cache de Shopify igual para todos.
+          Archivos: codificados desde los originales 1280x720 a CRF 16 (SSIM
+          0,996 frente al original: no se nota), SIN pista de audio, y con el
+          ultimo 0,75 s fundido en el principio para que el bucle no salte.
+          El -movil es el recorte vertical centrado en el frasco (406x720).
+        {%- endcomment -%}
         <video id="velmont-hero-bg" autoplay loop muted playsinline disablepictureinpicture
                preload="auto" tabindex="-1"
-               poster="{{ 'hero-fondo.jpg' | asset_url }}"
+               poster="{{ 'hero-3.jpg' | asset_url }}"
                width="1280" height="720">
-          <source src="{{ 'hero-fondo.mp4' | asset_url }}" type="video/mp4">
+          <source src="{{ 'hero-3.mp4' | asset_url }}" type="video/mp4">
         </video>
       </div>
       <script>
-        /* El atributo `media` de <source> NO lo miran los navegadores dentro
+        /* Elige el clip de esta visita: el primero al azar y luego en orden
+           (3 → 4 → 5 → 3…), recordado en este navegador, asi nunca se repite
+           el de la vez anterior. Sin almacenamiento (modo privado), al azar.
+
+           El atributo `media` de <source> NO lo miran los navegadores dentro
            de <video> (solo funciona en <picture>), asi que la version
-           vertical se elige aqui. En un telefono, el 16:9 recortado a pantalla
-           completa ensena exactamente la misma franja central que el recorte
-           9:16 —misma nitidez— pero pesa 1307 KB en vez de 567.
+           vertical tambien se elige aqui: en un telefono el 16:9 recortado a
+           pantalla completa ensena la misma franja central que el recorte
+           vertical —misma nitidez— pero pesa el doble.
 
            Va EN LINEA y sin `defer` a proposito: tiene que correr mientras se
            analiza el documento, antes de que el navegador decida que archivo
-           descargar. Si no hay JS se queda el horizontal, que tambien va. */
+           descargar. Sin JS se queda el primero, horizontal, que tambien va. */
         (function () {
           var v = document.getElementById('velmont-hero-bg');
-          if (!v || !window.matchMedia('(max-width: 760px)').matches) return;
+          if (!v) return;
+          var clips = [
+            { v: {{ 'hero-3.mp4' | asset_url | json }}, m: {{ 'hero-3-movil.mp4' | asset_url | json }}, p: {{ 'hero-3.jpg' | asset_url | json }} },
+            { v: {{ 'hero-4.mp4' | asset_url | json }}, m: {{ 'hero-4-movil.mp4' | asset_url | json }}, p: {{ 'hero-4.jpg' | asset_url | json }} },
+            { v: {{ 'hero-5.mp4' | asset_url | json }}, m: {{ 'hero-5-movil.mp4' | asset_url | json }}, p: {{ 'hero-5.jpg' | asset_url | json }} }
+          ];
+          var i;
+          try {
+            var antes = parseInt(localStorage.getItem('velmont_hero'), 10);
+            i = antes >= 0 && antes < clips.length ? (antes + 1) % clips.length : Math.floor(Math.random() * clips.length);
+            localStorage.setItem('velmont_hero', String(i));
+          } catch (e) { i = Math.floor(Math.random() * clips.length); }
+          var c = clips[i];
+          var src = window.matchMedia('(max-width: 760px)').matches ? c.m : c.v;
+          v.setAttribute('poster', c.p);
+          v.setAttribute('data-clip', String(i + 3));
           var s = v.querySelector('source');
-          if (s) { s.src = {{ 'hero-fondo-movil.mp4' | asset_url | json }}; v.load(); }
+          if (s && s.getAttribute('src') !== src) { s.setAttribute('src', src); v.load(); }
         })();
       </script>
     {%- endif -%}
@@ -186,7 +215,7 @@
     { "type": "image_picker", "id": "image", "label": "Imagen" },
     { "type": "product", "id": "product", "label": "…o un producto", "info": "Se usa su foto principal si no subes una imagen." },
     { "type": "image_picker", "id": "letters", "label": "Letras de la marca de agua" },
-    { "type": "checkbox", "id": "show_video", "label": "Vídeo de fondo a pantalla completa", "default": false, "info": "El clip del frasco ocupa toda la portada, en bucle, sin sonido y arrancando solo. Se reproduce siempre, incluso si el visitante tiene activado «Reducir movimiento» en su teléfono." },
+    { "type": "checkbox", "id": "show_video", "label": "Vídeo de fondo a pantalla completa", "default": false, "info": "Tres clips del frasco (hero 3, 4 y 5) ocupan toda la portada, en bucle, sin sonido y arrancando solo; cada visita ve uno distinto al de la vez anterior. Se reproduce siempre, incluso si el visitante tiene activado «Reducir movimiento» en su teléfono." },
     { "type": "checkbox", "id": "show_stage", "label": "Mostrar la pieza en la portada", "default": false, "info": "Apagado, la portada queda con la marca, la frase y los accesos. Encendido, aparece la foto elegida (o la del producto)." },
     { "type": "collection_list", "id": "collections", "label": "Colecciones enlazadas", "limit": 5, "info": "Accesos directos bajo los botones. Sin ninguna, no aparece la fila." },
     { "type": "text", "id": "scroll_label", "label": "Indicador de desplazamiento", "default": "Desliza" }

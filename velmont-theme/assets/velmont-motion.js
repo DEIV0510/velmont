@@ -356,8 +356,8 @@ function elVideoFondo() { return $('[data-hero-video] video'); }
  * llamada salga de JS. Asi que se prueba al montar, en cuanto hay datos, al
  * volver a la pestana y —ultimo recurso— al primer toque del usuario.
  *
- * NO se respeta `saveData` aqui: el clip es la portada, no un extra, y se
- * sirve una version de 567 KB al movil. El ahorro de datos dejaba la portada
+ * NO se respeta `saveData` aqui: el clip es la portada, no un extra, y al
+ * movil se le sirve el recorte vertical (1-2 MB, ver velmont-hero.liquid). El ahorro de datos dejaba la portada
  * congelada sin que nadie entendiera por que.
  */
 function videoFondo() {

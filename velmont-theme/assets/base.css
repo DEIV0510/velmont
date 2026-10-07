@@ -1187,8 +1187,8 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
 
 /* Contacto: banda propia, antes de las columnas (pedido del dueño,
    2026-10-06: «que resalte lo que es contacto»). Un boton por red, grande y
-   con su logotipo: WhatsApp en marfil, que es lo primero que se ve sobre el
-   negro; Instagram con filo dorado. El numero y la cuenta van escritos. */
+   con su logotipo, fondo negro y filo dorado (sin caja marfil: no le gusto al
+   dueño). El numero y la cuenta van escritos. */
 .foot__contact {
   display: grid; gap: var(--s6) var(--s8);
   padding-bottom: clamp(48px, 6vw, 88px); margin-bottom: clamp(48px, 6vw, 88px);
@@ -1228,11 +1228,15 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
   font-size: 1.1875rem; line-height: 1.15; letter-spacing: 0.01em;
   font-variant-numeric: lining-nums tabular-nums;
 }
-.foot .foot-btn--wa { background: var(--ivory); color: var(--ink); border: 1px solid var(--ivory); }
-.foot .foot-btn--wa:hover { background: #fff; color: var(--ink); }
+/* Los dos iguales: fondo negro y filo dorado. El de WhatsApp iba en una caja
+   marfil y al dueño no le gusto («quita ese recuadro blanco», 2026-10-06):
+   lo que lo distingue es su logotipo verde. */
+.foot .foot-btn--wa, .foot .foot-btn--ig {
+  color: var(--ivory); background: transparent;
+  border: 1px solid color-mix(in srgb, var(--gold) 70%, transparent);
+}
+.foot .foot-btn--wa:hover, .foot .foot-btn--ig:hover { color: var(--ivory); border-color: var(--ivory); background: rgba(244,241,234,0.06); }
 .foot-btn--wa .foot-btn__ico { background: #25D366; border-radius: 50%; }
-.foot .foot-btn--ig { color: var(--ivory); border: 1px solid color-mix(in srgb, var(--gold) 70%, transparent); }
-.foot .foot-btn--ig:hover { color: var(--ivory); border-color: var(--ivory); background: rgba(244,241,234,0.06); }
 /* Los colores del logotipo de Instagram: es lo que hace que se reconozca. */
 .foot-btn--ig .foot-btn__ico {
   border-radius: 13px;
@@ -2104,9 +2108,12 @@ body.ficha-combo .hdr:not(.is-stuck) .hdr__nav { color: var(--ink); }
    negro tan grande»): 192 → 86px a 1440, 126 → 56px a 940. Abajo se
    aprieta tambien un poco para que la banda quede equilibrada. */
 .houses { padding-block: clamp(48px, 6vw, 88px) clamp(72px, 8.4vw, 120px); }
-/* «Nuestras marcas» mas grande que un titulo de seccion corriente (pedido
-   del dueño, 2026-10-06): 46 → 88px en escritorio, 34 → 44px en el celular. */
-.houses .section-head__title { font-size: clamp(2.75rem, 1.6rem + 4.4vw, 5.5rem); line-height: 1; }
+/* «Nuestras marcas» mas grande que un titulo de seccion corriente y centrado
+   (pedidos del dueño, 2026-10-06; tras verlo a 88px en su iPad: «centrado y
+   un poquito más pequeño»): 72px en escritorio, 64 en el iPad, 40 en el
+   celular. */
+.houses .section-head { justify-content: center; text-align: center; }
+.houses .section-head__title { font-size: clamp(2.5rem, 1.5rem + 3.4vw, 4.5rem); line-height: 1; }
 /* Sin antetitulo encima, el margen de separacion del titulo es aire de mas. */
 .houses .section-head__title:first-child { margin-top: 0; }
 /* Entre el titulo y la primera tira se sumaban el margen del encabezado y el

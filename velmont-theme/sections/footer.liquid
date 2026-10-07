@@ -66,32 +66,6 @@
                 </a>
               {%- endif -%}
             </div>
-
-            {%- comment -%}
-              «¿Quieres trabajar con nosotros?» (nota de voz del dueño,
-              2026-10-06): una fila propia con su boton de WhatsApp. El chat
-              se abre con un mensaje escrito para que el dueño sepa de donde
-              llega la persona. Sin titular, la fila no se pinta.
-            {%- endcomment -%}
-            {%- if block.settings.work_title != blank and settings.whatsapp != blank -%}
-              {%- liquid
-                assign wa_trabajo = settings.whatsapp | split: '?' | first
-                if block.settings.work_message != blank
-                  assign mensaje = block.settings.work_message | url_encode | replace: '+', '%20'
-                  assign wa_trabajo = wa_trabajo | append: '?text=' | append: mensaje
-                endif
-              -%}
-              <div class="foot__trabajo">
-                <p class="foot__trabajo-t">{{ block.settings.work_title }}</p>
-                <a class="foot-btn foot-btn--wa" href="{{ wa_trabajo }}" target="_blank" rel="noopener">
-                  <span class="foot-btn__ico">{% render 'icon', name: 'whatsapp', size: 24 %}</span>
-                  <span class="foot-btn__txt">
-                    <span class="foot-btn__t">WhatsApp</span>
-                    <span class="foot-btn__s">{{ block.settings.work_text | default: 'Comunícate a nuestro WhatsApp' }}</span>
-                  </span>
-                </a>
-              </div>
-            {%- endif -%}
           </div>
         {%- endif -%}
       {%- endif -%}
@@ -210,12 +184,7 @@
         { "type": "text", "id": "title", "label": "Antetítulo", "default": "Contacto" },
         { "type": "text", "id": "heading", "label": "Titular", "default": "Asesoría personal" },
         { "type": "textarea", "id": "text", "label": "Texto", "default": "Escríbenos y te ayudamos a elegir tu perfume." },
-        { "type": "paragraph", "content": "Va destacado encima de las columnas, con un botón por red. El número y la cuenta salen de WhatsApp e Instagram en Ajustes del tema → Marca." },
-        { "type": "header", "content": "Trabaja con nosotros" },
-        { "type": "text", "id": "work_title", "label": "Titular", "default": "¿Quieres trabajar con nosotros?", "info": "Déjalo vacío para quitar la fila." },
-        { "type": "text", "id": "work_text", "label": "Texto del botón", "default": "Comunícate a nuestro WhatsApp" },
-        { "type": "text", "id": "work_message", "label": "Mensaje con el que se abre el chat", "default": "Hola, quiero trabajar con VELMONT.", "info": "Así sabes que la persona llega desde aquí." }
-      ]
+        { "type": "paragraph", "content": "Va destacado encima de las columnas, con un botón por red. El número y la cuenta salen de WhatsApp e Instagram en Ajustes del tema → Marca." }      ]
     }
   ],
   "max_blocks": 4

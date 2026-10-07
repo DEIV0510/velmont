@@ -1246,21 +1246,39 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
   .foot__contact-btns { display: grid; }
   .foot .foot-btn { width: 100%; }
 }
-/* «¿Quieres trabajar con nosotros?»: fila propia a todo el ancho de la banda,
-   separada por un filete, titular a la izquierda y boton a la derecha. */
-.foot__trabajo {
-  grid-column: 1 / -1;
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-  gap: var(--s5) var(--s7);
-  padding-top: clamp(28px, 3.4vw, 44px);
-  border-top: 1px solid rgba(244,241,234,0.12);
+/* ===================== TRABAJA CON NOSOTROS =====================
+   Seccion de la portada, justo antes de «Para terminar» (pedido del dueño,
+   2026-10-06). En la misma columna que la Declaracion y el Cierre; un filete
+   arriba la separa de «La casa», que suele ir justo antes y en el mismo
+   crema (la regla de paneles contiguos les quita el aire de mas). */
+.trabajo { padding-block: var(--section-text); }
+.trabajo__in {
+  display: grid; justify-items: start; gap: clamp(20px, 2.6vw, 32px);
+  border-top: 1px solid var(--hairline); padding-top: clamp(32px, 4vw, 56px);
 }
-.foot__trabajo-t {
-  margin: 0; color: var(--ivory);
+.trabajo__t {
+  margin: 0; max-width: 20ch;
   font-family: var(--font-display); font-weight: var(--w-display);
-  font-size: clamp(1.5rem, 1.15rem + 1.3vw, 2.25rem); line-height: 1.1;
-  letter-spacing: var(--track-display); text-transform: uppercase;
+  font-size: var(--display-section); line-height: var(--lh-display);
+  letter-spacing: var(--track-display); text-transform: uppercase; color: var(--on-surface);
 }
+.trabajo__p { margin: 0; max-width: 46ch; font-size: var(--t-300); font-weight: 500; line-height: 1.6; color: var(--on-surface-dim); }
+
+/* Boton de WhatsApp con su logotipo, para cualquier panel: filo dorado y
+   texto del color del panel (tinta sobre crema, marfil sobre negro). */
+.wa-btn {
+  display: inline-flex; align-items: center; gap: var(--s4);
+  min-height: 72px; padding: 12px 30px 12px 14px; text-align: left;
+  color: var(--on-surface);
+  border: 1px solid color-mix(in srgb, var(--gold) 75%, transparent);
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.wa-btn:hover { border-color: var(--on-surface); background: color-mix(in srgb, var(--on-surface) 5%, transparent); }
+.wa-btn__ico { display: grid; place-items: center; width: 46px; height: 46px; flex: none; color: #fff; background: #25D366; border-radius: 50%; }
+.wa-btn__txt { display: grid; gap: 4px; }
+.wa-btn__t { font-size: var(--label-size); letter-spacing: 0.24em; text-transform: uppercase; font-weight: 600; line-height: 1; opacity: 0.8; }
+.wa-btn__s { font-family: var(--font-ui); font-weight: 700; font-size: 1.1875rem; line-height: 1.15; }
+@media (max-width: 520px) { .wa-btn { width: 100%; } }
 
 /* Columnas: los enlaces de «Explorar» en la letra de los titulares y a
    tamaño de lectura (el dueño: «colección más grande»). */

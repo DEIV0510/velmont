@@ -290,6 +290,15 @@
         "anchor": "casas",
         "panel": "ink"
       }
+    },
+    "trabajo": {
+      "type": "velmont-trabajo",
+      "settings": {
+        "heading": "¿Quieres trabajar con nosotros?",
+        "button": "Comunícate a nuestro WhatsApp",
+        "message": "Hola, quiero trabajar con VELMONT.",
+        "panel": "cream"
+      }
     }
   },
   "order": [
@@ -302,6 +311,7 @@
     "banda",
     "momentos",
     "casa",
+    "trabajo",
     "cierre"
   ]
 }

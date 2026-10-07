@@ -25,16 +25,16 @@
   --t-800: 4rem;       /* 64 — display secundario (ficha, no la home)        */
   --t-900: 6rem;       /* 96 — display del hero                              */
 
-  /* Dos voces, sin zona gris: Bodoni para titulos, nombres de perfume y
-     precios; Manrope para todo lo que se lee de corrido (el dueño lo eligio
-     el 2026-10-06 por legibilidad — «TEXTOS DE LECTURA» en base.css; la
-     cursiva Bodoni de las frases cortas duro esa mañana). */
-  /* Bodoni Moda (elegida por el cliente el 2026-10-05 entre cuatro opciones,
-     «algo más luxury»): didona de moda, alto contraste. Es variable con eje de
-     tamaño óptico: en grande gana contraste y en pequeño se vuelve más
-     robusta sola, por eso va en 400 en todos los tamaños. Antes: Cormorant. */
-  --font-display: 'Bodoni Moda', 'Bodoni 72', Didot, Georgia, serif;
-  --font-ui: 'Manrope', 'Segoe UI', -apple-system, sans-serif;
+  /* Dos voces: Marcellus para titulos y nombres de perfume; Jost para todo lo
+     demas (textos, precios, interfaz). El dueño eligio la pareja el
+     2026-10-07 viendo su tienda con cuatro opciones: «cambia toda la
+     tipografía por completo... algo más luxury pero sobre todo legible».
+     Marcellus es una romana de trazo parejo con UN solo peso y sin cursiva
+     (ver font-synthesis en base.css). Jost, palo seco geometrico de moda.
+     Antes: Bodoni Moda + Manrope (didona de alto contraste: los trazos finos
+     se perdian en el celular). Las familias se cargan en theme.liquid. */
+  --font-display: 'Marcellus Cifras', 'Marcellus', 'Trajan Pro', Georgia, serif;
+  --font-ui: 'Jost', 'Futura', 'Segoe UI', -apple-system, sans-serif;
 
   /* Los dos unicos display de la home. Ambos extremos son escalones. */
   --display-hero: clamp(var(--t-700), 6vw, var(--t-900));
@@ -42,17 +42,14 @@
 
   /* Interlinea SIEMPRE sin unidad: con unidad no hereda bien y vuelve a
      producir valores sueltos. Display entre 1.02 y 1.08; cuerpo 1.6. */
-  --lh-display: 1.06;   /* 1.02 con Cormorant; Bodoni sube las tildes y pide aire */
+  --lh-display: 1.1;    /* aire para las tildes de las mayusculas (¿QUÉ, ÚNICAS) */
   --lh-title: 1.08;
   --lh-body: 1.6;
   --lh-eyebrow: 1;
 
-  /* «La misma letra pero más grosor» (el dueño, 2026-10-06): sobre el video
-     los trazos finos de Bodoni a 400 se perdían. 600 + tamaño óptico fijo en 28
-     (ver --opsz-display): misma Bodoni, trazos finos más gruesos. Todas las
-     reglas con la letra de titulares usan --w-display. */
-  --w-display: 600;
-  --opsz-display: 28;
+  /* Marcellus tiene un solo peso: 400. Todas las reglas con la letra de
+     titulares usan --w-display; con 600 el navegador fabricaria una negrita. */
+  --w-display: 400;
   --w-body: 400;
   --w-label: 500;
 

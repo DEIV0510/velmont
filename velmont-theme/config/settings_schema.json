@@ -102,25 +102,7 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "El sitio usa Bodoni Moda (títulos) y Manrope (interfaz) desde Google Fonts. Si cambias las familias, revisa que los pesos elegidos existan."
-      },
-      {
-        "type": "text",
-        "id": "font_display",
-        "label": "Familia de títulos",
-        "default": "'Bodoni Moda', 'Bodoni 72', Didot, Georgia, serif"
-      },
-      {
-        "type": "text",
-        "id": "font_ui",
-        "label": "Familia de interfaz",
-        "default": "'Manrope', 'Segoe UI', -apple-system, sans-serif"
-      },
-      {
-        "type": "text",
-        "id": "google_fonts_url",
-        "label": "URL de Google Fonts",
-        "default": "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Manrope:wght@400;500;600;700&display=swap"
+        "content": "La tienda usa Marcellus (títulos y nombres de perfume) y Jost (textos, precios e interfaz), elegidas por el dueño el 7 de octubre de 2026. Están fijadas en el tema."
       },
       {
         "type": "header",

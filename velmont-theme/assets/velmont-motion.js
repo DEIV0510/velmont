@@ -487,7 +487,9 @@ function titularesPorPalabra(gsap) {
       { yPercent: 108, clipPath: 'inset(0 0 100% 0)' },
       {
         yPercent: 0,
-        clipPath: 'inset(0 0 -12% 0)',
+        // Arriba en negativo: el recorte final no puede comerse las tildes
+        // de las mayusculas, que sobresalen de la caja de la palabra.
+        clipPath: 'inset(-45% 0 -12% 0)',
         duration: 0.95,
         ease: 'power3.out',
         stagger: CONFIG.titulo.palabraMs / 1000,

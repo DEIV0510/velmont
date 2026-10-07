@@ -51,7 +51,13 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="{{ settings.google_fonts_url }}" rel="stylesheet">
+  {%- comment -%}
+    Letras de la casa (el dueño las eligio el 2026-10-07): Marcellus para
+    titulos y Jost para textos. Fijas aqui y en velmont-tokens.css: antes las
+    familias salian de los ajustes del tema, pero el CSS de tokens las pisaba
+    y esos ajustes no mandaban.
+  {%- endcomment -%}
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400..700;1,400..700&family=Marcellus&display=swap" rel="stylesheet">
 
   {%- assign marble = settings.texture_marble -%}
 
@@ -84,9 +90,6 @@
       --on-surface-dim: var(--stone-deep);
       --hairline: {{ settings.color_ink | color_modify: 'alpha', 0.14 }};
       --hairline-strong: {{ settings.color_ink | color_modify: 'alpha', 0.28 }};
-
-      --font-display: {{ settings.font_display }};
-      --font-ui: {{ settings.font_ui }};
 
       --label-size: {{ settings.label_size }};
       --label-track: {{ settings.label_track }};

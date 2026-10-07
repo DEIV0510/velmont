@@ -9,6 +9,20 @@
    VELMONT — Base: reset, tipografia editorial, movimiento
    ========================================================================== */
 
+/* Cifras de los titulos en Jost. En Marcellus el 1 es una I y el 0 una O:
+   «1 MILLION EDT 100 ML» se leia «I MILLION EDT IOO ML». Esta familia solo
+   cubre los digitos (unicode-range) y va primera en --font-display; para lo
+   demas el navegador sigue con Marcellus. Es el mismo archivo de Jost que
+   carga theme.liquid, asi que no se descarga dos veces. */
+@font-face {
+  font-family: 'Marcellus Cifras';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jost/v20/92zatBhPNqw73oTd4g.woff2) format('woff2');
+  unicode-range: U+0030-0039;
+}
+
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scrollbar-gutter: stable; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
@@ -38,8 +52,12 @@ body {
   font-weight: 400;
   /* Algunas serif de titulo traen cifras de estilo antiguo (Cormorant lo hacia: el 9 bajaba, el 0 era una o): en
      «9PM BLACK», «STALLION 53» o «2 MATAI X 450.000» se leian desiguales.
-     Se hereda a todo; a Manrope no le cambia nada. */
+     Se hereda a todo; a Jost no le cambia nada. */
   font-variant-numeric: lining-nums;
+  /* Marcellus no tiene negrita ni cursiva: sin esto el navegador las
+     fabrica (la ultima linea en cursiva de algunos titulares) y se ven
+     deformes. Jost si las tiene y no le afecta. */
+  font-synthesis: none;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -809,7 +827,7 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
 .duo-tip__i {
   display: inline-grid; place-items: center; flex: none;
   width: 15px; height: 15px; border: 1px solid currentColor; border-radius: 50%;
-  font-family: var(--font-display); font-style: italic; font-weight: 600;
+  font-family: var(--font-ui); font-style: italic; font-weight: 600;
   font-size: 10px; line-height: 1; letter-spacing: 0; text-transform: none;
 }
 /* En la pieza el boton es la etiqueta: su area de toque crece sin que crezca
@@ -993,10 +1011,12 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
 }
 .campaign__title { margin-top: var(--s5); }
 .campaign__line { margin-top: var(--s5); max-width: 30ch; color: var(--stone); }
+/* Precios en Jost: en Marcellus el 0 es un circulo igual a la letra O y
+   «$140.000» se leia «$14O.OOO». */
 .campaign__price {
   margin-top: clamp(24px, 3vw, 40px);
-  font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--display-section);
-  line-height: 1; letter-spacing: var(--track-display);
+  font-family: var(--font-ui); font-weight: 500; font-size: var(--display-section);
+  line-height: 1; letter-spacing: 0;
 }
 .campaign__price sup { font-family: var(--font-ui); font-size: var(--label-size); letter-spacing: var(--label-track); vertical-align: super; color: var(--gold); margin-left: var(--s3); }
 .campaign__cta { margin-top: clamp(28px, 3.4vw, 44px); }
@@ -1043,7 +1063,7 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
 }
 /* Medido a 1440: a --t-700 el precio se partia en «2 por / $450.000». Escala con
    el ancho y cabe en una linea desde 900px hasta el escritorio grande. */
-.edicion__precio { margin: 0; font-family: var(--font-display); font-weight: var(--w-display); font-size: clamp(var(--t-500), 2.4vw, var(--t-600)); line-height: 1.05; }
+.edicion__precio { margin: 0; font-family: var(--font-ui); font-weight: 500; font-size: clamp(var(--t-500), 2.4vw, var(--t-600)); line-height: 1.05; }
 .edicion__antes { margin: 0; font-size: var(--t-200); color: var(--stone); }
 .edicion__texto { margin: 0; max-width: 32ch; font-size: var(--t-200); line-height: 1.5; color: var(--stone); }
 .edicion__cta { margin-top: var(--s3); }
@@ -1340,7 +1360,7 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
 .bag-suggest ul { display: grid; gap: var(--s4); margin-top: var(--s4); }
 .bag-suggest li { display: grid; grid-template-columns: 44px 1fr auto; gap: var(--s4); align-items: center; }
 .bag-totals { display: flex; justify-content: space-between; align-items: baseline; }
-.bag-totals strong { font-family: var(--font-display); font-size: 1.35rem; font-weight: var(--w-display); }
+.bag-totals strong { font-family: var(--font-ui); font-size: 1.35rem; font-weight: 600; }
 .bag-empty { padding-block: var(--s10); display: grid; gap: var(--s5); justify-items: start; }
 
 /* ===================== BUSCADOR ===================== */
@@ -1473,7 +1493,7 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
 .pdp__name { margin-top: var(--s3); }
 /* El precio bajaba de --t-600: al lado del nombre competian y la columna se
    leia como dos titulares. El nombre manda; el precio acompaña. */
-.pdp__price { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--t-500); }
+.pdp__price { font-family: var(--font-ui); font-weight: 600; font-size: var(--t-500); }
 /* Las cifras alineadas vienen de body; en los precios ademas van tabulares,
    para que los totales no bailen al cambiar la cantidad. */
 .pdp__price, .bag-totals strong, .ck__total { font-variant-numeric: lining-nums tabular-nums; }
@@ -1891,7 +1911,7 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
 @media (min-width: 900px) { .ck__summary { position: sticky; top: var(--s7); } }
 .ck__line { display: grid; grid-template-columns: 46px 1fr auto; gap: var(--s4); align-items: center; }
 .ck__totals { border-top: 1px solid var(--hairline); padding-top: var(--s4); display: grid; gap: var(--s3); }
-.ck__total { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-display); font-weight: var(--w-display); font-size: 1.3rem; }
+.ck__total { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-ui); font-weight: 600; font-size: 1.3rem; }
 
 /* ==========================================================================
    CAPA TACTIL — va al final para ganar sobre las definiciones base.
@@ -2471,20 +2491,15 @@ body.template-cart {
   color: var(--ink);
 }
 
-/* Tamaño óptico fijo de Bodoni (ver --opsz-display en velmont-tokens.css):
-   en automático, a tamaño de titular elige el corte más fino y los trazos
-   delgados desaparecen sobre el video. Se hereda; Manrope no tiene ese eje. */
-body { font-variation-settings: 'opsz' var(--opsz-display); }
-
 /* ==========================================================================
-   TEXTOS DE LECTURA (2026-10-06)
-   El dueño pidio letra «más legible» y eligio, viendo su ficha y sus tarjetas
-   con cuatro opciones, la A: los titulos, los nombres de perfume y los precios
-   siguen en Bodoni (son la marca) y todo lo que se lee de corrido va en
-   Manrope, recta y con cuerpo: entradillas, notas de coleccion, textos de
-   promocion, cierres, mensajes vacios, la descripcion y las notas de la ficha.
-   Esa misma mañana estas frases habian pasado a Bodoni cursiva («letras más
-   luxury»): en el celular los trazos finos se perdian.
+   TEXTOS DE LECTURA (2026-10-06; letras cambiadas el 2026-10-07)
+   Los titulos y los nombres de perfume van en la letra de titulares
+   (Marcellus) y todo lo que se lee de corrido en la de textos (Jost), recta
+   y con cuerpo: entradillas, notas de coleccion, textos de promocion,
+   cierres, mensajes vacios, la descripcion y las notas de la ficha. Lo
+   eligio el dueño en dos rondas viendo su tienda con cuatro opciones: la
+   legibilidad manda (antes eran Bodoni, en cursiva para estas frases, y
+   Manrope).
    El tamaño del lema del hero vive en velmont-motion.css (.hero-copy .hero__lede).
    ========================================================================== */
 .lede, .hero__lede, .section-head__lede, .collection-head__note,

@@ -596,7 +596,10 @@ body.cursor-on input, body.cursor-on textarea, body.cursor-on select { cursor: a
    La caja recorta y el interior sube. El clip-path lo anima GSAP; si las
    librerias no llegan, el titular nunca se parte y se lee normal.
    ========================================================================== */
-.pal { display: inline-block; overflow: hidden; vertical-align: bottom; }
+/* El relleno de arriba (con margen negativo, la palabra no se mueve) deja
+   sitio a las tildes de las MAYUSCULAS: con Marcellus suben por encima de la
+   caja y «SELECCIÓN» se quedaba con un punto en vez de tilde (2026-10-07). */
+.pal { display: inline-block; overflow: hidden; vertical-align: bottom; padding-top: 0.34em; margin-top: -0.34em; }
 .pal__in { display: inline-block; will-change: transform, clip-path; }
 
 /* ==========================================================================

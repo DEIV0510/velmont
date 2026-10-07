@@ -1246,6 +1246,21 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
   .foot__contact-btns { display: grid; }
   .foot .foot-btn { width: 100%; }
 }
+/* «¿Quieres trabajar con nosotros?»: fila propia a todo el ancho de la banda,
+   separada por un filete, titular a la izquierda y boton a la derecha. */
+.foot__trabajo {
+  grid-column: 1 / -1;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--s5) var(--s7);
+  padding-top: clamp(28px, 3.4vw, 44px);
+  border-top: 1px solid rgba(244,241,234,0.12);
+}
+.foot__trabajo-t {
+  margin: 0; color: var(--ivory);
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: clamp(1.5rem, 1.15rem + 1.3vw, 2.25rem); line-height: 1.1;
+  letter-spacing: var(--track-display); text-transform: uppercase;
+}
 
 /* Columnas: los enlaces de «Explorar» en la letra de los titulares y a
    tamaño de lectura (el dueño: «colección más grande»). */

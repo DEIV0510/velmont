@@ -107,16 +107,33 @@
         se ahorra el cliente con su pareja, y guardar en la linea del carrito
         que dos perfumes eligio (_duo) para pintar sus fotos en la bolsa.
       {%- endcomment -%}
+      {%- comment -%}
+        bundle_extra: perfumes que la app ofrece en el duo pero que no estan en
+        la coleccion (NÁUTICA VOYAGE, 2026-10-06). Sin sus datos la tarjeta
+        salia vacia, sin foto ni precio.
+      {%- endcomment -%}
+      {%- assign coma = false -%}
       <script type="application/json" data-bundle-piezas data-precio-combo="{{ product.price }}">
         [
           {%- for p in section.settings.bundle_source.products -%}
+            {%- if coma -%},{%- endif -%}
             {"t": {{ p.title | json }},
              "h": {{ p.handle | json }},
              "img": {{ p.featured_image | image_url: width: 420 | json }},
              "casa": {{ p.vendor | json }},
              "c": {{ p.price }},
              "precio": {{ p.price | money_without_trailing_zeros | json }}}
-            {%- unless forloop.last -%},{%- endunless -%}
+            {%- assign coma = true -%}
+          {%- endfor -%}
+          {%- for p in section.settings.bundle_extra -%}
+            {%- if coma -%},{%- endif -%}
+            {"t": {{ p.title | json }},
+             "h": {{ p.handle | json }},
+             "img": {{ p.featured_image | image_url: width: 420 | json }},
+             "casa": {{ p.vendor | json }},
+             "c": {{ p.price }},
+             "precio": {{ p.price | money_without_trailing_zeros | json }}}
+            {%- assign coma = true -%}
           {%- endfor -%}
         ]
       </script>
@@ -323,6 +340,7 @@
     },
     { "type": "collection", "id": "related_collection", "label": "Colección relacionada" },
     { "type": "collection", "id": "bundle_source", "label": "Piezas del combo", "info": "Sólo para fichas de combo. De aquí salen las fotos del selector visual: tiene que ser la misma colección que cargaste en la app de bundles." },
+    { "type": "product_list", "id": "bundle_extra", "label": "Más perfumes del combo", "limit": 12, "info": "Solo si la app de bundles ofrece un perfume que NO está en «Piezas del combo»: así su tarjeta sale con foto y precio. Lo ideal es añadirlo a esa colección." },
     { "type": "product", "id": "bundle_product", "label": "Ficha del combo", "info": "El producto donde se arma el combo (el Dúo VELMONT). Cada perfume de «Piezas del combo» muestra un enlace a él, porque dos sueltos se cobran a precio normal." },
     { "type": "collection", "id": "auto_promo_collection", "label": "Promoción automática", "info": "Colección con descuento automático en la bolsa (2 MATAI X 450.000). Sus perfumes muestran el texto de abajo." },
     { "type": "text", "id": "auto_promo_text", "label": "Texto de la promoción automática", "default": "Lleva dos y el descuento se aplica solo en la bolsa." },

@@ -778,8 +778,43 @@ function initBundlePicker() {
   if (!datos) return;
   let piezas = [];
   try { piezas = JSON.parse(datos.textContent); } catch { return; }
-  const porTitulo = new Map(piezas.map((p) => [String(p.t).trim().toUpperCase(), p]));
   const porHandle = new Map(piezas.map((p) => [p.h, p]));
+  // La app de bundles guarda SUS nombres y no se entera si el producto cambia:
+  // «9PM DIVE» (hoy 9AM DIVE), «HAYATY» (HAYAATI), «ODYSSEY-GO-MANGO»,
+  // «NÁUTICA» con tilde. Comparando el texto tal cual, esas tarjetas salian
+  // sin foto, casa ni precio (el dueño lo vio en su iPhone, 2026-10-06). Se
+  // compara sin tildes, espacios ni signos, contra el titulo Y el handle, y
+  // si nada coincide, con una letra de diferencia (dos en nombres largos).
+  const clave = (s) => String(s || '').normalize('NFD').replace(/\p{M}/gu, '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  const distancia = (a, b) => {
+    const fila = Array.from({ length: b.length + 1 }, (_, j) => j);
+    for (let i = 1; i <= a.length; i++) {
+      let diag = fila[0];
+      fila[0] = i;
+      for (let j = 1; j <= b.length; j++) {
+        const arriba = fila[j];
+        fila[j] = Math.min(fila[j] + 1, fila[j - 1] + 1, diag + (a[i - 1] === b[j - 1] ? 0 : 1));
+        diag = arriba;
+      }
+    }
+    return fila[b.length];
+  };
+  const porClave = new Map();
+  const indexar = (p) => { for (const k of [clave(p.t), clave(p.h)]) if (k && !porClave.has(k)) porClave.set(k, p); };
+  piezas.forEach(indexar);
+  const buscarPieza = (texto) => {
+    const k = clave(texto);
+    if (!k) return null;
+    if (porClave.has(k)) return porClave.get(k);
+    let mejor = null, dmin = Infinity, empate = false;
+    for (const [kk, p] of porClave) {
+      if (Math.abs(kk.length - k.length) > 2) continue;
+      const d = distancia(k, kk);
+      if (d < dmin) { dmin = d; mejor = p; empate = false; }
+      else if (d === dmin && p !== mejor) empate = true;
+    }
+    return mejor && !empate && dmin <= (k.length >= 12 ? 2 : 1) ? mejor : null;
+  };
   const precioCombo = parseInt(datos.dataset.precioCombo, 10) || 0;
   // NO se guarda el contenedor: la app reemplaza el subarbol de .pdp__info,
   // y una referencia vieja apunta a un nodo ya desconectado. Se busca
@@ -813,7 +848,7 @@ function initBundlePicker() {
   const elegida = (sel) => {
     if (!sel.value) return null;
     const texto = sel.options[sel.selectedIndex]?.text || '';
-    return porTitulo.get(texto.trim().toUpperCase()) || { t: texto.trim() };
+    return buscarPieza(texto) || { t: texto.trim() };
   };
   const pasoAbierto = (todos) => (reabierto !== null && reabierto < todos.length
     ? reabierto
@@ -960,14 +995,66 @@ function initBundlePicker() {
     const p = h && porHandle.get(h);
     const primero = selects()[0];
     if (p && primero && !elecciones.has(primero.name)) {
-      const opt = [...primero.options].find((o) => o.text.trim().toUpperCase() === String(p.t).trim().toUpperCase());
+      const opt = [...primero.options].find((o) => o.value && buscarPieza(o.text) === p);
       // Sin «change»: la app se pone al dia cuando el cliente elija el
       // segundo, y al añadir se manda lo que dicen los <select> (ver submit).
       if (opt) { elecciones.set(primero.name, opt.value); imponer(primero); }
     }
   };
 
+  // Tarjeta de un perfume del selector. Si se reconoce, foto, casa, nombre
+  // real del producto y precio suelto; si no, al menos el nombre de la app.
+  // «Suelto»: es el precio del frasco solo. Sin la palabra, 169.000 debajo de
+  // cada perfume competia con el 280.000 del combo. Texto con textContent: los
+  // nombres traen «&» (AL OUD HONOR & GLORY).
+  const pintarTarjeta = (b, texto) => {
+    const p = buscarPieza(texto);
+    b.innerHTML =
+      `<span class="bundle-pick__img">${
+        p && p.img ? `<img src="${p.img}" alt="" width="420" height="525" loading="lazy" decoding="async">` : ''
+      }</span>` +
+      '<span class="bundle-pick__casa"></span><span class="bundle-pick__nom"></span><span class="bundle-pick__pre"></span>';
+    b.querySelector('.bundle-pick__casa').textContent = p ? casaVisible(p.casa) : '';
+    b.querySelector('.bundle-pick__nom').textContent = p ? p.t : texto;
+    b.querySelector('.bundle-pick__pre').textContent = p && p.precio ? `Suelto ${p.precio}` : '';
+  };
+
+  // Ultimo recurso: un perfume que la app ofrece y que no esta ni en la
+  // coleccion ni en «Más perfumes del combo». Se busca en la tienda y solo se
+  // acepta si hay UN unico producto con ese nombre: con dos iguales (los
+  // NAUTICA VOYAGE duplicados) no se adivina cual es.
+  const buscados = new Set();
+  const completarFuera = async (textos) => {
+    const nuevos = [...new Set(textos)].filter((t) => !buscados.has(clave(t)));
+    if (!nuevos.length) return;
+    nuevos.forEach((t) => buscados.add(clave(t)));
+    let hallados = 0;
+    for (const t of nuevos) {
+      try {
+        const url = `${routes.predictive || '/search/suggest'}.json?q=${encodeURIComponent(t)}&resources[type]=product&resources[limit]=10`;
+        const prods = (await (await fetch(url)).json()).resources?.results?.products || [];
+        const iguales = prods.filter((x) => clave(x.title) === clave(t) || clave(x.handle) === clave(t));
+        if (iguales.length !== 1) continue;
+        const x = iguales[0];
+        const c = Math.round(parseFloat(x.price) * 100);
+        const pieza = {
+          t: x.title, h: x.handle, casa: x.vendor, c, precio: Number.isFinite(c) ? money(c) : '',
+          img: x.image ? x.image.replace(/(\.[a-z]+)(\?|$)/i, '_420x$1$2') : '',
+        };
+        porHandle.set(pieza.h, pieza);
+        indexar(pieza);
+        hallados += 1;
+      } catch { /* sin red: la tarjeta se queda con el nombre */ }
+    }
+    if (!hallados) return;
+    for (const b of document.querySelectorAll('.bundle-pick__it')) {
+      if (!b.querySelector('img') && b.dataset.texto) pintarTarjeta(b, b.dataset.texto);
+    }
+    revisar();
+  };
+
   const montar = () => {
+    const sinDatos = [];
     selects().forEach((sel, i) => {
       if (sel.dataset.picker) return;
       // OJO: la marca de "ya procesado" se pone al FINAL, no aqui. La app
@@ -1003,21 +1090,14 @@ function initBundlePicker() {
 
       for (const opt of sel.options) {
         if (!opt.value) continue;                 // el "Elige una fragancia"
-        const p = porTitulo.get(opt.text.trim().toUpperCase());
         const b = document.createElement('button');
         b.type = 'button';
         b.className = 'bundle-pick__it';
         b.dataset.val = opt.value;
+        b.dataset.texto = opt.text;
         b.setAttribute('aria-pressed', 'false');
-        // «Suelto»: es el precio del frasco solo. Sin la palabra, 169.000
-        // debajo de cada perfume competia con el 280.000 del combo.
-        b.innerHTML =
-          `<span class="bundle-pick__img">${
-            p && p.img ? `<img src="${p.img}" alt="" width="420" height="525" loading="lazy" decoding="async">` : ''
-          }</span>` +
-          `<span class="bundle-pick__casa">${p ? casaVisible(p.casa) : ''}</span>` +
-          `<span class="bundle-pick__nom">${opt.text}</span>` +
-          `<span class="bundle-pick__pre">${p && p.precio ? `Suelto ${p.precio}` : ''}</span>`;
+        pintarTarjeta(b, opt.text);
+        if (!buscarPieza(opt.text)) sinDatos.push(opt.text);
         b.addEventListener('click', () => {
           // Volver a pulsar la elegida la quita: elegir tiene que poder
           // deshacerse sin recargar.
@@ -1070,6 +1150,7 @@ function initBundlePicker() {
       document.body.classList.add('ficha-combo');
     });
     if (document.querySelector('.bundle-pick')) prepararFicha();
+    if (sinDatos.length) completarFuera(sinDatos);
   };
 
   // Se reintenta con un temporizador, NO con un MutationObserver.

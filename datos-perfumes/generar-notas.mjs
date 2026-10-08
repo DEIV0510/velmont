@@ -74,7 +74,8 @@ for (const d of inv) {
 //    tienda (duplicado_de) copia la fila de ese producto, al final.
 const duplicados = new Map(); // handle -> handle original
 for (const f of ['reinvestigacion-ahli.json', 'reinvestigacion-otros.json', 'reinvestigacion-extra.json',
-                 'nuevos-a.json', 'nuevos-b.json', 'nuevos-c.json', 'nuevos-d.json', 'nuevos-e.json']) {
+                 'nuevos-a.json', 'nuevos-b.json', 'nuevos-c.json', 'nuevos-d.json', 'nuevos-e.json',
+                 'nuevos-f.json']) {
   if (!existe(f)) continue;
   for (const d of leer(f)) {
     if (filas.get(d.handle)?.origen === 'hoja') continue;

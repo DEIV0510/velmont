@@ -1579,6 +1579,11 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
   .pdp__info,
   .pdp--combo .pdp__info { padding-top: var(--s7); }
 }
+/* El duo en movil no tiene foto debajo del encabezado: sin esto el titular
+   quedaba pegado al logotipo (8px a 390, 2px a 834). */
+@media (max-width: 899px) {
+  .pdp--combo .pdp__info { padding-top: calc(var(--header-h) + var(--s5)); }
+}
 .pdp--combo .pdp__name { font-size: var(--display-hero); line-height: 0.92; max-width: 14ch; }
 /* El precio y el boton no se pierden arriba: acompanan al titular. */
 .pdp--combo .pdp__price { font-size: var(--t-600); }

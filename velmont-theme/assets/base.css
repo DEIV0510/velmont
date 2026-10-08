@@ -1566,6 +1566,19 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
   align-content: start;
   max-width: none;
 }
+/* Escritorio y tablet en horizontal: la ficha empieza debajo del encabezado.
+   Arriba del todo la barra de anuncio baja el encabezado 32px y la foto
+   (fija a --header-h) y el texto no lo sabian: la fila del menu quedaba
+   montada sobre la foto y «LA CASA» encima de la casa del perfume (video del
+   dueño, 2026-10-08; medido a 1440, 1194, 1024 y 900). Con el relleno, el
+   escenario arranca justo donde termina el encabezado y la info un poco mas
+   abajo; en el duo, el titular igual. En movil no: ahi el encabezado va a
+   proposito sobre la foto, con su velo oscuro. */
+@media (min-width: 900px) {
+  .pdp { padding-top: var(--header-h); }
+  .pdp__info,
+  .pdp--combo .pdp__info { padding-top: var(--s7); }
+}
 .pdp--combo .pdp__name { font-size: var(--display-hero); line-height: 0.92; max-width: 14ch; }
 /* El precio y el boton no se pierden arriba: acompanan al titular. */
 .pdp--combo .pdp__price { font-size: var(--t-600); }

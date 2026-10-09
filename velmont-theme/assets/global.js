@@ -664,6 +664,12 @@ function initProduct() {
       if (price && match.dataset.price) price.textContent = match.dataset.price;
       const add = $('[data-add-main]');
       if (add) add.disabled = match.disabled;
+      // «Comprar ahora» lleva al pago con la presentación elegida.
+      const now = $('[data-buy-now]');
+      if (now) {
+        now.href = `${routes.cart || '/cart'}/${match.value}:1`;
+        if (match.disabled) now.setAttribute('aria-disabled', 'true'); else now.removeAttribute('aria-disabled');
+      }
     };
     groups.forEach((g) => g.addEventListener('click', (e) => {
       const btn = e.target.closest('.pdp__opt');

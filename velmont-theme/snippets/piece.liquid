@@ -147,7 +147,19 @@
         <span class="piece__add-largo">{{ 'products.product.pick_for_duo' | t }}</span>
         <span class="piece__add-corto">{{ 'products.product.pick_short' | t }}</span>
       </a>
+    {%- elsif variant.available and product.has_only_default_variant == false -%}
+      {%- comment -%}
+        Con varias presentaciones (Invictus 100 / 200 ml) la pieza no elige
+        por el cliente: lo lleva a la ficha, donde ve cada precio.
+      {%- endcomment -%}
+      <a class="act piece__add" href="{{ product.url }}">{{ 'products.product.choose_size' | t }}</a>
     {%- elsif variant.available -%}
+      {%- comment -%}
+        «Comprar ahora» (pedido del dueño, 2026-10-09): enlace de carrito
+        directo de Shopify, que abre el pago con este perfume sin tocar lo que
+        ya haya en la bolsa, como el «Comprar ya» de Shopify. Funciona sin JS.
+      {%- endcomment -%}
+      <a class="act act--solid piece__now" href="{{ routes.cart_url }}/{{ variant.id }}:1">{{ 'products.product.buy_now' | t }}</a>
       <button type="button" class="act piece__add" data-add="{{ variant.id }}">
         {% render 'icon', name: 'bag', size: 16 %}<span>{{ 'products.product.add' | t }}</span>
       </button>

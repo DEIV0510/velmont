@@ -82,6 +82,27 @@
         {%- endcomment -%}
         {%- capture cuerpo -%}
           {%- case block.type -%}
+            {%- when 'club' -%}
+              {%- comment -%}
+                «Únete al club» (pedido del dueño, 2026-10-09): formulario de
+                cliente de Shopify. El correo entra a Clientes con la
+                etiqueta «club», suscrito a correos de marketing.
+              {%- endcomment -%}
+              {%- form 'customer', class: 'club' -%}
+                <input type="hidden" name="contact[tags]" value="club">
+                {%- if block.settings.text != blank -%}<p class="fine">{{ block.settings.text }}</p>{%- endif -%}
+                {%- if form.posted_successfully? -%}
+                  <p class="club__ok" role="status">{{ 'general.club.gracias' | t }}</p>
+                {%- else -%}
+                  <div class="club__fila">
+                    <label class="visually-hidden" for="ClubCorreo-{{ block.id }}">{{ 'general.club.placeholder' | t }}</label>
+                    <input id="ClubCorreo-{{ block.id }}" class="club__input" type="email" name="contact[email]" required autocomplete="email" placeholder="{{ 'general.club.placeholder' | t }}">
+                    <button class="act club__btn" type="submit">{{ 'general.club.boton' | t }}</button>
+                  </div>
+                  {%- if form.errors -%}<p class="club__error" role="alert">{{ 'general.club.error' | t }}</p>{%- endif -%}
+                {%- endif -%}
+              {%- endform -%}
+
             {%- when 'text' -%}
               {%- if block.settings.text != blank -%}
                 <p class="fine">{{ block.settings.text }}</p>
@@ -160,11 +181,21 @@
   ],
   "blocks": [
     {
+      "type": "club",
+      "name": "Únete al club",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Únete al club" },
+        { "type": "textarea", "id": "text", "label": "Texto", "default": "Lanzamientos, promociones y novedades de la casa, directo a tu correo." },
+        { "type": "paragraph", "content": "Cada correo queda en Clientes con la etiqueta «club», suscrito a correos de marketing." }
+      ]
+    },
+    {
       "type": "text",
       "name": "Columna de texto",
       "settings": [
         { "type": "text", "id": "title", "label": "Título", "default": "La casa" },
-        { "type": "textarea", "id": "text", "label": "Texto", "default": "Perfumería multimarca. Perfumes originales, con envío a todo Colombia." }
+        { "type": "textarea", "id": "text", "label": "Texto", "default": "Perfumería multimarca. Perfumes 100 % originales, con envío gratis a todo Colombia." }
       ]
     },
     {
@@ -187,6 +218,6 @@
         { "type": "paragraph", "content": "Va destacado encima de las columnas, con un botón por red. El número y la cuenta salen de WhatsApp e Instagram en Ajustes del tema → Marca." }      ]
     }
   ],
-  "max_blocks": 4
+  "max_blocks": 5
 }
 {% endschema %}

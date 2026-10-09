@@ -812,10 +812,17 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
   position: relative; z-index: 2; pointer-events: none;
 }
 .piece__buy > * { pointer-events: auto; }
-.piece__add {
+.piece__buy { display: grid; gap: var(--s2); }
+.piece__add,
+.piece__now {
   width: 100%; min-height: 44px; padding: 0 var(--s3);
   gap: var(--s2); --label-track: 0.24em;
   border-color: var(--on-surface);
+}
+/* En la pieza estrecha del celular (162px) «COMPRAR AHORA» con el tracking
+   ancho no cabia en una linea. */
+@container (max-width: 240px) {
+  .piece__add, .piece__now { --label-track: 0.12em; padding: 0 var(--s2); }
 }
 .piece__add svg { flex: none; }
 .piece__add--off { color: var(--on-surface-dim); border-color: var(--hairline-strong); pointer-events: none; }
@@ -1896,6 +1903,9 @@ body[data-hdr="light"] .hdr:not(.is-stuck) .hdr__mark img { filter: brightness(0
 .pdp__cta { display: flex; gap: clamp(20px, 3vw, 40px); flex-wrap: wrap; align-items: center; margin-top: var(--s4); }
 .pdp__cta form { flex: 1 1 260px; }
 .pdp__cta form .act, .pdp__cta > .act { justify-content: center; min-width: 260px; }
+/* Comprar ahora + Añadir: lado a lado si caben, uno sobre otro si no. */
+.pdp__cta--dos { gap: var(--s3) var(--s4); }
+.pdp__cta--dos > .act { flex: 1 1 200px; min-width: 0; }
 
 .spec { border-top: 1px solid var(--hairline); padding-top: var(--s5); margin-top: var(--s3); display: grid; gap: var(--s5); }
 /* Misma rejilla que la ficha olfativa de arriba (Familia, Concentración…): con
@@ -2536,3 +2546,146 @@ body.template-cart {
   font-size: clamp(1.0625rem, 1.02rem + 0.2vw, 1.1875rem); line-height: 1.65; letter-spacing: 0;
   color: var(--on-surface);
 }
+
+/* ==========================================================================
+   WHATSAPP FLOTANTE (pedido del dueño, 2026-10-09)
+   En todas las paginas, abajo a la derecha. Circulo verde de WhatsApp: se
+   reconoce de un vistazo, como en las tiendas que el dueño tomo de
+   referencia. Por debajo del encabezado, el menu, la bolsa, el buscador y el
+   cuestionario (que lo tapan al abrirse) y, en la ficha del celular, encima
+   de la barra de compra, sin taparla.
+   ========================================================================== */
+.wa-flotante {
+  position: fixed;
+  right: clamp(16px, 2vw, 28px);
+  bottom: calc(clamp(16px, 2vw, 28px) + env(safe-area-inset-bottom));
+  z-index: calc(var(--z-header) - 1);
+  width: 58px; height: 58px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: #25D366; color: #fff;
+  box-shadow: 0 10px 26px rgba(8, 8, 10, 0.28);
+  transition: transform var(--t-base) var(--ease-out), bottom var(--t-base) var(--ease-out);
+}
+.wa-flotante:hover { transform: translateY(-2px) scale(1.04); }
+.wa-flotante:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+@media (max-width: 899px) {
+  .wa-flotante { width: 54px; height: 54px; }
+  body.has-buybar .wa-flotante { bottom: calc(84px + env(safe-area-inset-bottom)); }
+}
+@media print { .wa-flotante { display: none; } }
+
+/* ==========================================================================
+   GARANTÍAS · BANNERS POR PÚBLICO · MARCAS CON FOTO · CLUB
+   (pedido del dueño, 2026-10-09, con Disfragancias de referencia)
+   ========================================================================== */
+/* --- Garantías: cuatro cajas con ícono --- */
+.confianza { padding-block: clamp(48px, 6vw, 88px); }
+.confianza__t {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: var(--display-section); line-height: var(--lh-display);
+  text-transform: uppercase; text-align: center;
+  margin: 0 0 clamp(28px, 4vw, 48px);
+}
+.confianza__fila {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;
+}
+@media (min-width: 900px) { .confianza__fila { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s4); } }
+.confianza__item { min-width: 0; }
+.confianza__in {
+  height: 100%;
+  display: grid; justify-items: center; align-content: start; gap: 10px;
+  text-align: center;
+  padding: clamp(22px, 2.6vw, 34px) clamp(12px, 1.6vw, 22px);
+  border: 1px solid var(--hairline-strong);
+  color: var(--on-surface); text-decoration: none;
+  transition: border-color var(--t-fast) var(--ease-out);
+}
+a.confianza__in:hover { border-color: var(--gold-deep); }
+.confianza__ico { color: var(--gold-deep); line-height: 0; }
+.panel--black .confianza__ico, .panel--ink .confianza__ico { color: var(--gold); }
+.confianza__titulo { font-family: var(--font-ui); font-weight: 600; font-size: var(--t-300); line-height: 1.3; }
+.confianza__texto { font-family: var(--font-ui); font-weight: 500; font-size: var(--t-200); line-height: 1.5; color: var(--on-surface-dim); max-width: 26ch; }
+
+/* --- Banners por público: foto del perfume, velo abajo y «Comprar ahora» --- */
+.categorias { padding: clamp(12px, 1.4vw, 20px); }
+.categorias__grid { display: grid; gap: clamp(10px, 1.2vw, 16px); grid-template-columns: 1fr; }
+@media (min-width: 700px) {
+  .categorias__grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .categorias__grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.categoria {
+  position: relative; display: block; overflow: hidden; isolation: isolate;
+  aspect-ratio: 4 / 5; background: var(--noir-soft); color: var(--ivory); text-decoration: none;
+}
+/* En el celular van uno debajo del otro: mas bajos, para que los tres no
+   ocupen tres pantallas. */
+@media (max-width: 699px) { .categoria { aspect-ratio: 16 / 11; } }
+.categoria__foto {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transition: transform 900ms var(--ease-out);
+}
+.categoria:hover .categoria__foto { transform: scale(1.04); }
+.categoria__velo {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(8, 8, 10, 0) 30%, rgba(8, 8, 10, 0.74) 100%);
+}
+.categoria__txt {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
+  display: grid; justify-items: center; gap: 10px;
+  padding: clamp(20px, 3vw, 40px); text-align: center;
+}
+.categoria__ante { font-family: var(--font-ui); font-size: var(--t-200); font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
+.categoria__titulo {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: clamp(2.4rem, 1.6rem + 3vw, 4rem); line-height: 1; text-transform: uppercase;
+}
+.categoria__btn {
+  --btn-pad: 14px 26px; --btn-min-h: 44px;
+  margin-top: 6px; background: var(--ivory); color: var(--ink); border-color: var(--ivory);
+}
+.categoria__btn::after { display: none; }
+.categoria:hover .categoria__btn { background: transparent; color: var(--ivory); }
+
+/* --- Marcas con foto: fila que se desliza --- */
+.marcas-fotos { padding-block: 0 clamp(56px, 7vw, 100px); }
+.marcas-fotos__cab { margin-bottom: var(--s6); }
+.marcas-fotos__t {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: var(--display-section); line-height: var(--lh-display); text-transform: uppercase; text-align: center;
+}
+.marcas-fotos__fila {
+  display: grid; grid-auto-flow: column; grid-auto-columns: clamp(190px, 58vw, 250px);
+  gap: clamp(10px, 1.2vw, 16px);
+  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
+  padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);
+  scrollbar-width: thin;
+}
+@media (min-width: 900px) {
+  .marcas-fotos__fila { grid-auto-columns: calc((100% - 2 * var(--gutter) - 4 * 16px) / 5); }
+}
+.marca-foto { scroll-snap-align: start; display: grid; gap: 10px; align-content: start; color: var(--on-surface); text-decoration: none; min-width: 0; }
+.marca-foto__img { display: block; aspect-ratio: 3 / 4; overflow: hidden; background: var(--noir-soft); }
+.marca-foto__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease-out); }
+.marca-foto:hover .marca-foto__img img { transform: scale(1.05); }
+.marca-foto__nombre {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.6rem); line-height: 1.1; text-transform: uppercase;
+}
+.marca-foto__ver { font-family: var(--font-ui); font-size: var(--t-200); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+.panel--cream .marca-foto__ver { color: var(--gold-deep); }
+
+/* --- Únete al club (pie) --- */
+.club { display: grid; gap: var(--s4); }
+.club__fila { display: flex; gap: 8px; max-width: 460px; }
+.club__input {
+  flex: 1; min-width: 0; min-height: 48px; padding: 0 14px;
+  background: transparent; color: var(--ivory);
+  border: 1px solid rgba(244, 241, 234, 0.34); border-radius: 0;
+  font-family: var(--font-ui); font-weight: 500; font-size: var(--t-300);
+}
+.club__input::placeholder { color: rgba(244, 241, 234, 0.55); }
+.club__input:focus { outline: none; border-color: var(--gold); }
+.club__btn { --btn-pad: 0 22px; --btn-min-h: 48px; flex: none; color: var(--ivory); border-color: var(--gold); }
+.club__ok { color: var(--gold); font-family: var(--font-ui); font-weight: 600; }
+.club__error { color: #F2B8B5; font-family: var(--font-ui); font-size: var(--t-200); }

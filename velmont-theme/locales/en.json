@@ -1,12 +1,12 @@
 {
   "general": {
-    "meta_inicio": "Multi-brand perfumery. Original fragrances from Middle Eastern, niche and designer houses, shipped across Colombia.",
     "404": {
       "title": "This page",
       "subtitle": "left no trace.",
       "text": "The link you followed doesn't exist, or the piece is no longer available.",
       "cta": "View the collection"
     },
+    "meta_inicio": "Multi-brand perfumery. 100% original fragrances from Middle Eastern, niche and designer houses, with free shipping across Colombia.",
     "cart": {
       "title": "Bag",
       "items": "pieces",
@@ -36,6 +36,19 @@
       "label": "Pagination",
       "previous": "Previous",
       "next": "Next"
+    },
+    "wa_flotante": {
+      "label": "Message us on WhatsApp",
+      "mensaje": "Hi, I would like help choosing a perfume.",
+      "mensaje_producto": "Hi, I am interested in {{ title }}."
+    },
+    "club": {
+      "titulo": "Join the club",
+      "texto": "New arrivals, offers and news from the house, straight to your inbox.",
+      "placeholder": "Your email",
+      "boton": "Join",
+      "gracias": "Done, you are now part of the VELMONT club.",
+      "error": "Please check the email address."
     }
   },
   "products": {
@@ -62,7 +75,9 @@
       "duo_tip_cta": "Build my duo with this one",
       "duo_tip_cta_short": "Build my duo",
       "duo_tip_what": "What is it?",
-      "duo_promo_html": "This perfume is part of the duo: pick another one and pay <strong>{{ price }}</strong> for both."
+      "duo_promo_html": "This perfume is part of the duo: pick another one and pay <strong>{{ price }}</strong> for both.",
+      "buy_now": "Buy now",
+      "choose_size": "Choose size"
     }
   },
   "collections": {

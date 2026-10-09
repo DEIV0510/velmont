@@ -259,39 +259,8 @@
 .piece__stage img + img.piece__alt { position: absolute; inset: 0; opacity: 0; transition: opacity .6s var(--ease); }
 .piece:hover .piece__stage img + img.piece__alt { opacity: 1; }
 
-/* ==========================================================================
-   6 · CURSOR CON ETIQUETA
-   ========================================================================== */
-/* El contenedor no dibuja caja (display: contents). Antes era fixed con
-   z-index, y eso lo aislaba: el mix-blend-mode del punto solo se mezclaba con
-   el contenedor vacio y salia marfil liso, invisible sobre las secciones
-   crema. Ahora el punto se mezcla con la pagina: invierte lo que tiene debajo
-   y se ve en cualquier fondo. La etiqueta no se mezcla: va en crema sobre
-   vidrio oscuro, como los controles de las piezas, y se lee igual sobre una
-   foto negra que sobre una blanca. */
-.cursor { display: contents; }
-.cursor-dot {
-  position: fixed; top: 0; left: 0; z-index: var(--z-cursor);
-  width: 10px; height: 10px; margin: -5px 0 0 -5px;
-  border-radius: 999px; background: var(--ivory);
-  mix-blend-mode: difference; pointer-events: none;
-  opacity: 0;
-  transition: opacity .2s var(--ease), width .24s var(--ease), height .24s var(--ease), margin .24s var(--ease);
-}
-.cursor.is-ready .cursor-dot { opacity: 1; }
-.cursor.is-active .cursor-dot { width: 54px; height: 54px; margin: -27px 0 0 -27px; }
-.cursor-label {
-  position: fixed; top: 0; left: 0; z-index: calc(var(--z-cursor) + 1);
-  padding: 5px 9px; pointer-events: none;
-  font-family: var(--font-ui); font-size: var(--t-100); letter-spacing: var(--track-eyebrow);
-  text-transform: uppercase; color: var(--ivory);
-  background: rgba(8, 8, 10, 0.72);
-  opacity: 0; transition: opacity .2s var(--ease);
-  white-space: nowrap;
-}
-.cursor.is-ready.is-active .cursor-label { opacity: 1; }
-body.cursor-on, body.cursor-on a, body.cursor-on button { cursor: none; }
-body.cursor-on input, body.cursor-on textarea, body.cursor-on select { cursor: auto; }
+/* (6 · El cursor propio se quito el 2026-10-09: puntero normal del sistema.) */
+
 
 /* ==========================================================================
    7 · LOADER
@@ -355,7 +324,6 @@ body.cursor-on input, body.cursor-on textarea, body.cursor-on select { cursor: a
   .hero-stick { position: relative; height: auto; min-height: 100svh; }
   .hero-copy { opacity: 1 !important; transform: none !important; filter: none !important; }
   .hero-halo, .hero-cue i::after { animation: none; }
-  .cursor { display: none; }
   .js-motion [data-reveal] { transform: none; transition: opacity .4s linear; }
   .js-motion [data-reveal].reveal-x,
   .js-motion [data-reveal].reveal-x-rev { transform: none; }

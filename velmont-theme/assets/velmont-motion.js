@@ -45,9 +45,6 @@ export const CONFIG = {
     lift: 14,            // px de elevacion en Z
     shadow: 'rgba(0,0,0,.18)',
   },
-  cursor: {
-    lerp: 0.18,          // suavizado del seguimiento
-  },
 };
 
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -266,7 +263,9 @@ function montarOrquesta() {
 
   /* ---- B · raton de verdad y pantalla grande ------------------------ */
   mm.add(PUNTERO_FINO, () => {
-    const limpiezas = [heroRaton(gsap), initTilt(), initCursor(), initMagnetic()];
+    // Sin cursor propio (2026-10-09): el dueño lo vio en su Mac como un punto que
+    // persigue al raton con retraso y pidio el puntero normal, como en otras tiendas.
+    const limpiezas = [heroRaton(gsap), initTilt(), initMagnetic()];
     return () => limpiezas.forEach((f) => typeof f === 'function' && f());
   });
 
@@ -774,65 +773,6 @@ function initTilt() {
     });
   });
   return () => quitar.forEach((f) => f());
-}
-
-/* ==========================================================================
-   10 · CURSOR CON ETIQUETA
-   ========================================================================== */
-function initCursor() {
-  if ($('.cursor')) return null;
-  const cursor = document.createElement('div');
-  cursor.className = 'cursor';
-  cursor.setAttribute('aria-hidden', 'true');
-  cursor.innerHTML = '<div class="cursor-dot"></div><span class="cursor-label"></span>';
-  document.body.appendChild(cursor);
-  document.body.classList.add('cursor-on');
-
-  const dot = $('.cursor-dot', cursor);
-  const label = $('.cursor-label', cursor);
-  let mx = window.innerWidth / 2, my = window.innerHeight / 2, cx = mx, cy = my, raf = 0;
-
-  const mover = (e) => {
-    mx = e.clientX;
-    my = e.clientY;
-    cursor.classList.add('is-ready');
-  };
-  const loop = () => {
-    cx += (mx - cx) * CONFIG.cursor.lerp;
-    cy += (my - cy) * CONFIG.cursor.lerp;
-    dot.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)';
-    label.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0) translate(-50%,-50%)';
-    raf = requestAnimationFrame(loop);
-  };
-  const sobre = (e) => {
-    const zona = e.target.closest('[data-cursor-label]');
-    // Sobre un boton DENTRO de la zona (Añadir, el corazon de la pieza) la
-    // etiqueta mentiria: diria «Ver» y el clic añade. Y el disco lo taparia.
-    // Ahi vuelve el punto pequeño.
-    const control = e.target.closest('button, input, select, textarea, .piece__add');
-    if (zona && !(control && control !== zona && zona.contains(control))) {
-      cursor.classList.add('is-active');
-      label.textContent = zona.dataset.cursorLabel;
-    } else if (!e.target.closest('.cursor')) {
-      cursor.classList.remove('is-active');
-      label.textContent = '';
-    }
-  };
-  const fuera = () => cursor.classList.remove('is-ready');
-
-  window.addEventListener('mousemove', mover, { passive: true });
-  document.addEventListener('mouseover', sobre);
-  document.addEventListener('mouseleave', fuera);
-  raf = requestAnimationFrame(loop);
-
-  return () => {
-    cancelAnimationFrame(raf);
-    window.removeEventListener('mousemove', mover);
-    document.removeEventListener('mouseover', sobre);
-    document.removeEventListener('mouseleave', fuera);
-    cursor.remove();
-    document.body.classList.remove('cursor-on');
-  };
 }
 
 /* ==========================================================================

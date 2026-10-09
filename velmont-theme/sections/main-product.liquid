@@ -172,10 +172,28 @@
         {%- endfor -%}
       </select>
 
-      <div class="pdp__cta" data-reveal>
+      {%- liquid
+        assign es_combo = false
+        if section.settings.bundle_product != blank and section.settings.bundle_product.id == product.id
+          assign es_combo = true
+        endif
+      -%}
+      <div class="pdp__cta{% unless es_combo %} pdp__cta--dos{% endunless %}" data-reveal>
+        {%- comment -%}
+          «Comprar ahora» (pedido del dueño, 2026-10-09): enlace de carrito de
+          Shopify con la variante elegida (global.js lo cambia al elegir otra
+          presentación). Abre el pago con este perfume sin tocar la bolsa. El
+          duo no lo lleva: se arma eligiendo los dos perfumes y se añade.
+        {%- endcomment -%}
+        {%- unless es_combo -%}
+          <a class="act act--solid"
+             href="{{ routes.cart_url }}/{{ variant.id }}:1"
+             data-buy-now
+             {% unless variant.available %}aria-disabled="true"{% endunless %}>{{ 'products.product.buy_now' | t }}</a>
+        {%- endunless -%}
         <button type="submit"
                 name="add"
-                class="act act--solid"
+                class="act{% if es_combo %} act--solid{% endif %}"
                 data-add-main
                 {% unless variant.available %}disabled{% endunless %}>
           {%- if variant.available -%}{{ 'products.product.add' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}

@@ -9,7 +9,7 @@
           "type": "text",
           "settings": {
             "title": "La casa",
-            "text": "Perfumería multimarca. Perfumes originales, con envío a todo Colombia."
+            "text": "Perfumería multimarca. Perfumes 100 % originales, con envío gratis a todo Colombia."
           }
         },
         "explorar": {
@@ -33,9 +33,17 @@
             "heading": "Asesoría personal",
             "text": "Escríbenos y te ayudamos a elegir tu perfume."
           }
+        },
+        "club": {
+          "type": "club",
+          "settings": {
+            "title": "Únete al club",
+            "text": "Lanzamientos, promociones y novedades de la casa, directo a tu correo."
+          }
         }
       },
       "block_order": [
+        "club",
         "casa",
         "explorar",
         "ayuda",

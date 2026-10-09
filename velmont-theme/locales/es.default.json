@@ -1,12 +1,12 @@
 {
   "general": {
-    "meta_inicio": "Perfumería multimarca. Perfumes originales de casas de Oriente, de nicho y de diseñador, con envíos a todo Colombia.",
     "404": {
       "title": "Esta página",
       "subtitle": "no dejó huella.",
       "text": "El enlace que seguiste no existe o la pieza ya no está disponible.",
       "cta": "Ver la colección"
     },
+    "meta_inicio": "Perfumería multimarca. Perfumes 100 % originales de casas de Oriente, de nicho y de diseñador, con envío gratis a todo Colombia.",
     "cart": {
       "title": "Bolsa",
       "items": "piezas",
@@ -36,6 +36,19 @@
       "label": "Paginación",
       "previous": "Anterior",
       "next": "Siguiente"
+    },
+    "wa_flotante": {
+      "label": "Escríbenos por WhatsApp",
+      "mensaje": "Hola, quiero asesoría para elegir un perfume.",
+      "mensaje_producto": "Hola, me interesa {{ title }}."
+    },
+    "club": {
+      "titulo": "Únete al club",
+      "texto": "Lanzamientos, promociones y novedades de la casa, directo a tu correo.",
+      "placeholder": "Tu correo electrónico",
+      "boton": "Unirme",
+      "gracias": "Listo, ya eres parte del club VELMONT.",
+      "error": "Revisa el correo: parece que falta algo."
     }
   },
   "products": {
@@ -62,7 +75,9 @@
       "duo_tip_cta": "Armar mi dúo con este",
       "duo_tip_cta_short": "Armar mi dúo",
       "duo_tip_what": "¿Qué es?",
-      "duo_promo_html": "Este perfume entra en el dúo: elige otro y paga <strong>{{ price }}</strong> por los dos."
+      "duo_promo_html": "Este perfume entra en el dúo: elige otro y paga <strong>{{ price }}</strong> por los dos.",
+      "buy_now": "Comprar ahora",
+      "choose_size": "Elegir presentación"
     }
   },
   "collections": {

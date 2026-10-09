@@ -1,0 +1,73 @@
+{%- comment -%}
+  Tarjetas de marcas con foto (pedido del dueño, 2026-10-09, con Disfragancias
+  de referencia). Una fila que se desliza: foto de un perfume de esa casa,
+  su nombre y «Ver productos», que lleva a todos los de la marca. No se
+  inventan descripciones de las casas: solo el nombre. Va debajo de «Nuestras
+  marcas».
+{%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+  <section {% render 'panel', color: section.settings.panel, extra: 'marcas-fotos' %}>
+    {%- if section.settings.heading != blank -%}
+      <div class="column marcas-fotos__cab">
+        <h2 class="marcas-fotos__t" data-reveal>{{ section.settings.heading }}</h2>
+      </div>
+    {%- endif -%}
+    <div class="marcas-fotos__fila" data-reveal>
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign marca = block.settings.brand | strip
+          assign foto = block.settings.image
+          if foto == blank and block.settings.product != blank
+            assign foto = block.settings.product.featured_image
+          endif
+        -%}
+        {%- if marca != blank -%}
+          <a class="marca-foto" href="{{ routes.collections_url }}/vendors?q={{ marca | url_encode }}" {{ block.shopify_attributes }}>
+            <span class="marca-foto__img">
+              {%- if foto != blank -%}
+                {{ foto | image_url: width: 640 | image_tag: loading: 'lazy', alt: '', widths: '320, 480, 640', sizes: '(min-width: 900px) 22vw, 62vw' }}
+              {%- endif -%}
+            </span>
+            <span class="marca-foto__nombre">{{ marca }}</span>
+            <span class="marca-foto__ver">{{ section.settings.link_label | default: 'Ver productos' }} <span aria-hidden="true">→</span></span>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Marcas con foto",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titular", "info": "Opcional." },
+    { "type": "text", "id": "link_label", "label": "Texto del enlace", "default": "Ver productos" },
+    {
+      "type": "select",
+      "id": "panel",
+      "label": "Panel",
+      "options": [
+        { "value": "cream", "label": "Crema" },
+        { "value": "ink", "label": "Tinta" },
+        { "value": "black", "label": "Negro" }
+      ],
+      "default": "black"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "marca",
+      "name": "Marca",
+      "settings": [
+        { "type": "text", "id": "brand", "label": "Marca", "info": "Tal como está en el campo Proveedor de los productos (ej. LATTAFA)." },
+        { "type": "product", "id": "product", "label": "Perfume para la foto" },
+        { "type": "image_picker", "id": "image", "label": "…o una imagen propia" }
+      ]
+    }
+  ],
+  "max_blocks": 16,
+  "presets": [{ "name": "Marcas con foto" }]
+}
+{% endschema %}

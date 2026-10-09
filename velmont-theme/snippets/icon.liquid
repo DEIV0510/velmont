@@ -24,4 +24,11 @@
     <svg width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
   {%- when 'chat' -%}
     <svg width="{{ s | plus: 3 }}" height="{{ s | plus: 3 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true" focusable="false"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5Z"/></svg>
+  {%- comment -%} Fila de garantías (2026-10-09): original, pago, envío. {%- endcomment -%}
+  {%- when 'original' -%}
+    <svg width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 2.8 19.5 5.6v5.9c0 4.6-3.1 8.4-7.5 9.7-4.4-1.3-7.5-5.1-7.5-9.7V5.6Z"/><path d="m8.6 12 2.4 2.4 4.6-4.8"/></svg>
+  {%- when 'pago' -%}
+    <svg width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2.8" y="5.5" width="18.4" height="13" rx="1.6"/><path d="M2.8 9.6h18.4M6.4 14.6h4.2"/></svg>
+  {%- when 'envio' -%}
+    <svg width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.8 6.5h11v9.5h-11zM13.8 9.5h3.9l2.9 3.2v3.3h-6.8"/><circle cx="6.8" cy="17.4" r="1.7"/><circle cx="16.9" cy="17.4" r="1.7"/></svg>
 {%- endcase -%}

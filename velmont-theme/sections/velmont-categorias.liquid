@@ -1,0 +1,73 @@
+{%- comment -%}
+  Banners por público: «Perfumes para él / ella / unisex — Comprar ahora»
+  (pedido del dueño, 2026-10-09, con Disfragancias de referencia). No hay
+  fotos de ambiente: cada banner usa la foto de un perfume de la tienda (el
+  que se elija en el bloque) o, si no, la de la colección o su primer
+  producto. El botón lleva a la colección.
+{%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+  <section {% render 'panel', color: section.settings.panel, extra: 'categorias' %}>
+    <div class="categorias__grid categorias__grid--{{ section.blocks.size }}">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign col = block.settings.collection
+          assign foto = block.settings.image
+          if foto == blank and block.settings.product != blank
+            assign foto = block.settings.product.featured_image
+          endif
+          if foto == blank and col != blank
+            assign foto = col.featured_image | default: col.products.first.featured_image
+          endif
+          assign destino = col.url | default: routes.all_products_collection_url
+        -%}
+        <a class="categoria" href="{{ destino }}" data-reveal {{ block.shopify_attributes }}>
+          {%- if foto != blank -%}
+            {{ foto | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'categoria__foto', alt: '', widths: '480, 720, 960, 1200', sizes: '(min-width: 900px) 33vw, 100vw' }}
+          {%- endif -%}
+          <span class="categoria__velo" aria-hidden="true"></span>
+          <span class="categoria__txt">
+            {%- if block.settings.kicker != blank -%}<span class="categoria__ante">{{ block.settings.kicker }}</span>{%- endif -%}
+            <span class="categoria__titulo">{{ block.settings.title | default: col.title }}</span>
+            <span class="act categoria__btn">{{ block.settings.button | default: 'Comprar ahora' }}</span>
+          </span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Banners por público",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "panel",
+      "label": "Panel",
+      "options": [
+        { "value": "cream", "label": "Crema" },
+        { "value": "ink", "label": "Tinta" },
+        { "value": "black", "label": "Negro" }
+      ],
+      "default": "black"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "categoria",
+      "name": "Banner",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Colección" },
+        { "type": "text", "id": "kicker", "label": "Antetítulo", "default": "Perfumes para" },
+        { "type": "text", "id": "title", "label": "Título", "default": "Él" },
+        { "type": "text", "id": "button", "label": "Botón", "default": "Comprar ahora" },
+        { "type": "product", "id": "product", "label": "Perfume para la foto", "info": "Se usa su foto principal." },
+        { "type": "image_picker", "id": "image", "label": "…o una imagen propia", "info": "Si la eliges, manda sobre la del perfume." }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [{ "name": "Banners por público" }]
+}
+{% endschema %}

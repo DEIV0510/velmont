@@ -5,8 +5,8 @@
     "anuncio": {
       "type": "announcement-bar",
       "settings": {
-        "text": "Perfumería multimarca · Perfumes originales · Envíos a todo Colombia",
-        "text_mobile": "Perfumería · Envíos a todo Colombia"
+        "text": "Perfumes 100 % originales · Envío gratis a todo Colombia · Pago contra entrega",
+        "text_mobile": "Perfumes 100 % originales · Envío gratis"
       }
     },
     "header": {

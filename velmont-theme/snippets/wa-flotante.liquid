@@ -1,0 +1,23 @@
+{%- comment -%}
+  Botón flotante de WhatsApp en todas las páginas (pedido del dueño,
+  2026-10-09, con una tienda de referencia). Abre el chat con un mensaje ya
+  escrito; en la ficha nombra el perfume, para que el asesor sepa de qué se
+  habla. El número sale de Ajustes del tema → Marca: sin número no se pinta.
+  Queda por debajo del menú, la bolsa, el buscador y el cuestionario (z-index
+  del encabezado), y en la ficha del celular sube sobre la barra de compra.
+{%- endcomment -%}
+{%- if settings.whatsapp != blank -%}
+  {%- liquid
+    assign wa = settings.whatsapp | split: '?' | first
+    if request.page_type == 'product' and product
+      assign mensaje = 'general.wa_flotante.mensaje_producto' | t: title: product.title
+    else
+      assign mensaje = 'general.wa_flotante.mensaje' | t
+    endif
+    assign mensaje = mensaje | url_encode | replace: '+', '%20'
+  -%}
+  <a class="wa-flotante" href="{{ wa }}?text={{ mensaje }}" target="_blank" rel="noopener"
+     aria-label="{{ 'general.wa_flotante.label' | t }}" title="{{ 'general.wa_flotante.label' | t }}">
+    {% render 'icon', name: 'whatsapp', size: 30 %}
+  </a>
+{%- endif -%}

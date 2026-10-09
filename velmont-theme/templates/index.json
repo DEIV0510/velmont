@@ -6,7 +6,7 @@
         "envios": {
           "type": "meta",
           "settings": {
-            "text": "Envíos a todo Colombia"
+            "text": "Envío gratis a todo Colombia"
           }
         },
         "pago": {
@@ -24,7 +24,7 @@
         "originales": {
           "type": "meta",
           "settings": {
-            "text": "Perfumes originales"
+            "text": "Perfumes 100 % originales"
           }
         }
       },
@@ -38,7 +38,7 @@
         "kicker": "Perfumería multimarca",
         "heading": "Tu esencia.\nTu marca personal.",
         "italic_last": false,
-        "lede": "Perfumes originales de casas de Oriente, de nicho y de diseñador.",
+        "lede": "Perfumes 100 % originales de casas de Oriente, de nicho y de diseñador.",
         "primary_label": "Descubrir perfumes",
         "secondary_label": "Descubre tu marca personal",
         "product": "zenith",
@@ -60,7 +60,7 @@
         "d1": {
           "type": "item",
           "settings": {
-            "text": "Envíos a todo Colombia"
+            "text": "Envío gratis a todo Colombia"
           }
         },
         "d2": {
@@ -78,7 +78,7 @@
         "d3": {
           "type": "item",
           "settings": {
-            "text": "Perfumes originales"
+            "text": "Perfumes 100 % originales"
           }
         }
       },
@@ -299,6 +299,204 @@
         "message": "Hola, quiero trabajar con VELMONT.",
         "panel": "cream"
       }
+    },
+    "categorias": {
+      "type": "velmont-categorias",
+      "blocks": {
+        "para_el": {
+          "type": "categoria",
+          "settings": {
+            "collection": "para-el",
+            "kicker": "Perfumes para",
+            "title": "Él",
+            "button": "Comprar ahora",
+            "product": "jean-paul-gaultier-le-male-le-parfum"
+          }
+        },
+        "para_ella": {
+          "type": "categoria",
+          "settings": {
+            "collection": "para-ella",
+            "kicker": "Perfumes para",
+            "title": "Ella",
+            "button": "Comprar ahora",
+            "product": "lattafa-yara-candy-100ml"
+          }
+        },
+        "unisex": {
+          "type": "categoria",
+          "settings": {
+            "collection": "unisex",
+            "kicker": "Perfumes",
+            "title": "Unisex",
+            "button": "Comprar ahora",
+            "product": "mancera-french-riviera"
+          }
+        }
+      },
+      "block_order": [
+        "para_el",
+        "para_ella",
+        "unisex"
+      ],
+      "settings": {
+        "panel": "cream"
+      }
+    },
+    "marcas_fotos": {
+      "type": "velmont-marcas-fotos",
+      "blocks": {
+        "marca_1": {
+          "type": "marca",
+          "settings": {
+            "brand": "LATTAFA",
+            "product": "khamrah"
+          }
+        },
+        "marca_2": {
+          "type": "marca",
+          "settings": {
+            "brand": "ARMAF",
+            "product": "club-de-nuit-intense-3-6-edt-m"
+          }
+        },
+        "marca_3": {
+          "type": "marca",
+          "settings": {
+            "brand": "AHLI",
+            "product": "octans"
+          }
+        },
+        "marca_4": {
+          "type": "marca",
+          "settings": {
+            "brand": "RASASI",
+            "product": "hawas-black-100ml"
+          }
+        },
+        "marca_5": {
+          "type": "marca",
+          "settings": {
+            "brand": "AFNAN",
+            "product": "9pm-black"
+          }
+        },
+        "marca_6": {
+          "type": "marca",
+          "settings": {
+            "brand": "CAROLINA HERRERA",
+            "product": "ch-carolina-herrera-edt"
+          }
+        },
+        "marca_7": {
+          "type": "marca",
+          "settings": {
+            "brand": "JEAN PAUL GAULTIER",
+            "product": "gaultier-divine-edp"
+          }
+        },
+        "marca_8": {
+          "type": "marca",
+          "settings": {
+            "brand": "ARMANI",
+            "product": "stronger-with-you-edt"
+          }
+        },
+        "marca_9": {
+          "type": "marca",
+          "settings": {
+            "brand": "RABANNE",
+            "product": "1-million-edt-100-ml"
+          }
+        },
+        "marca_10": {
+          "type": "marca",
+          "settings": {
+            "brand": "MANCERA",
+            "product": "mancera-roses-vanille"
+          }
+        },
+        "marca_11": {
+          "type": "marca",
+          "settings": {
+            "brand": "MUNDUS",
+            "product": "babylon"
+          }
+        },
+        "marca_12": {
+          "type": "marca",
+          "settings": {
+            "brand": "ILMIN",
+            "product": "ilmin-il-benjuia"
+          }
+        }
+      },
+      "block_order": [
+        "marca_1",
+        "marca_2",
+        "marca_3",
+        "marca_4",
+        "marca_5",
+        "marca_6",
+        "marca_7",
+        "marca_8",
+        "marca_9",
+        "marca_10",
+        "marca_11",
+        "marca_12"
+      ],
+      "settings": {
+        "heading": "",
+        "link_label": "Ver productos",
+        "panel": "ink"
+      }
+    },
+    "confianza": {
+      "type": "velmont-confianza",
+      "blocks": {
+        "originales": {
+          "type": "item",
+          "settings": {
+            "icon": "original",
+            "title": "Perfumes 100 % originales",
+            "text": "Trabajamos solo con perfumes originales de cada casa."
+          }
+        },
+        "pago": {
+          "type": "item",
+          "settings": {
+            "icon": "pago",
+            "title": "Pago seguro",
+            "text": "Tarjeta, PSE o Bre-B con Bold, o pago contra entrega."
+          }
+        },
+        "envio": {
+          "type": "item",
+          "settings": {
+            "icon": "envio",
+            "title": "Envío gratis",
+            "text": "A todo Colombia, en todos los pedidos."
+          }
+        },
+        "asesoria": {
+          "type": "item",
+          "settings": {
+            "icon": "chat",
+            "title": "Asesoría por WhatsApp",
+            "text": "Te ayudamos a elegir tu perfume."
+          }
+        }
+      },
+      "block_order": [
+        "originales",
+        "pago",
+        "envio",
+        "asesoria"
+      ],
+      "settings": {
+        "heading": "",
+        "panel": "cream"
+      }
     }
   },
   "order": [
@@ -306,12 +504,15 @@
     "ediciones",
     "descubre",
     "coleccion",
+    "categorias",
     "casas",
+    "marcas_fotos",
     "statement",
     "banda",
     "momentos",
     "casa",
     "trabajo",
-    "cierre"
+    "cierre",
+    "confianza"
   ]
 }

@@ -29,15 +29,41 @@
     if titulo == blank or titulo == shop.name
       assign titulo = marca
     endif
+
+    comment
+      198 fichas traen del catalogo de septiembre un titulo para Google
+      «Nombre | Velmont Fragrances» y la descripcion «Compra X de Y en Velmont
+      Fragrances.», con la marca mal escrita (revisado 2026-10-08). Sin tocar
+      los productos: si el titulo trae «velmont fragrances» se usa el nombre
+      del perfume (sale «NOMBRE · VELMONT», como en las fichas nuevas) y si la
+      descripcion la trae, el comienzo de la descripcion real. La portada no
+      tenia descripcion: va la frase de la casa (locales, general.meta_inicio).
+    endcomment
+    assign descripcion = page_description
+    if request.page_type == "product"
+      assign seo_cmp = titulo | downcase
+      if seo_cmp contains "velmont fragrances"
+        assign titulo = product.title
+      endif
+      assign seo_cmp = descripcion | downcase
+      if seo_cmp contains "velmont fragrances" and product.description != blank
+        assign descripcion = product.description | replace: "</p>", " " | strip_html | strip_newlines | strip | truncate: 160
+      endif
+    endif
+    if request.page_type == "index" and descripcion == blank
+      assign descripcion = "general.meta_inicio" | t
+    endif
+    assign descripcion = descripcion | replace: "Velmont Fragrances", marca
+
     assign titulo_cmp = titulo | downcase
     assign marca_cmp = marca | downcase
   -%}
   <title>{{ titulo }}{% unless titulo_cmp contains marca_cmp %} · {{ marca }}{% endunless %}</title>
-  {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+  {% if descripcion != blank %}<meta name="description" content="{{ descripcion | escape }}">{% endif %}
 
   <meta property="og:site_name" content="{{ marca }}">
   <meta property="og:title" content="{{ titulo | escape }}">
-  {% if page_description %}<meta property="og:description" content="{{ page_description | escape }}">{% endif %}
+  {% if descripcion != blank %}<meta property="og:description" content="{{ descripcion | escape }}">{% endif %}
   <meta property="og:type" content="{% if request.page_type == 'product' %}product{% else %}website{% endif %}">
   <meta property="og:url" content="{{ canonical_url }}">
   {%- if request.page_type == 'product' and product.featured_image -%}

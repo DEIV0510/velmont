@@ -20,11 +20,17 @@
           endif
           assign destino = col.url | default: routes.all_products_collection_url
         -%}
+        {%- comment -%}
+          La foto es un frasco centrado: un texto encima lo tapaba. Por eso
+          van separados: foto arriba y texto debajo; en el celular, texto a
+          la izquierda y frasco a la derecha.
+        {%- endcomment -%}
         <a class="categoria" href="{{ destino }}" data-reveal {{ block.shopify_attributes }}>
-          {%- if foto != blank -%}
-            {{ foto | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'categoria__foto', alt: '', widths: '480, 720, 960, 1200', sizes: '(min-width: 900px) 33vw, 100vw' }}
-          {%- endif -%}
-          <span class="categoria__velo" aria-hidden="true"></span>
+          <span class="categoria__img">
+            {%- if foto != blank -%}
+              {{ foto | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'categoria__foto', alt: '', widths: '360, 540, 720, 1000', sizes: '(min-width: 700px) 33vw, 50vw' }}
+            {%- endif -%}
+          </span>
           <span class="categoria__txt">
             {%- if block.settings.kicker != blank -%}<span class="categoria__ante">{{ block.settings.kicker }}</span>{%- endif -%}
             <span class="categoria__titulo">{{ block.settings.title | default: col.title }}</span>

@@ -664,12 +664,16 @@ function initProduct() {
       if (price && match.dataset.price) price.textContent = match.dataset.price;
       const add = $('[data-add-main]');
       if (add) add.disabled = match.disabled;
-      // «Comprar ahora» lleva al pago con la presentación elegida.
-      const now = $('[data-buy-now]');
-      if (now) {
+      // «Comprar ahora» (ficha y barra del celular) lleva al pago con la
+      // presentación elegida, y la barra muestra su precio.
+      $$('[data-buy-now], [data-buybar-now]').forEach((now) => {
         now.href = `${routes.cart || '/cart'}/${match.value}:1`;
         if (match.disabled) now.setAttribute('aria-disabled', 'true'); else now.removeAttribute('aria-disabled');
-      }
+      });
+      const barPrice = $('[data-buybar-price]');
+      if (barPrice && match.dataset.price) barPrice.textContent = match.dataset.price;
+      const barAdd = $('[data-buybar-add]');
+      if (barAdd) barAdd.disabled = match.disabled;
     };
     groups.forEach((g) => g.addEventListener('click', (e) => {
       const btn = e.target.closest('.pdp__opt');
@@ -689,7 +693,7 @@ function initProduct() {
       const on = !e.isIntersecting;
       bar.classList.toggle('on', on);
       bar.setAttribute('aria-hidden', String(!on));
-      if (barBtn) barBtn.tabIndex = on ? 0 : -1;
+      $$('[data-buybar-add], [data-buybar-now]', bar).forEach((x) => { x.tabIndex = on ? 0 : -1; });
       document.body.classList.toggle('has-buybar', on && window.matchMedia('(max-width: 899px)').matches);
     }, { threshold: 0 }).observe(mainBtn);
   }

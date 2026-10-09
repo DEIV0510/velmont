@@ -24,7 +24,7 @@
         "originales": {
           "type": "meta",
           "settings": {
-            "text": "Perfumes 100 % originales"
+            "text": "Perfumes 100% originales"
           }
         }
       },
@@ -38,7 +38,7 @@
         "kicker": "Perfumería multimarca",
         "heading": "Tu esencia.\nTu marca personal.",
         "italic_last": false,
-        "lede": "Perfumes 100 % originales de casas de Oriente, de nicho y de diseñador.",
+        "lede": "Perfumes 100% originales de casas de Oriente, de nicho y de diseñador.",
         "primary_label": "Descubrir perfumes",
         "secondary_label": "Descubre tu marca personal",
         "product": "zenith",
@@ -78,7 +78,7 @@
         "d3": {
           "type": "item",
           "settings": {
-            "text": "Perfumes 100 % originales"
+            "text": "Perfumes 100% originales"
           }
         }
       },
@@ -458,7 +458,7 @@
           "type": "item",
           "settings": {
             "icon": "original",
-            "title": "Perfumes 100 % originales",
+            "title": "Perfumes 100% originales",
             "text": "Trabajamos solo con perfumes originales de cada casa."
           }
         },

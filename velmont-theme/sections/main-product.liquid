@@ -325,9 +325,17 @@
     <span class="buybar__name">{{ product.title }}</span>
     <span class="price" data-buybar-price>{{ variant.price | money_without_trailing_zeros }}</span>
   </div>
-  <button class="act act--solid" data-buybar-add tabindex="-1" {% unless variant.available %}disabled{% endunless %}>
-    {{ 'products.product.add' | t }}
-  </button>
+  {%- comment -%}
+    «Comprar ahora» también aquí (2026-10-09): la barra es lo que queda a la
+    mano en el celular. Añadir pasa a un botón de bolsa para que quepan.
+  {%- endcomment -%}
+  <div class="buybar__btns">
+    <a class="act act--solid buybar__now" href="{{ routes.cart_url }}/{{ variant.id }}:1" data-buybar-now tabindex="-1"
+       {% unless variant.available %}aria-disabled="true"{% endunless %}>{{ 'products.product.buy_now' | t }}</a>
+    <button class="act buybar__add" data-buybar-add tabindex="-1" aria-label="{{ 'products.product.add' | t }}" {% unless variant.available %}disabled{% endunless %}>
+      {% render 'icon', name: 'bag', size: 18 %}
+    </button>
+  </div>
 </div>
 
 {%- if section.settings.related_collection != blank -%}

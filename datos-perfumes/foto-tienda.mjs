@@ -4,19 +4,47 @@
 //        las columnas del CSV deben haber cambiado a lo esperado; TODO lo demás, igual.
 import fs from 'node:fs';
 
+// Shopify limita las consultas seguidas («local_rate_limited», 429): reintentar con espera.
+async function jget(url) {
+  for (let i = 0; i < 20; i++) {
+    if (i) await new Promise((s) => setTimeout(s, 30000));
+    const r = await fetch(url);
+    const t = await r.text();
+    if (r.status === 429 || /rate_limited/.test(t)) { await new Promise((s) => setTimeout(s, 15000)); continue; }
+    return JSON.parse(t);
+  }
+  throw new Error('sigue limitado: ' + url);
+}
+
+const CABECERAS = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0 Safari/537.36', Accept: 'application/json,text/plain,*/*', 'Accept-Language': 'es-CO,es;q=0.9' };
+// Shopify responde 429 «local_rate_limited» a consultas seguidas sin pausa: 2,5 s entre
+// consultas, cabeceras de navegador y reintentos con espera.
+async function jfetch(url) {
+  for (let i = 0; i < 20; i++) {
+    await new Promise((s) => setTimeout(s, i ? 15000 : 2500));
+    const r = await fetch(url, { headers: CABECERAS });
+    if (r.status === 429) continue;
+    const t = await r.clone().text();
+    if (/rate_limited/.test(t)) continue;
+    return r;
+  }
+  throw new Error('sigue limitado: ' + url);
+}
+
 const TIENDA = 'https://dhqvcp-bw.myshopify.com';
 const COLECCIONES = ['para-el', 'para-ella', 'unisex', '2-x-280-000', '2-matai-x-450-000'];
 
 async function foto() {
   const productos = [];
   for (let p = 1; p < 10; p++) {
-    const j = await (await fetch(`${TIENDA}/products.json?limit=250&page=${p}&nc=${Date.now()}`)).json();
+    const j = await (await jfetch(`${TIENDA}/products.json?limit=250&page=${p}${process.env.NC ? '&nc=' + Date.now() : ''}`)).json();
     if (!j.products.length) break;
     productos.push(...j.products);
+    if (j.products.length < 250) break;
   }
   const en = {};
   for (const c of COLECCIONES) {
-    const j = await (await fetch(`${TIENDA}/collections/${c}/products.json?limit=250&nc=${Date.now()}`)).json();
+    const j = await (await jfetch(`${TIENDA}/collections/${c}/products.json?limit=250${process.env.NC ? '&nc=' + Date.now() : ''}`)).json();
     for (const p of j.products) (en[p.handle] ||= []).push(c);
   }
   const out = {};

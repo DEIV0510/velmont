@@ -2641,7 +2641,7 @@ a.confianza__in:hover { border-color: var(--gold-deep); }
   .categoria__img { order: 2; }
   .categoria__txt { order: 1; justify-items: start; text-align: left; padding: 18px 16px; gap: 8px; }
   .categoria__titulo { font-size: clamp(2rem, 8vw, 2.6rem); }
-  .categoria__btn { --btn-pad: 12px 14px; --label-track: 0.14em; }
+  .categoria__btn { --btn-pad: 12px 10px; --label-track: 0.1em; white-space: nowrap; }
 }
 .categoria__ante { font-family: var(--font-ui); font-size: var(--t-200); font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
 .categoria__titulo {

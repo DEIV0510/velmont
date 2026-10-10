@@ -42,6 +42,9 @@
       "mensaje": "Hi, I would like help choosing a perfume.",
       "mensaje_producto": "Hi, I am interested in {{ title }}."
     },
+    "bolsa_flotante": {
+      "label": "View bag and check out"
+    },
     "club": {
       "titulo": "Join the club",
       "texto": "New arrivals, offers and news from the house, straight to your inbox.",

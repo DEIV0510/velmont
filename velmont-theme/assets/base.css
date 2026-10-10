@@ -2577,6 +2577,49 @@ body.template-cart {
 }
 @media print { .wa-flotante { display: none; } }
 
+/* --- Bolsa flotante (pedido del dueño, 2026-10-10) ---
+   Encima del botón de WhatsApp y solo con piezas en la bolsa: lleva a la
+   bolsa, donde está «Finalizar compra». Cuadrada, en negro con filo dorado,
+   como el resto del tema; el círculo verde es la marca de WhatsApp. */
+.bolsa-flotante {
+  --flot-lado: 58px;
+  position: fixed;
+  right: clamp(16px, 2vw, 28px);
+  bottom: calc(clamp(16px, 2vw, 28px) + var(--flot-lado) + 12px + env(safe-area-inset-bottom));
+  z-index: calc(var(--z-header) - 1);
+  width: var(--flot-lado); height: var(--flot-lado);
+  display: grid; place-items: center;
+  padding: 0;
+  background: var(--noir); color: var(--ivory);
+  border: 1px solid var(--gold);
+  box-shadow: 0 10px 26px rgba(8, 8, 10, 0.28);
+  cursor: pointer;
+  transition: transform var(--t-base) var(--ease-out), opacity var(--t-base) var(--ease-out),
+              visibility 0s linear 0s, bottom var(--t-base) var(--ease-out);
+}
+.bolsa-flotante--sola { bottom: calc(clamp(16px, 2vw, 28px) + env(safe-area-inset-bottom)); }
+.bolsa-flotante.is-off {
+  opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(10px);
+  transition: transform var(--t-base) var(--ease-out), opacity var(--t-base) var(--ease-out),
+              visibility 0s linear var(--t-base), bottom var(--t-base) var(--ease-out);
+}
+.bolsa-flotante:hover { transform: translateY(-2px); }
+.bolsa-flotante:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.bolsa-flotante__n {
+  position: absolute; top: -9px; right: -9px;
+  min-width: 22px; height: 22px; padding: 0 5px;
+  display: grid; place-items: center;
+  font-size: 12px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums;
+  background: var(--gold); color: var(--noir);
+}
+@media (max-width: 899px) {
+  .bolsa-flotante { --flot-lado: 54px; }
+  body.has-buybar .bolsa-flotante { bottom: calc(84px + var(--flot-lado) + 12px + env(safe-area-inset-bottom)); }
+  body.has-buybar .bolsa-flotante--sola { bottom: calc(84px + env(safe-area-inset-bottom)); }
+}
+@media (prefers-reduced-motion: reduce) { .bolsa-flotante, .bolsa-flotante.is-off { transition: none; } }
+@media print { .bolsa-flotante { display: none; } }
+
 /* ==========================================================================
    GARANTÍAS · BANNERS POR PÚBLICO · MARCAS CON FOTO · CLUB
    (pedido del dueño, 2026-10-09, con Disfragancias de referencia)

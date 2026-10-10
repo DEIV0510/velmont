@@ -1,0 +1,14 @@
+{%- comment -%}
+  Bolsa flotante (pedido del dueño, 2026-10-10): cuando el cliente ya separó
+  perfumes, un botón fijo encima del de WhatsApp abre la bolsa, que es donde
+  está «Finalizar compra». Con la bolsa vacía no se ve. El número lo
+  actualiza renderBag (global.js) en cada cambio, igual que el contador del
+  encabezado. Sin número de WhatsApp en Ajustes del tema, ocupa su lugar.
+{%- endcomment -%}
+<button type="button"
+        class="bolsa-flotante{% if settings.whatsapp == blank %} bolsa-flotante--sola{% endif %}{% if cart.item_count == 0 %} is-off{% endif %}"
+        data-bag-open data-bag-float
+        aria-label="{{ 'general.bolsa_flotante.label' | t }}" title="{{ 'general.bolsa_flotante.label' | t }}">
+  {% render 'icon', name: 'bag', size: 24 %}
+  <span class="bolsa-flotante__n" data-bag-float-count>{{ cart.item_count }}</span>
+</button>

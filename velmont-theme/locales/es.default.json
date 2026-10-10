@@ -42,6 +42,9 @@
       "mensaje": "Hola, quiero asesoría para elegir un perfume.",
       "mensaje_producto": "Hola, me interesa {{ title }}."
     },
+    "bolsa_flotante": {
+      "label": "Ver la bolsa y finalizar la compra"
+    },
     "club": {
       "titulo": "Únete al club",
       "texto": "Lanzamientos, promociones y novedades de la casa, directo a tu correo.",

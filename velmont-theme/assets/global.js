@@ -224,6 +224,13 @@ function renderBag(cart) {
     count.classList.toggle('off', cart.item_count === 0);
   }
   if (titleCount) titleCount.textContent = cart.item_count ? `(${cart.item_count})` : '';
+  // Bolsa flotante: aparece en cuanto hay una pieza y se va si la bolsa se vacia
+  const flotante = $('[data-bag-float]');
+  if (flotante) {
+    flotante.classList.toggle('is-off', cart.item_count === 0);
+    const n = $('[data-bag-float-count]', flotante);
+    if (n) n.textContent = cart.item_count;
+  }
   if (!body) return;
 
   if (!cart.item_count) {

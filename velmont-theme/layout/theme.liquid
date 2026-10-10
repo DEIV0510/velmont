@@ -286,6 +286,7 @@
   {% sections 'footer-group' %}
 
   {% render 'wa-flotante' %}
+  {%- unless request.page_type == 'cart' -%}{% render 'bolsa-flotante' %}{%- endunless -%}
 
   {% render 'bag-drawer' %}
   {% render 'saved-drawer' %}

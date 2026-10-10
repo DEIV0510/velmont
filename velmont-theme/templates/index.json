@@ -6,7 +6,7 @@
         "envios": {
           "type": "meta",
           "settings": {
-            "text": "Envío gratis a todo Colombia"
+            "text": "Envío a todo Colombia"
           }
         },
         "pago": {
@@ -60,7 +60,7 @@
         "d1": {
           "type": "item",
           "settings": {
-            "text": "Envío gratis a todo Colombia"
+            "text": "Envío a todo Colombia"
           }
         },
         "d2": {
@@ -474,8 +474,8 @@
           "type": "item",
           "settings": {
             "icon": "envio",
-            "title": "Envío gratis",
-            "text": "A todo Colombia, en todos los pedidos."
+            "title": "Envío a todo Colombia",
+            "text": "Tarifa única de $20.000 a cualquier ciudad."
           }
         },
         "asesoria": {

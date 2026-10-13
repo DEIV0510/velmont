@@ -56,6 +56,8 @@
     {%- endif -%}
 
     <h1 class="display pdp__name" data-reveal>{{ product.title }}</h1>
+    {%- comment -%} Estrellas de Judge.me: solo salen cuando ya hay reseñas. {%- endcomment -%}
+    <div class="jdgm-widget jdgm-preview-badge pdp__estrellas" data-id="{{ product.id }}">{{ product.metafields.judgeme.badge }}</div>
 
     <div class="pdp__price" data-reveal>
       {%- if variant.compare_at_price > variant.price -%}

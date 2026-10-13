@@ -2740,3 +2740,39 @@ a.confianza__in:hover { border-color: var(--gold-deep); }
 .club__btn { --btn-pad: 0 22px; --btn-min-h: 48px; flex: none; color: var(--ivory); border-color: var(--gold); }
 .club__ok { color: var(--gold); font-family: var(--font-ui); font-weight: 600; }
 .club__error { color: #F2B8B5; font-family: var(--font-ui); font-size: var(--t-200); }
+
+/* ==========================================================================
+   RESEÑAS (Judge.me, 2026-10-13)
+   El widget va en la sección «Aplicaciones» debajo de la ficha. Se le pone la
+   letra y el dorado del tema; las estrellas de tarjetas y ficha solo aparecen
+   cuando el perfume ya tiene reseñas (Judge.me las oculta en cero).
+   ========================================================================== */
+.apps { padding-block: clamp(40px, 6vw, 88px); }
+.apps__in { max-width: 1100px; margin-inline: auto; padding-inline: var(--gutter); }
+.apps__t {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: var(--display-section); line-height: var(--lh-display);
+  text-transform: uppercase; text-align: center; margin: 0 0 clamp(24px, 3vw, 40px);
+}
+.apps .jdgm-widget, .jdgm-preview-badge { font-family: var(--font-ui); }
+.apps .jm-review-widget-minimal-header__title {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: var(--display-section); line-height: var(--lh-display);
+  text-transform: uppercase; letter-spacing: var(--track-display);
+}
+/* Botones de Judge.me como los del tema: negro, esquinas rectas, mayúsculas */
+.jm-button { border-radius: 0 !important; }
+.jm-button--primary {
+  background: var(--noir) !important; color: var(--ivory) !important;
+  border: 1px solid var(--noir) !important;
+  font-family: var(--font-ui); font-size: var(--label-size); font-weight: 600;
+  letter-spacing: var(--label-track); text-transform: uppercase;
+  padding: 16px 30px !important; min-height: 48px;
+}
+.jm-button--primary:hover { background: transparent !important; color: var(--noir) !important; }
+/* Sin reseñas, Judge.me repite «No se encontraron elementos»: sobra */
+.jm-review-widget:has(.jm-no-reviews-state) .jdgm-empty-state { display: none; }
+.jdgm-star { color: var(--gold) !important; }
+.pdp__estrellas:not(:empty) { margin: calc(var(--s2) * -1) 0 var(--s3); }
+.piece__estrellas { font-size: 12px; line-height: 1; }
+.piece__estrellas:not(:empty) { margin-top: 4px; }

@@ -1,0 +1,40 @@
+{%- comment -%}
+  Bloques de apps (2026-10-13, reseñas con Judge.me). La ficha (main-product)
+  no recibe bloques de apps; esta sección los pinta debajo, en un panel con el
+  ancho de lectura del tema. Sin bloques no pinta nada.
+{%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+  <section {% render 'panel', color: section.settings.panel, extra: 'apps' %}>
+    <div class="apps__in">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="apps__t">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- for block in section.blocks -%}
+        {% render block %}
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Aplicaciones",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titular", "info": "Opcional." },
+    {
+      "type": "select",
+      "id": "panel",
+      "label": "Panel",
+      "options": [
+        { "value": "cream", "label": "Crema" },
+        { "value": "ink", "label": "Tinta" },
+        { "value": "black", "label": "Negro" }
+      ],
+      "default": "cream"
+    }
+  ],
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Aplicaciones" }]
+}
+{% endschema %}

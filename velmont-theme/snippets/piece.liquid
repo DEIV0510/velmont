@@ -131,6 +131,11 @@
     {%- if familia != blank -%}
       <span class="piece__notes">{{ familia }}</span>
     {%- endif -%}
+    {%- comment -%}
+      Estrellas de Judge.me, al final para no descuadrar los precios de una
+      fila. Judge.me no las pinta mientras el perfume no tenga reseñas.
+    {%- endcomment -%}
+    <div class="jdgm-widget jdgm-preview-badge piece__estrellas" data-id="{{ product.id }}">{{ product.metafields.judgeme.badge }}</div>
   </div>
 
   {%- comment -%}

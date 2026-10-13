@@ -23,7 +23,7 @@
           "type": "menu",
           "settings": {
             "title": "Ayuda",
-            "links": "Envíos | /pages/envios\nCambios | /pages/cambios\nPreguntas frecuentes | /pages/preguntas-frecuentes"
+            "links": "Envíos | /policies/shipping-policy\nCambios y devoluciones | /policies/refund-policy\nTérminos y condiciones | /policies/terms-of-service"
           }
         },
         "contacto": {

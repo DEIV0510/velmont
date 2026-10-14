@@ -14,7 +14,8 @@
   <span class="duo-tip__t">{{ duo.title }}</span>
   <p>{{ 'products.product.duo_tip_html' | t: price: precio_duo }}</p>
   <p class="duo-tip__como">{{ 'products.product.duo_tip_how' | t }}</p>
-  {%- if product != blank -%}
+  {%- comment -%} Un perfume agotado no lleva a armar el duo: entraria agotado. {%- endcomment -%}
+  {%- if product != blank and product.available -%}
     <a class="duo-tip__cta" href="{{ duo.url }}?elige={{ product.handle }}">
       <span class="duo-tip__cta-largo">{{ 'products.product.duo_tip_cta' | t }}</span>
       <span class="duo-tip__cta-corto">{{ 'products.product.duo_tip_cta_short' | t }}</span>

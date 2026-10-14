@@ -124,7 +124,8 @@
              "img": {{ p.featured_image | image_url: width: 420 | json }},
              "casa": {{ p.vendor | json }},
              "c": {{ p.price }},
-             "precio": {{ p.price | money_without_trailing_zeros | json }}}
+             "precio": {{ p.price | money_without_trailing_zeros | json }},
+             "ok": {{ p.available | json }}}
             {%- assign coma = true -%}
           {%- endfor -%}
           {%- for p in section.settings.bundle_extra -%}
@@ -134,7 +135,8 @@
              "img": {{ p.featured_image | image_url: width: 420 | json }},
              "casa": {{ p.vendor | json }},
              "c": {{ p.price }},
-             "precio": {{ p.price | money_without_trailing_zeros | json }}}
+             "precio": {{ p.price | money_without_trailing_zeros | json }},
+             "ok": {{ p.available | json }}}
             {%- assign coma = true -%}
           {%- endfor -%}
         ]
@@ -170,7 +172,8 @@
                   {% if v == variant %}selected{% endif %}
                   {% unless v.available %}disabled{% endunless %}
                   data-options="{{ v.options | join: '||' | escape }}"
-                  data-price="{{ v.price | money_without_trailing_zeros }}">{{ v.title }}</option>
+                  data-price="{{ v.price | money_without_trailing_zeros }}"
+                  {% if v.compare_at_price > v.price %}data-compare="{{ v.compare_at_price | money_without_trailing_zeros }}"{% endif %}>{{ v.title }}</option>
         {%- endfor -%}
       </select>
 
@@ -217,7 +220,7 @@
       assign handles = product.collections | map: 'handle'
       assign combo = section.settings.bundle_product
       assign en_duo = false
-      if combo != blank and section.settings.bundle_source != blank and combo.id != product.id
+      if combo != blank and section.settings.bundle_source != blank and combo.id != product.id and product.available
         if handles contains section.settings.bundle_source.handle
           assign en_duo = true
         endif
@@ -333,7 +336,8 @@
   {%- endcomment -%}
   <div class="buybar__btns">
     <a class="act act--solid buybar__now" href="{{ routes.cart_url }}/{{ variant.id }}:1" data-buybar-now tabindex="-1"
-       {% unless variant.available %}aria-disabled="true"{% endunless %}>{{ 'products.product.buy_now' | t }}</a>
+       data-txt-buy="{{ 'products.product.buy_now' | t | escape }}" data-txt-sold="{{ 'products.product.sold_out' | t | escape }}"
+       {% unless variant.available %}aria-disabled="true"{% endunless %}>{%- if variant.available -%}{{ 'products.product.buy_now' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}</a>
     <button class="act buybar__add" data-buybar-add tabindex="-1" aria-label="{{ 'products.product.add' | t }}" {% unless variant.available %}disabled{% endunless %}>
       {% render 'icon', name: 'bag', size: 18 %}
     </button>

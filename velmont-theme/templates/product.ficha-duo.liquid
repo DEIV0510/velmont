@@ -1,0 +1,22 @@
+{%- layout none -%}
+{%- comment -%}
+  Ficha corta de un perfume para el selector del Dúo (pedido del dueño,
+  2026-10-13): al tocar una tarjeta, global.js abre un panel con la foto y
+  el nombre que ya tiene, y pide aquí lo que solo sabe Liquid: la pirámide
+  olfativa (notas-datos) y la descripción. /products/<handle>?view=ficha-duo
+  Misma regla que la ficha: el párrafo genérico del import no se pinta.
+{%- endcomment -%}
+{%- liquid
+  assign descripcion = product.description
+  if descripcion contains 'Una pieza seleccionada para descubrir tu próxima firma olfativa'
+    assign descripcion = blank
+  elsif descripcion contains 'Consulta disponibilidad y recibe atención personalizada'
+    assign descripcion = blank
+  endif
+-%}
+<div class="duo-ficha__datos">
+  {%- if descripcion != blank -%}
+    <div class="duo-ficha__desc">{{ descripcion }}</div>
+  {%- endif -%}
+  {% render 'notas-datos', product: product %}
+</div>

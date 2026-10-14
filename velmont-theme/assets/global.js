@@ -128,26 +128,56 @@ function initMenu() {
 const scrim = $('[data-scrim]');
 let openPanel = null;
 
+let abiertoEn = 0;
+
 function closePanel() {
   if (!openPanel) return;
+  const cerrado = openPanel;
   openPanel.classList.remove('open');
   openPanel.setAttribute('aria-hidden', 'true');
+  // Cerrado no se puede enfocar ni leer: antes sus botones seguian en el Tab.
+  cerrado.inert = true;
   openPanel = null;
   scrim?.classList.remove('open');
   document.documentElement.classList.remove('no-scroll');
+  // El scroll suave de escritorio (Lenis) no respeta no-scroll: se para al
+  // abrir y vuelve aqui, ANTES del aviso, para que quien baje al paso
+  // siguiente (ficha del duo) pueda hacerlo.
+  window.VelmontLenis?.start?.();
+  // Quien abrio el panel puede querer devolver el foco (ficha del duo).
+  cerrado.dispatchEvent(new CustomEvent('panel:cerrado'));
 }
 
 function showPanel(el) {
   if (!el) return;
   if (openPanel && openPanel !== el) closePanel();
   openPanel = el;
+  el.inert = false;
   el.classList.add('open');
   el.setAttribute('aria-hidden', 'false');
   scrim?.classList.add('open');
   document.documentElement.classList.add('no-scroll');
+  window.VelmontLenis?.stop?.();
+  abiertoEn = performance.now();
 }
 
-scrim?.addEventListener('click', closePanel);
+// Cajones cerrados desde el principio: fuera del Tab.
+$$('.drawer').forEach((d) => { if (!d.classList.contains('open')) d.inert = true; });
+
+// Un doble toque en una tarjeta abria la ficha y el segundo toque, ya sobre
+// el velo, la cerraba al instante.
+scrim?.addEventListener('click', () => { if (performance.now() - abiertoEn > 450) closePanel(); });
+
+// Diálogo modal (ficha del duo): el Tab da la vuelta dentro del panel.
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Tab' || !openPanel || openPanel.getAttribute('aria-modal') !== 'true') return;
+  const focos = [...openPanel.querySelectorAll('a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])')]
+    .filter((x) => !x.hidden && x.offsetParent !== null);
+  if (!focos.length) return;
+  const primero = focos[0], ultimo = focos[focos.length - 1];
+  if (e.shiftKey && (document.activeElement === primero || !openPanel.contains(document.activeElement))) { e.preventDefault(); ultimo.focus(); }
+  else if (!e.shiftKey && (document.activeElement === ultimo || !openPanel.contains(document.activeElement))) { e.preventDefault(); primero.focus(); }
+});
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
 
 /* ---------------- Bolsa ---------------- */
@@ -194,7 +224,7 @@ function lineHTML(item, index) {
   return `
     <div class="bag-line" data-vid="${item.variant_id}">
       <a href="${item.url}" aria-label="${item.product_title}">${img}</a>
-      <div>
+      <div class="bag-line__mid">
         <a href="${item.url}"><span class="bag-line__name">${item.product_title}</span></a>
         ${item.variant_title ? `<span class="label">${item.variant_title}</span>` : ''}
         ${elegidas ? `<div class="bag-line__eleccion">${elegidas}</div>` : ''}
@@ -287,7 +317,13 @@ async function addToCart(id, quantity = 1, propiedades = null) {
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
     body: JSON.stringify({ items: [item] }),
   });
-  if (!res.ok) throw new Error('add failed');
+  if (!res.ok) {
+    let detalle = '';
+    try { detalle = (await res.json()).description || ''; } catch { /* sin cuerpo */ }
+    const err = new Error(detalle || 'add failed');
+    err.status = res.status;
+    throw err;
+  }
   renderBag(await fetchCart());
   showPanel(bag);
 
@@ -338,6 +374,7 @@ function initBag() {
     e.preventDefault();
     const btn = $('[data-add-main]', form);
     if (btn) btn.disabled = true;
+    form.querySelector('.form-aviso')?.remove();   // el aviso de un intento anterior
     try {
       // Se recoge el formulario ENTERO, no solo la variante: los campos
       // `properties[...]` son las fragancias que el cliente eligio en el
@@ -362,8 +399,22 @@ function initBag() {
         if ('_bundle_selection' in props) props._bundle_selection = sels.map((s) => s.value).join(' <> ');
       }
       await addToCart(select.value, 1, props);
-    } catch {
-      form.submit();   // plan B: envio normal, que tambien lleva el formulario entero
+    } catch (err) {
+      if (err && err.status === 422) {
+        // Shopify lo rechazo (sin existencias): se dice junto al boton.
+        let aviso = form.querySelector('.form-aviso');
+        if (!aviso) {
+          aviso = document.createElement('p');
+          aviso.className = 'form-aviso';
+          aviso.setAttribute('role', 'alert');
+          ($('.pdp__cta', form) || form).append(aviso);
+        }
+        aviso.textContent = err.message && err.message !== 'add failed'
+          ? err.message
+          : 'No se pudo añadir: uno de los perfumes no tiene existencias.';
+      } else {
+        form.submit();   // plan B: envio normal, que tambien lleva el formulario entero
+      }
     } finally {
       if (btn) btn.disabled = false;
     }
@@ -668,14 +719,31 @@ function initProduct() {
       if (!match) return;
       select.value = match.value;
       const price = $('.pdp__price');
-      if (price && match.dataset.price) price.textContent = match.dataset.price;
+      if (price && match.dataset.price) {
+        price.textContent = match.dataset.price;
+        if (match.dataset.compare) {
+          const tachado = document.createElement('s');
+          tachado.className = 'price';
+          tachado.textContent = match.dataset.compare;
+          price.append(' ', tachado);
+        }
+      }
       const add = $('[data-add-main]');
-      if (add) add.disabled = match.disabled;
+      if (add) {
+        // Presentación agotada: el botón lo dice (antes seguía en «Añadir»).
+        // El texto de «Añadir» se guarda antes de tocar nada; si la ficha ya
+        // cargó agotada, el botón traía «Agotado» y no sirve de modelo.
+        if (!add.dataset.txtAdd) add.dataset.txtAdd = add.disabled ? 'Añadir' : add.textContent.trim();
+        add.disabled = match.disabled;
+        add.textContent = match.disabled ? 'Agotado' : add.dataset.txtAdd;
+      }
+      $('.form-aviso')?.remove();
       // «Comprar ahora» (ficha y barra del celular) lleva al pago con la
       // presentación elegida, y la barra muestra su precio.
       $$('[data-buy-now], [data-buybar-now]').forEach((now) => {
         now.href = `${routes.cart || '/cart'}/${match.value}:1`;
         if (match.disabled) now.setAttribute('aria-disabled', 'true'); else now.removeAttribute('aria-disabled');
+        if (now.dataset.txtBuy) now.textContent = match.disabled ? now.dataset.txtSold : now.dataset.txtBuy;
       });
       const barPrice = $('[data-buybar-price]');
       if (barPrice && match.dataset.price) barPrice.textContent = match.dataset.price;
@@ -701,7 +769,8 @@ function initProduct() {
       bar.classList.toggle('on', on);
       bar.setAttribute('aria-hidden', String(!on));
       $$('[data-buybar-add], [data-buybar-now]', bar).forEach((x) => { x.tabIndex = on ? 0 : -1; });
-      document.body.classList.toggle('has-buybar', on && window.matchMedia('(max-width: 899px)').matches);
+      const seVe = getComputedStyle(bar).display !== 'none';
+      document.body.classList.toggle('has-buybar', on && seVe && window.matchMedia('(max-width: 899px)').matches);
     }, { threshold: 0 }).observe(mainBtn);
   }
 }
@@ -873,7 +942,10 @@ function initBundlePicker() {
   const ir = (el) => {
     if (!el) return;
     const lenis = window.VelmontLenis;
-    if (lenis && typeof lenis.scrollTo === 'function') lenis.scrollTo(el, { offset: -110 });
+    // Destino calculado desde el scroll REAL: tras elegir, la pagina se acorta
+    // (se cierran rejillas) y Lenis, que partia de su scroll animado viejo,
+    // bajaba de mas y dejaba el boton «Añadir el dúo» fuera de la vista.
+    if (lenis && typeof lenis.scrollTo === 'function') lenis.scrollTo(el.getBoundingClientRect().top + window.scrollY - 110);
     else el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
@@ -1011,7 +1083,8 @@ function initBundlePicker() {
     const h = new URLSearchParams(location.search).get('elige');
     const p = h && porHandle.get(h);
     const primero = selects()[0];
-    if (p && primero && !elecciones.has(primero.name)) {
+    // Un perfume agotado no se preelige: entraria al duo sin existencias.
+    if (p && p.ok !== false && primero && !elecciones.has(primero.name)) {
       const opt = [...primero.options].find((o) => o.value && buscarPieza(o.text) === p);
       // Sin «change»: la app se pone al dia cuando el cliente elija el
       // segundo, y al añadir se manda lo que dicen los <select> (ver submit).
@@ -1034,6 +1107,16 @@ function initBundlePicker() {
     b.querySelector('.bundle-pick__casa').textContent = p ? casaVisible(p.casa) : '';
     b.querySelector('.bundle-pick__nom').textContent = p ? p.t : texto;
     b.querySelector('.bundle-pick__pre').textContent = p && p.precio ? `Suelto ${p.precio}` : '';
+    // Agotado: se ve, pero no se elige (entraba al carrito sin existencias).
+    const agotada = !!(p && p.ok === false);
+    b.disabled = agotada;
+    b.classList.toggle('is-agotada', agotada);
+    if (agotada) {
+      b.setAttribute('aria-disabled', 'true');
+      b.querySelector('.bundle-pick__pre').textContent = 'Agotado';
+    } else {
+      b.removeAttribute('aria-disabled');
+    }
   };
 
   // Ultimo recurso: un perfume que la app ofrece y que no esta ni en la
@@ -1056,6 +1139,7 @@ function initBundlePicker() {
         const c = Math.round(parseFloat(x.price) * 100);
         const pieza = {
           t: x.title, h: x.handle, casa: x.vendor, c, precio: Number.isFinite(c) ? money(c) : '',
+          ok: x.available !== false,
           img: x.image ? x.image.replace(/(\.[a-z]+)(\?|$)/i, '_420x$1$2') : '',
         };
         porHandle.set(pieza.h, pieza);
@@ -1068,6 +1152,181 @@ function initBundlePicker() {
       if (!b.querySelector('img') && b.dataset.texto) pintarTarjeta(b, b.dataset.texto);
     }
     revisar();
+  };
+
+  /* ---------------------------------------------------------------------
+     Ficha del perfume antes de añadirlo al duo (pedido del dueño,
+     2026-10-13). Panel lateral con foto, casa, nombre y precio suelto (lo
+     que ya trae la tarjeta, al instante) y, en cuanto llega, la descripcion
+     y la piramide olfativa (plantilla product.ficha-duo). Al pie, la
+     pregunta: solo «Sí, añadir al dúo» elige el perfume.
+     --------------------------------------------------------------------- */
+  const nombreCombo = ($('.pdp__name')?.textContent || 'Dúo VELMONT').trim();
+  const datosFicha = new Map();   // handle -> Promise<string> (HTML de la ficha)
+  let ficha = null;               // el <aside>, se crea la primera vez
+  let pendiente = null;           // { nombre, valor, texto, confirmado }
+
+  const elegir = (nombre, valor) => {
+    const sel = selects().find((s) => s.name === nombre);
+    if (!sel) return;
+    if (valor) elecciones.set(nombre, valor); else elecciones.delete(nombre);
+    sel.value = valor;
+    // `change` SI hace falta aqui: con el la app rehace sus campos ocultos
+    // (_bundle_selection), que son los que separan el combo en dos perfumes
+    // en el checkout. Medido sin el: seguian diciendo «9PM BLACK <> 9PM
+    // BLACK», lo que la app trae puesto. Su oyente marca la rejilla.
+    sel.dispatchEvent(new Event('change', { bubbles: true }));
+    if (valor) { reabierto = null; avanzar = true; }
+    revisar();
+  };
+
+  // La tarjeta de origen, buscada de nuevo: la app pudo rehacer la rejilla.
+  const tarjetaDe = (nombre, valor) => {
+    const sel = selects().find((s) => s.name === nombre);
+    const rejilla = sel?.nextElementSibling;
+    if (!rejilla?.classList.contains('bundle-pick')) return null;
+    return [...rejilla.querySelectorAll('.bundle-pick__it')].find((b) => b.dataset.val === valor) || null;
+  };
+
+  const crearFicha = () => {
+    ficha = document.createElement('aside');
+    ficha.className = 'drawer duo-ficha';
+    ficha.setAttribute('role', 'dialog');
+    ficha.setAttribute('aria-modal', 'true');
+    ficha.setAttribute('aria-hidden', 'true');
+    ficha.setAttribute('aria-labelledby', 'duo-ficha-nombre');
+    ficha.innerHTML =
+      '<header class="drawer__head">' +
+        '<span class="label duo-ficha__paso"></span>' +
+        '<button type="button" class="icon-btn duo-ficha__cerrar" aria-label="Cerrar">' +
+          '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>' +
+        '</button>' +
+      '</header>' +
+      '<div class="drawer__body duo-ficha__body" data-lenis-prevent>' +
+        '<div class="duo-ficha__foto"></div>' +
+        '<span class="label duo-ficha__casa"></span>' +
+        '<h2 class="duo-ficha__nombre" id="duo-ficha-nombre" tabindex="-1"></h2>' +
+        '<p class="duo-ficha__suelto"></p>' +
+        '<div class="duo-ficha__mas"></div>' +
+        '<a class="link duo-ficha__ver" target="_blank" rel="noopener">Ver la ficha completa</a>' +
+      '</div>' +
+      '<footer class="drawer__foot duo-ficha__pie">' +
+        '<p class="duo-ficha__pregunta" aria-live="polite"></p>' +
+        '<button type="button" class="act act--solid duo-ficha__si"></button>' +
+        '<button type="button" class="act duo-ficha__no"></button>' +
+      '</footer>';
+    ficha.inert = true;
+    document.body.appendChild(ficha);
+    ficha.querySelector('.duo-ficha__cerrar').addEventListener('click', closePanel);
+    ficha.querySelector('.duo-ficha__no').addEventListener('click', closePanel);
+    ficha.querySelector('.duo-ficha__si').addEventListener('click', () => {
+      if (!pendiente) return;
+      const { nombre, valor, ya } = pendiente;
+      pendiente.confirmado = true;
+      // Primero se cierra: con la pagina bloqueada (no-scroll) no se podria
+      // bajar al paso siguiente, que es lo que hace elegir().
+      closePanel();
+      elegir(nombre, ya ? '' : valor);
+      setTimeout(() => {
+        let destino = null;
+        if (ya) destino = tarjetaDe(nombre, valor);
+        else {
+          const sigue = selects().find((s) => !s.value);
+          destino = sigue
+            ? sigue.nextElementSibling?.querySelector('.bundle-pick__it:not([disabled])')
+            : $('[name=add]');
+        }
+        if (destino && destino.offsetParent) destino.focus({ preventScroll: true });
+      }, 0);
+    });
+    // Cancelar (X, «Seguir viendo», Escape o el velo) devuelve el foco a la
+    // tarjeta que se toco; confirmar no: la pagina baja al paso siguiente.
+    ficha.addEventListener('panel:cerrado', () => {
+      const p = pendiente;
+      pendiente = null;
+      if (!p || p.confirmado) return;
+      const t = tarjetaDe(p.nombre, p.valor);
+      if (t && t.offsetParent) t.focus({ preventScroll: true });
+    });
+  };
+
+  // Descripcion y notas: una peticion por perfume, guardada para la proxima.
+  const pedirFicha = (h) => {
+    if (!datosFicha.has(h)) {
+      const url = `${window.VELMONT?.rootUrl || '/'}products/${encodeURIComponent(h)}?view=ficha-duo`;
+      datosFicha.set(h, fetch(url)
+        .then((r) => (r.ok ? r.text() : Promise.reject(new Error(String(r.status)))))
+        .then((t) => {
+          const frag = new DOMParser().parseFromString(t, 'text/html').querySelector('.duo-ficha__datos');
+          if (!frag) throw new Error('sin ficha');
+          return frag.outerHTML;
+        })
+        .catch(() => { datosFicha.delete(h); return ''; }));
+    }
+    return datosFicha.get(h);
+  };
+
+  const abrirFicha = (nombre, valor, texto, paso) => {
+    if (!ficha) crearFicha();
+    const sel = selects().find((s) => s.name === nombre);
+    const ya = !!sel && sel.value === valor;
+    pendiente = { nombre, valor, texto, ya, confirmado: false };
+    const p = buscarPieza(texto);
+    const titulo = p ? p.t : texto.trim();
+
+    ficha.querySelector('.duo-ficha__paso').textContent = paso;
+    const foto = ficha.querySelector('.duo-ficha__foto');
+    foto.replaceChildren();
+    if (p && p.img) {
+      const img = document.createElement('img');
+      // La tarjeta pide la foto a 420 px; aqui se ve el doble de grande.
+      img.src = p.img.replace(/([?&]width=)\d+/, '$1840').replace(/_420x(\.)/, '_840x$1');
+      img.alt = titulo;
+      img.width = 840; img.height = 1050;
+      foto.appendChild(img);
+    }
+    foto.hidden = !(p && p.img);
+    ficha.querySelector('.duo-ficha__casa').textContent = p ? casaVisible(p.casa) : '';
+    ficha.querySelector('.duo-ficha__nombre').textContent = titulo;
+    ficha.querySelector('.duo-ficha__suelto').textContent = p && p.precio ? `Precio suelto ${p.precio}` : '';
+    const ver = ficha.querySelector('.duo-ficha__ver');
+    if (p && p.h) ver.href = `${window.VELMONT?.rootUrl || '/'}products/${encodeURIComponent(p.h)}`;
+    ver.hidden = !(p && p.h);
+
+    const mas = ficha.querySelector('.duo-ficha__mas');
+    mas.replaceChildren();
+    if (p && p.h) {
+      mas.setAttribute('aria-busy', 'true');
+      pedirFicha(p.h).then((html) => {
+        // Si mientras tanto se abrio otro perfume, esta respuesta ya no va.
+        if (!pendiente || pendiente.valor !== valor || pendiente.nombre !== nombre) return;
+        mas.removeAttribute('aria-busy');
+        if (!html) return;
+        mas.innerHTML = html;
+        // La plantilla reutiliza la piramide de la ficha, que trae data-reveal:
+        // aqui no hay observador que la revele y quedaria invisible.
+        mas.querySelectorAll('[data-reveal]').forEach((el) => el.removeAttribute('data-reveal'));
+        limpiarEmojis(mas);
+      });
+    } else {
+      mas.removeAttribute('aria-busy');
+    }
+
+    const pregunta = ficha.querySelector('.duo-ficha__pregunta');
+    const b = document.createElement('b');
+    b.textContent = titulo;
+    if (ya) {
+      pregunta.replaceChildren(b, ` ya está en tu ${nombreCombo} como ${paso.toLowerCase()}.`);
+      ficha.querySelector('.duo-ficha__si').textContent = 'Quitar del dúo';
+      ficha.querySelector('.duo-ficha__no').textContent = 'Dejarlo';
+    } else {
+      pregunta.replaceChildren('¿Seguro que quieres añadir ', b, ` a tu ${nombreCombo}?`);
+      ficha.querySelector('.duo-ficha__si').textContent = 'Sí, añadir al dúo';
+      ficha.querySelector('.duo-ficha__no').textContent = 'Seguir viendo';
+    }
+    ficha.querySelector('.duo-ficha__body').scrollTop = 0;
+    showPanel(ficha);
+    ficha.querySelector('.duo-ficha__nombre').focus({ preventScroll: true });
   };
 
   const montar = () => {
@@ -1102,6 +1361,9 @@ function initBundlePicker() {
         reabierto = i;
         revisar();
         ir(rejilla);
+        // El foco va a la elegida de ese paso (o a la primera), no al vacío.
+        const t = rejilla.querySelector('.bundle-pick__it.on') || rejilla.querySelector('.bundle-pick__it:not([disabled])');
+        t?.focus({ preventScroll: true });
       });
       rejilla.appendChild(paso);
 
@@ -1113,23 +1375,14 @@ function initBundlePicker() {
         b.dataset.val = opt.value;
         b.dataset.texto = opt.text;
         b.setAttribute('aria-pressed', 'false');
+        b.setAttribute('aria-haspopup', 'dialog');
         pintarTarjeta(b, opt.text);
         if (!buscarPieza(opt.text)) sinDatos.push(opt.text);
-        b.addEventListener('click', () => {
-          // Volver a pulsar la elegida la quita: elegir tiene que poder
-          // deshacerse sin recargar.
-          const nuevo = sel.value === opt.value ? '' : opt.value;
-          if (nuevo) elecciones.set(sel.name, nuevo); else elecciones.delete(sel.name);
-          sel.value = nuevo;
-          // `change` SI hace falta aqui: con el la app rehace sus campos
-          // ocultos (_bundle_selection), que son los que separan el combo en
-          // dos perfumes en el checkout. Medido sin el: seguian diciendo
-          // «9PM BLACK <> 9PM BLACK», lo que la app trae puesto.
-          sel.dispatchEvent(new Event('change', { bubbles: true }));
-          marcar();
-          if (nuevo) { reabierto = null; avanzar = true; }
-          revisar();
-        });
+        // Tocar una tarjeta ya NO elige: abre la ficha del perfume y pregunta
+        // (pedido del dueño, 2026-10-13: se añadia en el acto y el cliente se
+        // perdia). Se pasan nombre y valor, no los nodos: la app puede
+        // rehacer su widget mientras la ficha esta abierta.
+        b.addEventListener('click', () => abrirFicha(sel.name, opt.value, opt.text, titulo));
         rejilla.appendChild(b);
       }
       if (!rejilla.querySelector('.bundle-pick__it')) return;
@@ -1165,6 +1418,8 @@ function initBundlePicker() {
       // Y avisa al <body>: sin escenario negro, el menu tiene que volver a
       // tinta o se queda marfil sobre crema, o sea invisible.
       document.body.classList.add('ficha-combo');
+      // En el combo no hay barra fija: WhatsApp y la bolsa vuelven abajo.
+      document.body.classList.remove('has-buybar');
     });
     if (document.querySelector('.bundle-pick')) prepararFicha();
     if (sinDatos.length) completarFuera(sinDatos);
@@ -1203,17 +1458,18 @@ function initBundlePicker() {
 // con envoltorios vacíos (div con un <br>, section sin nada). La casa no usa
 // emojis: se quitan aquí, antes de que el bloque se revele. ©, ® y ™ se quedan.
 const EMOJI = /(?![©®™])\p{Extended_Pictographic}|[\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}️‍⃣]/gu;
-function limpiarTextosPegados() {
-  for (const raiz of $$('.collection-head__note, .pdp__desc')) {
-    const caminante = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT);
-    for (let n = caminante.nextNode(); n; n = caminante.nextNode()) {
-      const limpio = n.nodeValue.replace(EMOJI, '');
-      if (limpio !== n.nodeValue) n.nodeValue = limpio.replace(/ {2,}/g, ' ');
-    }
-    for (const el of $$('div, section, p, span', raiz)) {
-      if (el.isConnected && !el.textContent.trim() && !el.querySelector('img, video, iframe')) el.remove();
-    }
+function limpiarEmojis(raiz) {
+  const caminante = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT);
+  for (let n = caminante.nextNode(); n; n = caminante.nextNode()) {
+    const limpio = n.nodeValue.replace(EMOJI, '');
+    if (limpio !== n.nodeValue) n.nodeValue = limpio.replace(/ {2,}/g, ' ');
   }
+  for (const el of $$('div, section, p, span', raiz)) {
+    if (el.isConnected && !el.textContent.trim() && !el.querySelector('img, video, iframe')) el.remove();
+  }
+}
+function limpiarTextosPegados() {
+  for (const raiz of $$('.collection-head__note, .pdp__desc')) limpiarEmojis(raiz);
 }
 
 /* ---------------- Pestaña del Dúo VELMONT ----------------

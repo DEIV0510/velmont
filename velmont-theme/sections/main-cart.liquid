@@ -1,6 +1,6 @@
-<section class="band band--tight" data-tone="light">
+<section class="band band--tight band--below-header" data-tone="light">
   <div class="wrap">
-    <span class="section-index" data-reveal>{{ cart.item_count }} {{ 'general.cart.items' | t }}</span>
+    <span class="section-index" data-reveal>{{ 'general.cart.items' | t: count: cart.item_count }}</span>
     <h1 class="display" data-reveal><span class="line-mask"><span>{{ 'general.cart.title' | t }}</span></span></h1>
   </div>
 
@@ -29,7 +29,7 @@
             {%- endif -%}
           </a>
 
-          <div>
+          <div class="bag-line__mid">
             <a href="{{ item.url }}"><span class="bag-line__name">{{ item.product.title }}</span></a>
             {%- unless item.product.has_only_default_variant -%}
               <span class="label">{{ item.variant.title }}</span>

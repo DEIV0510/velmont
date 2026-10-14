@@ -2776,3 +2776,141 @@ a.confianza__in:hover { border-color: var(--gold-deep); }
 .pdp__estrellas:not(:empty) { margin: calc(var(--s2) * -1) 0 var(--s3); }
 .piece__estrellas { font-size: 12px; line-height: 1; }
 .piece__estrellas:not(:empty) { margin-top: 4px; }
+
+/* ==========================================================================
+   FICHA DEL PERFUME EN EL DÚO (pedido del dueño, 2026-10-13)
+   Al tocar una tarjeta del selector se abre este cajón, el mismo de la
+   bolsa, con la ficha del perfume y la pregunta antes de añadirlo. En el
+   celular ocupa toda la pantalla; la pregunta y los botones quedan al pie.
+   ========================================================================== */
+.duo-ficha {
+  width: min(520px, 100vw);
+  --on-surface: var(--ink); --on-surface-dim: var(--stone-deep);
+}
+.duo-ficha .drawer__head { padding-block: var(--s5) var(--s4); border-bottom: 1px solid var(--hairline); }
+.duo-ficha__paso { color: var(--on-surface-dim); }
+.duo-ficha__body { padding-top: var(--s5); }
+.duo-ficha__foto { aspect-ratio: 4 / 5; overflow: hidden; background: var(--bone, #ece6da); margin-bottom: var(--s5); }
+.duo-ficha__foto[hidden] { display: none; }
+.duo-ficha__foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.duo-ficha__casa { display: block; margin-bottom: var(--s2); color: var(--on-surface-dim); }
+.duo-ficha__casa:empty { display: none; }
+.duo-ficha__nombre {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: var(--t-500); line-height: var(--lh-title); letter-spacing: var(--track-display);
+  text-transform: uppercase; margin: 0 0 var(--s2);
+}
+.duo-ficha__nombre:focus { outline: none; }
+.duo-ficha__suelto { margin: 0 0 var(--s5); font-size: var(--t-200); color: var(--on-surface-dim); }
+.duo-ficha__suelto:empty { display: none; }
+.duo-ficha__mas[aria-busy="true"]::before {
+  content: 'Cargando la ficha…'; display: block; padding-block: var(--s4);
+  font-size: var(--t-200); color: var(--on-surface-dim);
+}
+.duo-ficha__desc { font-size: var(--t-300); line-height: 1.6; margin-bottom: var(--s5); }
+.duo-ficha__desc > :first-child { margin-top: 0; }
+.duo-ficha__desc p { margin: 0 0 var(--s3); }
+.duo-ficha .notas { margin-bottom: var(--s5); }
+.duo-ficha__ver[hidden] { display: none; }
+.duo-ficha__pie { gap: var(--s3); background: var(--ivory); }
+.duo-ficha__pregunta { margin: 0 0 var(--s2); font-size: var(--t-300); line-height: 1.5; }
+.duo-ficha__pregunta b { font-weight: 700; }
+.duo-ficha__pie .act { width: 100%; }
+
+/* ==========================================================================
+   ARREGLOS DE LA REVISIÓN (2026-10-14)
+   ========================================================================== */
+/* --- Políticas (/policies/*): Shopify las pinta sin sección, sobre el fondo
+   negro del body y con tinta oscura (contraste 1,1:1), y el título quedaba
+   bajo el encabezado fijo. Página clara de lectura, como las demás internas. */
+body.template-policy { background: var(--ivory); color: var(--ink); }
+.shopify-policy__container {
+  max-width: 760px; margin-inline: auto;
+  padding: calc(var(--header-h) + clamp(32px, 5vw, 64px)) var(--gutter) clamp(64px, 8vw, 120px);
+  color: var(--ink);
+}
+.shopify-policy__title h1 {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: var(--display-section); line-height: var(--lh-display);
+  letter-spacing: var(--track-display); text-transform: uppercase;
+  color: var(--ink); margin: 0 0 var(--s6);
+}
+.shopify-policy__body { font-size: var(--t-300); line-height: 1.7; color: var(--ink); }
+.shopify-policy__body h2, .shopify-policy__body h3 {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: var(--t-400); letter-spacing: var(--track-display); text-transform: uppercase;
+  color: var(--ink); margin: var(--s7) 0 var(--s3);
+}
+.shopify-policy__body p { margin: 0 0 var(--s4); color: var(--ink); }
+.shopify-policy__body a { color: var(--gold-deep); text-decoration: underline; }
+
+/* --- Bolsa a página completa: nombre, presentación y cantidad en columna
+   (salían pegados: «INVICTUS EDT100 ML [−] 1 [+]») y el subtotal a lo ancho. */
+.bag-line__mid { display: grid; gap: var(--s2); justify-items: start; min-width: 0; }
+.bag-line__mid .label { white-space: nowrap; }
+.bag-line__mid .stepper { margin-top: var(--s2); }
+.cart-page__foot .bag-totals { justify-self: stretch; display: flex; justify-content: space-between; align-items: baseline; gap: var(--s4); }
+
+/* --- Ficha: «Comprar ahora» y «Añadir» en una línea y a la misma altura. */
+.pdp__cta--dos { align-items: stretch; }
+.pdp__cta--dos > .act { white-space: nowrap; }
+
+/* --- Dúo: perfume agotado en el selector. Se ve, pero no se puede elegir. */
+.bundle-pick__it.is-agotada { cursor: not-allowed; }
+.bundle-pick__it.is-agotada .bundle-pick__img img { filter: grayscale(1); opacity: 0.55; }
+.bundle-pick__it.is-agotada .bundle-pick__pre { color: var(--on-surface-dim); text-transform: uppercase; letter-spacing: var(--track-eyebrow); font-size: var(--t-100); }
+
+/* --- Barra fija de un perfume agotado: dice «Agotado» y no lleva al pago. */
+.buybar__now[aria-disabled="true"] { pointer-events: none; opacity: 0.5; }
+
+/* --- Pie: en el celular, con la barra de compra abierta, la última línea
+   quedaba tapada. */
+@media (max-width: 899px) {
+  body.has-buybar .foot { padding-bottom: calc(var(--sp-6) + 84px + env(safe-area-inset-bottom)); }
+}
+
+/* --- Judge.me: título del widget con la letra y el tamaño de los títulos
+   (su estilo en línea ganaba) y campos de 16px para que iOS no haga zoom. */
+.apps .jm-review-widget-minimal-header__title.jm-text {
+  font-size: var(--display-section) !important; text-align: center; width: 100%;
+}
+.jdgm-widget input, .jdgm-widget textarea, .jdgm-widget select,
+[class*="jdgm"] input, [class*="jdgm"] textarea, [class*="jm-"] input, [class*="jm-"] textarea { font-size: 16px !important; }
+
+/* --- Ficha del Dúo: arreglos de la revisión.
+   El pie marfil tapaba el relleno de los botones al pasar el ratón (el
+   relleno va con z-index:-1) y el texto desaparecía. */
+.duo-ficha__pie { background: none; }
+.duo-ficha__pie .act { isolation: isolate; }
+.duo-ficha :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+/* En escritorio la foto llenaba el panel y el nombre quedaba bajo el pie. */
+@media (min-width: 900px) {
+  .duo-ficha__foto { aspect-ratio: auto; height: min(42svh, 380px); }
+  .duo-ficha__foto img { object-fit: contain; }
+}
+/* Celular en horizontal: menos alto en cabecera y pie, botones en dos columnas. */
+@media (max-height: 520px) {
+  .duo-ficha .drawer__head { padding-block: var(--s3); }
+  .duo-ficha__pie { padding-block: var(--s3); grid-template-columns: 1fr 1fr; }
+  .duo-ficha__pregunta { grid-column: 1 / -1; margin: 0; }
+  .duo-ficha__foto { height: 50svh; aspect-ratio: auto; }
+  .duo-ficha__foto img { object-fit: contain; }
+}
+/* Ficha agotada: «Comprar ahora» no se ofrece (el botón principal ya dice «Agotado»). */
+.pdp__cta [data-buy-now][aria-disabled="true"] { display: none; }
+.pdp__cta--dos:has([data-buy-now][aria-disabled="true"]) > .act { flex-basis: 100%; }
+/* Aviso cuando Shopify no deja añadir (sin existencias). */
+.form-aviso { flex-basis: 100%; margin: 0; font-size: var(--t-200); color: #9b2c2c; }
+/* --- Segunda revisión (2026-10-14) --- */
+/* Ficha del Dúo en el celular: la foto llenaba la pantalla y el nombre y el
+   precio quedaban bajo el pie sin que se notara que había más. */
+@media (max-width: 899px) {
+  .duo-ficha__foto { aspect-ratio: auto; height: min(40svh, 320px); }
+  .duo-ficha__foto img { object-fit: contain; }
+}
+/* Judge.me: el título ocupa toda la fila para quedar centrado. */
+.apps .jm-cluster > .jm-stack:has(> .jm-review-widget-minimal-header__title) { flex: 1 1 100%; }
+/* Pie en el celular: la bolsa flotante tapaba «BOGOTÁ · COLOMBIA». */
+@media (max-width: 899px) { .foot__base { padding-right: 72px; } }
+/* Políticas: el logo del encabezado fijo se lavaba sobre el vidrio crema. */
+body.template-policy .hdr .hdr__mark img { filter: brightness(0.42) saturate(1.25); }

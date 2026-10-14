@@ -219,7 +219,7 @@
 </head>
 
 {%- liquid
-    assign light_pages = 'collection,search,page,list-collections,product,cart'
+    assign light_pages = 'collection,search,page,list-collections,product,cart,policy'
     assign is_light = false
     if light_pages contains request.page_type
       assign is_light = true

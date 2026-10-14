@@ -9,12 +9,15 @@
     "meta_inicio": "Perfumería multimarca. Perfumes 100% originales de casas de Oriente, de nicho y de diseñador, con envío a todo Colombia.",
     "cart": {
       "title": "Bolsa",
-      "items": "piezas",
+      "items": {
+        "one": "{{ count }} pieza",
+        "other": "{{ count }} piezas"
+      },
       "empty": "Tu bolsa está vacía.",
       "continue": "Ver la colección",
       "subtotal": "Subtotal",
       "checkout": "Finalizar compra",
-      "taxes_note": "Impuestos y envío se calculan en el pago.",
+      "taxes_note": "Impuestos incluidos. El envío se suma en el pago.",
       "remove": "Quitar",
       "increase": "Sumar una",
       "decrease": "Quitar una",
@@ -69,8 +72,8 @@
       "pick_for_duo": "Elegir para el dúo",
       "pick_short": "Elegir",
       "duo_guide_title": "Cómo armar tu dúo",
-      "duo_step_1": "Toca tu primera fragancia en la lista de abajo.",
-      "duo_step_2": "Toca la segunda.",
+      "duo_step_1": "Toca un perfume para ver su ficha y confirma «Sí, añadir al dúo».",
+      "duo_step_2": "Haz lo mismo con la segunda fragancia.",
       "duo_step_3_html": "Toca «Añadir el dúo»: los dos perfumes van juntos a la bolsa por <strong>{{ price }}</strong>.",
       "duo_tip_label": "Qué es el {{ title }}",
       "duo_tip_html": "Dos perfumes de esta selección, a tu elección, por <strong>{{ price }}</strong>.",

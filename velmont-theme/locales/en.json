@@ -9,12 +9,15 @@
     "meta_inicio": "Multi-brand perfumery. 100% original fragrances from Middle Eastern, niche and designer houses, with shipping across Colombia.",
     "cart": {
       "title": "Bag",
-      "items": "pieces",
+      "items": {
+        "one": "{{ count }} piece",
+        "other": "{{ count }} pieces"
+      },
       "empty": "Your bag is empty.",
       "continue": "View the collection",
       "subtotal": "Subtotal",
       "checkout": "Checkout",
-      "taxes_note": "Taxes and shipping calculated at checkout.",
+      "taxes_note": "Taxes included. Shipping is added at checkout.",
       "remove": "Remove",
       "increase": "Add one",
       "decrease": "Remove one",
@@ -69,8 +72,8 @@
       "pick_for_duo": "Pick for the duo",
       "pick_short": "Pick",
       "duo_guide_title": "How to build your duo",
-      "duo_step_1": "Tap your first fragrance in the list below.",
-      "duo_step_2": "Tap the second one.",
+      "duo_step_1": "Tap a fragrance to see its details and confirm «Yes, add to the duo».",
+      "duo_step_2": "Do the same with the second fragrance.",
       "duo_step_3_html": "Tap “Add the duo”: both perfumes go to the bag together for <strong>{{ price }}</strong>.",
       "duo_tip_label": "What the {{ title }} is",
       "duo_tip_html": "Two perfumes from this selection, your choice, for <strong>{{ price }}</strong>.",

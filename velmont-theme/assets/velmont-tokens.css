@@ -35,6 +35,11 @@
      se perdian en el celular). Las familias se cargan en theme.liquid. */
   --font-display: 'Marcellus Cifras', 'Marcellus', 'Trajan Pro', Georgia, serif;
   --font-ui: 'Jost', 'Futura', 'Segoe UI', -apple-system, sans-serif;
+  /* Voz cursiva (2026-10-18, el dueño: «una cursiva, algo premium, algo
+     lindo» en todas las secciones; eligió Playfair entre cuatro viendo su
+     tienda). Solo textos de sección y frases destacadas: nombres, precios,
+     botones y descripciones largas siguen en Marcellus y Jost. */
+  --font-cursiva: 'Playfair Display', Georgia, 'Times New Roman', serif;
 
   /* Los dos unicos display de la home. Ambos extremos son escalones. */
   --display-hero: clamp(var(--t-700), 6vw, var(--t-900));

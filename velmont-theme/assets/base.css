@@ -2533,9 +2533,25 @@ body.template-cart {
    Manrope).
    El tamaño del lema del hero vive en velmont-motion.css (.hero-copy .hero__lede).
    ========================================================================== */
+/* 2026-10-18: estos textos pasan a la cursiva Playfair (--font-cursiva), que
+   el dueño eligió entre cuatro viendo su portada («una cursiva, algo premium,
+   algo lindo» en todas las secciones). Mismos tamaños: se probó así. */
 .lede, .hero__lede, .section-head__lede, .collection-head__note,
-.world__text, .statement__aside, .moment__text, .edicion__texto, .campaign__line {
-  font-family: var(--font-ui); font-style: normal; font-weight: 500; letter-spacing: 0;
+.world__text, .statement__aside, .moment__text, .edicion__texto, .campaign__line,
+.categoria__ante, .wa-btn__s {
+  font-family: var(--font-cursiva); font-style: italic; font-weight: 400; letter-spacing: 0;
+}
+/* Frases destacadas de los títulos («es memoria.», «Tu marca personal.»):
+   antes eran la Marcellus inclinada a la fuerza (no tiene cursiva). Ahora,
+   cursiva de verdad, en minúscula, al mismo cuerpo del título. */
+main h1 em, main h2 em, main h3 em, .display em, .statement__line em, .closing__line em, .hero__title em {
+  font-family: var(--font-cursiva); font-style: italic; font-weight: 400;
+  text-transform: none; letter-spacing: 0;
+}
+/* Antetítulo de la portada («Perfumería multimarca»), en la misma voz. */
+.hero__kicker {
+  font-family: var(--font-cursiva); font-style: italic; font-weight: 400;
+  text-transform: none; letter-spacing: 0.02em; font-size: 17px;
 }
 .lede { font-size: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem); line-height: 1.55; }
 .section-head__lede { font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem); line-height: 1.55; }

@@ -83,7 +83,11 @@
     familias salian de los ajustes del tema, pero el CSS de tokens las pisaba
     y esos ajustes no mandaban.
   {%- endcomment -%}
-  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400..700;1,400..700&family=Marcellus&display=swap" rel="stylesheet">
+  {%- comment -%}
+    2026-10-18: + Playfair Display cursiva para los textos de cada sección y
+    las frases destacadas de los títulos (el dueño la eligió entre cuatro).
+  {%- endcomment -%}
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400..700;1,400..700&family=Marcellus&family=Playfair+Display:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
 
   {%- assign marble = settings.texture_marble -%}
 
